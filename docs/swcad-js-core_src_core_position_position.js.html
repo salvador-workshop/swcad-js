@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: swcad-js-core/src/core/position/position.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: swcad-js-core/src/core/position/position.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict"
+
+const posCuboid = require('./pos-cuboid');
+const posRectangle = require('./pos-rectangle');
+const posTriangle = require('./pos-triangle');
+
+/**
+ * ...
+ * @memberof core
+ * @namespace position
+ */
+
+const positionUtils = ({ lib, swLib }) => {
+    const {
+        measureDimensions,
+        measureBoundingBox,
+    } = lib.measurements
+
+    /**
+     * Measures key info, and presents it in a readable manner, like `{ size: { x: 99, y: 99, z: 99 }, min: { ... }, max: { ... } }`
+     * @memberof core.position
+     * @instance
+     * @returns ...
+     */
+    const measure = (inputGeom) => {
+        return {
+            boundingBox: measureBoundingBox(inputGeom),
+            dimensions: measureDimensions(inputGeom),
+        }
+    };
+
+    /**
+     * Gets 3D bounding coordinates of a given geometry
+     * @memberof core.position
+     * @param {object} geom 
+     * @returns Bounding coords (right, left, back, front, top, bottom)
+     */
+    const getGeomCoords = (geom) => {
+        const bBox = measureBoundingBox(geom);
+
+        return {
+            right: bBox[1][0], // (+X)
+            left: bBox[0][0], // (-X)
+            back: bBox[1][1], // (+Y)
+            front: bBox[0][1], // (-Y)
+            top: bBox[1][2], // (+Z)
+            bottom: bBox[0][2], // (-Z)
+        }
+    }
+
+    /**
+     * Finds long axis of a coord set
+     * @memberof core.position
+     * @param {number[]} size - [x, y, z]
+     * @returns axis with longest value (either "x", "y", or "z") or `null` if invalid
+     */
+    const findLongAxis = (size) => {
+        const is2d = size.length == 2 &amp;&amp; size.every(sizeNum => typeof sizeNum === 'number' &amp;&amp; sizeNum > 0)
+        const is3d = size.length == 3 &amp;&amp; size.every(sizeNum => typeof sizeNum === 'number' &amp;&amp; sizeNum > 0)
+
+        if (!is2d &amp;&amp; !is3d) {
+            return null
+        }
+
+        const maxDim = Math.max(...size)
+        const maxDimIdx = size.indexOf(maxDim)
+        const axes = ['x', 'y', 'z']
+
+        return axes[maxDimIdx]
+    }
+
+    const position = {
+        measure,
+        getGeomCoords,
+        findLongAxis,
+        /**
+         * Gets the keypoints for a given object
+         * @memberof core.position
+         * @instance
+         * @returns ...
+         */
+        getKeypoints: (inputGeom) => {
+            // keypoints: box corners, midpoints of edges, midpoints of box faces
+            return null;
+        }
+    }
+    const preLib = {...swLib}
+    preLib.core.position = position
+    console.log(preLib)
+
+    return {
+        ...position,
+        cuboid: posCuboid.init({ lib, swLib: preLib }),
+        rectangle: posRectangle.init({ lib, swLib: preLib }),
+        triangle: posTriangle.init({ lib, swLib: preLib }),
+    }
+}
+
+module.exports = { init: positionUtils };
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="builders.html">builders</a></li><li><a href="builders.arches.html">builders.arches</a></li><li><a href="builders.buttress.html">builders.buttress</a></li><li><a href="builders.columns.html">builders.columns</a></li><li><a href="builders.entryways.html">builders.entryways</a></li><li><a href="builders.roofs.html">builders.roofs</a></li><li><a href="builders.walls.html">builders.walls</a></li><li><a href="colors.html">colors</a></li><li><a href="core.html">core</a></li><li><a href="core.constants.html">core.constants</a></li><li><a href="core.errors.html">core.errors</a></li><li><a href="core.geometry.html">core.geometry</a></li><li><a href="core.geometry.points.html">core.geometry.points</a></li><li><a href="core.geometry.regPoly.html">core.geometry.regPoly</a></li><li><a href="core.internals.html">core.internals</a></li><li><a href="core.maths.html">core.maths</a></li><li><a href="core.position.html">core.position</a></li><li><a href="core.position.cuboid.html">core.position.cuboid</a></li><li><a href="core.position.rectangle.html">core.position.rectangle</a></li><li><a href="core.position.triangle.html">core.position.triangle</a></li><li><a href="core.specifications.html">core.specifications</a></li><li><a href="core.standards.html">core.standards</a></li><li><a href="families.brick.html">families.brick</a></li><li><a href="families.brick.northAmerica.html">families.brick.northAmerica</a></li><li><a href="families.crafts.html">families.crafts</a></li><li><a href="families.dowelFittings.html">families.dowelFittings</a></li><li><a href="families.dowelFittings.dowelCouplers.html">families.dowelFittings.dowelCouplers</a></li><li><a href="families.dowelFittings.dowelJigs.html">families.dowelFittings.dowelJigs</a></li><li><a href="families.dowelFittings.dowelJoists.html">families.dowelFittings.dowelJoists</a></li><li><a href="families.lumber.html">families.lumber</a></li><li><a href="families.lumber.northAmerica.html">families.lumber.northAmerica</a></li><li><a href="families.paper.html">families.paper</a></li><li><a href="families.tile.html">families.tile</a></li><li><a href="families.tile.northAmerica.html">families.tile.northAmerica</a></li><li><a href="families.trim.html">families.trim</a></li><li><a href="families.trim.aranea.html">families.trim.aranea</a></li><li><a href="layers.html">layers</a></li><li><a href="layout.html">layout</a></li><li><a href="models.html">models</a></li><li><a href="models.prefab.html">models.prefab</a></li><li><a href="models.prefab.foils3d.html">models.prefab.foils3d</a></li><li><a href="models.prefab.mesh3d.html">models.prefab.mesh3d</a></li><li><a href="models.prefab.mouldings.html">models.prefab.mouldings</a></li><li><a href="models.prefab.text3d.html">models.prefab.text3d</a></li><li><a href="models.profiles.html">models.profiles</a></li><li><a href="models.profiles.connections.html">models.profiles.connections</a></li><li><a href="models.profiles.curves.html">models.profiles.curves</a></li><li><a href="models.profiles.edge.html">models.profiles.edge</a></li><li><a href="models.profiles.ellipse.html">models.profiles.ellipse</a></li><li><a href="models.profiles.foils2d.html">models.profiles.foils2d</a></li><li><a href="models.profiles.frameRect.html">models.profiles.frameRect</a></li><li><a href="models.profiles.rectangle.html">models.profiles.rectangle</a></li><li><a href="models.profiles.reinforcement.html">models.profiles.reinforcement</a></li><li><a href="models.profiles.text2d.html">models.profiles.text2d</a></li><li><a href="models.profiles.triangle.html">models.profiles.triangle</a></li><li><a href="utils.html">utils</a></li><li><a href="utils.extras.html">utils.extras</a></li><li><a href="utils.transform.html">utils.transform</a></li></ul><h3>Global</h3><ul><li><a href="global.html#dowelCouplers">dowelCouplers</a></li><li><a href="global.html#dowelJigs">dowelJigs</a></li><li><a href="global.html#dowelJoists">dowelJoists</a></li><li><a href="global.html#lumberStd">lumberStd</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu Mar 26 2026 14:09:49 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

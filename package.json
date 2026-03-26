@@ -11,7 +11,7 @@
     "docs:families": "cd packages/swcad-js-families && npm run docs",
     "docs:std-specs": "cd packages/swcad-js-std-specs && npm run docs",
     "docs:ui": "cd packages/swcad-js-ui && npm run docs",
-    "docs": "jsdoc src -r -d docs -c jsdoc.json --readme readme.md"
+    "docs": "jsdoc packages -r -d docs -c jsdoc.json --readme readme.md"
   },
   "repository": {
     "type": "git",
@@ -24,5 +24,9 @@
     "codecad"
   ],
   "author": "R. J. Salvador <salvador.workshop@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "jsdoc": "^4.0.4"
+  }
 }
