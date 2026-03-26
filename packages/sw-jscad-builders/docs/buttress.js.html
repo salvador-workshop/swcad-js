@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: buttress.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: buttress.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict"
+
+/**
+ * ...
+ * @namespace builders.buttress
+ */
+
+const buttressBuilder = ({ lib, swLib }) => {
+    const { union, subtract } = lib.booleans;
+    const { cuboid } = lib.primitives;
+    const { align, translate } = lib.transforms;
+
+    const { constants } = swLib.core;
+    const { roofs } = swLib.builders;
+
+    return {
+        /**
+         * Builds a simple buttress/pilaster.
+         * @memberof builders.buttress
+         * @instance
+         * @param {Object} opts 
+         * @param {number} opts.height
+         * @param {number} opts.thickness
+         * @param {number} opts.width
+         * @param {string[]} opts.buttressOpts 
+         * @param {string[]} opts.trimOpts - ['base', 'dado', 'crown']
+         * @param {number} opts.trimSides - sides where trim is present. Expects an integer between 1-4
+         * @returns Buttress geometry
+         */
+        buildSimpleButtress: ({
+            height,
+            thickness,
+            width,
+            buttressOpts,
+            trimOpts,
+            trimSides,
+        }) => {
+            const baseShape = align({ modes: ['min', 'min', 'max'] }, cuboid({ size: [thickness, width, height] }));
+
+            const rooflet = roofs.buildShedRoof({
+                roofSpanSize: [thickness, width],
+                roofPitch: Math.PI / 8,
+                trimUnitSize: [1.25, 4],
+                roofOpts: ['solid']
+            });
+
+            return union(baseShape, rooflet);
+        },
+        /**
+         * Builds a two-part buttress/pilaster.
+         * @memberof builders.buttress
+         * @instance
+         * @param {Object} opts 
+         * @param {number} opts.height
+         * @param {number} opts.thickness
+         * @param {number} opts.bottomWidth
+         * @param {number} opts.topWidth
+         * @param {string[]} opts.buttressOpts 
+         * @param {string[]} opts.trimOpts - ['base', 'dado', 'crown']
+         * @param {number} opts.trimSides - sides where trim is present. Expects an integer between 1-4
+         * @returns Buttress geometry
+         */
+        buildTwoPartButtress: ({
+            height,
+            thickness,
+            bottomWidth,
+            topWidth,
+            midHeight,
+            buttressOpts,
+            trimOpts,
+            trimSides,
+        }) => {
+            const midHt = midHeight || height * constants.PHI_INV;
+            const baseShape = align(
+                { modes: ['min', 'min', 'min'], relativeTo: [0, 0, -midHt] },
+                cuboid({ size: [thickness, bottomWidth, height] })
+            );
+
+            const midRoofletBase = [thickness, bottomWidth - topWidth];
+            const topRoofletBase = [thickness, topWidth];
+            const cutaway = align(
+                { modes: ['min', 'min', 'min'] },
+                cuboid({ size: [...midRoofletBase, height - midHt] })
+            );
+            const baseButtress = subtract(baseShape, cutaway);
+
+            const midRooflet = roofs.buildShedRoof({
+                roofSpanSize: midRoofletBase,
+                roofPitch: Math.PI / 8,
+                wallThickness: 3,
+                trimUnitSize: [1.25, 4],
+                roofOpts: ['solid']
+            });
+
+            const topRooflet = translate(
+                [0, midRoofletBase[1], height - midHt],
+                roofs.buildShedRoof({
+                    roofSpanSize: topRoofletBase,
+                    roofPitch: Math.PI / 8,
+                    wallThickness: 3,
+                    trimUnitSize: [1.25, 4],
+                    roofOpts: ['solid']
+                })
+            );
+
+            return union(baseButtress, midRooflet, topRooflet);
+        }
+    };
+}
+
+module.exports = { init: buttressBuilder }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="builders.html">builders</a></li><li><a href="builders.arches.html">builders.arches</a></li><li><a href="builders.buttress.html">builders.buttress</a></li><li><a href="builders.columns.html">builders.columns</a></li><li><a href="builders.entryways.html">builders.entryways</a></li><li><a href="builders.roofs.html">builders.roofs</a></li><li><a href="builders.walls.html">builders.walls</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Jul 26 2025 17:10:47 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

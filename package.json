@@ -1,0 +1,28 @@
+{
+  "name": "sw-jscad",
+  "version": "0.10.0-alpha",
+  "description": "Salvador Workshop's JSCAD utilities and toolkit",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "docs:builders": "cd packages/sw-jscad-builders && npm run docs",
+    "docs:core": "cd packages/sw-jscad-core && npm run docs",
+    "docs:families": "cd packages/sw-jscad-families && npm run docs",
+    "docs:std-specs": "cd packages/sw-jscad-std-specs && npm run docs",
+    "docs:ui": "cd packages/sw-jscad-ui && npm run docs",
+    "docs": "jsdoc src -r -d docs -c jsdoc.json --readme readme.md"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salvador-workshop/sw-jscad.git"
+  },
+  "keywords": [
+    "openjscad",
+    "jscad",
+    "code-cad",
+    "codecad"
+  ],
+  "author": "R. J. Salvador <salvador.workshop@gmail.com>",
+  "license": "MIT"
+}

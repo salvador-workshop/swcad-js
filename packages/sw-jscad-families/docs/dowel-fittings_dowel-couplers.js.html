@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: dowel-fittings/dowel-couplers.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: dowel-fittings/dowel-couplers.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict"
+
+/**
+ * ...
+ * @namespace families.dowelFittings.dowelCouplers
+ */
+
+/**
+ * ...
+ * @param {*} param0 
+ * @returns ...
+ */
+const dowelCouplers = ({ lib, swLib }) => {
+    const { maths } = swLib.core
+    const { mesh3d } = swLib.models.prefab;
+
+    // TODO - pull this from `sw-jscad-std-specs` once it's in place.
+    const swDefaults = {
+        panelThicknessXs: maths.inchesToMm(2 / 64),  // 1/32"
+        panelThicknessSm: maths.inchesToMm(3 / 64),
+        panelThicknessMd: maths.inchesToMm(4 / 64),   // 1/16"
+        panelThicknessLg: maths.inchesToMm(5 / 64),
+        panelThicknessXl: maths.inchesToMm(6 / 64),   // 3/32"
+    }
+
+    const couplerDefaultSpecs = {
+        tolerance: maths.inchesToMm(1 / 64),
+        typThickness: swDefaults.panelThicknessSm,
+        offsetWidth: swDefaults.panelThicknessXs,
+        meshRadius: swDefaults.panelThicknessMd,
+    }
+
+    const extraSmallDowelCoupler = ({ dowelRadius }) => {
+        const couplerSpecs = {
+            ...couplerDefaultSpecs,
+            length: maths.inchesToMm(0.5)
+        }
+
+        const fittedRadius = dowelRadius + (couplerSpecs.tolerance / 2)
+        return mesh3d.meshCylinder({
+            radius: fittedRadius + couplerSpecs.typThickness,
+            height: couplerSpecs.length,
+            thickness: couplerSpecs.typThickness,
+            meshRadius: couplerSpecs.meshRadius,
+            meshMinWidth: couplerSpecs.typThickness,
+            meshSegments: 8,
+            edgeOffsets: [couplerSpecs.offsetWidth, couplerSpecs.offsetWidth],
+        });
+    };
+
+    const smallDowelCoupler = ({ dowelRadius }) => {
+        const couplerSpecs = {
+            ...couplerDefaultSpecs,
+            length: maths.inchesToMm(1)
+        }
+
+        const fittedRadius = dowelRadius + (couplerSpecs.tolerance / 2)
+        return mesh3d.meshCylinder({
+            radius: fittedRadius + couplerSpecs.typThickness,
+            height: couplerSpecs.length,
+            thickness: couplerSpecs.typThickness,
+            meshRadius: couplerSpecs.meshRadius,
+            meshMinWidth: couplerSpecs.typThickness,
+            meshSegments: 8,
+            edgeOffsets: [couplerSpecs.offsetWidth, couplerSpecs.offsetWidth],
+        });
+    };
+
+    const mediumDowelCoupler = ({ dowelRadius }) => {
+        const couplerSpecs = {
+            ...couplerDefaultSpecs,
+            length: maths.inchesToMm(2)
+        }
+
+        const fittedRadius = dowelRadius + (couplerSpecs.tolerance / 2)
+        return mesh3d.meshCylinder({
+            radius: fittedRadius + couplerSpecs.typThickness,
+            height: couplerSpecs.length,
+            thickness: couplerSpecs.typThickness,
+            meshRadius: couplerSpecs.meshRadius,
+            meshMinWidth: couplerSpecs.typThickness,
+            meshSegments: 8,
+            edgeOffsets: [couplerSpecs.offsetWidth, couplerSpecs.offsetWidth],
+        });
+    };
+
+    const largeDowelCoupler = ({ dowelRadius }) => {
+        const couplerSpecs = {
+            ...couplerDefaultSpecs,
+            length: maths.inchesToMm(3)
+        }
+
+        const fittedRadius = dowelRadius + (couplerSpecs.tolerance / 2)
+        return mesh3d.meshCylinder({
+            radius: fittedRadius + couplerSpecs.typThickness,
+            height: couplerSpecs.length,
+            thickness: couplerSpecs.typThickness,
+            meshRadius: couplerSpecs.meshRadius,
+            meshMinWidth: couplerSpecs.typThickness,
+            meshSegments: 8,
+            edgeOffsets: [couplerSpecs.offsetWidth, couplerSpecs.offsetWidth],
+        });
+    };
+
+    const output = {
+        extraSmallDowelCoupler,
+        smallDowelCoupler,
+        mediumDowelCoupler,
+        largeDowelCoupler,
+    }
+
+    return output;
+}
+
+module.exports = { init: dowelCouplers }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="families.brick.html">families.brick</a></li><li><a href="families.brick.northAmerica.html">families.brick.northAmerica</a></li><li><a href="families.crafts.html">families.crafts</a></li><li><a href="families.dowelFittings.html">families.dowelFittings</a></li><li><a href="families.dowelFittings.dowelCouplers.html">families.dowelFittings.dowelCouplers</a></li><li><a href="families.dowelFittings.dowelJigs.html">families.dowelFittings.dowelJigs</a></li><li><a href="families.dowelFittings.dowelJoists.html">families.dowelFittings.dowelJoists</a></li><li><a href="families.lumber.html">families.lumber</a></li><li><a href="families.lumber.northAmerica.html">families.lumber.northAmerica</a></li><li><a href="families.paper.html">families.paper</a></li><li><a href="families.tile.html">families.tile</a></li><li><a href="families.tile.northAmerica.html">families.tile.northAmerica</a></li><li><a href="families.trim.html">families.trim</a></li><li><a href="families.trim.aranea.html">families.trim.aranea</a></li></ul><h3>Global</h3><ul><li><a href="global.html#dowelCouplers">dowelCouplers</a></li><li><a href="global.html#dowelJigs">dowelJigs</a></li><li><a href="global.html#dowelJoists">dowelJoists</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Jul 26 2025 17:05:45 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
