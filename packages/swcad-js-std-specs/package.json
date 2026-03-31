@@ -1,12 +1,8 @@
 {
-  "name": "sw-jscad-std-specs",
+  "name": "swcad-js-std-specs",
   "version": "0.10.0-alpha",
   "description": "Standards and specs for Salvador Workshop's JSCAD utilities and toolkit.",
   "homepage": "",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/salvador-workshop/sw-jscad-std-specs.git"
-  },
   "main": "src/index.js",
   "scripts": {
     "docs": "jsdoc src -r -d docs -c jsdoc.json --readme readme.md",

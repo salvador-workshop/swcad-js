@@ -1,12 +1,8 @@
 {
-  "name": "sw-jscad-builders",
+  "name": "swcad-js-builders",
   "version": "0.10.0-alpha",
   "description": "Builder functions for Salvador Workshop's JSCAD utilities and toolkit.",
   "homepage": "",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/salvador-workshop/sw-jscad-builders.git"
-  },
   "main": "src/index.js",
   "scripts": {
     "docs": "jsdoc src -r -d docs -c jsdoc.json --readme readme.md",
