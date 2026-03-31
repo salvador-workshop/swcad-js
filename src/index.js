@@ -6,7 +6,17 @@ const buildersModule = require('swcad-js-builders');
 
 const init = ({ lib }) => {
     const swcadJsCore = coreModule.init({ lib })
-    
+
+    const swcadJsFamilies = coreModule.init({ lib, swLib: swcadJsCore })
+    const swcadJsUi = coreModule.init({ lib, swLib: swcadJsCore })
+
+    const swcadJsBuilders = coreModule.init({ lib, swLib: swcadJsCore, swFamilies: swcadJsFamilies })
+
+    const swcadJs = {
+        ...swcadJsCore,
+        ui: swcadJsUi,
+        builders: swcadJsBuilders,
+    }
 
     return swcadJs;
 }
