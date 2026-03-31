@@ -15,12 +15,12 @@ const init = ({ lib }) => {
     stdSpecs.constants.SUPERGOLDEN_RATIO = 1.4655712319
     stdSpecs.constants.PLASTIC_RATIO = 1.3247179572
 
-    const swJscad = {
+    const swcadJsCore = {
         core: { ...stdSpecs, ...coreModule.init({ stdSpecs, lib }) },
     }
 
-    swJscad.utils = utilsModule.init({ lib, swLib: swJscad });
-    swJscad.models = modelModule.init({ lib, swLib: swJscad });
+    swcadJsCore.utils = utilsModule.init({ lib, swLib: swcadJsCore });
+    swcadJsCore.models = modelModule.init({ lib, swLib: swcadJsCore });
 
     const swcadJsFamilies = familiesModule.init({ lib, swLib: swcadJsCore })
     const swcadJsUi = uiModule.init({ lib, swLib: swcadJsCore })
