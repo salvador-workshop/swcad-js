@@ -1,6 +1,6 @@
 {
   "name": "swcad-js-families",
-  "version": "0.10.0-alpha",
+  "version": "0.10.0-alpha.0",
   "description": "2D/3D model families for Salvador Workshop's JSCAD utilities and toolkit.",
   "homepage": "",
   "main": "src/index.js",

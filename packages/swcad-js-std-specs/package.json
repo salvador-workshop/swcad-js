@@ -1,6 +1,6 @@
 {
   "name": "swcad-js-std-specs",
-  "version": "0.10.0-alpha",
+  "version": "0.10.0-alpha.0",
   "description": "Standards and specs for Salvador Workshop's JSCAD utilities and toolkit.",
   "homepage": "",
   "main": "src/index.js",

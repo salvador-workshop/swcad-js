@@ -1,6 +1,6 @@
 {
   "name": "swcad-js-ui",
-  "version": "0.10.0-alpha",
+  "version": "0.10.0-alpha.0",
   "description": "UX functionality for swcad-js and sw-jscad-viewer",
   "homepage": "",
   "main": "src/index.js",
