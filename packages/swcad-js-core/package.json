@@ -1,6 +1,6 @@
 {
   "name": "sw-jscad",
-  "version": "0.10.0-alpha.3",
+  "version": "0.10.0-alpha.4",
   "description": "Salvador Workshop's JSCAD utilities and toolkit",
   "homepage": "",
   "repository": {
@@ -24,7 +24,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "swcad-js-std-specs": "0.10.0-alpha"
+    "swcad-js-builders": "0.10.0-alpha.0",
+    "swcad-js-families": "0.10.0-alpha.0",
+    "swcad-js-std-specs": "0.10.0-alpha.0",
+    "swcad-js-ui": "0.10.0-alpha.0"
   },
   "devDependencies": {
     "jsdoc": "^4.0.4"

@@ -2,10 +2,10 @@ const coreModule = require('./core');
 const utilsModule = require('./utils');
 const modelModule = require('./models');
 
-const stdSpecsModule = require('../../swcad-js-std-specs');
-const familiesModule = require('../../swcad-js-families');
-const uiModule = require('../../swcad-js-ui');
-const buildersModule = require('../../swcad-js-builders');
+const stdSpecsModule = require('swcad-js-std-specs');
+const familiesModule = require('swcad-js-families');
+const uiModule = require('swcad-js-ui');
+const buildersModule = require('swcad-js-builders');
 
 const init = ({ lib }) => {
     const stdSpecs = stdSpecsModule.init({ lib });
