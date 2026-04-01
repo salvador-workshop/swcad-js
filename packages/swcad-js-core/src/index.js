@@ -43,15 +43,24 @@ const init = ({ lib }) => {
             foil: swJsCad.models.profiles.foils2d,
             arch: swJsCad.builders.arches,
             trim: swJsCad.families.trim,
+            lumber: swJsCad.families.lumber,
+            paper: swJsCad.families.paper,
         },
         components: {
             mesh: swJsCad.models.prefab.mesh3d,
+            tile: swJsCad.families.tile,
+            crafts: swJsCad.families.crafts,
         },
         models: {
             foil: swJsCad.models.prefab.foils3d,
             arch: swJsCad.builders.arches,
-            wall: swJsCad.builders.walls,
+            buttress: swJsCad.builders.buttress,
+            wall: {
+                ...swJsCad.builders.walls,
+                entryway: swJsCad.builders.entryways
+            },
             column: swJsCad.builders.columns,
+            roof: swJsCad.builders.roofs,
         },
         utils: {
             constants: swJsCad.core.constants,
