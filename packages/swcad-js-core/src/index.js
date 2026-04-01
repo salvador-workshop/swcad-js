@@ -53,7 +53,7 @@ const init = ({ lib }) => {
             reinforcement: swJsCad.models.profiles.reinforcement,
             shapes: {
                 ellipse: swJsCad.models.profiles.ellipse,
-                octagon: swJsCad.models.profiles.octagon,
+                octagon: swJsCad.models.profiles.octagonal,
                 rectangle: swJsCad.models.profiles.rectangle,
                 triangle: swJsCad.models.profiles.triangle,
                 square: {
