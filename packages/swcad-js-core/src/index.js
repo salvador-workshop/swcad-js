@@ -39,17 +39,35 @@ const init = ({ lib }) => {
     /** Functions organized in the new style */
     const swcadJs = {
         profiles: {
+            text: swJsCad.models.profiles.text2d,
             mesh: swJsCad.models.profiles.mesh2d,
             foil: swJsCad.models.profiles.foils2d,
             arch: swJsCad.builders.arches,
             trim: swJsCad.families.trim,
             lumber: swJsCad.families.lumber,
             paper: swJsCad.families.paper,
+            connections: swJsCad.models.profiles.connections,
+            curves: swJsCad.models.profiles.curves,
+            edge: swJsCad.models.profiles.edge,
+            frameRect: swJsCad.models.profiles.frameRect,
+            reinforcement: swJsCad.models.profiles.reinforcement,
+            shapes: {
+                ellipse: swJsCad.models.profiles.ellipse,
+                octagon: swJsCad.models.profiles.octagon,
+                rectangle: swJsCad.models.profiles.rectangle,
+                triangle: swJsCad.models.profiles.triangle,
+                square: {
+                    sqCornerCircNotch: swJsCad.models.profiles.sqCornerCircNotch,
+                    sqCornerCircles: swJsCad.models.profiles.sqCornerCircles,
+                }
+            }
         },
         components: {
+            text: swJsCad.models.prefab.text3d,
             mesh: swJsCad.models.prefab.mesh3d,
             tile: swJsCad.families.tile,
             crafts: swJsCad.families.crafts,
+            moulding: swJsCad.models.prefab.mouldings,
         },
         models: {
             foil: swJsCad.models.prefab.foils3d,
@@ -66,6 +84,7 @@ const init = ({ lib }) => {
             constants: swJsCad.core.constants,
             math: swJsCad.core.maths,
             geometry: swJsCad.core.geometry,
+            extras: swJsCad.utils.extras,
             transform: swJsCad.utils.transform,
             specifications: swJsCad.core.specifications,
             standards: swJsCad.core.standards,
