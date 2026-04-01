@@ -28,11 +28,40 @@ const init = ({ lib }) => {
     const swcadJsUi = uiPackage.init({ lib, swLib: swcadJsCore })
     const swcadJsBuilders = buildersPackage.init({ lib, swLib: swcadJsCore, swFamilies: swcadJsFamilies })
 
-    const swcadJs = {
+    /** Functions organized in the old style */
+    const swJsCad = {
         ...swcadJsCore,
         families: swcadJsFamilies,
         ui: swcadJsUi,
         builders: swcadJsBuilders,
+    }
+
+    /** Functions organized in the new style */
+    const swcadJs = {
+        profiles: {
+            mesh: swJsCad.models.profiles.mesh2d,
+            foil: swJsCad.models.profiles.foils2d,
+            arch: swJsCad.builders.arches,
+            trim: swJsCad.families.trim,
+        },
+        components: {
+            mesh: swJsCad.models.prefab.mesh3d,
+        },
+        models: {
+            foil: swJsCad.models.prefab.foils3d,
+            arch: swJsCad.builders.arches,
+            wall: swJsCad.builders.walls,
+            column: swJsCad.builders.columns,
+        },
+        utils: {
+            constants: swJsCad.core.constants,
+            math: swJsCad.core.maths,
+            geometry: swJsCad.core.geometry,
+            transform: swJsCad.utils.transform,
+            specifications: swJsCad.core.specifications,
+            standards: swJsCad.core.transform,
+            colors: swJsCad.ui.ux.colors,
+        },
     }
 
     return swcadJs;

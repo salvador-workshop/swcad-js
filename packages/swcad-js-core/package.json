@@ -1,6 +1,6 @@
 {
   "name": "sw-jscad",
-  "version": "0.10.0-alpha.5",
+  "version": "0.10.0",
   "description": "Salvador Workshop's JSCAD utilities and toolkit",
   "homepage": "",
   "repository": {
