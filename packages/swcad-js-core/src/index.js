@@ -59,7 +59,7 @@ const init = ({ lib }) => {
             geometry: swJsCad.core.geometry,
             transform: swJsCad.utils.transform,
             specifications: swJsCad.core.specifications,
-            standards: swJsCad.core.transform,
+            standards: swJsCad.core.standards,
             colors: swJsCad.ui.ux.colors,
         },
     }
