@@ -84,6 +84,7 @@ const init = ({ lib }) => {
             constants: swJsCad.core.constants,
             math: swJsCad.core.maths,
             geometry: swJsCad.core.geometry,
+            position: swJsCad.core.position,
             extras: swJsCad.utils.extras,
             transform: swJsCad.utils.transform,
             specifications: swJsCad.core.specifications,
