@@ -70,6 +70,7 @@ const init = ({ lib }) => {
             specifications: swJsCad.core.specifications,
             standards: swJsCad.core.standards,
             colors: swJsCad.ui.ux.colors,
+            layout: swJsCad.ui.ux.layout,
         },
     }
 
