@@ -7,7 +7,7 @@
 
 "use strict"
 
-const openWebJoistInit = ({ lib }) => {
+const openWebJoistInit = ({ lib, swJscad }) => {
     const {
         cube,
         cylinder,
@@ -58,7 +58,15 @@ const openWebJoistInit = ({ lib }) => {
     const { TAU } = lib.maths.constants
     const { colorize } = lib.colors
 
+    const beadsBits = require('./beads-bits').init({ lib, swJscad });
 
+    const {
+        math
+    } = swJscad.utils
+
+    const {
+        interfaceProfileBeads
+    } = beadsBits
 
     /**
      * Builds default values and opts for the model
@@ -67,15 +75,15 @@ const openWebJoistInit = ({ lib }) => {
      * @memberof openWebJoist
      */
     const modelDefaults = () => {
-        const utils = modelUtils()
+        // const utils = modelUtils()
 
         /** Specific value declarations */
         const defaultValues = {
             dims: {
                 size: [
-                    utils.inchesToMm(2),
-                    utils.inchesToMm(4),
-                    utils.inchesToMm(1),
+                    math.inchesToMm(2),
+                    math.inchesToMm(4),
+                    math.inchesToMm(1),
                 ],
             },
             points: {
@@ -93,7 +101,7 @@ const openWebJoistInit = ({ lib }) => {
             type: 'default',
             scale: 1,
             interfaceThickness: 1.333333,
-            fitGap: utils.inchesToMm(1 / 128),
+            fitGap: math.inchesToMm(1 / 128),
             logMode: 'normal',
         }
 
@@ -114,7 +122,7 @@ const openWebJoistInit = ({ lib }) => {
      * @memberof openWebJoist
      */
     const modelProps = (opts) => {
-        const utils = modelUtils()
+        // const utils = modelUtils()
         const defaults = modelDefaults()
         console.log('panelFrameProps() -- opts', opts)
 
@@ -172,7 +180,7 @@ const openWebJoistInit = ({ lib }) => {
 
         /** Components used by model */
         const modelComponents = {
-            interfaceProfileBeads: utils.interfaceProfileBeads(
+            interfaceProfileBeads: interfaceProfileBeads(
                 interfaceThickness,
                 smProfileBeadWidth,
                 mdProfileBeadWidth,
@@ -218,7 +226,7 @@ const openWebJoistInit = ({ lib }) => {
      * @memberof openWebJoist
      */
     const model = (opts) => {
-        const utils = modelUtils()
+        // const utils = modelUtils()
         const defaults = modelDefaults()
 
         // User options
@@ -348,7 +356,7 @@ const openWebJoistInit = ({ lib }) => {
  * Test subjects
  * ------------------------------------- */
 
-const tUtils = modelUtils()
+// const tUtils = modelUtils()
 
 const newModelOpts = {
     size: [tUtils.inchesToMm(3), tUtils.inchesToMm(3), tUtils.inchesToMm(1)],
@@ -375,7 +383,7 @@ console.log('newModelProps', newModelProps)
  * @returns `geom3` or `geom3[]`
  */
 function main() {
-    const spaceUnit = tUtils.inchesToMm(3.5)
+    const spaceUnit = 25.4 * 3.5
 
     return [
         translate([spaceUnit * 0, spaceUnit * 0, spaceUnit * 0], newModelMain),

@@ -1,10 +1,10 @@
 "use strict"
 
-const componentsInit = ({ lib }) => {
+const componentsInit = ({ lib, swJscad }) => {
     const components = {}
 
-    components.beadsBits = require('./beads-bits').init({ lib });
-    components.openWebJoist = require('./open-web-joist').init({ lib });
+    components.beadsBits = require('./beads-bits').init({ lib, swJscad });
+    components.openWebJoist = require('./open-web-joist').init({ lib, swJscad });
 
     return components;
 }

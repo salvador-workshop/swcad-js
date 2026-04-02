@@ -1,69 +1,69 @@
 const componentsModule = require('./components');
 
 const init = ({ lib }) => {
-    const swJsCad = require('./sw-jscad').init({ lib });
+    const swJscad = require('./sw-jscad').init({ lib });
 
     const profiles = {
-        text: swJsCad.models.profiles.text2d,
-        mesh: swJsCad.models.profiles.mesh2d,
-        foil: swJsCad.models.profiles.foils2d,
-        arch: swJsCad.builders.arches,
-        trim: swJsCad.families.trim,
-        lumber: swJsCad.families.lumber,
-        paper: swJsCad.families.paper,
-        connections: swJsCad.models.profiles.connections,
-        curves: swJsCad.models.profiles.curves,
-        edge: swJsCad.models.profiles.edge,
-        frameRect: swJsCad.models.profiles.frameRect,
-        reinforcement: swJsCad.models.profiles.reinforcement,
+        text: swJscad.models.profiles.text2d,
+        mesh: swJscad.models.profiles.mesh2d,
+        foil: swJscad.models.profiles.foils2d,
+        arch: swJscad.builders.arches,
+        trim: swJscad.families.trim,
+        lumber: swJscad.families.lumber,
+        paper: swJscad.families.paper,
+        connections: swJscad.models.profiles.connections,
+        curves: swJscad.models.profiles.curves,
+        edge: swJscad.models.profiles.edge,
+        frameRect: swJscad.models.profiles.frameRect,
+        reinforcement: swJscad.models.profiles.reinforcement,
         shapes: {
-            ellipse: swJsCad.models.profiles.ellipse,
-            octagon: swJsCad.models.profiles.octagonal,
-            rectangle: swJsCad.models.profiles.rectangle,
-            triangle: swJsCad.models.profiles.triangle,
+            ellipse: swJscad.models.profiles.ellipse,
+            octagon: swJscad.models.profiles.octagonal,
+            rectangle: swJscad.models.profiles.rectangle,
+            triangle: swJscad.models.profiles.triangle,
             square: {
-                sqCornerCircNotch: swJsCad.models.profiles.sqCornerCircNotch,
-                sqCornerCircles: swJsCad.models.profiles.sqCornerCircles,
+                sqCornerCircNotch: swJscad.models.profiles.sqCornerCircNotch,
+                sqCornerCircles: swJscad.models.profiles.sqCornerCircles,
             }
         }
     }
 
-    const componentsData = componentsModule.init({ lib });
+    const componentsData = componentsModule.init({ lib, swJscad });
 
     const components = {
         ...componentsData,
-        text: swJsCad.models.prefab.text3d,
-        mesh: swJsCad.models.prefab.mesh3d,
-        tile: swJsCad.families.tile,
-        crafts: swJsCad.families.crafts,
-        moulding: swJsCad.models.prefab.mouldings,
-        dowelFittings: swJsCad.families.dowelFittings,
-        brick: swJsCad.families.brick,
+        text: swJscad.models.prefab.text3d,
+        mesh: swJscad.models.prefab.mesh3d,
+        tile: swJscad.families.tile,
+        crafts: swJscad.families.crafts,
+        moulding: swJscad.models.prefab.mouldings,
+        dowelFittings: swJscad.families.dowelFittings,
+        brick: swJscad.families.brick,
     }
 
     const models = {
-        foil: swJsCad.models.prefab.foils3d,
-        arch: swJsCad.builders.arches,
-        buttress: swJsCad.builders.buttress,
+        foil: swJscad.models.prefab.foils3d,
+        arch: swJscad.builders.arches,
+        buttress: swJscad.builders.buttress,
         wall: {
-            ...swJsCad.builders.walls,
-            entryway: swJsCad.builders.entryways
+            ...swJscad.builders.walls,
+            entryway: swJscad.builders.entryways
         },
-        column: swJsCad.builders.columns,
-        roof: swJsCad.builders.roofs,
+        column: swJscad.builders.columns,
+        roof: swJscad.builders.roofs,
     }
 
     const utils = {
-        constants: swJsCad.core.constants,
-        math: swJsCad.core.maths,
-        geometry: swJsCad.core.geometry,
-        position: swJsCad.core.position,
-        extras: swJsCad.utils.extras,
-        transform: swJsCad.utils.transform,
-        specifications: swJsCad.core.specifications,
-        standards: swJsCad.core.standards,
-        colors: swJsCad.ui.ux.colors,
-        layout: swJsCad.ui.ux.layout,
+        constants: swJscad.core.constants,
+        math: swJscad.core.maths,
+        geometry: swJscad.core.geometry,
+        position: swJscad.core.position,
+        extras: swJscad.utils.extras,
+        transform: swJscad.utils.transform,
+        specifications: swJscad.core.specifications,
+        standards: swJscad.core.standards,
+        colors: swJscad.ui.ux.colors,
+        layout: swJscad.ui.ux.layout,
     }
 
     /** Functions organized in the new style */

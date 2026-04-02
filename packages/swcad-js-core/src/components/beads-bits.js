@@ -7,7 +7,7 @@
  * @version 0.0.1
  */
 
-const beadsBitsInit = ({ lib }) => {
+const beadsBitsInit = ({ lib, swJscad }) => {
     const {
         cube,
         cylinder,
