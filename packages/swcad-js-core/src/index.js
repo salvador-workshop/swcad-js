@@ -68,6 +68,7 @@ const init = ({ lib }) => {
             tile: swJsCad.families.tile,
             crafts: swJsCad.families.crafts,
             moulding: swJsCad.models.prefab.mouldings,
+            dowelFittings: swJsCad.families.dowelFittings,
         },
         models: {
             foil: swJsCad.models.prefab.foils3d,

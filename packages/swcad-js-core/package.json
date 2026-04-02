@@ -1,6 +1,6 @@
 {
-  "name": "sw-jscad",
-  "version": "0.10.2-alpha.2",
+  "name": "swcad-js-core",
+  "version": "0.10.2-alpha.3",
   "description": "Salvador Workshop's JSCAD utilities and toolkit",
   "homepage": "",
   "repository": {
