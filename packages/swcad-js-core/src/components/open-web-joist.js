@@ -183,8 +183,8 @@ const openWebJoistInit = ({ lib, swJscad }) => {
         const lightSupportWidth = interfaceThickness * 1.125
 
         const edgeProfileSize = [minEdgeWidth, minEdgeWidth * 2]
-        const supportProfileSize = [inchesToMm(3 / 32), inchesToMm(3 / 32)]
-        const lightSupportProfileSize = [inchesToMm(1 / 16), inchesToMm(1 / 16)]
+        const supportProfileSize = [maths.inchesToMm(3 / 32), maths.inchesToMm(3 / 32)]
+        const lightSupportProfileSize = [maths.inchesToMm(1 / 16), maths.inchesToMm(1 / 16)]
 
 
         /* ----------------------------------------
