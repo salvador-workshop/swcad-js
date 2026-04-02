@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Namespace: profiles</title>
+    <title>JSDoc: Namespace: position</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Namespace: profiles</h1>
+    <h1 class="page-title">Namespace: position</h1>
 
     
 
@@ -28,7 +28,8 @@
 
 <header>
     
-        <h2>profiles</h2>
+        <h2>
+            <span class="ancestors"><a href="utils.html">utils</a>.</span>position</h2>
         
     
 </header>
@@ -37,7 +38,7 @@
     <div class="container-overview">
     
         
-            <div class="description">Builds various 2D profiles</div>
+            <div class="description">...</div>
         
 
         
@@ -72,7 +73,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-core_src_models_profiles_profiles.js.html">swcad-js-core/src/models/profiles/profiles.js</a>, <a href="swcad-js-core_src_models_profiles_profiles.js.html#line5">line 5</a>
+        <a href="swcad-js-core_src_core_position_position.js.html">swcad-js-core/src/core/position/position.js</a>, <a href="swcad-js-core_src_core_position_position.js.html#line7">line 7</a>
     </li></ul></dd>
     
 
@@ -102,37 +103,513 @@
         <h3 class="subsection-title">Namespaces</h3>
 
         <dl>
-            <dt><a href="profiles.connections.html">connections</a></dt>
+            <dt><a href="utils.position.cuboid.html">cuboid</a></dt>
             <dd></dd>
         
-            <dt><a href="profiles.curves.html">curves</a></dt>
+            <dt><a href="utils.position.rectangle.html">rectangle</a></dt>
             <dd></dd>
         
-            <dt><a href="profiles.edge.html">edge</a></dt>
-            <dd></dd>
-        
-            <dt><a href="profiles.foil.html">foil</a></dt>
-            <dd></dd>
-        
-            <dt><a href="profiles.frameRect.html">frameRect</a></dt>
-            <dd></dd>
-        
-            <dt><a href="profiles.mesh.html">mesh</a></dt>
-            <dd></dd>
-        
-            <dt><a href="profiles.reinforcement.html">reinforcement</a></dt>
-            <dd></dd>
-        
-            <dt><a href="profiles.shapes.html">shapes</a></dt>
-            <dd></dd>
-        
-            <dt><a href="profiles.text.html">text</a></dt>
+            <dt><a href="utils.position.triangle.html">triangle</a></dt>
             <dd></dd>
         </dl>
     
 
     
 
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getKeypoints"><span class="type-signature"></span>getKeypoints<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Gets the keypoints for a given object
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="swcad-js-core_src_core_position_position.js.html">swcad-js-core/src/core/position/position.js</a>, <a href="swcad-js-core_src_core_position_position.js.html#line82">line 82</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    ...
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="measure"><span class="type-signature"></span>measure<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Measures key info, and presents it in a readable manner, like `{ size: { x: 99, y: 99, z: 99 }, min: { ... }, max: { ... } }`
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="swcad-js-core_src_core_position_position.js.html">swcad-js-core/src/core/position/position.js</a>, <a href="swcad-js-core_src_core_position_position.js.html#line25">line 25</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    ...
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".findLongAxis"><span class="type-signature">(static) </span>findLongAxis<span class="signature">(size)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Finds long axis of a coord set
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>size</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;number></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">[x, y, z]</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="swcad-js-core_src_core_position_position.js.html">swcad-js-core/src/core/position/position.js</a>, <a href="swcad-js-core_src_core_position_position.js.html#line57">line 57</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    axis with longest value (either "x", "y", or "z") or `null` if invalid
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".getGeomCoords"><span class="type-signature">(static) </span>getGeomCoords<span class="signature">(geom)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Gets 3D bounding coordinates of a given geometry
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>geom</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="swcad-js-core_src_core_position_position.js.html">swcad-js-core/src/core/position/position.js</a>, <a href="swcad-js-core_src_core_position_position.js.html#line38">line 38</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Bounding coords (right, left, back, front, top, bottom)
+</div>
+
+
+
+    
+
+
+
+
+
+        
     
 
     

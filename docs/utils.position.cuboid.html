@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Namespace: shapes</title>
+    <title>JSDoc: Namespace: cuboid</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Namespace: shapes</h1>
+    <h1 class="page-title">Namespace: cuboid</h1>
 
     
 
@@ -29,7 +29,7 @@
 <header>
     
         <h2>
-            <span class="ancestors"><a href="profiles.html">profiles</a>.</span>shapes</h2>
+            <span class="ancestors"><a href="utils.html">utils</a><a href="utils.position.html">.position</a>.</span>cuboid</h2>
         
     
 </header>
@@ -38,7 +38,7 @@
     <div class="container-overview">
     
         
-            <div class="description">Builds various 2D shapes</div>
+            <div class="description">Cuboid calculations</div>
         
 
         
@@ -73,7 +73,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-core_src_models_profiles_profiles.js.html">swcad-js-core/src/models/profiles/profiles.js</a>, <a href="swcad-js-core_src_models_profiles_profiles.js.html#line19">line 19</a>
+        <a href="swcad-js-core_src_core_position_pos-cuboid.js.html">swcad-js-core/src/core/position/pos-cuboid.js</a>, <a href="swcad-js-core_src_core_position_pos-cuboid.js.html#line3">line 3</a>
     </li></ul></dd>
     
 
@@ -100,22 +100,6 @@
     
 
     
-        <h3 class="subsection-title">Namespaces</h3>
-
-        <dl>
-            <dt><a href="profiles.shapes.ellipse.html">ellipse</a></dt>
-            <dd></dd>
-        
-            <dt><a href="profiles.shapes.rectangle.html">rectangle</a></dt>
-            <dd></dd>
-        
-            <dt><a href="profiles.shapes.square.html">square</a></dt>
-            <dd></dd>
-        
-            <dt><a href="profiles.shapes.triangle.html">triangle</a></dt>
-            <dd></dd>
-        </dl>
-    
 
     
 
@@ -128,7 +112,7 @@
     
 
     
-    <h4 class="name" id="octagon"><span class="type-signature"></span>octagon<span class="signature">(opts)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".getCuboidCentre"><span class="type-signature">(static) </span>getCuboidCentre<span class="signature">(cuboidGeom)</span><span class="type-signature"></span></h4>
     
 
     
@@ -136,7 +120,7 @@
 
 
 <div class="description">
-    Octagonal
+    ...
 </div>
 
 
@@ -172,13 +156,13 @@
 
         <tr>
             
-                <td class="name"><code>opts</code></td>
+                <td class="name"><code>cuboidGeom</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">object</span>
 
 
             
@@ -188,56 +172,7 @@
 
             
 
-            <td class="description last">
-                <h6>Properties</h6>
-                
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>sqLength</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">side length for bounding square</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
+            <td class="description last"></td>
         </tr>
 
     
@@ -278,7 +213,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-core_src_models_profiles_profiles.js.html">swcad-js-core/src/models/profiles/profiles.js</a>, <a href="swcad-js-core_src_models_profiles_profiles.js.html#line485">line 485</a>
+        <a href="swcad-js-core_src_core_position_pos-cuboid.js.html">swcad-js-core/src/core/position/pos-cuboid.js</a>, <a href="swcad-js-core_src_core_position_pos-cuboid.js.html#line56">line 56</a>
     </li></ul></dd>
     
 
@@ -303,6 +238,457 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    ...
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".getCuboidCoords"><span class="type-signature">(static) </span>getCuboidCoords<span class="signature">(cuboidGeom)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    ...
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>cuboidGeom</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="swcad-js-core_src_core_position_pos-cuboid.js.html">swcad-js-core/src/core/position/pos-cuboid.js</a>, <a href="swcad-js-core_src_core_position_pos-cuboid.js.html#line24">line 24</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    ...
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".getCuboidCorners"><span class="type-signature">(static) </span>getCuboidCorners<span class="signature">(cuboidGeom)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    ...
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>cuboidGeom</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="swcad-js-core_src_core_position_pos-cuboid.js.html">swcad-js-core/src/core/position/pos-cuboid.js</a>, <a href="swcad-js-core_src_core_position_pos-cuboid.js.html#line34">line 34</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    ...
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".getCuboidCtrlPoints"><span class="type-signature">(static) </span>getCuboidCtrlPoints<span class="signature">(cuboidGeom)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    ...
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>cuboidGeom</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="swcad-js-core_src_core_position_pos-cuboid.js.html">swcad-js-core/src/core/position/pos-cuboid.js</a>, <a href="swcad-js-core_src_core_position_pos-cuboid.js.html#line66">line 66</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    ...
+</div>
+
+
+
+    
 
 
 

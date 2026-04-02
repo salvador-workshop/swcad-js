@@ -2,7 +2,7 @@
 
 /**
  * Geometry
- * @memberof core
+ * @memberof utils
  * @namespace geometry
  */
 
@@ -11,7 +11,7 @@ const geoRegPoly = require('./geo-reg-poly');
 /**
  * Finds the central point (avg.) between the given points
  * @param {number[]} points
- * @memberof core.geometry.points
+ * @memberof utils.geometry.points
  * @returns central point (avg.) between the given points
  */
 const ptCentroid = (points, mode = '3d') => {
@@ -47,7 +47,7 @@ const geometryUtils = ({ lib, swLib }) => {
     return {
         /**
          * Gets triangular points in area
-         * @memberof core.geometry
+         * @memberof utils.geometry
          * @param {*} x 
          * @param {*} y 
          * @param {*} radius 
@@ -94,7 +94,7 @@ const geometryUtils = ({ lib, swLib }) => {
         },
         /**
          * Gets square points in area
-         * @memberof core.geometry
+         * @memberof utils.geometry
          * @param {*} x 
          * @param {*} y 
          * @param {*} radius 
@@ -135,7 +135,7 @@ const geometryUtils = ({ lib, swLib }) => {
         },
         /**
          * Functions related to sets of Cartesian points
-         * @memberof core.geometry
+         * @memberof utils.geometry
          * @namespace points
          */
         points: {

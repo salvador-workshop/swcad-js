@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Namespace: profiles</title>
+    <title>JSDoc: Namespace: geometry</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Namespace: profiles</h1>
+    <h1 class="page-title">Namespace: geometry</h1>
 
     
 
@@ -28,7 +28,8 @@
 
 <header>
     
-        <h2>profiles</h2>
+        <h2>
+            <span class="ancestors"><a href="utils.html">utils</a>.</span>geometry</h2>
         
     
 </header>
@@ -37,7 +38,7 @@
     <div class="container-overview">
     
         
-            <div class="description">Builds various 2D profiles</div>
+            <div class="description">Geometry</div>
         
 
         
@@ -72,7 +73,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-core_src_models_profiles_profiles.js.html">swcad-js-core/src/models/profiles/profiles.js</a>, <a href="swcad-js-core_src_models_profiles_profiles.js.html#line5">line 5</a>
+        <a href="swcad-js-core_src_core_geometry_geometry.js.html">swcad-js-core/src/core/geometry/geometry.js</a>, <a href="swcad-js-core_src_core_geometry_geometry.js.html#line3">line 3</a>
     </li></ul></dd>
     
 
@@ -102,37 +103,406 @@
         <h3 class="subsection-title">Namespaces</h3>
 
         <dl>
-            <dt><a href="profiles.connections.html">connections</a></dt>
+            <dt><a href="utils.geometry.points.html">points</a></dt>
             <dd></dd>
         
-            <dt><a href="profiles.curves.html">curves</a></dt>
-            <dd></dd>
-        
-            <dt><a href="profiles.edge.html">edge</a></dt>
-            <dd></dd>
-        
-            <dt><a href="profiles.foil.html">foil</a></dt>
-            <dd></dd>
-        
-            <dt><a href="profiles.frameRect.html">frameRect</a></dt>
-            <dd></dd>
-        
-            <dt><a href="profiles.mesh.html">mesh</a></dt>
-            <dd></dd>
-        
-            <dt><a href="profiles.reinforcement.html">reinforcement</a></dt>
-            <dd></dd>
-        
-            <dt><a href="profiles.shapes.html">shapes</a></dt>
-            <dd></dd>
-        
-            <dt><a href="profiles.text.html">text</a></dt>
+            <dt><a href="utils.geometry.regPoly.html">regPoly</a></dt>
             <dd></dd>
         </dl>
     
 
     
 
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".getSquarePtsInArea"><span class="type-signature">(static) </span>getSquarePtsInArea<span class="signature">(x, y, radius)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Gets square points in area
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>radius</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="swcad-js-core_src_core_geometry_geometry.js.html">swcad-js-core/src/core/geometry/geometry.js</a>, <a href="swcad-js-core_src_core_geometry_geometry.js.html#line103">line 103</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    ...
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".getTriangularPtsInArea"><span class="type-signature">(static) </span>getTriangularPtsInArea<span class="signature">(x, y, radius)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Gets triangular points in area
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>radius</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="swcad-js-core_src_core_geometry_geometry.js.html">swcad-js-core/src/core/geometry/geometry.js</a>, <a href="swcad-js-core_src_core_geometry_geometry.js.html#line56">line 56</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    ...
+</div>
+
+
+
+    
+
+
+
+
+
+        
     
 
     
