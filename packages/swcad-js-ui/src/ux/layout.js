@@ -2,6 +2,7 @@
 
 /**
  * ...
+ * @memberof utils
  * @namespace layout
  */
 

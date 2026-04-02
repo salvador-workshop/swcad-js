@@ -1,10 +1,5 @@
 "use strict"
 
-/**
- * Coming soon...
- * @namespace layers
- */
-
 const layersInit = ({ lib }) => {
     return {}
 }
