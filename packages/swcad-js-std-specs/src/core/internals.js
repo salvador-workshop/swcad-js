@@ -1,10 +1,5 @@
 "use strict"
 
-/**
- * ...
- * @namespace core.internals
- */
-
 const internals = ({ lib, swLib }) => {
 
     //-------------------

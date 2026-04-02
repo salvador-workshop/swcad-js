@@ -1,10 +1,5 @@
 "use strict"
 
-/**
- * Core
- * @namespace core
- */
-
 const coreInit = ({ stdSpecs, lib }) => {
     const nextCoreLayer = {}
 

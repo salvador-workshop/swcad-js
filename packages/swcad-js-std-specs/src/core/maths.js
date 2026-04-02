@@ -2,11 +2,12 @@
 
 /**
  * ...
- * @namespace core.maths
+ * @memberof utils
+ * @namespace math
  */
 
 /**
- * @memberof utils.maths
+ * @memberof utils.math
  * @param {*} a 
  * @param {*} b 
  * @returns ...

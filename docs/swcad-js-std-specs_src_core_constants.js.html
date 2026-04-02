@@ -30,31 +30,32 @@
 
 /**
  * ...
- * @namespace core.constants
+ * @memberof utils
+ * @namespace constants
  */
 
 const constants = {
     /**
      * Inches / Millimetre conversion rate
-     * @memberof core.constants
+     * @memberof utils.constants
      * @constant {number}
      */
     INCHES_MM_FACTOR: 25.4,
     /**
      * Golden ratio
-     * @memberof core.constants
+     * @memberof utils.constants
      * @constant {number}
      */
     PHI: 1.6180339887,
     /**
      * Golden ratio inverse
-     * @memberof core.constants
+     * @memberof utils.constants
      * @constant {number}
      */
     PHI_INV: 0.6180339887,
     /**
      * Ratio of equilateral triangle's height to its side length
-     * @memberof core.constants
+     * @memberof utils.constants
      * @constant {number}
      */
     EQUI_TRIANGLE_HEIGHT_FACTOR: 0.86603
@@ -71,13 +72,13 @@ module.exports = constants;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="builders.html">builders</a></li><li><a href="builders.arches.html">builders.arches</a></li><li><a href="builders.buttress.html">builders.buttress</a></li><li><a href="builders.columns.html">builders.columns</a></li><li><a href="builders.entryways.html">builders.entryways</a></li><li><a href="builders.roofs.html">builders.roofs</a></li><li><a href="builders.walls.html">builders.walls</a></li><li><a href="colors.html">colors</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.moulding.html">components.moulding</a></li><li><a href="components.text.html">components.text</a></li><li><a href="core.html">core</a></li><li><a href="core.constants.html">core.constants</a></li><li><a href="core.errors.html">core.errors</a></li><li><a href="core.internals.html">core.internals</a></li><li><a href="core.maths.html">core.maths</a></li><li><a href="core.specifications.html">core.specifications</a></li><li><a href="core.standards.html">core.standards</a></li><li><a href="families.brick.html">families.brick</a></li><li><a href="families.brick.northAmerica.html">families.brick.northAmerica</a></li><li><a href="families.crafts.html">families.crafts</a></li><li><a href="families.dowelFittings.html">families.dowelFittings</a></li><li><a href="families.dowelFittings.dowelCouplers.html">families.dowelFittings.dowelCouplers</a></li><li><a href="families.dowelFittings.dowelJigs.html">families.dowelFittings.dowelJigs</a></li><li><a href="families.dowelFittings.dowelJoists.html">families.dowelFittings.dowelJoists</a></li><li><a href="families.lumber.html">families.lumber</a></li><li><a href="families.lumber.northAmerica.html">families.lumber.northAmerica</a></li><li><a href="families.paper.html">families.paper</a></li><li><a href="families.tile.html">families.tile</a></li><li><a href="families.tile.northAmerica.html">families.tile.northAmerica</a></li><li><a href="families.trim.html">families.trim</a></li><li><a href="families.trim.aranea.html">families.trim.aranea</a></li><li><a href="layers.html">layers</a></li><li><a href="layout.html">layout</a></li><li><a href="models.html">models</a></li><li><a href="models.foil.html">models.foil</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.curves.html">profiles.curves</a></li><li><a href="profiles.edge.html">profiles.edge</a></li><li><a href="profiles.foil.html">profiles.foil</a></li><li><a href="profiles.frameRect.html">profiles.frameRect</a></li><li><a href="profiles.mesh.html">profiles.mesh</a></li><li><a href="profiles.reinforcement.html">profiles.reinforcement</a></li><li><a href="profiles.shapes.html">profiles.shapes</a></li><li><a href="profiles.shapes.ellipse.html">profiles.shapes.ellipse</a></li><li><a href="profiles.shapes.rectangle.html">profiles.shapes.rectangle</a></li><li><a href="profiles.shapes.square.html">profiles.shapes.square</a></li><li><a href="profiles.shapes.triangle.html">profiles.shapes.triangle</a></li><li><a href="profiles.text.html">profiles.text</a></li><li><a href="utils.html">utils</a></li><li><a href="utils.extras.html">utils.extras</a></li><li><a href="utils.geometry.html">utils.geometry</a></li><li><a href="utils.geometry.points.html">utils.geometry.points</a></li><li><a href="utils.geometry.regPoly.html">utils.geometry.regPoly</a></li><li><a href="utils.position.html">utils.position</a></li><li><a href="utils.position.cuboid.html">utils.position.cuboid</a></li><li><a href="utils.position.rectangle.html">utils.position.rectangle</a></li><li><a href="utils.position.triangle.html">utils.position.triangle</a></li><li><a href="utils.transform.html">utils.transform</a></li></ul><h3>Global</h3><ul><li><a href="global.html#dowelCouplers">dowelCouplers</a></li><li><a href="global.html#dowelJigs">dowelJigs</a></li><li><a href="global.html#dowelJoists">dowelJoists</a></li><li><a href="global.html#lumberStd">lumberStd</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="builders.html">builders</a></li><li><a href="builders.arches.html">builders.arches</a></li><li><a href="builders.buttress.html">builders.buttress</a></li><li><a href="builders.columns.html">builders.columns</a></li><li><a href="builders.entryways.html">builders.entryways</a></li><li><a href="builders.roofs.html">builders.roofs</a></li><li><a href="builders.walls.html">builders.walls</a></li><li><a href="colors.html">colors</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.moulding.html">components.moulding</a></li><li><a href="components.text.html">components.text</a></li><li><a href="families.brick.html">families.brick</a></li><li><a href="families.brick.northAmerica.html">families.brick.northAmerica</a></li><li><a href="families.crafts.html">families.crafts</a></li><li><a href="families.dowelFittings.html">families.dowelFittings</a></li><li><a href="families.dowelFittings.dowelCouplers.html">families.dowelFittings.dowelCouplers</a></li><li><a href="families.dowelFittings.dowelJigs.html">families.dowelFittings.dowelJigs</a></li><li><a href="families.dowelFittings.dowelJoists.html">families.dowelFittings.dowelJoists</a></li><li><a href="families.lumber.html">families.lumber</a></li><li><a href="families.lumber.northAmerica.html">families.lumber.northAmerica</a></li><li><a href="families.paper.html">families.paper</a></li><li><a href="families.tile.html">families.tile</a></li><li><a href="families.tile.northAmerica.html">families.tile.northAmerica</a></li><li><a href="families.trim.html">families.trim</a></li><li><a href="families.trim.aranea.html">families.trim.aranea</a></li><li><a href="layers.html">layers</a></li><li><a href="layout.html">layout</a></li><li><a href="models.html">models</a></li><li><a href="models.foil.html">models.foil</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.curves.html">profiles.curves</a></li><li><a href="profiles.edge.html">profiles.edge</a></li><li><a href="profiles.foil.html">profiles.foil</a></li><li><a href="profiles.frameRect.html">profiles.frameRect</a></li><li><a href="profiles.mesh.html">profiles.mesh</a></li><li><a href="profiles.reinforcement.html">profiles.reinforcement</a></li><li><a href="profiles.shapes.html">profiles.shapes</a></li><li><a href="profiles.shapes.ellipse.html">profiles.shapes.ellipse</a></li><li><a href="profiles.shapes.rectangle.html">profiles.shapes.rectangle</a></li><li><a href="profiles.shapes.square.html">profiles.shapes.square</a></li><li><a href="profiles.shapes.triangle.html">profiles.shapes.triangle</a></li><li><a href="profiles.text.html">profiles.text</a></li><li><a href="utils.html">utils</a></li><li><a href="utils.constants.html">utils.constants</a></li><li><a href="utils.extras.html">utils.extras</a></li><li><a href="utils.geometry.html">utils.geometry</a></li><li><a href="utils.geometry.points.html">utils.geometry.points</a></li><li><a href="utils.geometry.regPoly.html">utils.geometry.regPoly</a></li><li><a href="utils.math.html">utils.math</a></li><li><a href="utils.position.html">utils.position</a></li><li><a href="utils.position.cuboid.html">utils.position.cuboid</a></li><li><a href="utils.position.rectangle.html">utils.position.rectangle</a></li><li><a href="utils.position.triangle.html">utils.position.triangle</a></li><li><a href="utils.specifications.html">utils.specifications</a></li><li><a href="utils.standards.html">utils.standards</a></li><li><a href="utils.transform.html">utils.transform</a></li></ul><h3>Global</h3><ul><li><a href="global.html#dowelCouplers">dowelCouplers</a></li><li><a href="global.html#dowelJigs">dowelJigs</a></li><li><a href="global.html#dowelJoists">dowelJoists</a></li><li><a href="global.html#lumberStd">lumberStd</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu Apr 02 2026 07:14:44 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu Apr 02 2026 07:20:32 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
