@@ -11,7 +11,7 @@ const edgeInit = ({ lib, swLib }) => {
 
     /**
      * Edge profile: Circular notch in bottom half
-     * @memberof models.profiles.edge
+     * @memberof profiles.edge
      * @instance
      * @param {Object} opts 
      * @param {number} opts.totalThickness - total thickness of edge
@@ -49,7 +49,7 @@ const edgeInit = ({ lib, swLib }) => {
 
     /**
     * Edge profile: Circular portrusion in bottom half
-    * @memberof models.profiles.edge
+    * @memberof profiles.edge
     * @instance
     * @param {Object} opts 
     * @param {number} opts.totalThickness - total thickness of edge
@@ -91,7 +91,7 @@ const edgeInit = ({ lib, swLib }) => {
 
     /**
      * Edge profiles
-     * @memberof models.profiles
+     * @memberof profiles
      * @namespace edge
      */
     const edge = {

@@ -46,13 +46,13 @@ const connectionsInit = ({ lib, swLib }) => {
 
     /**
      * Connection profiles
-     * @memberof models.profiles
+     * @memberof profiles
      * @namespace connections
      */
     const connections = {
         /**
          * ...
-         * @memberof models.profiles.connections
+         * @memberof profiles.connections
          * @param {object} opts 
          * @returns ...
          */
@@ -113,7 +113,7 @@ const connectionsInit = ({ lib, swLib }) => {
         },
         /**
          * ...
-         * @memberof models.profiles.connections
+         * @memberof profiles.connections
          * @param {object} opts
          * @returns ...
          */
@@ -163,7 +163,7 @@ const connectionsInit = ({ lib, swLib }) => {
         /**
          * Tab and Dovetail profiles are designed to fit right against the male edge.
          * With a margin (1mm default) extending into the female edge to ensure one shape that holds both dovetail ends.
-         * @memberof models.profiles.connections
+         * @memberof profiles.connections
          * @param {*} opts 
          * @returns ...
          */
@@ -202,7 +202,7 @@ const connectionsInit = ({ lib, swLib }) => {
         /**
          * Tab and Dovetail profiles are designed to fit right against the male edge.
          * With a margin (1mm default) extending into the female edge to ensure one shape that holds both dovetail ends.
-         * @memberof models.profiles.connections
+         * @memberof profiles.connections
          * @param {*} opts 
          * @returns ...
          */

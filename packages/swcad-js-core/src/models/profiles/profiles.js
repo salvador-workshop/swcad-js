@@ -4,7 +4,6 @@ const standards = require("sw-jscad-std-specs/src/core/standards");
 
 /**
  * Builds various 2D profiles
- * @memberof models
  * @namespace profiles
  */
 
@@ -33,13 +32,13 @@ const profileBuilder = ({ lib, swLib }) => {
 
   /**
    * Triangle profiles
-   * @memberof models.profiles
+   * @memberof profiles.shapes
    * @namespace triangle
    */
   const triangles = {
     /**
      * ...
-     * @memberof models.profiles.triangle
+     * @memberof profiles.shapes.triangle
      * @param {object} opts
      * @returns ...
      */
@@ -48,7 +47,7 @@ const profileBuilder = ({ lib, swLib }) => {
     },
     /**
      * ...
-     * @memberof models.profiles.triangle
+     * @memberof profiles.shapes.triangle
      * @param {object} opts
      * @returns ...
      */
@@ -58,7 +57,7 @@ const profileBuilder = ({ lib, swLib }) => {
     },
     /**
      * ...
-     * @memberof models.profiles.triangle
+     * @memberof profiles.shapes.triangle
      * @param {object} opts
      * @returns ...
      */
@@ -67,7 +66,7 @@ const profileBuilder = ({ lib, swLib }) => {
     },
     /**
      * ...
-     * @memberof models.profiles.triangle
+     * @memberof profiles.shapes.triangle
      * @param {object} opts
      * @returns ...
      */
@@ -76,7 +75,7 @@ const profileBuilder = ({ lib, swLib }) => {
     },
     /**
      * ...
-     * @memberof models.profiles.triangle
+     * @memberof profiles.shapes.triangle
      * @param {object} opts
      * @returns ...
      */
@@ -85,7 +84,7 @@ const profileBuilder = ({ lib, swLib }) => {
     },
     /**
      * ...
-     * @memberof models.profiles.triangle
+     * @memberof profiles.shapes.triangle
      * @param {object} opts
      * @returns ...
      */
@@ -94,7 +93,7 @@ const profileBuilder = ({ lib, swLib }) => {
     },
     /**
      * ...
-     * @memberof models.profiles.triangle
+     * @memberof profiles.shapes.triangle
      * @param {object} opts
      * @returns ...
      */
@@ -118,13 +117,13 @@ const profileBuilder = ({ lib, swLib }) => {
 
   /**
    * Rectangle profiles
-   * @memberof models.profiles
+   * @memberof profiles.shapes
    * @namespace rectangle
    */
   const rectangles = {
     /**
      * ...
-     * @memberof models.profiles.rectangle
+     * @memberof profiles.shapes.rectangle
      * @param {object} opts
      * @returns ...
      */
@@ -133,7 +132,7 @@ const profileBuilder = ({ lib, swLib }) => {
     },
     /**
      * ...
-     * @memberof models.profiles.rectangle
+     * @memberof profiles.shapes.rectangle
      * @param {object} opts
      * @returns ...
      */
@@ -142,7 +141,7 @@ const profileBuilder = ({ lib, swLib }) => {
     },
     /**
      * ...
-     * @memberof models.profiles.rectangle
+     * @memberof profiles.shapes.rectangle
      * @param {object} opts
      * @returns ...
      */
@@ -151,7 +150,7 @@ const profileBuilder = ({ lib, swLib }) => {
     },
     /**
      * ...
-     * @memberof models.profiles.rectangle
+     * @memberof profiles.shapes.rectangle
      * @param {object} opts
      * @returns ...
      */
@@ -160,7 +159,7 @@ const profileBuilder = ({ lib, swLib }) => {
     },
     /**
      * ...
-     * @memberof models.profiles.rectangle
+     * @memberof profiles.shapes.rectangle
      * @param {object} opts
      * @returns ...
      */
@@ -169,7 +168,7 @@ const profileBuilder = ({ lib, swLib }) => {
     },
     /**
      * ...
-     * @memberof models.profiles.rectangle
+     * @memberof profiles.shapes.rectangle
      * @param {object} opts
      * @returns ...
      */
@@ -178,7 +177,7 @@ const profileBuilder = ({ lib, swLib }) => {
     },
     /**
      * ...
-     * @memberof models.profiles.rectangle
+     * @memberof profiles.shapes.rectangle
      * @param {object} opts
      * @returns ...
      */
@@ -225,14 +224,14 @@ const profileBuilder = ({ lib, swLib }) => {
 
   /**
    * Curve profiles
-   * @memberof models.profiles
+   * @memberof profiles
    * @namespace curves
    */
   const curves = {
     rightCorner: {
       /**
        * ...
-       * @memberof models.profiles.curves
+       * @memberof profiles.curves
        * @param {object} opts
        * @returns ...
        */
@@ -241,7 +240,7 @@ const profileBuilder = ({ lib, swLib }) => {
       },
       /**
        * ...
-       * @memberof models.profiles.curves
+       * @memberof profiles.curves
        * @param {object} opts
        * @returns ...
        */
@@ -250,7 +249,7 @@ const profileBuilder = ({ lib, swLib }) => {
       },
       /**
        * ...
-       * @memberof models.profiles.curves
+       * @memberof profiles.curves
        * @param {object} opts
        * @returns ...
        */
@@ -259,7 +258,7 @@ const profileBuilder = ({ lib, swLib }) => {
       },
       /**
        * ...
-       * @memberof models.profiles.curves
+       * @memberof profiles.curves
        * @param {object} opts
        * @returns ...
        */
@@ -268,7 +267,7 @@ const profileBuilder = ({ lib, swLib }) => {
       },
       /**
        * ...
-       * @memberof models.profiles.curves
+       * @memberof profiles.curves
        * @param {object} opts
        * @returns ...
        */
@@ -277,7 +276,7 @@ const profileBuilder = ({ lib, swLib }) => {
       },
       /**
        * ...
-       * @memberof models.profiles.curves
+       * @memberof profiles.curves
        * @param {object} opts
        * @returns ...
        */
@@ -286,7 +285,7 @@ const profileBuilder = ({ lib, swLib }) => {
       },
       /**
        * ...
-       * @memberof models.profiles.curves
+       * @memberof profiles.curves
        * @param {object} opts
        * @returns ...
        */
@@ -327,13 +326,13 @@ const profileBuilder = ({ lib, swLib }) => {
 
   /**
    * Ellipse profiles
-   * @memberof models.profiles
+   * @memberof profiles.shapes
    * @namespace ellipse
    */
   const ellipses = {
     /**
      * ...
-     * @memberof models.profiles.ellipse
+     * @memberof profiles.shapes.ellipse
      * @param {object} opts
      * @returns ...
      */
@@ -342,7 +341,7 @@ const profileBuilder = ({ lib, swLib }) => {
     },
     /**
      * ...
-     * @memberof models.profiles.ellipse
+     * @memberof profiles.shapes.ellipse
      * @param {object} opts
      * @returns ...
      */
@@ -351,7 +350,7 @@ const profileBuilder = ({ lib, swLib }) => {
     },
     /**
      * ...
-     * @memberof models.profiles.ellipse
+     * @memberof profiles.shapes.ellipse
      * @param {object} opts
      * @returns ...
      */
@@ -360,7 +359,7 @@ const profileBuilder = ({ lib, swLib }) => {
     },
     /**
      * ...
-     * @memberof models.profiles.ellipse
+     * @memberof profiles.shapes.ellipse
      * @param {object} opts
      * @returns ...
      */
@@ -369,7 +368,7 @@ const profileBuilder = ({ lib, swLib }) => {
     },
     /**
      * ...
-     * @memberof models.profiles.ellipse
+     * @memberof profiles.shapes.ellipse
      * @param {object} opts
      * @returns ...
      */
@@ -378,7 +377,7 @@ const profileBuilder = ({ lib, swLib }) => {
     },
     /**
      * ...
-     * @memberof models.profiles.ellipse
+     * @memberof profiles.shapes.ellipse
      * @param {object} opts
      * @returns ...
      */
@@ -387,7 +386,7 @@ const profileBuilder = ({ lib, swLib }) => {
     },
     /**
      * ...
-     * @memberof models.profiles.ellipse
+     * @memberof profiles.shapes.ellipse
      * @param {object} opts
      * @returns ...
      */
@@ -403,7 +402,7 @@ const profileBuilder = ({ lib, swLib }) => {
   return {
     /**
      * Square with circular notches at corners.
-     * @memberof models.profiles
+     * @memberof profiles.shapes.square
      * @instance
      * @param {Object} opts 
      * @param {number} opts.sqLength - side length for bounding square 
@@ -431,7 +430,7 @@ const profileBuilder = ({ lib, swLib }) => {
     },
     /**
      * Square with circles at corners.
-     * @memberof models.profiles
+     * @memberof profiles.shapes.square
      * @instance
      * @param {Object} opts 
      * @param {number} opts.sqLength - side length for bounding square 
@@ -461,7 +460,8 @@ const profileBuilder = ({ lib, swLib }) => {
     },
     /**
      * Octagonal
-     * @memberof models.profiles
+     * @memberof profiles.shapes
+     * @alias octagon
      * @instance
      * @param {Object} opts 
      * @param {number} opts.sqLength - side length for bounding square 

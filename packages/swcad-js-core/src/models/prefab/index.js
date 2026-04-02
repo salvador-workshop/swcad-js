@@ -1,10 +1,5 @@
 "use strict"
 
-/**
- * ...
- * @memberof models
- * @namespace prefab
- */
 const prefabInit = ({ lib, swLib }) => {
     return {
         foils3d: require('./foils-3d').init({ lib, swLib }),
