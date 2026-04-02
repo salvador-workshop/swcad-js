@@ -75,8 +75,6 @@ const openWebJoistInit = ({ lib, swJscad }) => {
      * @memberof openWebJoist
      */
     const modelDefaults = () => {
-        // const utils = modelUtils()
-
         /** Specific value declarations */
         const defaultValues = {
             dims: {
@@ -122,7 +120,6 @@ const openWebJoistInit = ({ lib, swJscad }) => {
      * @memberof openWebJoist
      */
     const modelProps = (opts) => {
-        // const utils = modelUtils()
         const defaults = modelDefaults()
         console.log('panelFrameProps() -- opts', opts)
 
@@ -226,7 +223,6 @@ const openWebJoistInit = ({ lib, swJscad }) => {
      * @memberof openWebJoist
      */
     const model = (opts) => {
-        // const utils = modelUtils()
         const defaults = modelDefaults()
 
         // User options
@@ -356,10 +352,8 @@ const openWebJoistInit = ({ lib, swJscad }) => {
  * Test subjects
  * ------------------------------------- */
 
-// const tUtils = modelUtils()
-
 const newModelOpts = {
-    size: [tUtils.inchesToMm(3), tUtils.inchesToMm(3), tUtils.inchesToMm(1)],
+    size: [25.4 * 3, 25.4 * 3, 25.4 * 1],
 }
 
 const newModelData = model(newModelOpts)
@@ -390,6 +384,7 @@ function main() {
 
         translate([spaceUnit * 1, spaceUnit * 0, spaceUnit * 0], newModelParts.subcomponent1),
         translate([spaceUnit * 1, spaceUnit * 1, spaceUnit * 0], newModelParts.subcomponent2),
+
         translate([spaceUnit * 1, spaceUnit * 2, spaceUnit * 0], newModelParts.assembly1),
         translate([spaceUnit * 1, spaceUnit * 3, spaceUnit * 0], newModelParts.assembly2),
     ]
