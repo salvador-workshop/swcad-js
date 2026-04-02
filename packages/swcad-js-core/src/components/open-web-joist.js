@@ -398,7 +398,7 @@ const openWebJoistInit = ({ lib, swJscad }) => {
                 [braceUnitSize[0], braceUnitMidpoint[1], 0],
             ]
             let lightSupportProfilePts = lightSupportPts.map(lsPts => {
-                return translate(lsPts, fPanelProfiles.lightSupport)
+                return translate(lsPts, interfaceProfileBeads.sm)
             })
             const lightSupportLine1 = hull(lightSupportProfilePts[0], lightSupportProfilePts[1])
             const lightSupportLine2 = hull(lightSupportProfilePts[2], lightSupportProfilePts[3])
@@ -434,7 +434,7 @@ const openWebJoistInit = ({ lib, swJscad }) => {
                 return align({
                     modes: ['center', 'center', 'center'],
                     relativeTo: edgePt
-                }, fPanelProfiles.edge)
+                }, interfaceProfileBeads.lg)
             })
 
             const edge1 = hull(edgeProfilePts[0], edgeProfilePts[1])
