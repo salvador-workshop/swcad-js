@@ -2,6 +2,7 @@ const componentsModule = require('./components');
 
 const init = ({ lib }) => {
     const swJscad = require('./sw-jscad').init({ lib });
+    console.log('swJscad initialized:', swJscad);
 
     const profiles = {
         text: swJscad.models.profiles.text2d,

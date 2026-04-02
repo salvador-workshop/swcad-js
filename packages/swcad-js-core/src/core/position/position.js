@@ -128,7 +128,11 @@ const positionUtils = ({ lib, swLib }) => {
         getKeypoints: (inputGeom) => {
             // keypoints: box corners, midpoints of edges, midpoints of box faces
             return null;
-        }
+        },
+        alignModes,
+        ctr,
+        ctrMin,
+        ctrMax,
     }
     const preLib = { ...swLib }
     preLib.core.position = position
@@ -136,10 +140,6 @@ const positionUtils = ({ lib, swLib }) => {
 
     return {
         ...position,
-        alignModes,
-        ctr,
-        ctrMin,
-        ctrMax,
         cuboid: posCuboid.init({ lib, swLib: preLib }),
         rectangle: posRectangle.init({ lib, swLib: preLib }),
         triangle: posTriangle.init({ lib, swLib: preLib }),

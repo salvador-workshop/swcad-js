@@ -62,6 +62,7 @@ const openWebJoistInit = ({ lib, swJscad }) => {
 
     const {
         maths,
+        position,
     } = swJscad.core
 
     const {
@@ -456,9 +457,9 @@ const openWebJoistInit = ({ lib, swJscad }) => {
             )
 
             const joistWebs = union(
-                ctr(joistEdges),
-                ctr(braceUnits),
-                ctr(endCaps),
+                position.ctr(joistEdges),
+                position.ctr(braceUnits),
+                position.ctr(endCaps),
             )
 
             const keepArea = cuboid({
