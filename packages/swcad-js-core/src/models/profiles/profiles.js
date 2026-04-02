@@ -16,6 +16,22 @@ const profileBuilder = ({ lib, swLib }) => {
 
   const { constants, position } = swLib.core
 
+  /**
+   * Builds various 2D shapes
+   * @memberof profiles
+   * @namespace shapes
+   */
+  const shapes = {
+    /**
+     * Builds various 2D squares
+     * @memberof profiles.shapes
+     * @namespace square
+     */
+    square: {
+
+    }
+  }
+
 
   //-------------
   //  TRIANGLES
