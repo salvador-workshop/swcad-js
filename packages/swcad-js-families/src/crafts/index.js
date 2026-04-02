@@ -2,7 +2,8 @@
 
 /**
  * ...
- * @namespace families.crafts
+ * @memberof components
+ * @namespace crafts
  */
 
 const init = ({ lib, swLib }) => {

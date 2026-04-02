@@ -1,10 +1,5 @@
 "use strict"
 
-/**
- * These standards follow North American dimensional lumber sizes
- */
-
-
 const lumberStd = ({ lib, swLib }) => {
     const { constants, maths } = swLib.core
 

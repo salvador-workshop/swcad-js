@@ -2,7 +2,8 @@
 
 /**
  * ...
- * @namespace families.lumber
+ * @memberof profiles
+ * @namespace lumber
  */
 
 const init = ({ lib, swLib }) => {

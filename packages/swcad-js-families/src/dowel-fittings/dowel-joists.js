@@ -2,11 +2,7 @@
 
 /**
  * ...
- * @namespace families.dowelFittings.dowelJoists
- */
-
-/**
- * ...
+ * @memberof components.dowelFittings
  * @param {*} param0 
  * @returns ...
  */

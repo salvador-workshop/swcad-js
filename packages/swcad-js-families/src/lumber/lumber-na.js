@@ -2,7 +2,8 @@
 
 /**
  * ...
- * @namespace families.lumber.northAmerica
+ * @memberof profiles.lumber
+ * @namespace northAmerica
  */
 
 const lumberNorthAmerica = ({ lib, swLib }) => {

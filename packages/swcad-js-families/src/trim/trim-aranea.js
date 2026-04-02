@@ -2,7 +2,8 @@
 
 /**
  * ...
- * @namespace families.trim.aranea
+ * @memberof profiles.trim
+ * @namespace aranea
  */
 
 const trimAranea = ({ lib, swLib }) => {
