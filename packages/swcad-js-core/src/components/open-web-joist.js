@@ -61,8 +61,8 @@ const openWebJoistInit = ({ lib, swJscad }) => {
     const beadsBits = require('./beads-bits').init({ lib, swJscad });
 
     const {
-        math
-    } = swJscad.utils
+        maths,
+    } = swJscad.core
 
     const {
         interfaceProfileBeads
@@ -79,9 +79,9 @@ const openWebJoistInit = ({ lib, swJscad }) => {
         const defaultValues = {
             dims: {
                 size: [
-                    math.inchesToMm(2),
-                    math.inchesToMm(4),
-                    math.inchesToMm(1),
+                    maths.inchesToMm(2),
+                    maths.inchesToMm(4),
+                    maths.inchesToMm(1),
                 ],
             },
             points: {
@@ -99,7 +99,7 @@ const openWebJoistInit = ({ lib, swJscad }) => {
             type: 'default',
             scale: 1,
             interfaceThickness: 1.333333,
-            fitGap: math.inchesToMm(1 / 128),
+            fitGap: maths.inchesToMm(1 / 128),
             logMode: 'normal',
         }
 
