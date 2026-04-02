@@ -44,7 +44,39 @@ const ptCentroid = (points, mode = '3d') => {
 const geometryUtils = ({ lib, swLib }) => {
     const { maths } = swLib.core;
 
+    /**
+     * ...
+     * @memberof utils.geometry
+     * @param {*} startPt 
+     * @param {*} endPt 
+     * @param {*} mode 
+     * @returns ...
+     */
+    const angleOfTwoPtLine = (startPt, endPt, mode = 'rad') => {
+        const diffY = endPt[1] - startPt[1]
+        const diffX = endPt[0] - startPt[0]
+        const angleRad = Math.atan2(diffY, diffX)
+        const angleDeg = angleRad * (180 / Math.PI)
+
+        return mode == 'deg' ? angleDeg : angleRad
+    }
+
+    /**
+     * ...
+     * @memberof utils.geometry
+     * @param {*} angleRad 
+     * @param {*} dist 
+     * @returns ...
+     */
+    const pointFromAngleAndDist = (angleRad, dist) => {
+        const x = dist * Math.cos(angleRad)
+        const y = dist * Math.sin(angleRad)
+        return [x, y]
+    }
+
     return {
+        angleOfTwoPtLine,
+        pointFromAngleAndDist,
         /**
          * Gets triangular points in area
          * @memberof utils.geometry

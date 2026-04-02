@@ -12,9 +12,55 @@ const posTriangle = require('./pos-triangle');
 
 const positionUtils = ({ lib, swLib }) => {
     const {
+        align,
+    } = lib.transforms
+
+    const {
         measureDimensions,
         measureBoundingBox,
     } = lib.measurements
+
+
+    /**
+     * ...
+     * @memberof utils.position
+     */
+    const alignModes = {
+        ctr: ['center', 'center', 'center'],
+        ctrMin: ['center', 'center', 'min'],
+        ctrMax: ['center', 'center', 'max'],
+    }
+
+    /**
+     * ...
+     * @memberof utils.position
+     * @param {*} inGeom 
+     * @param {*} pt 
+     * @returns ...
+     */
+    const ctr = (inGeom, pt = [0, 0, 0]) => {
+        return align({ modes: alignModes.ctr, relativeTo: pt }, inGeom)
+    }
+    /**
+     * ...
+     * @memberof utils.position
+     * @param {*} inGeom 
+     * @param {*} pt 
+     * @returns ...
+     */
+    const ctrMin = (inGeom, pt = [0, 0, 0]) => {
+        return align({ modes: alignModes.ctrMin, relativeTo: pt }, inGeom)
+    }
+    /**
+     * ...
+     * @memberof utils.position
+     * @param {*} inGeom 
+     * @param {*} pt 
+     * @returns ...
+     */
+    const ctrMax = (inGeom, pt = [0, 0, 0]) => {
+        return align({ modes: alignModes.ctrMax, relativeTo: pt }, inGeom)
+    }
 
     /**
      * Measures key info, and presents it in a readable manner, like `{ size: { x: 99, y: 99, z: 99 }, min: { ... }, max: { ... } }`
@@ -84,12 +130,16 @@ const positionUtils = ({ lib, swLib }) => {
             return null;
         }
     }
-    const preLib = {...swLib}
+    const preLib = { ...swLib }
     preLib.utils.position = position
     console.log(preLib)
 
     return {
         ...position,
+        alignModes,
+        ctr,
+        ctrMin,
+        ctrMax,
         cuboid: posCuboid.init({ lib, swLib: preLib }),
         rectangle: posRectangle.init({ lib, swLib: preLib }),
         triangle: posTriangle.init({ lib, swLib: preLib }),
