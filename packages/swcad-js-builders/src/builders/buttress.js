@@ -2,7 +2,8 @@
 
 /**
  * ...
- * @namespace builders.buttress
+ * @memberof models
+ * @namespace buttress
  */
 
 const buttressBuilder = ({ lib, swLib }) => {
@@ -16,7 +17,7 @@ const buttressBuilder = ({ lib, swLib }) => {
     return {
         /**
          * Builds a simple buttress/pilaster.
-         * @memberof builders.buttress
+         * @memberof models.buttress
          * @instance
          * @param {Object} opts 
          * @param {number} opts.height
@@ -48,7 +49,7 @@ const buttressBuilder = ({ lib, swLib }) => {
         },
         /**
          * Builds a two-part buttress/pilaster.
-         * @memberof builders.buttress
+         * @memberof models.buttress
          * @instance
          * @param {Object} opts 
          * @param {number} opts.height

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Namespace: square</title>
+    <title>JSDoc: Namespace: arch</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Namespace: square</h1>
+    <h1 class="page-title">Namespace: arch</h1>
 
     
 
@@ -29,7 +29,7 @@
 <header>
     
         <h2>
-            <span class="ancestors"><a href="profiles.html">profiles</a><a href="profiles.shapes.html">.shapes</a>.</span>square</h2>
+            <span class="ancestors"><a href="models.html">models</a>.</span>arch</h2>
         
     
 </header>
@@ -38,7 +38,7 @@
     <div class="container-overview">
     
         
-            <div class="description">Builds various 2D squares</div>
+            <div class="description">Builds circle-based arches. Input 2D profiles must be centred at (0, 0, 0)</div>
         
 
         
@@ -73,7 +73,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-core_src_models_profiles_profiles.js.html">swcad-js-core/src/models/profiles/profiles.js</a>, <a href="swcad-js-core_src_models_profiles_profiles.js.html#line25">line 25</a>
+        <a href="swcad-js-builders_src_builders_arches.js.html">swcad-js-builders/src/builders/arches.js</a>, <a href="swcad-js-builders_src_builders_arches.js.html#line3">line 3</a>
     </li></ul></dd>
     
 
@@ -112,7 +112,7 @@
     
 
     
-    <h4 class="name" id="sqCornerCircNotch"><span class="type-signature"></span>sqCornerCircNotch<span class="signature">(opts)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="onePtArch"><span class="type-signature"></span>onePtArch<span class="signature">(opts, geomProfile)</span><span class="type-signature"></span></h4>
     
 
     
@@ -120,7 +120,7 @@
 
 
 <div class="description">
-    Square with circular notches at corners.
+    Builds a one-centre (semicircular) arch.
 </div>
 
 
@@ -198,7 +198,7 @@
 
         <tr>
             
-                <td class="name"><code>sqLength</code></td>
+                <td class="name"><code>arcRadius</code></td>
             
 
             <td class="type">
@@ -214,30 +214,7 @@
 
             
 
-            <td class="description last">side length for bounding square</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>notchRadius</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">radius of circular notch</td>
+            <td class="description last">arc radius</td>
         </tr>
 
     
@@ -245,6 +222,29 @@
 </table>
 
             </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>geomProfile</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">geom2.Geom2</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">2D cross-section profile</td>
         </tr>
 
     
@@ -285,7 +285,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-core_src_models_profiles_profiles.js.html">swcad-js-core/src/models/profiles/profiles.js</a>, <a href="swcad-js-core_src_models_profiles_profiles.js.html#line427">line 427</a>
+        <a href="swcad-js-builders_src_builders_arches.js.html">swcad-js-builders/src/builders/arches.js</a>, <a href="swcad-js-builders_src_builders_arches.js.html#line26">line 26</a>
     </li></ul></dd>
     
 
@@ -321,7 +321,7 @@
     
 
     
-    <h4 class="name" id="sqCornerCircles"><span class="type-signature"></span>sqCornerCircles<span class="signature">(opts)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="twoPtArch"><span class="type-signature"></span>twoPtArch<span class="signature">(opts, geomProfile)</span><span class="type-signature"></span></h4>
     
 
     
@@ -329,7 +329,7 @@
 
 
 <div class="description">
-    Square with circles at corners.
+    Builds a two-centre pointed arch.
 </div>
 
 
@@ -407,7 +407,7 @@
 
         <tr>
             
-                <td class="name"><code>sqLength</code></td>
+                <td class="name"><code>arcRadius</code></td>
             
 
             <td class="type">
@@ -423,14 +423,14 @@
 
             
 
-            <td class="description last">side length for bounding square</td>
+            <td class="description last">arc radius</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>cornerRadius</code></td>
+                <td class="name"><code>archWidth</code></td>
             
 
             <td class="type">
@@ -446,7 +446,7 @@
 
             
 
-            <td class="description last">radius of circular corner</td>
+            <td class="description last">arch width</td>
         </tr>
 
     
@@ -454,6 +454,29 @@
 </table>
 
             </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>geomProfile</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">geom2.Geom2</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">2D cross-section profile</td>
         </tr>
 
     
@@ -494,7 +517,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-core_src_models_profiles_profiles.js.html">swcad-js-core/src/models/profiles/profiles.js</a>, <a href="swcad-js-core_src_models_profiles_profiles.js.html#line455">line 455</a>
+        <a href="swcad-js-builders_src_builders_arches.js.html">swcad-js-builders/src/builders/arches.js</a>, <a href="swcad-js-builders_src_builders_arches.js.html#line50">line 50</a>
     </li></ul></dd>
     
 

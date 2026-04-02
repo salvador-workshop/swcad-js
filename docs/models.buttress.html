@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Namespace: square</title>
+    <title>JSDoc: Namespace: buttress</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Namespace: square</h1>
+    <h1 class="page-title">Namespace: buttress</h1>
 
     
 
@@ -29,7 +29,7 @@
 <header>
     
         <h2>
-            <span class="ancestors"><a href="profiles.html">profiles</a><a href="profiles.shapes.html">.shapes</a>.</span>square</h2>
+            <span class="ancestors"><a href="models.html">models</a>.</span>buttress</h2>
         
     
 </header>
@@ -38,7 +38,7 @@
     <div class="container-overview">
     
         
-            <div class="description">Builds various 2D squares</div>
+            <div class="description">...</div>
         
 
         
@@ -73,7 +73,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-core_src_models_profiles_profiles.js.html">swcad-js-core/src/models/profiles/profiles.js</a>, <a href="swcad-js-core_src_models_profiles_profiles.js.html#line25">line 25</a>
+        <a href="swcad-js-builders_src_builders_buttress.js.html">swcad-js-builders/src/builders/buttress.js</a>, <a href="swcad-js-builders_src_builders_buttress.js.html#line3">line 3</a>
     </li></ul></dd>
     
 
@@ -112,7 +112,7 @@
     
 
     
-    <h4 class="name" id="sqCornerCircNotch"><span class="type-signature"></span>sqCornerCircNotch<span class="signature">(opts)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="buildSimpleButtress"><span class="type-signature"></span>buildSimpleButtress<span class="signature">(opts)</span><span class="type-signature"></span></h4>
     
 
     
@@ -120,7 +120,7 @@
 
 
 <div class="description">
-    Square with circular notches at corners.
+    Builds a simple buttress/pilaster.
 </div>
 
 
@@ -198,7 +198,7 @@
 
         <tr>
             
-                <td class="name"><code>sqLength</code></td>
+                <td class="name"><code>height</code></td>
             
 
             <td class="type">
@@ -214,14 +214,14 @@
 
             
 
-            <td class="description last">side length for bounding square</td>
+            <td class="description last"></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>notchRadius</code></td>
+                <td class="name"><code>thickness</code></td>
             
 
             <td class="type">
@@ -237,7 +237,99 @@
 
             
 
-            <td class="description last">radius of circular notch</td>
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>width</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>buttressOpts</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>trimOpts</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">['base', 'dado', 'crown']</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>trimSides</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">sides where trim is present. Expects an integer between 1-4</td>
         </tr>
 
     
@@ -285,7 +377,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-core_src_models_profiles_profiles.js.html">swcad-js-core/src/models/profiles/profiles.js</a>, <a href="swcad-js-core_src_models_profiles_profiles.js.html#line427">line 427</a>
+        <a href="swcad-js-builders_src_builders_buttress.js.html">swcad-js-builders/src/builders/buttress.js</a>, <a href="swcad-js-builders_src_builders_buttress.js.html#line31">line 31</a>
     </li></ul></dd>
     
 
@@ -310,6 +402,16 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Buttress geometry
+</div>
+
+
+
+    
 
 
 
@@ -321,7 +423,7 @@
     
 
     
-    <h4 class="name" id="sqCornerCircles"><span class="type-signature"></span>sqCornerCircles<span class="signature">(opts)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="buildTwoPartButtress"><span class="type-signature"></span>buildTwoPartButtress<span class="signature">(opts)</span><span class="type-signature"></span></h4>
     
 
     
@@ -329,7 +431,7 @@
 
 
 <div class="description">
-    Square with circles at corners.
+    Builds a two-part buttress/pilaster.
 </div>
 
 
@@ -407,7 +509,7 @@
 
         <tr>
             
-                <td class="name"><code>sqLength</code></td>
+                <td class="name"><code>height</code></td>
             
 
             <td class="type">
@@ -423,14 +525,14 @@
 
             
 
-            <td class="description last">side length for bounding square</td>
+            <td class="description last"></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>cornerRadius</code></td>
+                <td class="name"><code>thickness</code></td>
             
 
             <td class="type">
@@ -446,7 +548,122 @@
 
             
 
-            <td class="description last">radius of circular corner</td>
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>bottomWidth</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>topWidth</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>buttressOpts</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>trimOpts</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">['base', 'dado', 'crown']</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>trimSides</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">sides where trim is present. Expects an integer between 1-4</td>
         </tr>
 
     
@@ -494,7 +711,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-core_src_models_profiles_profiles.js.html">swcad-js-core/src/models/profiles/profiles.js</a>, <a href="swcad-js-core_src_models_profiles_profiles.js.html#line455">line 455</a>
+        <a href="swcad-js-builders_src_builders_buttress.js.html">swcad-js-builders/src/builders/buttress.js</a>, <a href="swcad-js-builders_src_builders_buttress.js.html#line64">line 64</a>
     </li></ul></dd>
     
 
@@ -519,6 +736,16 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Buttress geometry
+</div>
+
+
+
+    
 
 
 
