@@ -90,17 +90,38 @@ const openWebJoistInit = ({ lib, swJscad }) => {
             typeDetails: {
                 default: { id: 'default', desc: 'Default' },
                 alt: { id: 'alt', desc: 'Alternate' },
-            }
+            },
+            width: maths.inchesToMm(1.125),
+            length: maths.inchesToMm(5.5),
+            dowelRadius: 3.25 / 2,
+            type: 'default',
+            dovetailOpt: 'both',
+            reinforcementLevel: 1,
+            unitLength: maths.inchesToMm(1),
+            dowelHolderLength: maths.inchesToMm(5 / 16),
+            interfaceThickness: 1.333,
+            fitGap: maths.inchesToMm(1 / 128),
+            ratioDiamToHolderHeight: 1.666667,
+            ratioDiamToChannelDepth: 0.866667,
+            ratioDiamToSideChannelWidth: 1,
+            ratioDiamToDowelDepth: 0.333333,
         }
 
         /** Computed values for option defaults */
         const defaultOpts = {
-            size: defaultValues.dims.size,
+            // size: defaultValues.dims.size,
             type: 'default',
             scale: 1,
             interfaceThickness: 1.333333,
             fitGap: maths.inchesToMm(1 / 128),
             logMode: 'normal',
+            width: defaultValues.width,
+            length: defaultValues.length,
+            dowelRadius: defaultValues.dowelRadius,
+            dovetailOpt: defaultValues.dovetailOpt,
+            reinforcementLevel: defaultValues.reinforcementLevel,
+            unitLength: defaultValues.unitLength,
+            dowelHolderLength: defaultValues.dowelHolderLength,
         }
 
         return {
@@ -124,25 +145,47 @@ const openWebJoistInit = ({ lib, swJscad }) => {
         console.log('panelFrameProps() -- opts', opts)
 
         const {
-            size,
             type,
             scale,
             interfaceThickness,
             fitGap,
             logMode,
+            width,
+            length,
+            dowelRadius,
+            dovetailOpt,
+            reinforcementLevel,
+            unitLength,
+            dowelHolderLength,
         } = opts
 
         /* ----------------------------------------
         * Prop calculations
         * ------------------------------------- */
 
-        const width = size[0]
-        const depth = size[1]
-        const height = size[2]
+        // const width = size[0]
+        // const depth = size[1]
+        // const height = size[2]
 
         const lgProfileBeadWidth = interfaceThickness * 1.75
         const mdProfileBeadWidth = interfaceThickness * 1.5
         const smProfileBeadWidth = interfaceThickness * 1.125
+
+        const lengthUnits = Math.ceil(length / unitLength)
+
+        const dowelDiam = dowelRadius * 2
+        const joistWebWidth = width - (dowelDiam * 2) - (interfaceThickness * 2)
+        const minEdgeWidth = dowelDiam + (2 * interfaceThickness) + (2 * fitGap)
+        const dowelHolderWidth = interfaceThickness * 2 + dowelDiam
+
+        const edgeWidth = interfaceThickness * 1.75
+        const supportWidth = interfaceThickness * 1.5
+        const lightSupportWidth = interfaceThickness * 1.125
+
+        const edgeProfileSize = [minEdgeWidth, minEdgeWidth * 2]
+        const supportProfileSize = [inchesToMm(3 / 32), inchesToMm(3 / 32)]
+        const lightSupportProfileSize = [inchesToMm(1 / 16), inchesToMm(1 / 16)]
+
 
         /* ----------------------------------------
         * Preparing Model Properties, Dimensions
@@ -150,24 +193,45 @@ const openWebJoistInit = ({ lib, swJscad }) => {
 
         /** Constant values for model */
         const modelConstants = {
-            type,
-            scale,
+            ratioDiamToHolderHeight: defaults.vals.ratioDiamToHolderHeight,
+            ratioDiamToChannelDepth: defaults.vals.ratioDiamToChannelDepth,
+            ratioDiamToSideChannelWidth: defaults.vals.ratioDiamToSideChannelWidth,
+            ratioDiamToDowelDepth: defaults.vals.ratioDiamToDowelDepth,
         }
 
         /** Derived user options for the model */
         const modelOpts = {
             type,
             scale,
+            dovetailOpt,
+            reinforcementLevel,
         }
 
         /** Various dimensions for model */
         const modelDims = {
-            size,
+            // size,
+            // interfaceThickness,
+            // fitGap,
+            // width,
+            // depth,
+            // height,
+            width,
+            length,
+            dowelRadius,
+            dowelDiam,
+            joistWebWidth,
+            unitLength,
+            lengthUnits,
+            dowelHolderLength,
             interfaceThickness,
             fitGap,
-            width,
-            depth,
-            height,
+            dowelHolderWidth,
+            edgeWidth,
+            supportWidth,
+            lightSupportWidth,
+            edgeProfileSize,
+            supportProfileSize,
+            lightSupportProfileSize,
         }
 
         /** Various key points for model */
@@ -227,23 +291,37 @@ const openWebJoistInit = ({ lib, swJscad }) => {
 
         // User options
         const {
-            size = defaults.opts.size,
             type = defaults.opts.type,
             scale = defaults.opts.scale,
             interfaceThickness = defaults.opts.interfaceThickness,
             fitGap = defaults.opts.fitGap,
             logMode = defaults.opts.logMode,
+            width = defaults.opts.width,
+            length = defaults.opts.length,
+            dowelRadius = defaults.opts.dowelRadius,
+            dovetailOpt = defaults.opts.dovetailOpt,
+            reinforcementLevel = defaults.opts.reinforcementLevel,
+            unitLength = defaults.opts.unitLength,
+            dowelHolderLength = defaults.opts.dowelHolderLength,
         } = opts
 
-        console.log('newModel() -- opts', opts)
         const inOpts = {
-            size,
             type,
             scale,
             interfaceThickness,
             fitGap,
             logMode,
+            width,
+            length,
+            dowelRadius,
+            dovetailOpt,
+            reinforcementLevel,
+            unitLength,
+            dowelHolderLength,
         }
+
+        console.log('openWebJoist.model() -- opts', opts)
+        console.log('openWebJoist.model() -- inOpts', inOpts)
 
         const modelProperties = modelProps(inOpts)
 
@@ -251,53 +329,150 @@ const openWebJoistInit = ({ lib, swJscad }) => {
          * Modelling, Component/Assembly Modules
          * ------------------------------------- */
 
-        /** Sub-component 01 */
-        const subcomponent1 = (modelProps) => {
-            const {
-                metadata,
-                opts,
-                dims,
-                points,
-            } = modelProps
 
-            return sphere()
+        const framePanelWebs = (modelProps) => {
+            const {
+                reinforcementLevel
+            } = modelProps.opts
+
+            const {
+                size,
+                joistWebWidth,
+                dowelRadius,
+                dowelDiam,
+                lengthUnits,
+                unitLength,
+                length,
+                interfaceThickness,
+                fitGap,
+                edgeWidth,
+                supportWidth,
+                lightSupportWidth,
+            } = modelProps.dims
+
+            const {
+                interfaceProfileBeads
+            } = modelProps.components
+
+            const panelPtsWidth = joistWebWidth - edgeWidth
+
+            const braceUnitSize = [
+                panelPtsWidth,
+                unitLength
+            ]
+            const braceUnitMidpoint = [
+                braceUnitSize[0] / 2,
+                braceUnitSize[1] / 2,
+            ]
+            const braceUnitCentrePoints = []
+            for (let idx = 0; idx < lengthUnits; idx++) {
+                braceUnitCentrePoints.push([
+                    braceUnitMidpoint[0],
+                    unitLength * idx + braceUnitMidpoint[1],
+                    0,
+                ])
+            }
+            let braceUnitPts = [
+                [0, 0, 0],
+                [braceUnitSize[0], braceUnitSize[1], 0],
+                [braceUnitSize[0], 0, 0],
+                [0, braceUnitSize[1], 0],
+            ]
+
+            const supportPts = braceUnitPts.map(buPt => {
+                return translate(buPt, interfaceProfileBeads.md)
+            })
+            const supportLine1 = hull(supportPts[0], supportPts[1])
+            const supportLine2 = hull(supportPts[2], supportPts[3])
+            let diagonalSupports = supportLine1
+            if (reinforcementLevel > 1) {
+                diagonalSupports = union(supportLine1, supportLine2)
+            }
+
+            const lightSupportPts = [
+                [0, 0, 0],
+                [braceUnitSize[0], 0, 0],
+                [0, braceUnitSize[1], 0],
+                [braceUnitSize[0], braceUnitSize[1], 0],
+                [0, braceUnitMidpoint[1], 0],
+                [braceUnitSize[0], braceUnitMidpoint[1], 0],
+            ]
+            let lightSupportProfilePts = lightSupportPts.map(lsPts => {
+                return translate(lsPts, fPanelProfiles.lightSupport)
+            })
+            const lightSupportLine1 = hull(lightSupportProfilePts[0], lightSupportProfilePts[1])
+            const lightSupportLine2 = hull(lightSupportProfilePts[2], lightSupportProfilePts[3])
+            const lightSupportLine3 = hull(lightSupportProfilePts[4], lightSupportProfilePts[5])
+            let lightSupports = union(
+                lightSupportLine1,
+                lightSupportLine2,
+            )
+            if (reinforcementLevel > 2) {
+
+                lightSupports = union(
+                    lightSupports,
+                    lightSupportLine3,
+                )
+            }
+
+            const braceUnit = union(
+                diagonalSupports,
+                lightSupports,
+            )
+            let braceUnits = braceUnitCentrePoints.map(bucPt => {
+                return align({ modes: ['center', 'center', 'center'], relativeTo: bucPt }, braceUnit)
+            })
+            braceUnits = union(...braceUnits)
+
+            const edgePts = [
+                [0, 0, 0],
+                [0, length, 0],
+                [braceUnitSize[0], 0, 0],
+                [braceUnitSize[0], length, 0],
+            ]
+            const edgeProfilePts = edgePts.map(edgePt => {
+                return align({
+                    modes: ['center', 'center', 'center'],
+                    relativeTo: edgePt
+                }, fPanelProfiles.edge)
+            })
+
+            const edge1 = hull(edgeProfilePts[0], edgeProfilePts[1])
+            const edge2 = hull(edgeProfilePts[2], edgeProfilePts[3])
+
+            const joistEdges = union(
+                edge1,
+                edge2,
+            )
+
+            let endCap = cuboid({ size: [joistWebWidth, edgeWidth, interfaceThickness] })
+            endCap = align({
+                modes: ['min', 'min', 'center'],
+                relativeTo: [edgeWidth / -2, 0, 0]
+            }, endCap)
+            const endCaps = union(
+                endCap,
+                translate([0, length - edgeWidth, 0], endCap)
+            )
+
+            const joistWebs = union(
+                ctr(joistEdges),
+                ctr(braceUnits),
+                ctr(endCaps),
+            )
+
+            const keepArea = cuboid({
+                size: [
+                    joistWebWidth,
+                    length,
+                    interfaceThickness * 2,
+                ]
+            })
+
+            return intersect(joistWebs, keepArea)
         }
 
-        /** Sub-component 02 */
-        const subcomponent2 = (modelProps) => {
-            const {
-                metadata,
-                opts,
-                dims,
-                points,
-            } = modelProps
 
-            return cube()
-        }
-
-        /** Assembly 01 */
-        const assembly1 = (modelProps) => {
-            const {
-                metadata,
-                opts,
-                dims,
-                points,
-            } = modelProps
-
-            return sphere()
-        }
-
-        /** Assembly 02 */
-        const assembly2 = (modelProps) => {
-            const {
-                metadata,
-                opts,
-                dims,
-                points,
-            } = modelProps
-
-            return cube()
-        }
 
         /* ----------------------------------------
          * Complete Assembly
@@ -305,35 +480,21 @@ const openWebJoistInit = ({ lib, swJscad }) => {
 
         /** Final Assembly */
         const finalAssembly = (modelProps) => {
-            let subComp1 = subcomponent1(modelProps)
-            let subComp2 = subcomponent2(modelProps)
+            fPanelWebs = framePanelWebs(modelProps)
 
-            let a1 = assembly1(modelProps)
-            let a2 = assembly2(modelProps)
-
-            return union(
-                subComp1,
-                subComp2,
-            )
+            return fPanelWebs
         }
 
         /* ----------------------------------------
          * Outputs
          * ------------------------------------- */
 
-        let subComp1 = subcomponent1(modelProperties)
-        let subComp2 = subcomponent2(modelProperties)
-
-        let a1 = assembly1(modelProperties)
-        let a2 = assembly2(modelProperties)
+        let fPanelWebs = framePanelWebs(modelProperties)
 
         let mainModel = finalAssembly(modelProperties)
 
         let modelParts = {
-            subcomponent1: subComp1,
-            subcomponent2: subComp2,
-            assembly1: a1,
-            assembly2: a2,
+            framePanelWebs: fPanelWebs,
         }
 
         return [mainModel, modelParts, modelProperties]
