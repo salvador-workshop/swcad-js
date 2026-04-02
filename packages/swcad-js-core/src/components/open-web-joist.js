@@ -342,56 +342,6 @@ const openWebJoistInit = ({ lib, swJscad }) => {
     return model
 }
 
-
-//==============================================================================
-
-
-
-
-/* ----------------------------------------
- * Test subjects
- * ------------------------------------- */
-
-const newModelOpts = {
-    size: [25.4 * 3, 25.4 * 3, 25.4 * 1],
-}
-
-const newModelData = model(newModelOpts)
-
-const newModelMain = newModelData[0]
-const newModelParts = newModelData[1]
-const newModelProps = newModelData[2]
-
-console.log('newModelProps', newModelProps)
-
-
-
-
-//==============================================================================
-
-
-
-
-/**
- * Main function to be rendered by JSCAD
- * @returns `geom3` or `geom3[]`
- */
-function main() {
-    const spaceUnit = 25.4 * 3.5
-
-    return [
-        translate([spaceUnit * 0, spaceUnit * 0, spaceUnit * 0], newModelMain),
-
-        translate([spaceUnit * 1, spaceUnit * 0, spaceUnit * 0], newModelParts.subcomponent1),
-        translate([spaceUnit * 1, spaceUnit * 1, spaceUnit * 0], newModelParts.subcomponent2),
-
-        translate([spaceUnit * 1, spaceUnit * 2, spaceUnit * 0], newModelParts.assembly1),
-        translate([spaceUnit * 1, spaceUnit * 3, spaceUnit * 0], newModelParts.assembly2),
-    ]
-}
-
-
 module.exports = {
     init: openWebJoistInit,
-    main,
 }
