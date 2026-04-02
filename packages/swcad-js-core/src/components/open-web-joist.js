@@ -335,6 +335,7 @@ const openWebJoistInit = ({ lib }) => {
         return [mainModel, modelParts, modelProperties]
     }
 
+    return model
 }
 
 
