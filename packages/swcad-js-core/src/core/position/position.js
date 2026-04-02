@@ -131,7 +131,7 @@ const positionUtils = ({ lib, swLib }) => {
         }
     }
     const preLib = { ...swLib }
-    preLib.utils.position = position
+    preLib.core.position = position
     console.log(preLib)
 
     return {
