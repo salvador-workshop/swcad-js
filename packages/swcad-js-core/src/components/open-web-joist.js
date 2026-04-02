@@ -143,7 +143,7 @@ const openWebJoistInit = ({ lib, swJscad }) => {
      */
     const modelProps = (opts) => {
         const defaults = modelDefaults()
-        console.log('panelFrameProps() -- opts', opts)
+        console.log('openWebJoist.modelProps() -- opts', opts)
 
         const {
             type,
@@ -272,7 +272,7 @@ const openWebJoistInit = ({ lib, swJscad }) => {
             components: modelComponents,
         }
 
-        console.log('panelFrameProps() -- modelProperties', modelProperties)
+        console.log('openWebJoist.modelProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }
