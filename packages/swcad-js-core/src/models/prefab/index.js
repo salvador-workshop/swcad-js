@@ -2,9 +2,9 @@
 
 /**
  * ...
- * @memberof models
- * @namespace prefab
+ * @namespace components
  */
+
 const prefabInit = ({ lib, swLib }) => {
     return {
         foils3d: require('./foils-3d').init({ lib, swLib }),

@@ -1,10 +1,5 @@
 "use strict"
 
-/**
- * ...
- * @namespace core.errors
- */
-
 // found declaration style on SO:
 // https://stackoverflow.com/a/5251506
 function SwError(message) {

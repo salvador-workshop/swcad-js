@@ -2,9 +2,9 @@
 
 /**
  * ...
- * @namespace families.brick.northAmerica
+ * @memberof components.brick
+ * @namespace northAmerica
  */
-
 
 const brickNorthAmerica = ({ lib, swLib }) => {
 

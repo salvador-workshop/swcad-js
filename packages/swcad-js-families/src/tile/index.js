@@ -2,7 +2,8 @@
 
 /**
  * ...
- * @namespace families.tile
+ * @memberof components
+ * @namespace tile
  */
 
 const init = ({ lib, swLib }) => {

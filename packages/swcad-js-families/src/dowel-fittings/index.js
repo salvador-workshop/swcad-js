@@ -2,7 +2,8 @@
 
 /**
  * ...
- * @namespace families.dowelFittings
+ * @memberof components
+ * @namespace dowelFittings
  */
 
 const init = ({ lib, swLib }) => {

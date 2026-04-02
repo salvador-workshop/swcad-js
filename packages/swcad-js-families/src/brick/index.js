@@ -2,7 +2,8 @@
 
 /**
  * ...
- * @namespace families.brick
+ * @memberof components
+ * @namespace brick
  */
 
 const init = ({ lib, swLib }) => {

@@ -2,8 +2,8 @@
 
 /**
  * ...
- * @memberof models.prefab
- * @namespace mesh3d
+ * @memberof components
+ * @namespace mesh
  */
 
 //-----------
@@ -93,7 +93,7 @@ const superPrimsMeshInit = ({ lib, swLib }) => {
 
     /**
      * Builds a flat mesh panel model.
-     * @memberof models.prefab.mesh3d.mesh
+     * @memberof components.mesh
      * @param {*} opts 
      * @param {number[]} opts.size
      * @param {Number} opts.radius - radius
@@ -245,7 +245,7 @@ const superPrimsMeshInit = ({ lib, swLib }) => {
 
     /**
      * Builds a flat mesh panel model. Mesh thickness is determined by `size[2]`
-     * @memberof models.prefab.mesh3d.mesh
+     * @memberof components.mesh
      * @param {*} param0 
      * @returns ...
      */
@@ -362,7 +362,7 @@ const superPrimsMeshInit = ({ lib, swLib }) => {
 
     /**
      * ...
-     * @memberof models.prefab.mesh3d.mesh
+     * @memberof components.mesh
      * @param {*} opts 
      * @returns ...
      */

@@ -6,7 +6,7 @@ const posTriangle = require('./pos-triangle');
 
 /**
  * ...
- * @memberof core
+ * @memberof utils
  * @namespace position
  */
 
@@ -18,7 +18,7 @@ const positionUtils = ({ lib, swLib }) => {
 
     /**
      * Measures key info, and presents it in a readable manner, like `{ size: { x: 99, y: 99, z: 99 }, min: { ... }, max: { ... } }`
-     * @memberof core.position
+     * @memberof utils.position
      * @instance
      * @returns ...
      */
@@ -31,7 +31,7 @@ const positionUtils = ({ lib, swLib }) => {
 
     /**
      * Gets 3D bounding coordinates of a given geometry
-     * @memberof core.position
+     * @memberof utils.position
      * @param {object} geom 
      * @returns Bounding coords (right, left, back, front, top, bottom)
      */
@@ -50,7 +50,7 @@ const positionUtils = ({ lib, swLib }) => {
 
     /**
      * Finds long axis of a coord set
-     * @memberof core.position
+     * @memberof utils.position
      * @param {number[]} size - [x, y, z]
      * @returns axis with longest value (either "x", "y", or "z") or `null` if invalid
      */
@@ -75,7 +75,7 @@ const positionUtils = ({ lib, swLib }) => {
         findLongAxis,
         /**
          * Gets the keypoints for a given object
-         * @memberof core.position
+         * @memberof utils.position
          * @instance
          * @returns ...
          */
@@ -85,7 +85,7 @@ const positionUtils = ({ lib, swLib }) => {
         }
     }
     const preLib = {...swLib}
-    preLib.core.position = position
+    preLib.utils.position = position
     console.log(preLib)
 
     return {

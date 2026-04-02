@@ -2,7 +2,8 @@
 
 /**
  * ...
- * @namespace families.trim
+ * @memberof profiles
+ * @namespace trim
  */
 
 const init = ({ lib, swLib }) => {

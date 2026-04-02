@@ -2,8 +2,8 @@
 
 /**
  * ...
- * @memberof models.profiles
- * @namespace text2d
+ * @memberof profiles
+ * @namespace text
  */
 
 const textUtils = ({ lib }) => {
@@ -15,7 +15,7 @@ const textUtils = ({ lib }) => {
 
     /**
      * Creates a simple 2D line of text
-     * @memberof models.profiles.text2d
+     * @memberof profiles.text
      * @instance
      * @param {*} param0 
      * @returns ...

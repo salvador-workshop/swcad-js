@@ -2,7 +2,8 @@
 
 /**
  * ...
- * @namespace families.tile.northAmerica
+ * @memberof components.tile
+ * @namespace northAmerica
  */
 
 const tileNorthAmerica = ({ lib, swLib }) => {

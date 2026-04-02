@@ -2,7 +2,7 @@
 
 /**
  * Rectangle calculations
- * @memberof core.position
+ * @memberof utils.position
  * @namespace rectangle
  */
 
@@ -17,7 +17,7 @@ const geoRectangle = ({ lib, swLib }) => {
 
     /**
      * ...
-     * @memberof core.position.rectangle
+     * @memberof utils.position.rectangle
      * @param {object} rectGeom 
      * @returns ...
      */
@@ -27,7 +27,7 @@ const geoRectangle = ({ lib, swLib }) => {
 
     /**
      * ...
-     * @memberof core.position.rectangle
+     * @memberof utils.position.rectangle
      * @param {object} rectGeom 
      * @returns ...
      */
@@ -45,7 +45,7 @@ const geoRectangle = ({ lib, swLib }) => {
 
     /**
      * ...
-     * @memberof core.position.rectangle
+     * @memberof utils.position.rectangle
      * @param {object} rectGeom 
      * @returns ...
      */
@@ -55,7 +55,7 @@ const geoRectangle = ({ lib, swLib }) => {
 
     /**
      * ...
-     * @memberof core.position.rectangle
+     * @memberof utils.position.rectangle
      * @param {object} rectGeom 
      * @returns ...
      */

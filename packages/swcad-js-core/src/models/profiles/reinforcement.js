@@ -13,7 +13,7 @@ const reinforcementInit = ({ lib, swLib }) => {
 
     /**
      * ...
-     * @memberof models.profiles.reinforcement
+     * @memberof profiles.reinforcement
      * @param {object} opts 
      * @returns ...
      */
@@ -75,7 +75,7 @@ const reinforcementInit = ({ lib, swLib }) => {
     }
     /**
      * ...
-     * @memberof models.profiles.reinforcement
+     * @memberof profiles.reinforcement
      * @param {object} opts 
      * @returns ...
      */
@@ -98,7 +98,7 @@ const reinforcementInit = ({ lib, swLib }) => {
 
     /**
      * ...
-     * @memberof models.profiles.reinforcement
+     * @memberof profiles.reinforcement
      * @param {object} opts 
      * @returns ...
      */
@@ -119,14 +119,14 @@ const reinforcementInit = ({ lib, swLib }) => {
 
     /**
      * Reinforcement profiles
-     * @memberof models.profiles
+     * @memberof profiles
      * @namespace reinforcement
      */
     const reinforcement = {
         straight: straightBeam,
         /**
          * ...
-         * @memberof models.profiles.reinforcement
+         * @memberof profiles.reinforcement
          * @param {object} opts
          * @returns ...
          */
@@ -145,7 +145,7 @@ const reinforcementInit = ({ lib, swLib }) => {
         uBeam: cBeam,
         /**
          * ...
-         * @memberof models.profiles.reinforcement
+         * @memberof profiles.reinforcement
          * @param {object} opts 
          * @returns ...
          */
@@ -163,7 +163,7 @@ const reinforcementInit = ({ lib, swLib }) => {
         },
         /**
          * ...
-         * @memberof models.profiles.reinforcement
+         * @memberof profiles.reinforcement
          * @param {object} opts 
          * @returns ...
          */
@@ -186,7 +186,7 @@ const reinforcementInit = ({ lib, swLib }) => {
         },
         /**
          * ...
-         * @memberof models.profiles.reinforcement
+         * @memberof profiles.reinforcement
          * @param {object} opts 
          * @returns ...
          */
@@ -195,7 +195,7 @@ const reinforcementInit = ({ lib, swLib }) => {
         },
         /**
          * ...
-         * @memberof models.profiles.reinforcement
+         * @memberof profiles.reinforcement
          * @param {object} opts 
          * @returns ...
          */
@@ -204,7 +204,7 @@ const reinforcementInit = ({ lib, swLib }) => {
         },
         /**
          * ...
-         * @memberof models.profiles.reinforcement
+         * @memberof profiles.reinforcement
          * @param {object} opts 
          * @returns ...
          */
@@ -213,7 +213,7 @@ const reinforcementInit = ({ lib, swLib }) => {
         },
         /**
          * ...
-         * @memberof models.profiles.reinforcement
+         * @memberof profiles.reinforcement
          * @param {object} opts 
          * @returns ...
          */

@@ -2,8 +2,8 @@
 
 /**
  * ...
- * @memberof models.prefab
- * @namespace text3d
+ * @memberof components
+ * @namespace text
  */
 
 const DEFAULT_EXTRUDE_HEIGHT = 1;
@@ -20,7 +20,7 @@ const textUtils = ({ lib, swLib }) => {
 
     /**
      * Creates a simple 3D line of text
-     * @memberof models.prefab.text3d
+     * @memberof components.text
      * @instance
      * @param {*} param0 
      * @returns ...
@@ -42,7 +42,7 @@ const textUtils = ({ lib, swLib }) => {
         flatText,
         /**
          * Creates a rectangular panel with engraved text
-         * @memberof models.prefab.text3d
+         * @memberof components.text
          * @instance
          * @param {*} opts 
          * @returns ...

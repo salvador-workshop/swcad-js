@@ -12,7 +12,8 @@
 
 /**
  * ...
- * @namespace core.specifications
+ * @memberof utils
+ * @namespace specifications
  */
 
 const planes = {

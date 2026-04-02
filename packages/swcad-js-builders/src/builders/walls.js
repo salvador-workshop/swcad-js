@@ -2,7 +2,8 @@
 
 /**
  * ...
- * @namespace builders.walls
+ * @memberof models
+ * @namespace wall
  */
 
 const wallBuilder = ({ lib, swLib, swFamilies }) => {
@@ -68,7 +69,7 @@ const wallBuilder = ({ lib, swLib, swFamilies }) => {
         verifyTrimUnits,
         /**
          * Builds a wall.
-         * @memberof builders.walls
+         * @memberof models.wall
          * @instance
          * @param {Object} opts 
          * @param {number} opts.length

@@ -2,7 +2,8 @@
 
 /**
  * ...
- * @namespace families.paper
+ * @memberof profiles
+ * @namespace paper
  */
 
 const init = ({ lib, swLib }) => {
