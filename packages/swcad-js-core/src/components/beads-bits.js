@@ -7,7 +7,7 @@
  * @version 0.0.1
  */
 
-const beadsBitsInit = ({ lib, swJscad }) => {
+const beadsBitsInit = ({ jscad, swcadJs }) => {
     const {
         cube,
         cylinder,
@@ -20,48 +20,48 @@ const beadsBitsInit = ({ lib, swJscad }) => {
         roundedRectangle,
         rectangle,
         triangle,
-    } = lib.primitives
+    } = jscad.primitives
 
     const {
         align,
         translate,
         rotate,
         mirror
-    } = lib.transforms
+    } = jscad.transforms
 
     const {
         intersect,
         subtract,
         union,
         scission
-    } = lib.booleans
+    } = jscad.booleans
 
     const {
         extrudeLinear,
         extrudeRotate,
         project
-    } = lib.extrusions
+    } = jscad.extrusions
 
     const {
         measureDimensions,
         measureBoundingBox,
         measureVolume
-    } = lib.measurements
+    } = jscad.measurements
 
     const {
         hull,
         hullChain
-    } = lib.hulls
+    } = jscad.hulls
 
-    const { vectorText } = lib.text
-    const { toOutlines } = lib.geometries.geom2
-    const { TAU } = lib.maths.constants
-    const { colorize } = lib.colors
+    const { vectorText } = jscad.text
+    const { toOutlines } = jscad.geometries.geom2
+    const { TAU } = jscad.maths.constants
+    const { colorize } = jscad.colors
 
     const {
         constants,
         position
-    } = swJscad.core
+    } = swcadJs.utils
 
     /**
      * Base utils and constants for setup

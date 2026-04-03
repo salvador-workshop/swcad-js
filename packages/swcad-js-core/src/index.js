@@ -1,8 +1,8 @@
 const componentsModule = require('./components');
 
-const init = ({ lib }) => {
-    const swJscad = require('./sw-jscad').init({ lib });
-    console.log('swJscad initialized:', swJscad);
+const init = ({ jscad }) => {
+    const swJscad = require('./sw-jscad').init({ lib: jscad });
+    console.log('swJscad initialized', swJscad);
 
     const profiles = {
         text: swJscad.models.profiles.text2d,
@@ -29,10 +29,7 @@ const init = ({ lib }) => {
         }
     }
 
-    const componentsData = componentsModule.init({ lib, swJscad });
-
-    const components = {
-        ...componentsData,
+    const componentsOld = {
         text: swJscad.models.prefab.text3d,
         mesh: swJscad.models.prefab.mesh3d,
         tile: swJscad.families.tile,
@@ -70,12 +67,26 @@ const init = ({ lib }) => {
     /** Functions organized in the new style */
     const swcadJs = {
         profiles,
-        components,
+        components: componentsOld,
         models,
         utils,
     }
 
-    return swcadJs;
+
+    // ----------------
+    // New Components
+    // ----------------
+
+    const componentsNew = componentsModule.init({ jscad, swcadJs });
+
+    swcadJs.components = {
+        ...componentsOld,
+        ...componentsNew,
+    }
+
+    console.log('swcadJs initialized', swcadJs);
+
+    return swcadJs
 }
 
 module.exports = { init };
