@@ -1,8 +1,8 @@
 /**
- * @file Salvador Workshop's JSCAD Model Template (v3.3.1)
+ * @file Component for generating an open web joist, with various options for dimensions and reinforcement levels.
  * @module openWebJoist
  * @author R. J. Salvador (Salvador Workshop)
- * @version 0.0.1
+ * @version 1.1.0
  */
 
 "use strict"
@@ -94,9 +94,7 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
             },
             width: maths.inchesToMm(1.125),
             length: maths.inchesToMm(5.5),
-            dowelRadius: 3.25 / 2,
             type: 'default',
-            dovetailOpt: 'both',
             reinforcementLevel: 1,
             unitLength: maths.inchesToMm(1),
             dowelHolderLength: maths.inchesToMm(5 / 16),
@@ -110,7 +108,6 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
 
         /** Computed values for option defaults */
         const defaultOpts = {
-            // size: defaultValues.dims.size,
             type: 'default',
             scale: 1,
             interfaceThickness: 1.333333,
@@ -118,8 +115,6 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
             logMode: 'normal',
             width: defaultValues.width,
             length: defaultValues.length,
-            dowelRadius: defaultValues.dowelRadius,
-            dovetailOpt: defaultValues.dovetailOpt,
             reinforcementLevel: defaultValues.reinforcementLevel,
             unitLength: defaultValues.unitLength,
             dowelHolderLength: defaultValues.dowelHolderLength,
@@ -153,8 +148,6 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
             logMode,
             width,
             length,
-            dowelRadius,
-            dovetailOpt,
             reinforcementLevel,
             unitLength,
             dowelHolderLength,
@@ -164,28 +157,15 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
         * Prop calculations
         * ------------------------------------- */
 
-        // const width = size[0]
-        // const depth = size[1]
-        // const height = size[2]
-
         const lgProfileBeadWidth = interfaceThickness * 1.75
         const mdProfileBeadWidth = interfaceThickness * 1.5
         const smProfileBeadWidth = interfaceThickness * 1.125
 
         const lengthUnits = Math.ceil(length / unitLength)
 
-        const dowelDiam = dowelRadius * 2
-        const joistWebWidth = width - (dowelDiam * 2) - (interfaceThickness * 2)
-        const minEdgeWidth = dowelDiam + (2 * interfaceThickness) + (2 * fitGap)
-        const dowelHolderWidth = interfaceThickness * 2 + dowelDiam
-
-        const edgeWidth = interfaceThickness * 1.75
-        const supportWidth = interfaceThickness * 1.5
-        const lightSupportWidth = interfaceThickness * 1.125
-
-        const edgeProfileSize = [minEdgeWidth, minEdgeWidth * 2]
-        const supportProfileSize = [maths.inchesToMm(3 / 32), maths.inchesToMm(3 / 32)]
-        const lightSupportProfileSize = [maths.inchesToMm(1 / 16), maths.inchesToMm(1 / 16)]
+        const edgeWidth = lgProfileBeadWidth
+        const supportWidth = mdProfileBeadWidth
+        const lightSupportWidth = smProfileBeadWidth
 
 
         /* ----------------------------------------
@@ -204,35 +184,21 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
         const modelOpts = {
             type,
             scale,
-            dovetailOpt,
             reinforcementLevel,
         }
 
         /** Various dimensions for model */
         const modelDims = {
-            // size,
-            // interfaceThickness,
-            // fitGap,
-            // width,
-            // depth,
-            // height,
             width,
             length,
-            dowelRadius,
-            dowelDiam,
-            joistWebWidth,
             unitLength,
             lengthUnits,
             dowelHolderLength,
             interfaceThickness,
             fitGap,
-            dowelHolderWidth,
             edgeWidth,
             supportWidth,
             lightSupportWidth,
-            edgeProfileSize,
-            supportProfileSize,
-            lightSupportProfileSize,
         }
 
         /** Various key points for model */
@@ -299,8 +265,8 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
             logMode = defaults.opts.logMode,
             width = defaults.opts.width,
             length = defaults.opts.length,
-            dowelRadius = defaults.opts.dowelRadius,
-            dovetailOpt = defaults.opts.dovetailOpt,
+            // // dowelRadius = defaults.opts.dowelRadius,
+            // // dovetailOpt = defaults.opts.dovetailOpt,
             reinforcementLevel = defaults.opts.reinforcementLevel,
             unitLength = defaults.opts.unitLength,
             dowelHolderLength = defaults.opts.dowelHolderLength,
@@ -314,8 +280,7 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
             logMode,
             width,
             length,
-            dowelRadius,
-            dovetailOpt,
+            // dovetailOpt,
             reinforcementLevel,
             unitLength,
             dowelHolderLength,
@@ -338,14 +303,12 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
 
             const {
                 size,
-                joistWebWidth,
-                dowelRadius,
-                dowelDiam,
                 lengthUnits,
                 unitLength,
                 length,
                 interfaceThickness,
                 fitGap,
+                width,
                 edgeWidth,
                 supportWidth,
                 lightSupportWidth,
@@ -355,7 +318,7 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
                 interfaceProfileBeads
             } = modelProps.components
 
-            const panelPtsWidth = joistWebWidth - edgeWidth
+            const panelPtsWidth = width - edgeWidth
 
             const braceUnitSize = [
                 panelPtsWidth,
@@ -446,7 +409,7 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
                 edge2,
             )
 
-            let endCap = cuboid({ size: [joistWebWidth, edgeWidth, interfaceThickness] })
+            let endCap = cuboid({ size: [width, edgeWidth, interfaceThickness] })
             endCap = align({
                 modes: ['min', 'min', 'center'],
                 relativeTo: [edgeWidth / -2, 0, 0]
@@ -464,7 +427,7 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
 
             const keepArea = cuboid({
                 size: [
-                    joistWebWidth,
+                    width,
                     length,
                     interfaceThickness * 2,
                 ]
