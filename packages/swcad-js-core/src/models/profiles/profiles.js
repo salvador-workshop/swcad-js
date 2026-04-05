@@ -1,7 +1,5 @@
 "use strict"
 
-const standards = require("sw-jscad-std-specs/src/core/standards");
-
 /**
  * Builds various 2D profiles
  * @namespace profiles
