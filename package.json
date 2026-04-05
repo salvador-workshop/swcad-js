@@ -12,7 +12,8 @@
     "docs:families": "cd packages/swcad-js-families && npm run docs",
     "docs:std-specs": "cd packages/swcad-js-std-specs && npm run docs",
     "docs:ui": "cd packages/swcad-js-ui && npm run docs",
-    "docs": "jsdoc packages -r -d docs -c jsdoc.json --readme readme.md"
+    "docs": "jsdoc packages -r -d docs -c jsdoc.json --readme readme.md",
+    "build": "node esbuild.mjs"
   },
   "repository": {
     "type": "git",
@@ -26,8 +27,8 @@
   ],
   "author": "R. J. Salvador <salvador.workshop@gmail.com>",
   "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
+    "esbuild": "0.28.0",
     "jsdoc": "^4.0.4"
   }
 }
