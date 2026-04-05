@@ -58,15 +58,12 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
     const { TAU } = jscad.maths.constants
     const { colorize } = jscad.colors
 
-    const beadsBits = require('./beads-bits').init({
-        jscad: jscad,
-        swcadJs: swcadJs
-    }); // verbose style needed for minification to work
-
     const {
-        maths,
+        math,
         position,
     } = swcadJs.utils
+
+    const beadsBits = require('./beads-bits').init({ jscad, swcadJs });
 
     const {
         interfaceProfileBeads
@@ -83,9 +80,9 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
         const defaultValues = {
             dims: {
                 size: [
-                    maths.inchesToMm(2),
-                    maths.inchesToMm(4),
-                    maths.inchesToMm(1),
+                    math.inchesToMm(2),
+                    math.inchesToMm(4),
+                    math.inchesToMm(1),
                 ],
             },
             points: {
@@ -95,14 +92,14 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
                 default: { id: 'default', desc: 'Default' },
                 alt: { id: 'alt', desc: 'Alternate' },
             },
-            width: maths.inchesToMm(1.125),
-            length: maths.inchesToMm(5.5),
+            width: math.inchesToMm(1.125),
+            length: math.inchesToMm(5.5),
             type: 'default',
             reinforcementLevel: 1,
-            unitLength: maths.inchesToMm(1),
-            dowelHolderLength: maths.inchesToMm(5 / 16),
+            unitLength: math.inchesToMm(1),
+            dowelHolderLength: math.inchesToMm(5 / 16),
             interfaceThickness: 1.333,
-            fitGap: maths.inchesToMm(1 / 128),
+            fitGap: math.inchesToMm(1 / 128),
             ratioDiamToHolderHeight: 1.666667,
             ratioDiamToChannelDepth: 0.866667,
             ratioDiamToSideChannelWidth: 1,
@@ -114,7 +111,7 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
             type: 'default',
             scale: 1,
             interfaceThickness: 1.333333,
-            fitGap: maths.inchesToMm(1 / 128),
+            fitGap: math.inchesToMm(1 / 128),
             logMode: 'normal',
             width: defaultValues.width,
             length: defaultValues.length,
