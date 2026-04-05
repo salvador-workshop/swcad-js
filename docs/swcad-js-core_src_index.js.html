@@ -26,105 +26,95 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>// TODO: Replace relative paths with package imports once build tools are in place
-const stdSpecsPackage = require('../../swcad-js-std-specs');
-const familiesPackage = require('../../swcad-js-families');
-const uiPackage = require('../../swcad-js-ui');
-const buildersPackage = require('../../swcad-js-builders');
+            <pre class="prettyprint source linenums"><code>const componentsModule = require('./components');
 
-const coreModule = require('./core');
-const utilsModule = require('./utils');
-const modelModule = require('./models');
+const init = ({ jscad }) => {
+    const swJscad = require('./sw-jscad').init({ lib: jscad });
+    console.log('swJscad initialized', swJscad);
 
-const init = ({ lib }) => {
-    const stdSpecs = stdSpecsPackage.init({ lib });
-
-    stdSpecs.constants.SILVER_RATIO = 1 + Math.sqrt(2)          // 2.4142
-    stdSpecs.constants.BRONZE_RATIO = 3 + Math.sqrt(13) / 2     // 3.3028
-    stdSpecs.constants.COPPER_RATIO = 2 + Math.sqrt(5)          // 4.2361
-    stdSpecs.constants.SUPERGOLDEN_RATIO = 1.4655712319
-    stdSpecs.constants.PLASTIC_RATIO = 1.3247179572
-
-    const swcadJsCore = {
-        core: { ...stdSpecs, ...coreModule.init({ stdSpecs, lib }) },
+    const profiles = {
+        text: swJscad.models.profiles.text2d,
+        mesh: swJscad.models.profiles.mesh2d,
+        foil: swJscad.models.profiles.foils2d,
+        arch: swJscad.builders.arches,
+        trim: swJscad.families.trim,
+        lumber: swJscad.families.lumber,
+        paper: swJscad.families.paper,
+        connections: swJscad.models.profiles.connections,
+        curves: swJscad.models.profiles.curves,
+        edge: swJscad.models.profiles.edge,
+        frameRect: swJscad.models.profiles.frameRect,
+        reinforcement: swJscad.models.profiles.reinforcement,
+        shapes: {
+            ellipse: swJscad.models.profiles.ellipse,
+            octagon: swJscad.models.profiles.octagonal,
+            rectangle: swJscad.models.profiles.rectangle,
+            triangle: swJscad.models.profiles.triangle,
+            square: {
+                sqCornerCircNotch: swJscad.models.profiles.sqCornerCircNotch,
+                sqCornerCircles: swJscad.models.profiles.sqCornerCircles,
+            }
+        }
     }
 
-    swcadJsCore.utils = utilsModule.init({ lib, swLib: swcadJsCore });
-    swcadJsCore.models = modelModule.init({ lib, swLib: swcadJsCore });
+    const componentsOld = {
+        text: swJscad.models.prefab.text3d,
+        mesh: swJscad.models.prefab.mesh3d,
+        tile: swJscad.families.tile,
+        crafts: swJscad.families.crafts,
+        moulding: swJscad.models.prefab.mouldings,
+        dowelFittings: swJscad.families.dowelFittings,
+        brick: swJscad.families.brick,
+    }
 
-    const swcadJsFamilies = familiesPackage.init({ lib, swLib: swcadJsCore })
-    const swcadJsUi = uiPackage.init({ lib, swLib: swcadJsCore })
-    const swcadJsBuilders = buildersPackage.init({ lib, swLib: swcadJsCore, swFamilies: swcadJsFamilies })
+    const models = {
+        foil: swJscad.models.prefab.foils3d,
+        arch: swJscad.builders.arches,
+        buttress: swJscad.builders.buttress,
+        wall: {
+            ...swJscad.builders.walls,
+            entryway: swJscad.builders.entryways
+        },
+        column: swJscad.builders.columns,
+        roof: swJscad.builders.roofs,
+    }
 
-    /** Functions organized in the old style */
-    const swJsCad = {
-        ...swcadJsCore,
-        families: swcadJsFamilies,
-        ui: swcadJsUi,
-        builders: swcadJsBuilders,
+    const utils = {
+        constants: swJscad.core.constants,
+        math: swJscad.core.maths,
+        geometry: swJscad.core.geometry,
+        position: swJscad.core.position,
+        extras: swJscad.utils.extras,
+        transform: swJscad.utils.transform,
+        specifications: swJscad.core.specifications,
+        standards: swJscad.core.standards,
+        colors: swJscad.ui.ux.colors,
+        layout: swJscad.ui.ux.layout,
     }
 
     /** Functions organized in the new style */
     const swcadJs = {
-        profiles: {
-            text: swJsCad.models.profiles.text2d,
-            mesh: swJsCad.models.profiles.mesh2d,
-            foil: swJsCad.models.profiles.foils2d,
-            arch: swJsCad.builders.arches,
-            trim: swJsCad.families.trim,
-            lumber: swJsCad.families.lumber,
-            paper: swJsCad.families.paper,
-            connections: swJsCad.models.profiles.connections,
-            curves: swJsCad.models.profiles.curves,
-            edge: swJsCad.models.profiles.edge,
-            frameRect: swJsCad.models.profiles.frameRect,
-            reinforcement: swJsCad.models.profiles.reinforcement,
-            shapes: {
-                ellipse: swJsCad.models.profiles.ellipse,
-                octagon: swJsCad.models.profiles.octagonal,
-                rectangle: swJsCad.models.profiles.rectangle,
-                triangle: swJsCad.models.profiles.triangle,
-                square: {
-                    sqCornerCircNotch: swJsCad.models.profiles.sqCornerCircNotch,
-                    sqCornerCircles: swJsCad.models.profiles.sqCornerCircles,
-                }
-            }
-        },
-        components: {
-            text: swJsCad.models.prefab.text3d,
-            mesh: swJsCad.models.prefab.mesh3d,
-            tile: swJsCad.families.tile,
-            crafts: swJsCad.families.crafts,
-            moulding: swJsCad.models.prefab.mouldings,
-            dowelFittings: swJsCad.families.dowelFittings,
-            brick: swJsCad.families.brick,
-        },
-        models: {
-            foil: swJsCad.models.prefab.foils3d,
-            arch: swJsCad.builders.arches,
-            buttress: swJsCad.builders.buttress,
-            wall: {
-                ...swJsCad.builders.walls,
-                entryway: swJsCad.builders.entryways
-            },
-            column: swJsCad.builders.columns,
-            roof: swJsCad.builders.roofs,
-        },
-        utils: {
-            constants: swJsCad.core.constants,
-            math: swJsCad.core.maths,
-            geometry: swJsCad.core.geometry,
-            position: swJsCad.core.position,
-            extras: swJsCad.utils.extras,
-            transform: swJsCad.utils.transform,
-            specifications: swJsCad.core.specifications,
-            standards: swJsCad.core.standards,
-            colors: swJsCad.ui.ux.colors,
-            layout: swJsCad.ui.ux.layout,
-        },
+        profiles,
+        components: componentsOld,
+        models,
+        utils,
     }
 
-    return swcadJs;
+
+    // ----------------
+    // New Components
+    // ----------------
+
+    const componentsNew = componentsModule.init({ jscad, swcadJs });
+
+    swcadJs.components = {
+        ...componentsOld,
+        ...componentsNew,
+    }
+
+    console.log('swcadJs initialized', swcadJs);
+
+    return swcadJs
 }
 
 module.exports = { init };
@@ -138,13 +128,13 @@ module.exports = { init };
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="components.html">components</a></li><li><a href="components.brick.html">components.brick</a></li><li><a href="components.brick.northAmerica.html">components.brick.northAmerica</a></li><li><a href="components.crafts.html">components.crafts</a></li><li><a href="components.dowelFittings.html">components.dowelFittings</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.moulding.html">components.moulding</a></li><li><a href="components.text.html">components.text</a></li><li><a href="components.tile.html">components.tile</a></li><li><a href="components.tile.northAmerica.html">components.tile.northAmerica</a></li><li><a href="models.html">models</a></li><li><a href="models.arch.html">models.arch</a></li><li><a href="models.buttress.html">models.buttress</a></li><li><a href="models.column.html">models.column</a></li><li><a href="models.foil.html">models.foil</a></li><li><a href="models.roof.html">models.roof</a></li><li><a href="models.wall.html">models.wall</a></li><li><a href="models.wall.entryway.html">models.wall.entryway</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.curves.html">profiles.curves</a></li><li><a href="profiles.edge.html">profiles.edge</a></li><li><a href="profiles.foil.html">profiles.foil</a></li><li><a href="profiles.frameRect.html">profiles.frameRect</a></li><li><a href="profiles.lumber.html">profiles.lumber</a></li><li><a href="profiles.lumber.northAmerica.html">profiles.lumber.northAmerica</a></li><li><a href="profiles.mesh.html">profiles.mesh</a></li><li><a href="profiles.paper.html">profiles.paper</a></li><li><a href="profiles.reinforcement.html">profiles.reinforcement</a></li><li><a href="profiles.shapes.html">profiles.shapes</a></li><li><a href="profiles.shapes.ellipse.html">profiles.shapes.ellipse</a></li><li><a href="profiles.shapes.rectangle.html">profiles.shapes.rectangle</a></li><li><a href="profiles.shapes.square.html">profiles.shapes.square</a></li><li><a href="profiles.shapes.triangle.html">profiles.shapes.triangle</a></li><li><a href="profiles.text.html">profiles.text</a></li><li><a href="profiles.trim.html">profiles.trim</a></li><li><a href="profiles.trim.aranea.html">profiles.trim.aranea</a></li><li><a href="utils.html">utils</a></li><li><a href="utils.colors.html">utils.colors</a></li><li><a href="utils.constants.html">utils.constants</a></li><li><a href="utils.extras.html">utils.extras</a></li><li><a href="utils.geometry.html">utils.geometry</a></li><li><a href="utils.geometry.points.html">utils.geometry.points</a></li><li><a href="utils.geometry.regPoly.html">utils.geometry.regPoly</a></li><li><a href="utils.layout.html">utils.layout</a></li><li><a href="utils.math.html">utils.math</a></li><li><a href="utils.position.html">utils.position</a></li><li><a href="utils.position.cuboid.html">utils.position.cuboid</a></li><li><a href="utils.position.rectangle.html">utils.position.rectangle</a></li><li><a href="utils.position.triangle.html">utils.position.triangle</a></li><li><a href="utils.specifications.html">utils.specifications</a></li><li><a href="utils.standards.html">utils.standards</a></li><li><a href="utils.transform.html">utils.transform</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.brick.html">components.brick</a></li><li><a href="components.brick.northAmerica.html">components.brick.northAmerica</a></li><li><a href="components.crafts.html">components.crafts</a></li><li><a href="components.dowelFittings.html">components.dowelFittings</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.moulding.html">components.moulding</a></li><li><a href="components.openWebJoist.html">components.openWebJoist</a></li><li><a href="components.text.html">components.text</a></li><li><a href="components.tile.html">components.tile</a></li><li><a href="components.tile.northAmerica.html">components.tile.northAmerica</a></li><li><a href="models.html">models</a></li><li><a href="models.arch.html">models.arch</a></li><li><a href="models.buttress.html">models.buttress</a></li><li><a href="models.column.html">models.column</a></li><li><a href="models.foil.html">models.foil</a></li><li><a href="models.roof.html">models.roof</a></li><li><a href="models.wall.html">models.wall</a></li><li><a href="models.wall.entryway.html">models.wall.entryway</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.curves.html">profiles.curves</a></li><li><a href="profiles.edge.html">profiles.edge</a></li><li><a href="profiles.foil.html">profiles.foil</a></li><li><a href="profiles.frameRect.html">profiles.frameRect</a></li><li><a href="profiles.lumber.html">profiles.lumber</a></li><li><a href="profiles.lumber.northAmerica.html">profiles.lumber.northAmerica</a></li><li><a href="profiles.mesh.html">profiles.mesh</a></li><li><a href="profiles.paper.html">profiles.paper</a></li><li><a href="profiles.reinforcement.html">profiles.reinforcement</a></li><li><a href="profiles.shapes.html">profiles.shapes</a></li><li><a href="profiles.shapes.ellipse.html">profiles.shapes.ellipse</a></li><li><a href="profiles.shapes.rectangle.html">profiles.shapes.rectangle</a></li><li><a href="profiles.shapes.square.html">profiles.shapes.square</a></li><li><a href="profiles.shapes.triangle.html">profiles.shapes.triangle</a></li><li><a href="profiles.text.html">profiles.text</a></li><li><a href="profiles.trim.html">profiles.trim</a></li><li><a href="profiles.trim.aranea.html">profiles.trim.aranea</a></li><li><a href="utils.html">utils</a></li><li><a href="utils.colors.html">utils.colors</a></li><li><a href="utils.constants.html">utils.constants</a></li><li><a href="utils.extras.html">utils.extras</a></li><li><a href="utils.geometry.html">utils.geometry</a></li><li><a href="utils.geometry.points.html">utils.geometry.points</a></li><li><a href="utils.geometry.regPoly.html">utils.geometry.regPoly</a></li><li><a href="utils.layout.html">utils.layout</a></li><li><a href="utils.math.html">utils.math</a></li><li><a href="utils.position.html">utils.position</a></li><li><a href="utils.position.cuboid.html">utils.position.cuboid</a></li><li><a href="utils.position.rectangle.html">utils.position.rectangle</a></li><li><a href="utils.position.triangle.html">utils.position.triangle</a></li><li><a href="utils.specifications.html">utils.specifications</a></li><li><a href="utils.standards.html">utils.standards</a></li><li><a href="utils.transform.html">utils.transform</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu Apr 02 2026 08:05:19 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sun Apr 05 2026 19:37:42 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

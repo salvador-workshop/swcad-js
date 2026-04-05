@@ -1,10 +1,10 @@
 "use strict"
 
 /**
- * @file Beads and Bits
- * @module beadsBits
+ * Beads and Bits
+ * @namespace beadsBits
+ * @memberof components 
  * @author R. J. Salvador (Salvador Workshop)
- * @version 0.0.1
  */
 
 const beadsBitsInit = ({ jscad, swcadJs }) => {
@@ -64,7 +64,11 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     } = swcadJs.utils
 
     /**
-     * Base utils and constants for setup
+     * Standard bead profiles for interface connections
+     * @param {number} baseThickness - Thickness of the bead profile
+     * @param {number} smWidth - Width of the small bead profile
+     * @param {number} mdWidth - Width of the medium bead profile
+     * @param {number} lgWidth - Width of the large bead profile
      * @returns {Object<string, geom3>} - Small, Medium, and Large bead profiles
      * @memberof beadsBits
      */
