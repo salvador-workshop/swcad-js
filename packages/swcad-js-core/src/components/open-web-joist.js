@@ -58,7 +58,7 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
     const { TAU } = jscad.maths.constants
     const { colorize } = jscad.colors
 
-    const beadsBits = require('./beads-bits').init({ lib: jscad, swJscad });
+    const beadsBits = require('./beads-bits').init({ jscad, swcadJs });
 
     const {
         maths,
