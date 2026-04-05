@@ -58,7 +58,10 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
     const { TAU } = jscad.maths.constants
     const { colorize } = jscad.colors
 
-    const beadsBits = require('./beads-bits').init({ jscad, swcadJs });
+    const beadsBits = require('./beads-bits').init({
+        jscad: jscad,
+        swcadJs: swcadJs
+    }); // verbose style needed for minification to work
 
     const {
         maths,
