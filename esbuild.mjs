@@ -5,6 +5,7 @@ await esbuild.buildSync({
   bundle: true,
   outfile: 'dist/swcad.js',
   target: 'es2020',
+  format: 'cjs',
 })
 
 await esbuild.buildSync({
@@ -13,4 +14,5 @@ await esbuild.buildSync({
   minify: true,
   outfile: 'dist/swcad.min.js',
   target: 'es2020',
+  format: 'cjs',
 })
