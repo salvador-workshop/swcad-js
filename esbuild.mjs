@@ -4,7 +4,7 @@ await esbuild.buildSync({
   entryPoints: ['src/index.js'],
   bundle: true,
   outfile: 'dist/swcad.js',
-  target: 'node24',
+  target: 'es2020',
 })
 
 await esbuild.buildSync({
@@ -12,5 +12,5 @@ await esbuild.buildSync({
   bundle: true,
   minify: true,
   outfile: 'dist/swcad.min.js',
-  target: 'node24',
+  target: 'es2020',
 })

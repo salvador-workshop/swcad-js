@@ -5,7 +5,7 @@
   "workspaces": [
     "packages/*"
   ],
-  "main": "src/index.js",
+  "main": "dist/swcad.min.js",
   "scripts": {
     "docs:builders": "cd packages/swcad-js-builders && npm run docs",
     "docs:core": "cd packages/swcad-js-core && npm run docs",
