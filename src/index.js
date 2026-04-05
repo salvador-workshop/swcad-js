@@ -1,7 +1,7 @@
 const coreModule = require('../packages/swcad-js-core');
 
-const init = ({ lib }) => {
-    const swcadJs = coreModule.init({ lib })
+const init = ({ jscad }) => {
+    const swcadJs = coreModule.init({ jscad })
     return swcadJs;
 }
 
