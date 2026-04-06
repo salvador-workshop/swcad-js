@@ -7,6 +7,50 @@ const reinforcementInit = ({ jscad, swcadJs }) => {
     const { position } = swcadJs.utils
     const { profiles } = swcadJs
 
+    const offsetShape = (offWidth, fThickness) => {
+        if (offWidth == 0) {
+            return null
+        }
+
+        return union(
+            align(
+                { modes: ['min', 'max', 'center'] },
+                rectangle({ size: [offWidth, fThickness] }),
+            ),
+            align(
+                { modes: ['min', 'min', 'center'] },
+                profiles.triangle.right30({ base: offWidth }),
+            ),
+        )
+    }
+
+    const adjOffsetShape = (offShape, thickness, baseLeft, baseRight, baseFront) => {
+        if (offShape == null) {
+            return null
+        }
+
+        // default idx == 0 (inset)
+        let adjOffShape = align({
+            modes: ['max', 'min', 'center'],
+            relativeTo: [baseLeft, baseFront, 0],
+        }, offShape)
+
+        if (idx == 1) {
+            // offset
+            adjOffShape = align(
+                {
+                    modes: ['min', 'min', 'center'],
+                    relativeTo: [baseRight, baseFront, 0]
+                },
+                mirror({
+                    normal: [1, 0, 0],
+                    origin: [thickness / 2, 0, 0]
+                }, offShape)
+            )
+        }
+        return adjOffShape;
+    }
+
     //-----------------
     //  REINFORCEMENT
     //-----------------
@@ -24,38 +68,17 @@ const reinforcementInit = ({ jscad, swcadJs }) => {
         const fThickness = flangeThickness || thickness
 
         const offsetShapes = offsetWidths.map(offWidth => {
-            if (offWidth == 0) {
-                return null
-            }
-            return union(
-                align(
-                    { modes: ['min', 'max', 'center'] },
-                    rectangle({ size: [offWidth, fThickness] }),
-                ),
-                align(
-                    { modes: ['min', 'min', 'center'] },
-                    profiles.triangle.right30({ base: offWidth }),
-                ),
-            )
+            return offsetShape(offWidth, fThickness)
         })
 
         const adjOffsetShapes = offsetShapes.map((offShape, idx) => {
-            if (offShape == null) {
-                return null
-            }
-            // default idx == 0 (inset)
-            let adjOffShape = align(
-                { modes: ['max', 'min', 'center'], relativeTo: [baseShapeCoords.left, baseShapeCoords.front, 0] },
-                offShape
-            )
-            if (idx == 1) {
-                // offset
-                adjOffShape = align(
-                    { modes: ['min', 'min', 'center'], relativeTo: [baseShapeCoords.right, baseShapeCoords.front, 0] },
-                    mirror({ normal: [1, 0, 0], origin: [thickness / 2, 0, 0] }, offShape)
-                )
-            }
-            return adjOffShape;
+            return adjOffsetShape(
+                offShape,
+                thickness,
+                baseShapeCoords.left,
+                baseShapeCoords.right,
+                baseShapeCoords.front,
+            );
         })
 
         let finalShape = baseShape
@@ -123,6 +146,8 @@ const reinforcementInit = ({ jscad, swcadJs }) => {
      * @namespace reinforcement
      */
     const reinforcement = {
+        offsetShape,
+        adjOffsetShape,
         straight: straightBeam,
         /**
          * ...

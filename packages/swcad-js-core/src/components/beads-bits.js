@@ -60,8 +60,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
 
     const {
         constants,
-        position
-    } = swcadJs.utils
+    } = swcadJs.data
 
     /**
      * Standard bead profiles for interface connections
