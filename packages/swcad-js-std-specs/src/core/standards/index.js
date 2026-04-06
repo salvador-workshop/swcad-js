@@ -8,7 +8,8 @@ const tileStd = require('./std-tiles')
 
 /**
  * ...
- * @namespace utils.standards
+ * @memberof data
+ * @namespace standards
  */
 
 const standards = ({ lib, swLib }) => {

@@ -8,44 +8,44 @@ const phi = 1.6180339887
 
 /**
  * ...
- * @memberof utils
+ * @memberof data
  * @namespace constants
  */
 
 const constants = {
     /**
      * Inches / Millimetre conversion rate
-     * @memberof utils.constants
+     * @memberof data.constants
      * @constant {number}
      */
     INCHES_MM_FACTOR: 25.4,
     /**
      * Golden ratio
-     * @memberof utils.constants
+     * @memberof data.constants
      * @constant {number}
      */
     PHI: phi,
     /**
      * Golden ratio inverse
-     * @memberof utils.constants
+     * @memberof data.constants
      * @constant {number}
      */
     PHI_INV: 1 / phi,
     /**
      * Ratio of equilateral triangle's height to its side length
-     * @memberof utils.constants
+     * @memberof data.constants
      * @constant {number}
      */
     EQUI_TRIANGLE_HEIGHT_FACTOR: eqTriHeightFactor,
     /**
      * ...
-     * @memberof utils.constants
+     * @memberof data.constants
      * @constant {number}
      */
     TRI_45_FACTOR: tri45Factor,
     /**
      * ...
-     * @memberof utils.constants
+     * @memberof data.constants
      * @constant {number}
      */
     TRI_30_FACTOR: tri30Factor,

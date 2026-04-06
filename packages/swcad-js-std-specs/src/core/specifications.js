@@ -12,7 +12,7 @@
 
 /**
  * ...
- * @memberof utils
+ * @memberof data
  * @namespace specifications
  */
 

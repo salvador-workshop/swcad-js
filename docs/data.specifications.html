@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: swcad-js-families/src/tile/tile-na.js</title>
+    <title>JSDoc: Namespace: specifications</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,79 +17,100 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: swcad-js-families/src/tile/tile-na.js</h1>
+    <h1 class="page-title">Namespace: specifications</h1>
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>"use strict"
+        <h2>
+            <span class="ancestors"><a href="data.html">data</a>.</span>specifications</h2>
+        
+    
+</header>
 
-/**
- * ...
- * @memberof components.tile
- * @namespace northAmerica
- */
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">...</div>
+        
 
-const tileNorthAmerica = ({ lib, swLib }) => {
+        
 
-    const { cuboid } = lib.primitives
-    const { maths } = swLib.core
-    const { extras } = swLib.utils
 
-    const tileStandards = {
-        TILE_THICKNESS_LG: maths.inchesToMm(9 / 32), // 7.14375 mm
-        TILE_THICKNESS_MD: maths.inchesToMm(1 / 4), // 6.35 mm
-        TILE_THICKNESS_SM: maths.inchesToMm(7 / 32), // 5.55625 mm
-        TILE_SIZE_MOSAIC: 10,
-        TILE_SIZE_SM: maths.inchesToMm(3),
-        TILE_SIZE_MD: maths.inchesToMm(4),
-        TILE_SIZE_LG: maths.inchesToMm(5),
-    }
+<dl class="details">
 
-    const thicknesses = {
-        thin: tileStandards.TILE_THICKNESS_SM,
-        medium: tileStandards.TILE_THICKNESS_MD,
-        thick: tileStandards.TILE_THICKNESS_LG,
-    }
+    
 
-    const sizes = {
-        mosaic: tileStandards.TILE_SIZE_MOSAIC,
-        small: tileStandards.TILE_SIZE_SM,
-        medium: tileStandards.TILE_SIZE_MD,
-        large: tileStandards.TILE_SIZE_LG,
-    }
+    
 
-    const tileModels = {}
+    
 
-    Object.entries(thicknesses).forEach(([thKey, thVal], thIdx) => {
-        Object.entries(sizes).forEach(([sKey, sVal], sIdx) => {
-            const thicknessLabel = thKey === 'medium' ? '' : ` ${thKey}`;
-            const modelName = extras.camelCase(`${sKey}${thicknessLabel}`)
-            const modelSize = [sVal, sVal, thVal]
+    
 
-            tileModels[modelName] = {
-                name: modelName,
-                size: modelSize,
-                length: sKey,
-                lengthDim: sVal,
-                thickness: thKey,
-                thicknessDim: thVal,
-                geom: cuboid({ size: modelSize }),
-            }
-        })
-    })
+    
 
-    return tileModels
-}
+    
 
-module.exports = { init: tileNorthAmerica }
-</code></pre>
-        </article>
-    </section>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="swcad-js-std-specs_src_core_specifications.js.html">swcad-js-std-specs/src/core/specifications.js</a>, <a href="swcad-js-std-specs_src_core_specifications.js.html#line13">line 13</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

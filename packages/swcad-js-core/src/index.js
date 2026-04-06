@@ -52,16 +52,23 @@ const init = ({ jscad }) => {
     }
 
     const utils = {
-        constants: swJscad.core.constants,
         math: swJscad.core.maths,
         geometry: swJscad.core.geometry,
         position: swJscad.core.position,
         extras: swJscad.utils.extras,
         transform: swJscad.utils.transform,
-        specifications: swJscad.core.specifications,
-        standards: swJscad.core.standards,
         colors: swJscad.ui.ux.colors,
         layout: swJscad.ui.ux.layout,
+    }
+
+    /**
+     * Constants, standards, specs
+     * @namespace data
+     */
+    const data = {
+        constants: swJscad.core.constants,
+        specifications: swJscad.core.specifications,
+        standards: swJscad.core.standards,
     }
 
     /** Functions organized in the new style */
@@ -70,6 +77,7 @@ const init = ({ jscad }) => {
         components: componentsOld,
         models,
         utils,
+        data,
     }
 
 
