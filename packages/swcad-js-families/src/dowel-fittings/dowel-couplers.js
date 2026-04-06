@@ -3,9 +3,9 @@
 /**
  * ...
  * @memberof components.dowelFittings
- * @param {*} param0 
- * @returns ...
+ * @namespace dowelCouplers
  */
+
 const dowelCouplers = ({ lib, swLib }) => {
     const { maths } = swLib.core
     const { mesh3d } = swLib.models.prefab;

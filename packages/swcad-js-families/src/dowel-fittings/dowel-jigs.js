@@ -3,8 +3,7 @@
 /**
  * ...
  * @memberof components.dowelFittings
- * @param {*} param0 
- * @returns ...
+ * @namespace dowelJigs
  */
 const dowelJigs = ({ lib, swLib }) => {
     const { cuboid } = lib.primitives;

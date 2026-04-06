@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: swcad-js-core/src/core/position/pos-rectangle.js</title>
+    <title>JSDoc: Namespace: dowelCouplers</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,122 +17,100 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: swcad-js-core/src/core/position/pos-rectangle.js</h1>
+    <h1 class="page-title">Namespace: dowelCouplers</h1>
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>"use strict"
+        <h2>
+            <span class="ancestors"><a href="components.html">components</a><a href="components.dowelFittings.html">.dowelFittings</a>.</span>dowelCouplers</h2>
+        
+    
+</header>
 
-/**
- * Rectangle calculations
- * @memberof utils.position
- * @namespace rectangle
- */
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">...</div>
+        
 
-const geoRectangle = ({ lib, swLib }) => {
-    const {
-        measureDimensions,
-        measureBoundingBox,
-        measureCenter
-    } = lib.measurements;
+        
 
-    const { position } = swLib.core
 
-    /**
-     * ...
-     * @memberof utils.position.rectangle
-     * @param {object} rectGeom 
-     * @returns ...
-     */
-    const getRectangleCoords = (rectGeom) => {
-        return position.getGeomCoords(rectGeom)
-    }
+<dl class="details">
 
-    /**
-     * ...
-     * @memberof utils.position.rectangle
-     * @param {object} rectGeom 
-     * @returns ...
-     */
-    const getRectangleCorners = (rectGeom) => {
-        const bBox = measureBoundingBox(rectGeom);
+    
 
-        const coords = getRectangleCoords(rectGeom);
-        return {
-            c1: [coords.right, coords.front, 0], // (+X, -Y)
-            c2: [coords.right, coords.back, 0], // (+X, +Y)
-            c3: [coords.left, coords.back, 0], // (-X, +Y)
-            c4: [coords.left, coords.front, 0], // (-X, -Y)
-        }
-    }
+    
 
-    /**
-     * ...
-     * @memberof utils.position.rectangle
-     * @param {object} rectGeom 
-     * @returns ...
-     */
-    const getRectangleCentre = (rectGeom) => {
-        return measureCenter(rectGeom);
-    }
+    
 
-    /**
-     * ...
-     * @memberof utils.position.rectangle
-     * @param {object} rectGeom 
-     * @returns ...
-     */
-    const getRectangleCtrlPoints = (rectGeom) => {
-        const bBox = measureBoundingBox(rectGeom);
-        const dims = measureDimensions(rectGeom);
+    
 
-        const coords = getRectangleCoords(rectGeom);
-        const corners = getRectangleCorners(rectGeom);
-        const centre = getRectangleCentre(rectGeom);
+    
 
-        const edgeMidpoints = {
-            e1: [coords.right, centre[1], centre[2]], // midpoint of edge (Y axis, +X,)
-            e2: [centre[0], coords.back, centre[2]], // midpoint of edge (X axis, +Y,)
-            e3: [coords.left, centre[1], centre[2]], // midpoint of edge (Y axis, -X,)
-            e4: [centre[0], coords.front, centre[2]], // midpoint of edge (X axis, -Y,)
-        }
+    
 
-        // i1 to i4 are inside the rectangle, at the centre of each quadrant
-        // (each quadrant is practically a sub-rectangle)
-        const qtrRectDims = [dims[0] / 4, dims[1] / 4, 0]
-        const internal = {
-            i0: centre,
-            i1: [centre[0] + qtrRectDims[0], centre[1] + qtrRectDims[1], centre[2]], // quadrant I (+X, +Y)
-            i2: [centre[0] - qtrRectDims[0], centre[1] + qtrRectDims[1], centre[2]], // quadrant II (-X, +Y)
-            i3: [centre[0] - qtrRectDims[0], centre[1] - qtrRectDims[1], centre[2]], // quadrant III (-X, -Y)
-            i4: [centre[0] + qtrRectDims[0], centre[1] - qtrRectDims[1], centre[2]], // quadrant VI (+X, -Y)
+    
 
-        }
+    
 
-        return {
-            ...internal,
-            ...corners,
-            ...edgeMidpoints,
-        };
-    }
+    
 
-    return {
-        getRectangleCoords,
-        getRectangleCorners,
-        getRectangleCentre,
-        getRectangleCtrlPoints,
-    }
-}
+    
 
-module.exports = { init: geoRectangle };
-</code></pre>
-        </article>
-    </section>
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="swcad-js-families_src_dowel-fittings_dowel-couplers.js.html">swcad-js-families/src/dowel-fittings/dowel-couplers.js</a>, <a href="swcad-js-families_src_dowel-fittings_dowel-couplers.js.html#line3">line 3</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
