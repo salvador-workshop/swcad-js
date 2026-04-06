@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Namespace: northAmerica</title>
+    <title>JSDoc: Source: swcad-js-core/src/models/prefab/arch-3d.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,100 +17,92 @@
 
 <div id="main">
 
-    <h1 class="page-title">Namespace: northAmerica</h1>
+    <h1 class="page-title">Source: swcad-js-core/src/models/prefab/arch-3d.js</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            <span class="ancestors"><a href="components.html">components</a><a href="components.tile.html">.tile</a>.</span>northAmerica</h2>
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict"
 
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">...</div>
-        
+/**
+ * Builds circle-based arches. Input 2D profiles must be centred at (0, 0, 0)
+ * @memberof models
+ * @namespace arch
+ */
 
-        
+const archBuilder = ({ lib }) => {
+  const { path2, geom2 } = lib.geometries
+  const { extrudeRotate } = lib.extrusions
+  const { arc, cuboid } = lib.primitives
+  const { translate, mirror, rotate, align } = lib.transforms
+  const { union, subtract, intersect } = lib.booleans
+  const { measureDimensions } = lib.measurements;
 
+  return {
+    /**
+     * Builds a one-centre (semicircular) arch.
+     * @memberof models.arch
+     * @instance
+     * @param {Object} opts 
+     * @param {number} opts.arcRadius - arc radius 
+     * @param {geom2.Geom2} geomProfile - 2D cross-section profile
+     */
+    onePtArch: (opts, geomProfile) => {
+      const arcRad = opts.arcRadius;
+      const profile = translate([arcRad, 0, 0], geomProfile);
+      const baseArch = extrudeRotate({ segments: 48, angle: Math.PI }, profile);
 
-<dl class="details">
+      return align({ modes: ['center', 'center', 'min'] }, rotate([Math.PI / 2, 0, 0], baseArch));
 
-    
+    },
+    /**
+     * Builds a two-centre pointed arch.
+     * @memberof models.arch
+     * @instance
+     * @param {Object} opts 
+     * @param {number} opts.arcRadius - arc radius 
+     * @param {number} opts.archWidth - arch width 
+     * @param {geom2.Geom2} geomProfile - 2D cross-section profile
+     */
+    twoPtArch: (opts, geomProfile) => {
+      const arcRad = opts.arcRadius;
+      const archWth = opts.archWidth;
+      const profileSpecs = measureDimensions(geomProfile);
+      const profile = translate([profileSpecs[0] / 2 + arcRad, 0, 0], geomProfile);
+      const baseArch = extrudeRotate({ segments: 48, angle: Math.PI }, profile);
 
-    
+      const cutawaySize = Math.max(archWth, arcRad) * 2;
+      const mirrorAxis = arcRad - (archWth / 2);
+      const cutawayOffset = (cutawaySize / -2) + mirrorAxis;
+      const archCutaway = translate([cutawayOffset, cutawaySize / 2, 0], cuboid(
+        {
+          size: [cutawaySize, cutawaySize, profileSpecs[1] * 1.25],
+          center: [0, 0, 0]
+        }
+      ))
+      const cutArch = subtract(baseArch, archCutaway);
+      const reflectedArch = mirror({ normal: [1, 0, 0], origin: [mirrorAxis, 0, 0] }, cutArch);
 
-    
+      return align({ modes: ['center', 'center', 'min'] }, rotate([Math.PI / 2, 0, 0], union(cutArch, reflectedArch)));
 
-    
+    },
+    threePt: (opts, geomProfile) => {
+      return null;
+    },
+    fourPt: (opts, geomProfile) => {
+      return null;
+    },
+  }
+}
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-families_src_tile_tile-na.js.html">swcad-js-families/src/tile/tile-na.js</a>, <a href="swcad-js-families_src_tile_tile-na.js.html#line3">line 3</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+module.exports = { init: archBuilder }
+</code></pre>
+        </article>
+    </section>
 
 
 

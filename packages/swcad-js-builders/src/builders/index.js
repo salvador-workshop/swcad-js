@@ -5,7 +5,6 @@ const init = ({ lib, swLib, swFamilies }) => {
         // Dependent on libs and utils
         columns: require('./columns').init({ lib, swLib, swFamilies }),
         walls: require('./walls').init({ lib, swLib, swFamilies }),
-        arches: require('./arches').init({ lib, swLib, swFamilies }),
     }
 
     builders.entryways = require('./entryways').init({ lib, swLib: { ...swLib, builders }, swFamilies });

@@ -17,7 +17,7 @@ const archBuilder = ({ lib }) => {
   return {
     /**
      * Builds a one-centre (semicircular) arch.
-     * @memberof models.arch
+     * @memberof profiles.arch
      * @instance
      * @param {Object} opts 
      * @param {number} opts.arcRadius - arc radius 
@@ -29,7 +29,7 @@ const archBuilder = ({ lib }) => {
     },
     /**
      * Builds a two-centre pointed arch.
-     * @memberof models.arch
+     * @memberof profiles.arch
      * @instance
      * @param {Object} opts 
      * @param {number} opts.arcRadius - arc radius 

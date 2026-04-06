@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Namespace: northAmerica</title>
+    <title>JSDoc: Source: swcad-js-core/src/models/profiles/arch-2d.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,100 +17,76 @@
 
 <div id="main">
 
-    <h1 class="page-title">Namespace: northAmerica</h1>
+    <h1 class="page-title">Source: swcad-js-core/src/models/profiles/arch-2d.js</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            <span class="ancestors"><a href="components.html">components</a><a href="components.tile.html">.tile</a>.</span>northAmerica</h2>
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict"
 
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">...</div>
-        
+/**
+ * Builds circle-based arches.
+ * @memberof profiles
+ * @namespace arch
+ */
 
-        
+const archBuilder = ({ lib }) => {
+  const { path2, geom2 } = lib.geometries
+  const { extrudeRotate } = lib.extrusions
+  const { arc, cuboid } = lib.primitives
+  const { translate, mirror, rotate, align } = lib.transforms
+  const { union, subtract, intersect } = lib.booleans
+  const { measureDimensions } = lib.measurements;
 
+  return {
+    /**
+     * Builds a one-centre (semicircular) arch.
+     * @memberof profiles.arch
+     * @instance
+     * @param {Object} opts 
+     * @param {number} opts.arcRadius - arc radius 
+     */
+    onePtArch: (opts) => {
+      const arcRad = opts.arcRadius;
+      const baseArchPath = path2.close(arc({ radius: arcRad, endAngle: Math.PI, segments: 48 }));
+      return geom2.fromPoints(path2.toPoints(baseArchPath));
+    },
+    /**
+     * Builds a two-centre pointed arch.
+     * @memberof profiles.arch
+     * @instance
+     * @param {Object} opts 
+     * @param {number} opts.arcRadius - arc radius 
+     * @param {number} opts.archWidth - arch width 
+     */
+    twoPtArch: (opts) => {
+      const arcRad = opts.arcRadius;
+      const archWth = opts.archWidth;
+      // 2D
+      const baseArchPath = path2.close(arc({ radius: arcRad, endAngle: Math.PI, segments: 48 }));
+      const baseArch = geom2.fromPoints(path2.toPoints(baseArchPath));
+      const mirrorAxis = arcRad - (archWth / 2);
+      const reflectedArch = mirror({ normal: [1, 0, 0], origin: [mirrorAxis, 0, 0] }, baseArch);
+      return align({ modes: ['center', 'min', 'min'] }, intersect(baseArch, reflectedArch));
 
-<dl class="details">
+    },
+    threePt: (opts) => {
+      return null;
+    },
+    fourPt: (opts) => {
+      return null;
+    },
+  }
+}
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-families_src_tile_tile-na.js.html">swcad-js-families/src/tile/tile-na.js</a>, <a href="swcad-js-families_src_tile_tile-na.js.html#line3">line 3</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+module.exports = { init: archBuilder }
+</code></pre>
+        </article>
+    </section>
 
 
 
