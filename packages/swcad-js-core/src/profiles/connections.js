@@ -52,7 +52,7 @@ const connectionsInit = ({ jscad, swcadJs }) => {
         unitLength,
         fitGap,
     ) => {
-        console.log('interlockingProfiles()', unitWidth, unitLength, fitGap,)
+        console.log('interlockingProfiles()', unitWidth, unitLength, fitGap)
         const sampleThickness = 1 // scission only works with 3D objects. Need a filler thickness for now
         const widthUnit = unitWidth / 3
         const lengthUnit = unitLength / 3
@@ -292,11 +292,10 @@ const connectionsInit = ({ jscad, swcadJs }) => {
         dovetail: ({
             width,
             depth,
-            interfaceThickness = connectionDefaults.interfaceThickness,
             fitGap = connectionDefaults.fit,
         }) => {
-            console.log('dovetail()', width, depth, interfaceThickness, fitGap)
-            const dovetailProfiles = interlockingProfiles(width, depth, interfaceThickness, fitGap)
+            console.log('dovetail()', width, depth, fitGap)
+            const dovetailProfiles = interlockingProfiles(width, depth, fitGap)
 
             return {
                 male: dovetailProfiles[1],
