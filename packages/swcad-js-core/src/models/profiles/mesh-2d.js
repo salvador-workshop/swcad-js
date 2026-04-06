@@ -7,16 +7,37 @@
 const mesh2dInit = ({ lib, swLib }) => {
 
     /**
-     * Builds a 2D mesh
+     * Builds 2D mesh panel perforations (hole punch)
      * @memberof profiles.mesh
      * @returns ...
      */
-    const meshProfile = () => {
+    const meshPanelCutProfile = ({
+        panelSize = 0,
+        holeRadius = 0,
+        holeDistance = 0,
+        holePattern = '0',
+    }) => {
+        return null
+    }
 
+    /**
+     * Builds a 2D mesh panel
+     * @memberof profiles.mesh
+     * @returns ...
+     */
+    const meshPanelProfile = ({
+        size = 0,
+        edgeMargin = 0,
+        holeRadius = 0,
+        holeDistance = 0,
+        holePattern = '0',
+    }) => {
+        return null
     }
 
     return {
-        meshProfile
+        meshPanelCutProfile,
+        meshPanelProfile,
     };
 }
 
