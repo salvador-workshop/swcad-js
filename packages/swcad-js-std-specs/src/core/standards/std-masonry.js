@@ -13,6 +13,10 @@ const masonryStd = ({ lib, swLib }) => {
         MORTAR_JOINT_LG: maths.inchesToMm(1 / 2),
     }
 
+    /**
+     * Brick standards
+     * @memberof data.standards.masonry
+     */
     const brick = {
         US_BRICK_LENGTH_NOM: maths.inchesToMm(8),
         US_BRICK_WIDTH_NOM: maths.inchesToMm(4),
@@ -29,6 +33,10 @@ const masonryStd = ({ lib, swLib }) => {
     brick['US_BRICK_WIDTH_LG_JOINT'] = brick.US_BRICK_WIDTH_NOM - masonry.MORTAR_JOINT_LG
     brick['US_BRICK_HEIGHT_LG_JOINT'] = brick.US_BRICK_HEIGHT_NOM - masonry.MORTAR_JOINT_LG
 
+    /**
+     * Concrete standards
+     * @memberof data.standards.masonry
+     */
     const concrete = {
         CMU_FACE_THICKNESS: 36,
         CMU_WEB_THICKNESS: 32,

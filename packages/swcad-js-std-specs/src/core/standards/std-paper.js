@@ -9,6 +9,10 @@ const paperStd = ({ lib, swLib }) => {
     const { constants, maths } = swLib.core
 
     // STANDARD: [width, height]
+    /**
+     * Metric standards
+     * @memberof data.standards.paper
+     */
     const metric = {
         A0: [841, 1189],
         A1: [594, 841],
@@ -45,6 +49,10 @@ const paperStd = ({ lib, swLib }) => {
         C10: [28, 40],
     }
 
+    /**
+     * ANSI standards
+     * @memberof data.standards.paper
+     */
     const naAnsi = {
         ANSI_A: [maths.inchesToMm(8.5), maths.inchesToMm(11)],
         ANSI_B: [maths.inchesToMm(11), maths.inchesToMm(17)],
@@ -53,6 +61,10 @@ const paperStd = ({ lib, swLib }) => {
         ANSI_E: [maths.inchesToMm(34), maths.inchesToMm(44)],
     }
 
+    /**
+     * North American architecture standards
+     * @memberof data.standards.paper
+     */
     const naArch = {
         ARCH_A: [maths.inchesToMm(9), maths.inchesToMm(12)],
         ARCH_B: [maths.inchesToMm(12), maths.inchesToMm(18)],
@@ -62,6 +74,10 @@ const paperStd = ({ lib, swLib }) => {
         ARCH_E: [maths.inchesToMm(36), maths.inchesToMm(48)],
     }
 
+    /**
+     * Imperial standards
+     * @memberof data.standards.paper
+     */
     const imperial = {
         ansi: naAnsi,
         arch: naArch,
@@ -71,6 +87,10 @@ const paperStd = ({ lib, swLib }) => {
         LEDGER: [maths.inchesToMm(17), maths.inchesToMm(11)],
     }
 
+    /**
+     * Card standards
+     * @memberof data.standards.paper
+     */
     const cards = {
         BUSINESS_CARD: [maths.inchesToMm(3.5), maths.inchesToMm(2)],
         BUSINESS_CARD_SQ: [maths.inchesToMm(2.5), maths.inchesToMm(2.5)],
@@ -83,17 +103,29 @@ const paperStd = ({ lib, swLib }) => {
         POSTCARD: [maths.inchesToMm(6), maths.inchesToMm(4)],
     }
 
+    /**
+     * Bookmark standards
+     * @memberof data.standards.paper
+     */
     const bookmarks = {
         BOOKMARK_SM: [maths.inchesToMm(1.5), maths.inchesToMm(4.5)],
         BOOKMARK_MD: [maths.inchesToMm(2), maths.inchesToMm(6.5)],
         BOOKMARK_LG: [maths.inchesToMm(2.25), maths.inchesToMm(8.5)],
     }
 
+    /**
+     * Poster standards
+     * @memberof data.standards.paper
+     */
     const poster = {
         POSTERJAM: metric.B2,
         ALBUM_COVER: [maths.inchesToMm(12 + (3 / 8)), maths.inchesToMm(12 + (3 / 8))],
     }
 
+    /**
+     * Photos standards
+     * @memberof data.standards.paper
+     */
     const photos = {
         PASSPORT_CAN: [50, 70],
         PASSPORT_US: [maths.inchesToMm(2), maths.inchesToMm(2)],

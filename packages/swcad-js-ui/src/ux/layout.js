@@ -296,8 +296,6 @@ const layoutUtils = ({ lib, swLib }) => {
     return {
         /**
          * Adds element to layout
-         * @memberof layout
-         * @instance
          * @param {Object} opts 
          * @param {string} opts.name 
          * @param {string} opts.desc 
@@ -306,6 +304,8 @@ const layoutUtils = ({ lib, swLib }) => {
          * @param {number[]} opts.layoutOpts.minSize -- [x,y,z] showing minimum size for element layout
          * @param {boolean} opts.layoutOpts.is2D -- 
          * @param {Object} geom
+         * @memberof utils.layout
+         * @instance
          */
         addToLayout: ({
             name = '',
