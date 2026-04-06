@@ -8,6 +8,7 @@ const profilesInit = ({ lib, swLib }) => {
         foils2d: require('./foils-2d').init({ lib, swLib }),
         mesh2d: require('./mesh-2d').init({ lib, swLib }),
         text2d: require('./text-2d').init({ lib, swLib }),
+        arch: require('./arch-2d').init({ lib, swLib }),
     }
 
     profiles.reinforcement = require('./reinforcement').init({ lib, swLib: { ...swLib, models: { profiles } } })

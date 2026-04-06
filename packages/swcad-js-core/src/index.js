@@ -8,7 +8,7 @@ const init = ({ jscad }) => {
         text: swJscad.models.profiles.text2d,
         mesh: swJscad.models.profiles.mesh2d,
         foil: swJscad.models.profiles.foils2d,
-        arch: swJscad.builders.arches,
+        arch: swJscad.models.profiles.arch,
         trim: swJscad.families.trim,
         lumber: swJscad.families.lumber,
         paper: swJscad.families.paper,
@@ -41,7 +41,7 @@ const init = ({ jscad }) => {
 
     const models = {
         foil: swJscad.models.prefab.foils3d,
-        arch: swJscad.builders.arches,
+        arch: swJscad.models.prefab.arch,
         buttress: swJscad.builders.buttress,
         wall: {
             ...swJscad.builders.walls,

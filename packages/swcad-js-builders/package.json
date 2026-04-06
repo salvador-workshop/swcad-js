@@ -1,6 +1,6 @@
 {
   "name": "swcad-js-builders",
-  "version": "0.10.0-alpha.0",
+  "version": "0.10.1",
   "description": "Builder functions for Salvador Workshop's JSCAD utilities and toolkit.",
   "homepage": "",
   "main": "src/index.js",

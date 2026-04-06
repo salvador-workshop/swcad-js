@@ -2,6 +2,7 @@
 
 /**
  * Builds circle-based arches. Input 2D profiles must be centred at (0, 0, 0)
+ * @deprecated This builder is deprecated in favor of the `arch` models in `profiles` and `prefab`.
  * @memberof models
  * @namespace arch
  */
