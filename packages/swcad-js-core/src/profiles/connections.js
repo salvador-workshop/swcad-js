@@ -1,20 +1,20 @@
-const connectionsInit = ({ lib, swLib }) => {
-    const { circle, rectangle, triangle } = lib.primitives
-    const { union, subtract } = lib.booleans
-    const { align, translate, mirror } = lib.transforms
-    const { hull } = lib.hulls
-    const { degToRad } = lib.utils
+const connectionsInit = ({ jscad, swcadJs }) => {
+    const { circle, rectangle, triangle } = jscad.primitives
+    const { union, subtract } = jscad.booleans
+    const { align, translate, mirror } = jscad.transforms
+    const { hull } = jscad.hulls
+    const { degToRad } = jscad.utils
 
-    const { position, maths } = swLib.core
+    const { position, math } = swcadJs.utils
 
     //---------------
     //  CONNECTIONS
     //---------------
 
     const connectionDefaults = {
-        tolerance: maths.inchesToMm(1 / 128),
-        fit: maths.inchesToMm(1 / 128),
-        cornerRadius: maths.inchesToMm(1 / 4),
+        tolerance: math.inchesToMm(1 / 128),
+        fit: math.inchesToMm(1 / 128),
+        cornerRadius: math.inchesToMm(1 / 4),
         dovetailAngle: degToRad(8),
         dovetailMargin: 1,
         tabAngle: degToRad(8),
