@@ -19,12 +19,12 @@ const reinforcementInit = ({ jscad, swcadJs }) => {
             ),
             align(
                 { modes: ['min', 'min', 'center'] },
-                profiles.triangle.right30({ base: offWidth }),
+                profiles.shapes.triangle.right30({ base: offWidth }),
             ),
         )
     }
 
-    const adjOffsetShape = (offShape, thickness, baseLeft, baseRight, baseFront) => {
+    const adjOffsetShape = (offShape, idx, thickness, baseLeft, baseRight, baseFront) => {
         if (offShape == null) {
             return null
         }
@@ -74,6 +74,7 @@ const reinforcementInit = ({ jscad, swcadJs }) => {
         const adjOffsetShapes = offsetShapes.map((offShape, idx) => {
             return adjOffsetShape(
                 offShape,
+                idx,
                 thickness,
                 baseShapeCoords.left,
                 baseShapeCoords.right,
