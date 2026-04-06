@@ -1,5 +1,10 @@
 "use strict"
 
+/**
+ * Paper standards
+ * @namespace paper
+ * @memberof data.standards
+ */
 const paperStd = ({ lib, swLib }) => {
     const { constants, maths } = swLib.core
 

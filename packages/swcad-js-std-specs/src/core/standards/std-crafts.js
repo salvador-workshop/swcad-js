@@ -1,5 +1,10 @@
 "use strict"
 
+/**
+ * Craft standards
+ * @namespace crafts
+ * @memberof data.standards
+ */
 const craftStd = ({ lib, swLib }) => {
     return {
         DIAM_TOOTHPICK: 2.30,

@@ -1,5 +1,10 @@
 "use strict"
 
+/**
+ * Masonry standards
+ * @namespace masonry
+ * @memberof data.standards
+ */
 const masonryStd = ({ lib, swLib }) => {
     const { constants, maths } = swLib.core
 
