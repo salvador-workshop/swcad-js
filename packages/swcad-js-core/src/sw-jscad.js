@@ -1,8 +1,7 @@
-// TODO: Replace relative paths with package imports once build tools are in place
-const stdSpecsPackage = require('../../swcad-js-std-specs');
-const familiesPackage = require('../../swcad-js-families');
-const uiPackage = require('../../swcad-js-ui');
-const buildersPackage = require('../../swcad-js-builders');
+const stdSpecsPackage = require('swcad-js-std-specs');
+const familiesPackage = require('swcad-js-families');
+const uiPackage = require('swcad-js-ui');
+const buildersPackage = require('swcad-js-builders');
 
 const coreModule = require('./core');
 const utilsModule = require('./utils');

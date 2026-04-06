@@ -60,8 +60,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
 
     const {
         constants,
-        position
-    } = swcadJs.utils
+    } = swcadJs.data
 
     /**
      * Standard bead profiles for interface connections
@@ -70,7 +69,8 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * @param {number} mdWidth - Width of the medium bead profile
      * @param {number} lgWidth - Width of the large bead profile
      * @returns {Object<string, geom3>} - Small, Medium, and Large bead profiles
-     * @memberof beadsBits
+     * @instance
+     * @memberof components.beadsBits
      */
     const interfaceProfileBeads = (baseThickness, smWidth, mdWidth, lgWidth) => {
         const edgeOffset = baseThickness / constants.TRI_30_FACTOR / 2

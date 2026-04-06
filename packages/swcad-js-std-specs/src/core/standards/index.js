@@ -8,12 +8,17 @@ const tileStd = require('./std-tiles')
 
 /**
  * ...
- * @namespace utils.standards
+ * @memberof data
+ * @namespace standards
  */
 
 const standards = ({ lib, swLib }) => {
     const { constants, maths } = swLib.core
 
+    /**
+     * Pegboard standards
+     * @memberof data.standards
+     */
     const pegboard = {
         PEGBOARD_SPACING: maths.inchesToMm(1),
         PEGBOARD_HOLE_DIAM: maths.inchesToMm(7 / 32),
@@ -21,11 +26,19 @@ const standards = ({ lib, swLib }) => {
         MICRO_PEGBOARD_HOLE_DIAM: maths.inchesToMm(1 / 8),
     }
 
+    /**
+     * Gridfinity standards
+     * @memberof data.standards
+     */
     const gridfinity = {
         GRIDFINITY_SPACING: 42,
         GRIDFINITY_RAIL_WIDTH: 7,
     }
 
+    /**
+     * SW Panel Thicknesses
+     * @memberof data.standards
+     */
     const swDefaults = {
         PANEL_THICKNESS_XS: maths.inchesToMm(2 / 64),  // 1/32"
         PANEL_THICKNESS_SM: maths.inchesToMm(3 / 64),

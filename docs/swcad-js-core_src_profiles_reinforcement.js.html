@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: swcad-js-core/src/profiles/reinforcement.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: swcad-js-core/src/profiles/reinforcement.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const reinforcementInit = ({ jscad, swcadJs }) => {
+    const { rectangle } = jscad.primitives
+    const { union } = jscad.booleans
+    const { rotate, align, mirror } = jscad.transforms
+    const { TAU } = jscad.maths.constants
+
+    const { position } = swcadJs.utils
+    const { profiles } = swcadJs
+
+    const offsetShape = (offWidth, fThickness) => {
+        if (offWidth == 0) {
+            return null
+        }
+
+        return union(
+            align(
+                { modes: ['min', 'max', 'center'] },
+                rectangle({ size: [offWidth, fThickness] }),
+            ),
+            align(
+                { modes: ['min', 'min', 'center'] },
+                profiles.shapes.triangle.right30({ base: offWidth }),
+            ),
+        )
+    }
+
+    const adjOffsetShape = (offShape, idx, thickness, baseLeft, baseRight, baseFront) => {
+        if (offShape == null) {
+            return null
+        }
+
+        // default idx == 0 (inset)
+        let adjOffShape = align({
+            modes: ['max', 'min', 'center'],
+            relativeTo: [baseLeft, baseFront, 0],
+        }, offShape)
+
+        if (idx == 1) {
+            // offset
+            adjOffShape = align(
+                {
+                    modes: ['min', 'min', 'center'],
+                    relativeTo: [baseRight, baseFront, 0]
+                },
+                mirror({
+                    normal: [1, 0, 0],
+                    origin: [thickness / 2, 0, 0]
+                }, offShape)
+            )
+        }
+        return adjOffShape;
+    }
+
+    //-----------------
+    //  REINFORCEMENT
+    //-----------------
+
+    /**
+     * ...
+     * @memberof profiles.reinforcement
+     * @param {object} opts 
+     * @returns ...
+     */
+    const straightBeam = ({ length, thickness, flangeThickness, insetWidth = 0, offsetWidth = 0, doubleFlanged = false }) => {
+        const baseShape = rectangle({ size: [thickness, length] })
+        const baseShapeCoords = position.getGeomCoords(baseShape)
+        const offsetWidths = [insetWidth, offsetWidth]
+        const fThickness = flangeThickness || thickness
+
+        const offsetShapes = offsetWidths.map(offWidth => {
+            return offsetShape(offWidth, fThickness)
+        })
+
+        const adjOffsetShapes = offsetShapes.map((offShape, idx) => {
+            return adjOffsetShape(
+                offShape,
+                idx,
+                thickness,
+                baseShapeCoords.left,
+                baseShapeCoords.right,
+                baseShapeCoords.front,
+            );
+        })
+
+        let finalShape = baseShape
+        adjOffsetShapes.forEach((oShape, idx) => {
+            if (oShape) {
+                finalShape = union(finalShape, oShape)
+            }
+        })
+
+        const mirrored = mirror({ normal: [0, 1, 0] }, finalShape)
+
+        if (doubleFlanged) {
+            return union(finalShape, mirrored)
+        }
+
+        return mirrored
+    }
+    /**
+     * ...
+     * @memberof profiles.reinforcement
+     * @param {object} opts 
+     * @returns ...
+     */
+    const cBeam = ({ length, depth, thickness, flangeThickness, insetWidth, offsetWidth }) => {
+        const beam1 = align({ modes: ['center', 'min', 'center'] }, rotate(
+            [0, 0, TAU / -4],
+            straightBeam({ length, thickness, flangeThickness })
+        ))
+        const beam2 = align(
+            { modes: ['center', 'min', 'center'], relativeTo: [(length + thickness) / -2, 0, 0] },
+            straightBeam({ length: depth, thickness, flangeThickness, insetWidth, offsetWidth })
+        )
+        const beam3 = align(
+            { modes: ['center', 'min', 'center'], relativeTo: [(length + thickness) / 2, 0, 0] },
+            straightBeam({ length: depth, thickness, flangeThickness, insetWidth, offsetWidth })
+        )
+
+        return union(beam1, beam2, beam3)
+    }
+
+    /**
+     * ...
+     * @memberof profiles.reinforcement
+     * @param {object} opts 
+     * @returns ...
+     */
+    const polyBeam = ({ radius, segments, thickness, insetWidth, offsetWidth }) => {
+        const beams = []
+        const beam = align(
+            { modes: ['min', 'min', 'center'], relativeTo: [-insetWidth - (thickness / 2), 0, 0] },
+            straightBeam({ length: radius / 2, thickness, insetWidth, offsetWidth })
+        )
+        for (let idx = 0; idx &lt; segments; idx++) {
+            const angle = idx / segments * TAU
+            const rotatedBeam = rotate([0, 0, angle], beam)
+            beams.push(rotatedBeam)
+        }
+
+        return union(...beams)
+    }
+
+    /**
+     * Reinforcement profiles
+     * @memberof profiles
+     * @namespace reinforcement
+     */
+    const reinforcement = {
+        offsetShape,
+        adjOffsetShape,
+        straight: straightBeam,
+        /**
+         * ...
+         * @memberof profiles.reinforcement
+         * @param {object} opts
+         * @returns ...
+         */
+        corner: ({ length, depth, thickness, flangeThickness, insetWidth = 0, offsetWidth = 0 }) => {
+            const beam1 = align(
+                { modes: ['min', 'center', 'center'], relativeTo: [insetWidth, 0, (thickness + offsetWidth) / 2] },
+                rotate([0, 0, TAU / -4], straightBeam({ length, thickness, flangeThickness, insetWidth, offsetWidth }))
+            )
+            const beam2 = align({ modes: ['min', 'min', 'center'], relativeTo: [-insetWidth + thickness, 0, 0] },
+                straightBeam({ length: depth, thickness, flangeThickness, insetWidth, offsetWidth })
+            )
+
+            return union(beam1, beam2)
+        },
+        cBeam,
+        uBeam: cBeam,
+        /**
+         * ...
+         * @memberof profiles.reinforcement
+         * @param {object} opts 
+         * @returns ...
+         */
+        tBeam: ({ length, depth, thickness, flangeThickness, insetWidth, offsetWidth }) => {
+            const beam1 = align({ modes: ['center', 'min', 'center'] }, rotate(
+                [0, 0, TAU / -4],
+                straightBeam({ length, thickness, flangeThickness, insetWidth, doubleFlanged: true })
+            ))
+            const beam2 = align(
+                { modes: ['center', 'min', 'center'] },
+                straightBeam({ length: depth, thickness, flangeThickness, insetWidth, offsetWidth })
+            )
+
+            return union(beam1, beam2)
+        },
+        /**
+         * ...
+         * @memberof profiles.reinforcement
+         * @param {object} opts 
+         * @returns ...
+         */
+        doubleTBeam: ({ length, depth, thickness, flangeThickness, insetWidth, offsetWidth }) => {
+            const beamPoints = [length / 3 - (length / 2), length * 2 / 3 - (length / 2)]
+            const beam1 = align({ modes: ['center', 'min', 'center'] }, rotate(
+                [0, 0, TAU / -4],
+                straightBeam({ length, thickness, flangeThickness, insetWidth, doubleFlanged: true })
+            ))
+            const beam2 = align(
+                { modes: ['center', 'min', 'center'], relativeTo: [beamPoints[0], 0, 0] },
+                straightBeam({ length: depth, thickness, flangeThickness, insetWidth, offsetWidth })
+            )
+            const beam3 = align(
+                { modes: ['center', 'min', 'center'], relativeTo: [beamPoints[1], 0, 0] },
+                straightBeam({ length: depth, thickness, flangeThickness, insetWidth, offsetWidth })
+            )
+
+            return union(beam1, beam2, beam3)
+        },
+        /**
+         * ...
+         * @memberof profiles.reinforcement
+         * @param {object} opts 
+         * @returns ...
+         */
+        triBeam: ({ radius, thickness, insetWidth, offsetWidth }) => {
+            return polyBeam({ radius, segments: 3, thickness, insetWidth, offsetWidth })
+        },
+        /**
+         * ...
+         * @memberof profiles.reinforcement
+         * @param {object} opts 
+         * @returns ...
+         */
+        crossBeam: ({ radius, thickness, insetWidth, offsetWidth }) => {
+            return polyBeam({ radius, segments: 4, thickness, insetWidth, offsetWidth })
+        },
+        /**
+         * ...
+         * @memberof profiles.reinforcement
+         * @param {object} opts 
+         * @returns ...
+         */
+        pentaBeam: ({ radius, thickness, insetWidth, offsetWidth }) => {
+            return polyBeam({ radius, segments: 5, thickness, insetWidth, offsetWidth })
+        },
+        /**
+         * ...
+         * @memberof profiles.reinforcement
+         * @param {object} opts 
+         * @returns ...
+         */
+        hexBeam: ({ radius, thickness, insetWidth, offsetWidth }) => {
+            return polyBeam({ radius, segments: 6, thickness, insetWidth, offsetWidth })
+        },
+    }
+
+    return reinforcement;
+}
+
+module.exports = { init: reinforcementInit }</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.brick.html">components.brick</a></li><li><a href="components.brick.northAmerica.html">components.brick.northAmerica</a></li><li><a href="components.crafts.html">components.crafts</a></li><li><a href="components.dowelFittings.html">components.dowelFittings</a></li><li><a href="components.dowelFittings.dowelCouplers.html">components.dowelFittings.dowelCouplers</a></li><li><a href="components.dowelFittings.dowelJigs.html">components.dowelFittings.dowelJigs</a></li><li><a href="components.dowelFittings.dowelJoists.html">components.dowelFittings.dowelJoists</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.moulding.html">components.moulding</a></li><li><a href="components.openWebJoist.html">components.openWebJoist</a></li><li><a href="components.text.html">components.text</a></li><li><a href="components.tile.html">components.tile</a></li><li><a href="components.tile.northAmerica.html">components.tile.northAmerica</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.specifications.html">data.specifications</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="data.standards.crafts.html">data.standards.crafts</a></li><li><a href="data.standards.lumber.html">data.standards.lumber</a></li><li><a href="data.standards.masonry.html">data.standards.masonry</a></li><li><a href="data.standards.paper.html">data.standards.paper</a></li><li><a href="data.standards.tiles.html">data.standards.tiles</a></li><li><a href="models.html">models</a></li><li><a href="models.arch.html">models.arch</a></li><li><a href="models.buttress.html">models.buttress</a></li><li><a href="models.column.html">models.column</a></li><li><a href="models.foil.html">models.foil</a></li><li><a href="models.roof.html">models.roof</a></li><li><a href="models.wall.html">models.wall</a></li><li><a href="models.wall.entryway.html">models.wall.entryway</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.arch.html">profiles.arch</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.curves.html">profiles.curves</a></li><li><a href="profiles.edge.html">profiles.edge</a></li><li><a href="profiles.foil.html">profiles.foil</a></li><li><a href="profiles.frameRect.html">profiles.frameRect</a></li><li><a href="profiles.lumber.html">profiles.lumber</a></li><li><a href="profiles.lumber.northAmerica.html">profiles.lumber.northAmerica</a></li><li><a href="profiles.mesh.html">profiles.mesh</a></li><li><a href="profiles.paper.html">profiles.paper</a></li><li><a href="profiles.reinforcement.html">profiles.reinforcement</a></li><li><a href="profiles.shapes.html">profiles.shapes</a></li><li><a href="profiles.shapes.ellipse.html">profiles.shapes.ellipse</a></li><li><a href="profiles.shapes.rectangle.html">profiles.shapes.rectangle</a></li><li><a href="profiles.shapes.square.html">profiles.shapes.square</a></li><li><a href="profiles.shapes.triangle.html">profiles.shapes.triangle</a></li><li><a href="profiles.text.html">profiles.text</a></li><li><a href="profiles.trim.html">profiles.trim</a></li><li><a href="profiles.trim.aranea.html">profiles.trim.aranea</a></li><li><a href="utils.html">utils</a></li><li><a href="utils.colors.html">utils.colors</a></li><li><a href="utils.extras.html">utils.extras</a></li><li><a href="utils.geometry.html">utils.geometry</a></li><li><a href="utils.geometry.points.html">utils.geometry.points</a></li><li><a href="utils.geometry.regPoly.html">utils.geometry.regPoly</a></li><li><a href="utils.layout.html">utils.layout</a></li><li><a href="utils.math.html">utils.math</a></li><li><a href="utils.palette.html">utils.palette</a></li><li><a href="utils.position.html">utils.position</a></li><li><a href="utils.position.cuboid.html">utils.position.cuboid</a></li><li><a href="utils.position.rectangle.html">utils.position.rectangle</a></li><li><a href="utils.position.triangle.html">utils.position.triangle</a></li><li><a href="utils.transform.html">utils.transform</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Mon Apr 06 2026 14:08:23 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

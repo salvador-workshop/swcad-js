@@ -22,16 +22,16 @@ const mathUtils = ({ lib, swLib }) => {
     return {
         /**
          * ...
-         * @memberof utils.maths
          * @param {*} n 
          * @returns ...
+         * @memberof utils.math
          */
         isEven: (n) => {
             return n % 2 == 0;
         },
         /**
          * ...
-         * @memberof utils.maths
+         * @memberof utils.math
          * @param {*} n 
          * @returns ...
          */
@@ -41,21 +41,21 @@ const mathUtils = ({ lib, swLib }) => {
         arrayCartesianProduct,
         /**
          * ...
-         * @memberof utils.maths
+         * @memberof utils.math
          * @param {*} numInches 
          * @returns ...
          */
         inchesToMm: (numInches) => numInches * INCHES_MM_FACTOR,
         /**
          * ...
-         * @memberof utils.maths
+         * @memberof utils.math
          * @param {*} numInches 
          * @returns ...
          */
         mmToInches: (numMils) => numMils / INCHES_MM_FACTOR,
         /**
          * ...
-         * @memberof utils.maths
+         * @memberof utils.math
          * @param {*} numInches 
          * @returns ...
          */

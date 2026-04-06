@@ -3,8 +3,7 @@
 /**
  * ...
  * @memberof components.dowelFittings
- * @param {*} param0 
- * @returns ...
+ * @namespace dowelJoists
  */
 const dowelJoists = ({ lib, swLib }) => {
     const { cylinder, cuboid } = lib.primitives;
@@ -206,6 +205,8 @@ const dowelJoists = ({ lib, swLib }) => {
      * @param {number} opts.dowelRadius 
      * @param {number} opts.height
      * @returns ...
+     * @memberof components.dowelFittings.dowelJoists
+     * @instance
      */
     const iJoist = ({ dowelRadius, height }) => {
         const initSpecs = {
@@ -249,6 +250,8 @@ const dowelJoists = ({ lib, swLib }) => {
      * @param {number} opts.dowelRadius 
      * @param {number} opts.height
      * @returns ...
+     * @memberof components.dowelFittings.dowelJoists
+     * @instance
      */
     const triJoist = ({ dowelRadius, height }) => {
         const initSpecs = {
@@ -328,6 +331,8 @@ const dowelJoists = ({ lib, swLib }) => {
      * @param {number} opts.dowelRadius 
      * @param {number} opts.height
      * @returns ...
+     * @memberof components.dowelFittings.dowelJoists
+     * @instance
      */
     const squareJoist = ({ dowelRadius, height }) => {
         const initSpecs = {
@@ -380,6 +385,8 @@ const dowelJoists = ({ lib, swLib }) => {
      * @param {number} opts.dowelRadius 
      * @param {number[]} opts.size - [height, width]
      * @returns ...
+     * @memberof components.dowelFittings.dowelJoists
+     * @instance
      */
     const rectJoist = ({ dowelRadius, size }) => {
         const initSpecs = {

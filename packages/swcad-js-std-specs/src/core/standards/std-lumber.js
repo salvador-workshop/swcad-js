@@ -1,5 +1,11 @@
 "use strict"
 
+/**
+ * Lumber standards
+ * @namespace lumber
+ * @memberof data.standards
+ */
+
 const lumberStd = ({ lib, swLib }) => {
     const { constants, maths } = swLib.core
 
@@ -49,7 +55,11 @@ const lumberStd = ({ lib, swLib }) => {
     const widths = [1, 2, 3, 4, 6, 8, 10, 12]
     const depths = [1, 2, 3, 4]
 
-    const computedSizes = {}
+    /**
+     * Dimensional lumber standards
+     * @memberof data.standards.lumber
+     */
+    const dimensional = {}
     const lumberSizes = maths.arrayCartesianProduct(depths, widths)
     lumberSizes.forEach(lumberDims => {
         const depthDim = baseLumberSizes[`${lumberDims[0]}`];
@@ -63,9 +73,13 @@ const lumberStd = ({ lib, swLib }) => {
             depth: depthDim.actual,
             width: widthDim.actual,
         }
-        computedSizes[newPropName] = newVal
+        dimensional[newPropName] = newVal
     });
 
+    /**
+     * Plywood standards
+     * @memberof data.standards.lumber
+     */
     const plywood = {
         thicknesses: {
             EIGHTH: {
@@ -99,13 +113,13 @@ const lumberStd = ({ lib, swLib }) => {
         SHEET_WIDTH_SM: maths.inchesToMm(24),
     }
 
+    // TODO: Add data on
+    // -- pegs
+    // -- biscuits
+    // -- other connectors
+
     return {
-        aux: {
-            TYP_PEG_DIAM: 1,
-            TYP_PEG_LENGTH: 1,
-            TYP_BISCUIT_RADII: [1, 1],
-        },
-        dimensional: computedSizes,
+        dimensional,
         plywood,
     }
 }

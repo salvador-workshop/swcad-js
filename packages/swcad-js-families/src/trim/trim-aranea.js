@@ -186,13 +186,13 @@ const trimAranea = ({ lib, swLib }) => {
 
     /**
      * Creates a set of trimwork profiles
-     * @memberof families.trimAranea
-     * @instance
      * @param {Object} opts 
      * @param {number} opts.unitHeight - Typical height for basic trim unit
      * @param {number} opts.unitDepth - Typical depth for basic trim unit
      * @param {number} opts.detailDepth - Size of corner details (mm). Defaults to 1/3 of `unitDepth`
      * @param {number} opts.styleOpts - Style options ("base", "crown", "dado"). Defaults to "dado"
+     * @memberof profiles.trim.aranea
+     * @instance
      */
     const buildTrimFamily = ({
         unitHeight,
