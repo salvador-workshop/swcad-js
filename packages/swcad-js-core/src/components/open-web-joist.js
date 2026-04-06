@@ -248,10 +248,21 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
 
 
     /**
-     * New Model
-     * @param {*} opts 
+     * Open Web Joist component`
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof openWebJoist
+     * @param {Object} opts - Options for the model
+      * @param {string} opts.type - Type of the model, for future use with different design variations
+      * @param {number} opts.scale - Scale factor for the model
+      * @param {number} opts.interfaceThickness - Thickness of the interface connections
+      * @param {number} opts.fitGap - Gap for fitting parts together
+      * @param {string} opts.logMode - Logging mode for debugging (e.g., 'verbose', 'normal', 'error')
+      * @param {number} opts.width - Width of the joist
+      * @param {number} opts.length - Length of the joist
+      * @param {number} opts.reinforcementLevel - Level of reinforcement (1: basic, 2: moderate, 3: high)
+      * @param {number} opts.unitLength - Length of each unit section for webbing
+      * @param {number} opts.dowelHolderLength - Length of the dowel holder sections
+     * @instance
+     * @memberof components.openWebJoist
      */
     const model = (opts) => {
         const defaults = modelDefaults()
