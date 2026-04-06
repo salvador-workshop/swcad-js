@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: swcad-js-core/src/models/profiles/reinforcement.js</title>
+    <title>JSDoc: Source: swcad-js-core/src/profiles/reinforcement.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: swcad-js-core/src/models/profiles/reinforcement.js</h1>
+    <h1 class="page-title">Source: swcad-js-core/src/profiles/reinforcement.js</h1>
 
     
 
@@ -26,14 +26,14 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const reinforcementInit = ({ lib, swLib }) => {
-    const { rectangle } = lib.primitives
-    const { union } = lib.booleans
-    const { rotate, align, mirror } = lib.transforms
-    const { TAU } = lib.maths.constants
+            <pre class="prettyprint source linenums"><code>const reinforcementInit = ({ jscad, swcadJs }) => {
+    const { rectangle } = jscad.primitives
+    const { union } = jscad.booleans
+    const { rotate, align, mirror } = jscad.transforms
+    const { TAU } = jscad.maths.constants
 
-    const { position } = swLib.core
-    const { profiles } = swLib.models
+    const { position } = swcadJs.utils
+    const { profiles } = swcadJs
 
     //-----------------
     //  REINFORCEMENT

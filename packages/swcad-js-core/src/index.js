@@ -71,7 +71,10 @@ const init = ({ jscad }) => {
         standards: swJscad.core.standards,
     }
 
-    /** Functions organized in the new style */
+    /**
+     * Old functions organized in the new style
+     * @since 0.10.8
+     * */
     const swcadJsCore = {
         profiles: coreProfiles,
         components: coreComponents,
@@ -97,6 +100,10 @@ const init = ({ jscad }) => {
         ...swcadJsComponents,
     }
 
+    /**
+     * User-facing library
+     * @since 0.10.8
+     * */
     const swcadJs = {
         profiles,
         components,
