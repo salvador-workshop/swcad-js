@@ -12,13 +12,14 @@
 // - Cylinders with rounded corners
 //---------------------
 
-const superPrimsMeshInit = ({ lib, swLib }) => {
-    const { cuboid, cylinder, triangle, rectangle } = lib.primitives
-    const { translate, rotate, align, mirror } = lib.transforms
-    const { subtract, union } = lib.booleans
-    const { measureBoundingBox } = lib.measurements
-    const { extrudeRotate, extrudeLinear } = lib.extrusions
-    const { TAU } = lib.maths.constants
+const mesh3dInit = ({ jscad, swcadJs }) => {
+
+    const { cuboid, cylinder, triangle, rectangle } = jscad.primitives
+    const { translate, rotate, align, mirror } = jscad.transforms
+    const { subtract, union } = jscad.booleans
+    const { measureBoundingBox } = jscad.measurements
+    const { extrudeRotate, extrudeLinear } = jscad.extrusions
+    const { TAU } = jscad.maths.constants
 
     const { maths, geometry, position } = swLib.core
 
@@ -516,4 +517,4 @@ const superPrimsMeshInit = ({ lib, swLib }) => {
     }
 }
 
-module.exports = { init: superPrimsMeshInit };
+module.exports = { init: mesh3dInit };

@@ -5,6 +5,7 @@ const componentsInit = ({ jscad, swcadJs }) => {
 
     components.beadsBits = require('./beads-bits').init({ jscad, swcadJs });
     components.openWebJoist = require('./open-web-joist').init({ jscad, swcadJs });
+    components.mesh = require('./mesh-3d').init({ jscad, swcadJs });
 
     return components;
 }
