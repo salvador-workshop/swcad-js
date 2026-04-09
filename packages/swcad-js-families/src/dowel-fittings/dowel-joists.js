@@ -4,6 +4,7 @@
  * ...
  * @memberof components.dowelFittings
  * @namespace dowelJoists
+ * @deprecated
  */
 const dowelJoists = ({ lib, swLib }) => {
     const { cylinder, cuboid } = lib.primitives;

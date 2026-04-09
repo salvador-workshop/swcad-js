@@ -96,152 +96,159 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
      * Builds a flat mesh panel model.
      * @memberof components.mesh
      * @param {*} opts 
-     * @param {number[]} opts.size
-     * @param {Number} opts.radius - radius
-     * @param {Number} opts.segments - # of segments in mesh holes
-     * @param {Number} opts.edgeMargin - distance between edges and mesh holes
-     * @param {Number} opts.meshThickness - distance between mesh openings
-     * @param {String} opts.pattern - 'tri' (default) or 'square'
-     * @param {String} opts.patternMode - 'contain' (default) or 'fill'
      * @returns ...
      */
     const meshPanel = ({
+        // size,
+        // radius,
+        // segments = 12,
+        // edgeMargin,
+        // meshThickness,
+        // pattern = 'tri',
+        // patternMode = 'contain',
+        // edgeInsets = [0, 0],
+        // edgeOffsets = [0, 0],
         size,
-        radius,
-        segments = 12,
+        thickness,
         edgeMargin,
-        meshThickness,
-        pattern = 'tri',
-        patternMode = 'contain',
-        edgeInsets = [0, 0],
-        edgeOffsets = [0, 0],
+        holeRadius,
+        holeDistance,
+        holePattern,
     }) => {
-        const calcMeshThickness = meshThickness || size[2];
-        const punchSpecs = {
-            radius: radius,
-            height: size[2] * 2,
-            segments,
-        }
+        // const calcMeshThickness = meshThickness || size[2];
+        // const punchSpecs = {
+        //     radius: radius,
+        //     height: size[2] * 2,
+        //     segments,
+        // }
 
-        const meshSpecs = {
-            radius: radius + (calcMeshThickness / 2),
-            edgeMargin: edgeMargin || radius + size[2],
+        // const meshSpecs = {
+        //     radius: radius + (calcMeshThickness / 2),
+        //     edgeMargin: edgeMargin || radius + size[2],
 
-        }
-        meshSpecs.length = size[0] - (meshSpecs.edgeMargin * 2)
-        meshSpecs.width = size[1] - (meshSpecs.edgeMargin * 2)
-        meshSpecs.height = size[2]
+        // }
+        // meshSpecs.length = size[0] - (meshSpecs.edgeMargin * 2)
+        // meshSpecs.width = size[1] - (meshSpecs.edgeMargin * 2)
+        // meshSpecs.height = size[2]
 
-        let outputPanel = null
-        const basePlate = cuboid({ size });
-        const basePlateCoords = position.cuboid.getCuboidCoords(basePlate)
-        const basePlateCtrlPoints = position.cuboid.getCuboidCtrlPoints(basePlate)
-        let baseShape = basePlate
+        // let outputPanel = null
+        // const basePlate = cuboid({ size });
+        // const basePlateCoords = position.cuboid.getCuboidCoords(basePlate)
+        // const basePlateCtrlPoints = position.cuboid.getCuboidCtrlPoints(basePlate)
+        // let baseShape = basePlate
 
-        const hasInset = edgeInsets.some(insetVal => insetVal > 0)
-        const hasOffset = edgeOffsets.some(offsetVal => offsetVal > 0)
+        // const hasInset = edgeInsets.some(insetVal => insetVal > 0)
+        // const hasOffset = edgeOffsets.some(offsetVal => offsetVal > 0)
 
-        if (hasInset) {
-            edgeInsets.forEach((insetWidth, idx) => {
-                if (insetWidth === 0) {
-                    return
-                }
-                const isTop = idx === 0;
-                let insetSectionAlignOpts = {};
-                let insetFlangeAlignOpts = {};
-                const flipOpts = []
-                if (isTop) {
-                    insetSectionAlignOpts = { modes: ['min', 'min', 'max'] }
-                    insetFlangeAlignOpts = { modes: ['center', 'max', 'min'], relativeTo: [0, basePlateCoords.back, basePlateCoords.top], }
-                    flipOpts.push('vertical')
-                } else {
-                    insetSectionAlignOpts = { modes: ['min', 'min', 'min'] };
-                    insetFlangeAlignOpts = { modes: ['center', 'min', 'min'], relativeTo: [0, basePlateCoords.front, basePlateCoords.top], };
-                }
-                const insetSection = align(
-                    insetSectionAlignOpts,
-                    edgeFlange('inset', insetWidth, 0.5, flipOpts)
-                )
-                const insetReinforcement = align(
-                    insetFlangeAlignOpts,
-                    rotate([0, TAU / 4, 0], extrudeLinear({ height: size[0] }, insetSection))
-                )
+        // if (hasInset) {
+        //     edgeInsets.forEach((insetWidth, idx) => {
+        //         if (insetWidth === 0) {
+        //             return
+        //         }
+        //         const isTop = idx === 0;
+        //         let insetSectionAlignOpts = {};
+        //         let insetFlangeAlignOpts = {};
+        //         const flipOpts = []
+        //         if (isTop) {
+        //             insetSectionAlignOpts = { modes: ['min', 'min', 'max'] }
+        //             insetFlangeAlignOpts = { modes: ['center', 'max', 'min'], relativeTo: [0, basePlateCoords.back, basePlateCoords.top], }
+        //             flipOpts.push('vertical')
+        //         } else {
+        //             insetSectionAlignOpts = { modes: ['min', 'min', 'min'] };
+        //             insetFlangeAlignOpts = { modes: ['center', 'min', 'min'], relativeTo: [0, basePlateCoords.front, basePlateCoords.top], };
+        //         }
+        //         const insetSection = align(
+        //             insetSectionAlignOpts,
+        //             edgeFlange('inset', insetWidth, 0.5, flipOpts)
+        //         )
+        //         const insetReinforcement = align(
+        //             insetFlangeAlignOpts,
+        //             rotate([0, TAU / 4, 0], extrudeLinear({ height: size[0] }, insetSection))
+        //         )
 
-                baseShape = union(insetReinforcement, baseShape)
-            })
-        }
+        //         baseShape = union(insetReinforcement, baseShape)
+        //     })
+        // }
 
-        if (hasOffset) {
-            edgeOffsets.forEach((offsetWidth, idx) => {
-                if (offsetWidth === 0) {
-                    return
-                }
-                const isTop = idx === 0;
-                let offsetSectionAlignOpts = {};
-                let offsetFlangeAlignOpts = {};
-                const flipOpts = []
-                if (isTop) {
-                    offsetSectionAlignOpts = { modes: ['min', 'min', 'max'] }
-                    offsetFlangeAlignOpts = { modes: ['center', 'max', 'max'], relativeTo: [0, basePlateCoords.back, basePlateCoords.bottom], }
-                    flipOpts.push('vertical')
-                } else {
-                    offsetSectionAlignOpts = { modes: ['min', 'min', 'min'] };
-                    offsetFlangeAlignOpts = { modes: ['center', 'min', 'max'], relativeTo: [0, basePlateCoords.front, basePlateCoords.bottom], };
-                }
-                const offsetSection = align(
-                    offsetSectionAlignOpts,
-                    edgeFlange('offset', offsetWidth, 0.5, flipOpts)
-                )
-                const offsetReinforcement = align(
-                    offsetFlangeAlignOpts,
-                    rotate([0, TAU / 4, 0], extrudeLinear({ height: size[0] }, offsetSection))
-                )
+        // if (hasOffset) {
+        //     edgeOffsets.forEach((offsetWidth, idx) => {
+        //         if (offsetWidth === 0) {
+        //             return
+        //         }
+        //         const isTop = idx === 0;
+        //         let offsetSectionAlignOpts = {};
+        //         let offsetFlangeAlignOpts = {};
+        //         const flipOpts = []
+        //         if (isTop) {
+        //             offsetSectionAlignOpts = { modes: ['min', 'min', 'max'] }
+        //             offsetFlangeAlignOpts = { modes: ['center', 'max', 'max'], relativeTo: [0, basePlateCoords.back, basePlateCoords.bottom], }
+        //             flipOpts.push('vertical')
+        //         } else {
+        //             offsetSectionAlignOpts = { modes: ['min', 'min', 'min'] };
+        //             offsetFlangeAlignOpts = { modes: ['center', 'min', 'max'], relativeTo: [0, basePlateCoords.front, basePlateCoords.bottom], };
+        //         }
+        //         const offsetSection = align(
+        //             offsetSectionAlignOpts,
+        //             edgeFlange('offset', offsetWidth, 0.5, flipOpts)
+        //         )
+        //         const offsetReinforcement = align(
+        //             offsetFlangeAlignOpts,
+        //             rotate([0, TAU / 4, 0], extrudeLinear({ height: size[0] }, offsetSection))
+        //         )
 
-                baseShape = union(offsetReinforcement, baseShape)
-            })
-        }
+        //         baseShape = union(offsetReinforcement, baseShape)
+        //     })
+        // }
 
-        const parts = [baseShape]
-        const punch = cylinder(punchSpecs);
+        // const parts = [baseShape]
+        // const punch = cylinder(punchSpecs);
 
-        if (patternMode === 'contain') {
-            // pattern is neatly contained in the bounding rectangle
-            const punchPoints = getPunchPoints(pattern, meshSpecs.length, meshSpecs.width, meshSpecs.radius)
-            punchPoints.forEach(punchPt => {
-                parts.push(translate([punchPt.x, punchPt.y, 0], punch))
-            });
+        // if (patternMode === 'contain') {
+        //     // pattern is neatly contained in the bounding rectangle
+        //     const punchPoints = getPunchPoints(pattern, meshSpecs.length, meshSpecs.width, meshSpecs.radius)
+        //     punchPoints.forEach(punchPt => {
+        //         parts.push(translate([punchPt.x, punchPt.y, 0], punch))
+        //     });
 
-            outputPanel = subtract(...parts)
-        }
+        //     outputPanel = subtract(...parts)
+        // }
 
-        else if (patternMode === 'fill') {
-            // pattern extends outside the bounding rectangle, and gets cut off
-            const punchPoints = getPunchPoints(
-                pattern,
-                size[0] + (meshSpecs.radius * 2),
-                size[1] + (meshSpecs.radius * 2),
-                meshSpecs.radius
-            )
-            punchPoints.forEach(punchPt => {
-                parts.push(translate([punchPt.x, punchPt.y, 0], punch))
-            });
+        // else if (patternMode === 'fill') {
+        //     // pattern extends outside the bounding rectangle, and gets cut off
+        //     const punchPoints = getPunchPoints(
+        //         pattern,
+        //         size[0] + (meshSpecs.radius * 2),
+        //         size[1] + (meshSpecs.radius * 2),
+        //         meshSpecs.radius
+        //     )
+        //     punchPoints.forEach(punchPt => {
+        //         parts.push(translate([punchPt.x, punchPt.y, 0], punch))
+        //     });
 
-            const punchedPanel = subtract(...parts)
-            const panelEdge = subtract(
-                baseShape,
-                cuboid({
-                    size: [
-                        size[0] - (meshSpecs.edgeMargin * 2),
-                        size[1] - (meshSpecs.edgeMargin * 2),
-                        size[2] * 1.5,
-                    ]
-                })
-            );
+        //     const punchedPanel = subtract(...parts)
+        //     const panelEdge = subtract(
+        //         baseShape,
+        //         cuboid({
+        //             size: [
+        //                 size[0] - (meshSpecs.edgeMargin * 2),
+        //                 size[1] - (meshSpecs.edgeMargin * 2),
+        //                 size[2] * 1.5,
+        //             ]
+        //         })
+        //     );
 
-            outputPanel = union(punchedPanel, panelEdge)
-        }
+        //     outputPanel = union(punchedPanel, panelEdge)
+        // }
 
-        return outputPanel
+        // return outputPanel
+
+
+
+
+
+        const mPanel = null
+        
+        return mPanel
     }
 
     /**
@@ -249,6 +256,7 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
      * @memberof components.mesh
      * @param {*} param0 
      * @returns ...
+     * @deprecated
      */
     const meshCuboid = ({
         size,
@@ -366,6 +374,7 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
      * @memberof components.mesh
      * @param {*} opts 
      * @returns ...
+     * @deprecated
      */
     const meshCylinder = ({
         radius,
