@@ -5,6 +5,65 @@
  */
 
 const mesh2dInit = ({ jscad, swcadJs }) => {
+    const {
+        cube,
+        cylinder,
+        sphere,
+        cylinderElliptic,
+        circle,
+        cuboid,
+        roundedCuboid,
+        roundedCylinder,
+        roundedRectangle,
+        rectangle,
+        triangle,
+    } = jscad.primitives
+
+    const {
+        align,
+        translate,
+        rotate,
+        mirror
+    } = jscad.transforms
+
+    const {
+        intersect,
+        subtract,
+        union,
+        scission
+    } = jscad.booleans
+
+    const {
+        extrudeLinear,
+        extrudeRotate,
+        project
+    } = jscad.extrusions
+
+    const {
+        measureDimensions,
+        measureBoundingBox,
+        measureVolume
+    } = jscad.measurements
+
+    const {
+        hull,
+        hullChain
+    } = jscad.hulls
+
+    const { vectorText } = jscad.text
+    const { toOutlines } = jscad.geometries.geom2
+    const { TAU } = jscad.maths.constants
+    const { colorize } = jscad.colors
+
+    const {
+        math,
+        position,
+        geometry,
+    } = swcadJs.utils
+
+    const {
+        constants,
+    } = swcadJs.data
 
     /**
      * Builds default values and opts for the model
@@ -13,14 +72,13 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
      * @memberof profiles.mesh
      */
     const modelDefaults = () => {
-        const utils = modelUtils()
 
         /** Specific value declarations */
         const defaultValues = {
             dims: {
                 size: [
-                    utils.inchesToMm(6),
-                    utils.inchesToMm(3),
+                    math.inchesToMm(6),
+                    math.inchesToMm(3),
                 ],
             },
             points: {
@@ -38,11 +96,11 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             type: 'default',
             scale: 1,
             interfaceThickness: 1.333333,
-            fitGap: utils.inchesToMm(1 / 128),
+            fitGap: math.inchesToMm(1 / 128),
             logMode: 'normal',
-            edgeMargin: utils.inchesToMm(3 / 16),
-            holeRadius: utils.inchesToMm(0.125),
-            holeDistance: utils.inchesToMm(0.5),
+            edgeMargin: math.inchesToMm(3 / 16),
+            holeRadius: math.inchesToMm(0.125),
+            holeDistance: math.inchesToMm(0.5),
             holePattern: 'tri',
         }
 
@@ -63,7 +121,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
      * @memberof profiles.mesh
      */
     const modelProps = (opts) => {
-        const utils = modelUtils()
         const defaults = modelDefaults()
         console.log('panelFrameProps() -- opts', opts)
 
@@ -184,7 +241,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
      * @memberof profiles.mesh
      */
     const model = (opts) => {
-        const utils = modelUtils()
         const defaults = modelDefaults()
 
         // User options
