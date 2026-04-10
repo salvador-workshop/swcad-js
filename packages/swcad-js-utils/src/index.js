@@ -1,11 +1,9 @@
-const uxModule = require('./ux');
+"use strict"
 
-const init = ({ lib, swLib }) => {
-    let swJscadUi = {
-        ux: { ...uxModule.init({ lib, swLib }) }
-    }
-
-    return swJscadUi;
+const utilsInit = ({ jscad, swcadJs }) => {
+    return null
 }
 
-module.exports = { init };
+module.exports = {
+    init: utilsInit,
+};

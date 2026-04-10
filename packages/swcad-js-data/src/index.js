@@ -1,9 +1,9 @@
 "use strict"
 
-const coreModule = require('./core');
-
-const init = ({ lib }) => {
-    return coreModule.init({ lib });
+const dataInit = ({ jscad, swcadJs }) => {
+    return null
 }
 
-module.exports = { init };
+module.exports = {
+    init: dataInit,
+};

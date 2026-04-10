@@ -1,123 +1,53 @@
 const componentsModule = require('./components');
 const profilesModule = require('./profiles');
 
-const init = ({ jscad }) => {
-    /**
-     * Constants, standards, specs
-     * @namespace data
-     */
-    const coreData = {
-        constants: swJscad.core.constants,
-        specifications: swJscad.core.specifications,
-        standards: swJscad.core.standards,
-    }
+"use strict"
+
+const coreInit = ({ jscad }) => {
 
     /**
-     * Constants, standards, specs
-     * @namespace calcs
-     */
-    const coreCalcs = {
-        math: swJscad.core.maths,
-        geometry: swJscad.core.geometry,
-        position: swJscad.core.position,
-        transform: swJscad.utils.transform,
-    }
-
-    const coreProfiles = {
-        text: swJscad.models.profiles.text2d,
-        trim: swJscad.families.trim,
-        connections: swJscad.models.profiles.connections,
-        curves: swJscad.models.profiles.curves,
-        edge: swJscad.models.profiles.edge,
-        structure: {
-            arch: swJscad.models.profiles.arch,
-            foil: swJscad.models.profiles.foils2d,
-            mesh: swJscad.models.profiles.mesh2d,
-
-        },
-        shapes: {
-            ellipse: swJscad.models.profiles.ellipse,
-            octagon: swJscad.models.profiles.octagonal,
-            rectangle: {
-                ...swJscad.models.profiles.rectangle,
-                frame: swJscad.models.profiles.frameRect,
-            },
-            triangle: swJscad.models.profiles.triangle,
-            square: {
-                sqCornerCircNotch: swJscad.models.profiles.sqCornerCircNotch,
-                sqCornerCircles: swJscad.models.profiles.sqCornerCircles,
-            }
-        }
-    }
-
-    const coreProfileSpec = {
-        lumber: swJscad.families.lumber,
-        paper: swJscad.families.paper,
-    }
-
-    const coreComponents = {
-        text: swJscad.models.prefab.text3d,
-        mesh: swJscad.models.prefab.mesh3d,
-        moulding: swJscad.models.prefab.mouldings,
-        dowelFittings: swJscad.families.dowelFittings,
-    }
-
-    const coreComponentSpec = {
-        brick: swJscad.families.brick,
-        tile: swJscad.families.tile,
-        crafts: swJscad.families.crafts,
-    }
-
-    const coreModels = {
-        foil: swJscad.models.prefab.foils3d,
-        arch: swJscad.models.prefab.arch,
-        buttress: swJscad.builders.buttress,
-        wall: {
-            ...swJscad.builders.walls,
-            entryway: swJscad.builders.entryways
-        },
-        column: swJscad.builders.columns,
-        roof: swJscad.builders.roofs,
-    }
-
-    const coreUtils = {
-        extras: swJscad.utils.extras,
-        colors: swJscad.ui.ux.colors,
-        layout: swJscad.ui.ux.layout,
-    }
-
-    /**
-     * Old functions organized in the new style
+     * First step to building the library
      * @since 0.11.1
      * */
     const swcadJsCore = {
-        data: coreData,
-        calcs: coreCalcs,
-        profiles: coreProfiles,
-        profileSpec: coreProfileSpec,
-        components: coreComponents,
-        componentSpec: coreComponentSpec,
-        models: coreModels,
-        utils: coreUtils,
+        data: require('swcad-js-data').init({ jscad }),
+        calcs: null,
+        utils: null,
+        profiles: null,
+        profileSpec: null,
+        components: null,
+        componentSpec: null,
+        models: null,
     }
 
 
-    // ----------------
-    // New Components
-    // ----------------
+    /**
+     * Intermediate step to building the library
+     * @since 0.11.1
+     * */
+    let swcadJsAssembly = swcadJsCore
 
-    const swcadJsProfiles = profilesModule.init({ jscad, swcadJs: swcadJsCore })
-    const profiles = {
-        ...coreProfiles,
-        ...swcadJsProfiles,
-    }
-    swcadJsCore.profiles = profiles
+    const assemblyCalcs = require('swcad-js-calcs').init({ jscad, swcadJs: swcadJsAssembly })
+    swcadJsAssembly.calcs = assemblyCalcs
 
-    const swcadJsComponents = componentsModule.init({ jscad, swcadJs: swcadJsCore });
-    const components = {
-        ...coreComponents,
-        ...swcadJsComponents,
-    }
+    const assemblyUtils = require('swcad-js-utils').init({ jscad, swcadJs: swcadJsAssembly })
+    swcadJsAssembly.utils = assemblyUtils
+
+    const assemblyProfiles = require('swcad-js-profiles').init({ jscad, swcadJs: swcadJsAssembly })
+    swcadJsAssembly.profiles = assemblyProfiles
+
+    const assemblyProfileSpec = require('swcad-js-profile-spec').init({ jscad, swcadJs: swcadJsAssembly })
+    swcadJsAssembly.profileSpec = assemblyProfileSpec
+
+    const assemblyComponents = require('swcad-js-components').init({ jscad, swcadJs: swcadJsAssembly })
+    swcadJsAssembly.components = assemblyComponents
+
+    const assemblyComponentSpec = require('swcad-js-component-spec').init({ jscad, swcadJs: swcadJsAssembly })
+    swcadJsAssembly.componentSpec = assemblyComponentSpec
+
+    const assemblyModels = require('swcad-js-models').init({ jscad, swcadJs: swcadJsAssembly })
+    swcadJsAssembly.models = assemblyModels
+
 
     /**
      * User-facing library
@@ -126,12 +56,12 @@ const init = ({ jscad }) => {
     const swcadJs = {
         data: swcadJsCore.data,
         calcs: swcadJsCore.calcs,
+        utils: swcadJsCore.utils,
         profiles: swcadJsCore.profiles,
         profileSpec: swcadJsCore.profileSpec,
         components: components,
         componentSpec: swcadJsCore.componentSpec,
         models: swcadJsCore.models,
-        utils: swcadJsCore.utils,
     }
 
     console.log('swcadJs initialized', swcadJs);
@@ -139,4 +69,6 @@ const init = ({ jscad }) => {
     return swcadJs
 }
 
-module.exports = { init };
+module.exports = {
+    init: coreInit,
+};
