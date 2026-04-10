@@ -14,6 +14,7 @@ const rectangularFrameInit = ({ jscad, swcadJs }) => {
     const { TAU } = jscad.maths.constants
 
     const { profiles } = swcadJs
+    const { shapes } = swcadJs.profiles
     const { position } = swcadJs.calcs
 
     // Defining corner styles and available tag options
@@ -40,32 +41,32 @@ const rectangularFrameInit = ({ jscad, swcadJs }) => {
         tri45deg: {
             id: 'tri45deg',
             ...cStyleDefault,
-            func: profiles.triangle.right45
+            func: shapes.triangle.right45
         },
         tri30deg: {
             id: 'tri30deg',
             ...cStyleDefault,
-            func: profiles.triangle.right30
+            func: shapes.triangle.right30
         },
         triGolden: {
             id: 'triGolden',
             ...cStyleDefault,
-            func: profiles.triangle.rightGolden
+            func: shapes.triangle.rightGolden
         },
         triSilver: {
             id: 'triSilver',
             ...cStyleDefault,
-            func: profiles.triangle.rightSilver
+            func: shapes.triangle.rightSilver
         },
         triBronze: {
             id: 'triBronze',
             ...cStyleDefault,
-            func: profiles.triangle.rightBronze
+            func: shapes.triangle.rightBronze
         },
         triCopper: {
             id: 'triCopper',
             ...cStyleDefault,
-            func: profiles.triangle.rightCopper
+            func: shapes.triangle.rightCopper
         },
     }
 
@@ -77,37 +78,37 @@ const rectangularFrameInit = ({ jscad, swcadJs }) => {
         rectGolden: {
             id: 'rectGolden',
             ...cStDefRect,
-            func: profiles.rectangle.golden
+            func: shapes.rectangle.golden
         },
         rectSixtyThirty: {
             id: 'rectSixtyThirty',
             ...cStDefRect,
-            func: profiles.rectangle.sixtyThirty
+            func: shapes.rectangle.sixtyThirty
         },
         rectSilver: {
             id: 'rectSilver',
             ...cStDefRect,
-            func: profiles.rectangle.silver
+            func: shapes.rectangle.silver
         },
         rectBronze: {
             id: 'rectBronze',
             ...cStDefRect,
-            func: profiles.rectangle.bronze
+            func: shapes.rectangle.bronze
         },
         rectCopper: {
             id: 'rectCopper',
             ...cStDefRect,
-            func: profiles.rectangle.copper
+            func: shapes.rectangle.copper
         },
         rectSuperGolden: {
             id: 'rectSuperGolden',
             ...cStDefRect,
-            func: profiles.rectangle.superGolden
+            func: shapes.rectangle.superGolden
         },
         rectPlastic: {
             id: 'rectPlastic',
             ...cStDefRect,
-            func: profiles.rectangle.plastic
+            func: shapes.rectangle.plastic
         },
     }
 
@@ -119,37 +120,37 @@ const rectangularFrameInit = ({ jscad, swcadJs }) => {
         ellipseGolden: {
             id: 'ellipseGolden',
             ...cStDefEllipse,
-            func: profiles.ellipse.golden
+            func: shapes.ellipse.golden
         },
         ellipseSixtyThirty: {
             id: 'ellipseSixtyThirty',
             ...cStDefEllipse,
-            func: profiles.ellipse.sixtyThirty
+            func: shapes.ellipse.sixtyThirty
         },
         ellipseSilver: {
             id: 'ellipseSilver',
             ...cStDefEllipse,
-            func: profiles.ellipse.silver
+            func: shapes.ellipse.silver
         },
         ellipseBronze: {
             id: 'ellipseBronze',
             ...cStDefEllipse,
-            func: profiles.ellipse.bronze
+            func: shapes.ellipse.bronze
         },
         ellipseCopper: {
             id: 'ellipseCopper',
             ...cStDefEllipse,
-            func: profiles.ellipse.copper
+            func: shapes.ellipse.copper
         },
         ellipseSuperGolden: {
             id: 'ellipseSuperGolden',
             ...cStDefEllipse,
-            func: profiles.ellipse.superGolden
+            func: shapes.ellipse.superGolden
         },
         ellipsePlastic: {
             id: 'ellipsePlastic',
             ...cStDefEllipse,
-            func: profiles.ellipse.plastic
+            func: shapes.ellipse.plastic
         },
     }
 

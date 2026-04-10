@@ -51,14 +51,14 @@ const coreInit = ({ jscad }) => {
      * @since 0.11.1
      * */
     const swcadJs = {
-        data: swcadJsCore.data,
-        calcs: swcadJsCore.calcs,
-        profiles: swcadJsCore.profiles,
-        profileSpec: swcadJsCore.profileSpec,
-        components: components,
-        componentSpec: swcadJsCore.componentSpec,
-        utils: swcadJsCore.utils,
-        models: swcadJsCore.models,
+        data: swcadJsAssembly.data,
+        calcs: swcadJsAssembly.calcs,
+        profiles: swcadJsAssembly.profiles,
+        profileSpec: swcadJsAssembly.profileSpec,
+        components: swcadJsAssembly.components,
+        componentSpec: swcadJsAssembly.componentSpec,
+        utils: swcadJsAssembly.utils,
+        models: swcadJsAssembly.models,
     }
 
     console.log('swcadJs initialized', swcadJs);

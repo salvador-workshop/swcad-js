@@ -16,22 +16,6 @@ const profileBuilder = ({ jscad, swcadJs }) => {
   const { constants } = swcadJs.data
   const { position } = swcadJs.calcs
 
-  /**
-   * Builds various 2D shapes
-   * @memberof profiles
-   * @namespace shapes
-   */
-  const shapes = {
-    /**
-     * Builds various 2D squares
-     * @memberof profiles.shapes
-     * @namespace square
-     */
-    square: {
-
-    }
-  }
-
 
   //-------------
   //  TRIANGLES
@@ -206,7 +190,17 @@ const profileBuilder = ({ jscad, swcadJs }) => {
   //  OUTPUT
   //----------
 
-  return {
+  /**
+   * Builds various 2D shapes
+   * @memberof profiles
+   * @namespace shapes
+   */
+  const shapes = {
+    /**
+     * Builds various 2D squares
+     * @memberof profiles.shapes
+     * @namespace square
+     */
     square: {
       /**
        * Square with circular notches at corners.
@@ -287,9 +281,21 @@ const profileBuilder = ({ jscad, swcadJs }) => {
       }
     },
     triangle: triangles,
-    rectangle: rectangleModule.init({ jscad, swcadJs }),
+    rectangle: null,
     ellipse: ellipses,
   }
+
+  const preLib = {
+    ...swcadJs,
+    profiles: {
+      ...swcadJs.profiles,
+      shapes
+    }
+  }
+
+  shapes.rectangle = rectangleModule.init({ jscad, swcadJs: preLib })
+
+  return shapes
 }
 
 module.exports = { init: profileBuilder }

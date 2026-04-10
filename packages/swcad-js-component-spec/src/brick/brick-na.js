@@ -9,7 +9,7 @@
 const brickNorthAmerica = ({ jscad, swcadJs }) => {
 
     const { cuboid } = jscad.primitives;
-    const { masonry } = swcadJs.core.standards;
+    const { masonry } = swcadJs.data.standards;
 
     const brickNorAm = {}
     const brickNorAmSpecs = [

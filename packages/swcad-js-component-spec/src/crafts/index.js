@@ -14,18 +14,19 @@ const init = ({ jscad, swcadJs }) => {
     const { extrudeLinear, extrudeRotate } = jscad.extrusions
     const { TAU } = jscad.maths.constants
 
-    const { standards, maths, position } = swcadJs.core
+    const { standards } = swcadJs.data
+    const { math, position } = swcadJs.calcs
 
     const toothpickSpecs = {
         radius: standards.crafts.DIAM_TOOTHPICK / 2,
-        length: maths.inchesToMm(4),
-        pointLength: maths.inchesToMm(1 / 4),
+        length: math.inchesToMm(4),
+        pointLength: math.inchesToMm(1 / 4),
     }
 
     const bbqSkewerSpecs = {
         radius: standards.crafts.DIAM_BBQ_SKEWER / 2,
-        length: maths.inchesToMm(12),
-        pointLength: maths.inchesToMm(0.5),
+        length: math.inchesToMm(12),
+        pointLength: math.inchesToMm(0.5),
     }
 
     const popsicleStickSpecs = {

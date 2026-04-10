@@ -96,7 +96,6 @@ const rectangleInit = ({ jscad, swcadJs }) => {
 
     return {
         ...rectangles,
-        frame: rectFrame.init({ jscad, swcadJs }),
     }
 }
 

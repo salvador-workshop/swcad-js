@@ -23,7 +23,7 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
 
     const {
         math,
-    } = swcadJs.utils
+    } = swcadJs.calcs
 
     const {
         mesh: mesh2d

@@ -5,10 +5,18 @@ const layout = require('./layout')
 const palette = require('./palette')
 
 const utilsInit = ({ jscad, swcadJs }) => {
+    const coloursCore = colors.init({ jscad, swcadJs })
+
+    const preLib = {
+        ...swcadJs,
+        utils: {
+            colors: coloursCore
+        },
+    }
     return {
-        colors: colors.init({ jscad, swcadJs }),
-        layout: layout.init({ jscad, swcadJs }),
-        palette: palette.init({ jscad, swcadJs }),
+        colors: coloursCore,
+        layout: layout.init({ jscad, swcadJs: preLib }),
+        palette: palette.init({ jscad, swcadJs: preLib }),
     }
 }
 

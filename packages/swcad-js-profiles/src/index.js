@@ -1,6 +1,5 @@
 "use strict"
 
-const profiles = require('./profiles')
 const beadsBits = require('./beads-bits')
 const connections = require('./connections')
 const curve = require('./curve')

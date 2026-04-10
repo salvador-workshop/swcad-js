@@ -1,14 +1,13 @@
 "use strict"
 
-const profilesInit = ({ jscad, swcadJs }) => {
-    const profiles = {
-        ...require('../profiles').init({ jscad, swcadJs }),
+const structureInit = ({ jscad, swcadJs }) => {
+    const structure = {
         foils2d: require('./foils-2d').init({ jscad, swcadJs }),
         text2d: require('../text').init({ jscad, swcadJs }),
         arch: require('./arch-2d').init({ jscad, swcadJs }),
     }
 
-    return profiles
+    return structure
 }
 
-module.exports = { init: profilesInit };
+module.exports = { init: structureInit };

@@ -61,7 +61,7 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
     const {
         math,
         position,
-    } = swcadJs.utils
+    } = swcadJs.calcs
 
     const beadsBits = require('../beads-bits').init({ jscad, swcadJs });
 

@@ -16,7 +16,7 @@ const textUtils = ({ jscad, swcadJs }) => {
     const { extrudeLinear } = jscad.extrusions
     const { measureDimensions } = jscad.measurements;
 
-    const { text2d } = swcadJs.models.profiles
+    const { text: text2d } = swcadJs.profiles
 
     /**
      * Creates a simple 3D line of text

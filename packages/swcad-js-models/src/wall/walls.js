@@ -12,9 +12,9 @@ const wallBuilder = ({ jscad, swcadJs }) => {
     const { cuboid } = jscad.primitives
     const { measureDimensions } = jscad.measurements;
 
-    const { mouldings } = swcadJs.models.prefab
-    const { aranea } = swcadJs.trim
-    const { PHI_INV } = swcadJs.core.constants
+    const { mouldings } = swcadJs.components
+    const { aranea } = swcadJs.profiles.trim
+    const { PHI_INV } = swcadJs.data.constants
 
     const crownTrim = ({ totalThickness, totalLength, trimProfile }) => {
         const profileDims = measureDimensions(trimProfile);
