@@ -1,6 +1,6 @@
 {
   "name": "swcad-js-profile-spec",
-  "version": "0.11.1",
+  "version": "0.11.1-alpha.0",
   "description": "swcad-js-profile-spec",
   "homepage": "",
   "main": "src/index.js",

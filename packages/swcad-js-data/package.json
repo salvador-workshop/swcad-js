@@ -1,7 +1,7 @@
 {
   "name": "swcad-js-data",
-  "version": "0.10.1",
-  "description": "Standards and specs for Salvador Workshop's JSCAD utilities and toolkit.",
+  "version": "0.11.1-alpha.0",
+  "description": "swcad-js-data",
   "homepage": "",
   "main": "src/index.js",
   "scripts": {
