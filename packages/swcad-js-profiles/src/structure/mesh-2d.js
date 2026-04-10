@@ -59,7 +59,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
         math,
         position,
         geometry,
-    } = swcadJs.utils
+    } = swcadJs.calcs
 
     const {
         constants,

@@ -9,11 +9,11 @@ const coreInit = ({ jscad }) => {
     const swcadJsCore = {
         data: require('swcad-js-data').init({ jscad }),
         calcs: null,
-        utils: null,
         profiles: null,
         profileSpec: null,
         components: null,
         componentSpec: null,
+        utils: null,
         models: null,
     }
 
@@ -27,9 +27,6 @@ const coreInit = ({ jscad }) => {
     const assemblyCalcs = require('swcad-js-calcs').init({ jscad, swcadJs: swcadJsAssembly })
     swcadJsAssembly.calcs = assemblyCalcs
 
-    const assemblyUtils = require('swcad-js-utils').init({ jscad, swcadJs: swcadJsAssembly })
-    swcadJsAssembly.utils = assemblyUtils
-
     const assemblyProfiles = require('swcad-js-profiles').init({ jscad, swcadJs: swcadJsAssembly })
     swcadJsAssembly.profiles = assemblyProfiles
 
@@ -42,6 +39,9 @@ const coreInit = ({ jscad }) => {
     const assemblyComponentSpec = require('swcad-js-component-spec').init({ jscad, swcadJs: swcadJsAssembly })
     swcadJsAssembly.componentSpec = assemblyComponentSpec
 
+    const assemblyUtils = require('swcad-js-utils').init({ jscad, swcadJs: swcadJsAssembly })
+    swcadJsAssembly.utils = assemblyUtils
+
     const assemblyModels = require('swcad-js-models').init({ jscad, swcadJs: swcadJsAssembly })
     swcadJsAssembly.models = assemblyModels
 
@@ -53,11 +53,11 @@ const coreInit = ({ jscad }) => {
     const swcadJs = {
         data: swcadJsCore.data,
         calcs: swcadJsCore.calcs,
-        utils: swcadJsCore.utils,
         profiles: swcadJsCore.profiles,
         profileSpec: swcadJsCore.profileSpec,
         components: components,
         componentSpec: swcadJsCore.componentSpec,
+        utils: swcadJsCore.utils,
         models: swcadJsCore.models,
     }
 

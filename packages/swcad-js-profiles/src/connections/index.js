@@ -7,7 +7,7 @@ const connectionsInit = ({ jscad, swcadJs }) => {
     const { project } = jscad.extrusions
 
 
-    const { position, math } = swcadJs.utils
+    const { position, math } = swcadJs.calcs
 
     //---------------
     //  CONNECTIONS

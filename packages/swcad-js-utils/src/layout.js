@@ -14,9 +14,9 @@ const layoutUtils = ({ jscad, swcadJs }) => {
     const isGeom2 = jscad.geometries.geom2.isA
     const isPath2 = jscad.geometries.path2.isA
 
-    const { maths } = swcadJs.core
-    const { text2d } = swcadJs.models.profiles
-    const { text3d } = swcadJs.models.prefab
+    const { math } = swcadJs.calcs
+    const { text: text2d } = swcadJs.profiles
+    const { text: text3d } = swcadJs.components
 
     const layoutElements = new Map();
     let largestDimensionX = 0;
@@ -242,7 +242,7 @@ const layoutUtils = ({ jscad, swcadJs }) => {
     }
 
     const gridLayout = ({ layoutOpts }) => {
-        const gridSize = maths.factorize(layoutElements.size);
+        const gridSize = math.factorize(layoutElements.size);
         const numColumns = gridSize[1];
         const layoutContent = [];
 

@@ -9,7 +9,7 @@
 const lumberNorthAmerica = ({ jscad, swcadJs }) => {
 
     const { rectangle } = jscad.primitives;
-    const { lumber } = swcadJs.core.standards;
+    const { lumber } = swcadJs.data.standards;
 
     const dimLumberModels = []
     for (const [stdKey, stdVal] of Object.entries(lumber.dimensional)) {

@@ -4,8 +4,8 @@ const reinforcementInit = ({ jscad, swcadJs }) => {
     const { rotate, align, mirror } = jscad.transforms
     const { TAU } = jscad.maths.constants
 
-    const { position } = swcadJs.utils
-    const { profiles } = swcadJs
+    const { position } = swcadJs.calcs
+    const { shapes } = swcadJs.profiles
 
     const offsetShape = (offWidth, fThickness) => {
         if (offWidth == 0) {
@@ -19,7 +19,7 @@ const reinforcementInit = ({ jscad, swcadJs }) => {
             ),
             align(
                 { modes: ['min', 'min', 'center'] },
-                profiles.shapes.triangle.right30({ base: offWidth }),
+                shapes.triangle.right30({ base: offWidth }),
             ),
         )
     }
