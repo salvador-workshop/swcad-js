@@ -93,6 +93,7 @@ const init = ({ jscad }) => {
         ...coreProfiles,
         ...swcadJsProfiles,
     }
+    swcadJsCore.profiles = profiles
 
     const swcadJsComponents = componentsModule.init({ jscad, swcadJs: swcadJsCore });
     const components = {
@@ -105,8 +106,8 @@ const init = ({ jscad }) => {
      * @since 0.10.8
      * */
     const swcadJs = {
-        profiles,
         components,
+        profiles: swcadJsCore.profiles,
         models: swcadJsCore.models,
         utils: swcadJsCore.utils,
         data: swcadJsCore.data,

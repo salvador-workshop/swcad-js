@@ -5,7 +5,6 @@ const profilesInit = ({ lib, swLib }) => {
         ...require('./profiles').init({ lib, swLib }),
         edge: require('./edge').init({ lib, swLib }),
         foils2d: require('./foils-2d').init({ lib, swLib }),
-        mesh2d: require('./mesh-2d').init({ lib, swLib }),
         text2d: require('./text-2d').init({ lib, swLib }),
         arch: require('./arch-2d').init({ lib, swLib }),
     }

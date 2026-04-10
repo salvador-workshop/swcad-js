@@ -4,6 +4,7 @@
  * ...
  * @memberof components.dowelFittings
  * @namespace dowelCouplers
+ * @deprecated
  */
 
 const dowelCouplers = ({ lib, swLib }) => {
