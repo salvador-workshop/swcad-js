@@ -12,23 +12,23 @@ const wallBuilder = ({ jscad, swcadJs }) => {
     const { cuboid } = jscad.primitives
     const { measureDimensions } = jscad.measurements;
 
-    const { mouldings } = swcadJs.components
+    const { moulding } = swcadJs.components
     const { aranea } = swcadJs.profiles.trim
     const { PHI_INV } = swcadJs.data.constants
 
     const crownTrim = ({ totalThickness, totalLength, trimProfile }) => {
         const profileDims = measureDimensions(trimProfile);
-        return mouldings.cuboidMoulding({ size: [totalLength, totalThickness, profileDims[1]] }, trimProfile);
+        return moulding.cuboidMoulding({ size: [totalLength, totalThickness, profileDims[1]] }, trimProfile);
     }
 
     const dadoTrim = ({ totalThickness, totalLength, trimProfile }) => {
         const profileDims = measureDimensions(trimProfile);
-        return mouldings.cuboidMoulding({ size: [totalLength, totalThickness, profileDims[1]] }, trimProfile);
+        return moulding.cuboidMoulding({ size: [totalLength, totalThickness, profileDims[1]] }, trimProfile);
     }
 
     const baseTrim = ({ totalThickness, totalLength, trimProfile }) => {
         const profileDims = measureDimensions(trimProfile);
-        return mouldings.cuboidMoulding({ size: [totalLength, totalThickness, profileDims[1]] }, trimProfile);
+        return moulding.cuboidMoulding({ size: [totalLength, totalThickness, profileDims[1]] }, trimProfile);
     }
 
     const getEntryTrimForDadoUnits = ({ dadoUnits, trimUnitHeight, trimUnitDepth }) => {
