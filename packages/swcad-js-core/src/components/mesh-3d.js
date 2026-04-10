@@ -21,7 +21,15 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
     const { extrudeRotate, extrudeLinear } = jscad.extrusions
     const { TAU } = jscad.maths.constants
 
-    const { maths, geometry, position } = swLib.core
+    const {
+        math,
+        geometry,
+        position
+    } = swcadJs.utils
+
+    const {
+        mesh: mesh2d
+    } = swcadJs.profiles
 
     const getPunchPoints = (pattern, length, width, radius) => {
         let punchPoints = geometry.getTriangularPtsInArea(length, width, radius)
@@ -99,15 +107,6 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
      * @returns ...
      */
     const meshPanel = ({
-        // size,
-        // radius,
-        // segments = 12,
-        // edgeMargin,
-        // meshThickness,
-        // pattern = 'tri',
-        // patternMode = 'contain',
-        // edgeInsets = [0, 0],
-        // edgeOffsets = [0, 0],
         size,
         thickness,
         edgeMargin,
@@ -115,258 +114,17 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
         holeDistance,
         holePattern,
     }) => {
-        // const calcMeshThickness = meshThickness || size[2];
-        // const punchSpecs = {
-        //     radius: radius,
-        //     height: size[2] * 2,
-        //     segments,
-        // }
+        const mPanelProfile = mesh2d({
+            size,
+            edgeMargin,
+            holeRadius,
+            holeDistance,
+            holePattern,
+        })
 
-        // const meshSpecs = {
-        //     radius: radius + (calcMeshThickness / 2),
-        //     edgeMargin: edgeMargin || radius + size[2],
+        const mPanel = extrudeLinear({ height: thickness }, mPanelProfile)
 
-        // }
-        // meshSpecs.length = size[0] - (meshSpecs.edgeMargin * 2)
-        // meshSpecs.width = size[1] - (meshSpecs.edgeMargin * 2)
-        // meshSpecs.height = size[2]
-
-        // let outputPanel = null
-        // const basePlate = cuboid({ size });
-        // const basePlateCoords = position.cuboid.getCuboidCoords(basePlate)
-        // const basePlateCtrlPoints = position.cuboid.getCuboidCtrlPoints(basePlate)
-        // let baseShape = basePlate
-
-        // const hasInset = edgeInsets.some(insetVal => insetVal > 0)
-        // const hasOffset = edgeOffsets.some(offsetVal => offsetVal > 0)
-
-        // if (hasInset) {
-        //     edgeInsets.forEach((insetWidth, idx) => {
-        //         if (insetWidth === 0) {
-        //             return
-        //         }
-        //         const isTop = idx === 0;
-        //         let insetSectionAlignOpts = {};
-        //         let insetFlangeAlignOpts = {};
-        //         const flipOpts = []
-        //         if (isTop) {
-        //             insetSectionAlignOpts = { modes: ['min', 'min', 'max'] }
-        //             insetFlangeAlignOpts = { modes: ['center', 'max', 'min'], relativeTo: [0, basePlateCoords.back, basePlateCoords.top], }
-        //             flipOpts.push('vertical')
-        //         } else {
-        //             insetSectionAlignOpts = { modes: ['min', 'min', 'min'] };
-        //             insetFlangeAlignOpts = { modes: ['center', 'min', 'min'], relativeTo: [0, basePlateCoords.front, basePlateCoords.top], };
-        //         }
-        //         const insetSection = align(
-        //             insetSectionAlignOpts,
-        //             edgeFlange('inset', insetWidth, 0.5, flipOpts)
-        //         )
-        //         const insetReinforcement = align(
-        //             insetFlangeAlignOpts,
-        //             rotate([0, TAU / 4, 0], extrudeLinear({ height: size[0] }, insetSection))
-        //         )
-
-        //         baseShape = union(insetReinforcement, baseShape)
-        //     })
-        // }
-
-        // if (hasOffset) {
-        //     edgeOffsets.forEach((offsetWidth, idx) => {
-        //         if (offsetWidth === 0) {
-        //             return
-        //         }
-        //         const isTop = idx === 0;
-        //         let offsetSectionAlignOpts = {};
-        //         let offsetFlangeAlignOpts = {};
-        //         const flipOpts = []
-        //         if (isTop) {
-        //             offsetSectionAlignOpts = { modes: ['min', 'min', 'max'] }
-        //             offsetFlangeAlignOpts = { modes: ['center', 'max', 'max'], relativeTo: [0, basePlateCoords.back, basePlateCoords.bottom], }
-        //             flipOpts.push('vertical')
-        //         } else {
-        //             offsetSectionAlignOpts = { modes: ['min', 'min', 'min'] };
-        //             offsetFlangeAlignOpts = { modes: ['center', 'min', 'max'], relativeTo: [0, basePlateCoords.front, basePlateCoords.bottom], };
-        //         }
-        //         const offsetSection = align(
-        //             offsetSectionAlignOpts,
-        //             edgeFlange('offset', offsetWidth, 0.5, flipOpts)
-        //         )
-        //         const offsetReinforcement = align(
-        //             offsetFlangeAlignOpts,
-        //             rotate([0, TAU / 4, 0], extrudeLinear({ height: size[0] }, offsetSection))
-        //         )
-
-        //         baseShape = union(offsetReinforcement, baseShape)
-        //     })
-        // }
-
-        // const parts = [baseShape]
-        // const punch = cylinder(punchSpecs);
-
-        // if (patternMode === 'contain') {
-        //     // pattern is neatly contained in the bounding rectangle
-        //     const punchPoints = getPunchPoints(pattern, meshSpecs.length, meshSpecs.width, meshSpecs.radius)
-        //     punchPoints.forEach(punchPt => {
-        //         parts.push(translate([punchPt.x, punchPt.y, 0], punch))
-        //     });
-
-        //     outputPanel = subtract(...parts)
-        // }
-
-        // else if (patternMode === 'fill') {
-        //     // pattern extends outside the bounding rectangle, and gets cut off
-        //     const punchPoints = getPunchPoints(
-        //         pattern,
-        //         size[0] + (meshSpecs.radius * 2),
-        //         size[1] + (meshSpecs.radius * 2),
-        //         meshSpecs.radius
-        //     )
-        //     punchPoints.forEach(punchPt => {
-        //         parts.push(translate([punchPt.x, punchPt.y, 0], punch))
-        //     });
-
-        //     const punchedPanel = subtract(...parts)
-        //     const panelEdge = subtract(
-        //         baseShape,
-        //         cuboid({
-        //             size: [
-        //                 size[0] - (meshSpecs.edgeMargin * 2),
-        //                 size[1] - (meshSpecs.edgeMargin * 2),
-        //                 size[2] * 1.5,
-        //             ]
-        //         })
-        //     );
-
-        //     outputPanel = union(punchedPanel, panelEdge)
-        // }
-
-        // return outputPanel
-
-
-
-
-
-        const mPanel = null
-        
         return mPanel
-    }
-
-    /**
-     * Builds a flat mesh panel model. Mesh thickness is determined by `size[2]`
-     * @memberof components.mesh
-     * @param {*} param0 
-     * @returns ...
-     * @deprecated
-     */
-    const meshCuboid = ({
-        size,
-        meshPanelThickness,
-        radius,
-        segments = 16,
-        edgeMargin,
-        edgeInsets = [0, 0],
-        edgeOffsets = [0, 0],
-        pattern = 'tri',
-        openTop = false,
-        openBottom = false,
-    }) => {
-        const specs = {
-            meshPanelThickness: meshPanelThickness || maths.inchesToMm(3 / 32),
-            edgeMargin: edgeMargin || radius * 2,
-        }
-
-        const baseCuboid = cuboid({ size })
-        const baseCuboidBb = measureBoundingBox(baseCuboid);
-        const baseCuboidCoords = position.cuboid.getCuboidCoords(baseCuboid)
-        const baseCuboidCtrlPoints = position.cuboid.getCuboidCtrlPoints(baseCuboid)
-
-        // [x,y,z (default)]
-        const mPanelSpecs = [
-            {
-                size: [size[1], size[2], specs.meshPanelThickness],
-                rotation: [TAU / 4, 0, TAU / 4],
-                scaleFactors: [size[0] / specs.meshPanelThickness * 3, 1, 1],
-            },
-            {
-                size: [size[0], size[2], specs.meshPanelThickness],
-                rotation: [TAU / -4, 0, 0],
-                scaleFactors: [1, size[1] / specs.meshPanelThickness * 3, 1],
-            },
-            {
-                size: [size[0], size[1], specs.meshPanelThickness],
-                rotation: [0, 0, 0],
-                scaleFactors: [1, 1, size[2] / specs.meshPanelThickness * 3],
-            },
-        ]
-
-        const parts = []
-        mPanelSpecs.forEach((mPanelSpec, idx) => {
-            const rotatedPanel = rotate(mPanelSpec.rotation, meshPanel({
-                size: mPanelSpec.size,
-                radius,
-                segments,
-                edgeMargin: specs.edgeMargin,
-                pattern,
-                edgeInsets,
-                edgeOffsets
-            }));
-
-            const hasInset = edgeInsets.some(insetVal => insetVal > 0)
-            const hasOffset = edgeOffsets.some(offsetVal => offsetVal > 0)
-
-            let maxInset = 0;
-            if (hasInset) {
-                maxInset = Math.max(...edgeInsets)
-            }
-            let maxOffset = 0;
-            if (hasOffset) {
-                maxOffset = Math.max(...edgeOffsets)
-            }
-
-            let flipNormal = [0, 0, 0]
-            let aligmentModeA = ['center', 'center', 'min']
-            let aligmentModeB = ['center', 'center', 'max']
-            let relPointA = baseCuboidCtrlPoints.f6
-            let relPointB = baseCuboidCtrlPoints.f5
-
-            // [left, front, bottom]
-            // [right, back, top]
-            if (idx === 0) {
-                flipNormal = [1, 0, 0]
-                aligmentModeA = ['min', 'center', 'center']
-                aligmentModeB = ['max', 'center', 'center']
-                relPointA = baseCuboidCtrlPoints.f2
-                relPointA[0] = relPointA[0] - maxOffset
-                relPointB = baseCuboidCtrlPoints.f1
-                relPointB[0] = relPointB[0] + maxOffset
-            } else if (idx === 1) {
-                flipNormal = [0, 1, 0]
-                aligmentModeA = ['center', 'min', 'center']
-                aligmentModeB = ['center', 'max', 'center']
-                relPointA = baseCuboidCtrlPoints.f4
-                relPointA[1] = relPointA[1] - maxOffset
-                relPointB = baseCuboidCtrlPoints.f3
-                relPointB[1] = relPointB[1] + maxOffset
-            }
-
-            const flippedPanel = mirror({ normal: flipNormal }, rotatedPanel)
-
-            // [left, front, bottom]
-            const skipBottom = openBottom && idx == 2;
-            if (!skipBottom) {
-                parts.push(align({ modes: aligmentModeA, relativeTo: relPointA }, rotatedPanel))
-            }
-
-            // [right, back, top]
-            const skipTop = openTop && idx == 2;
-            if (!skipTop) {
-                parts.push(align({ modes: aligmentModeB, relativeTo: relPointB }, flippedPanel))
-            }
-        });
-
-        let mainShape = union(...parts)
-
-        return mainShape;
     }
 
     /**
@@ -507,7 +265,7 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
         for (let idx = 0; idx < numPunchDiscs - 1; idx++) {
             const zOffset = discHeightInterval * idx;
             let discRotation = [0, 0, 0]
-            if (maths.isOdd(idx)) {
+            if (math.isOdd(idx)) {
                 discRotation = [0, 0, TAU / (numPunches * 2)]
             }
             punchedTube = subtract(punchedTube, translate(
@@ -521,7 +279,6 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
 
     return {
         meshPanel,
-        meshCuboid,
         meshCylinder,
     }
 }
