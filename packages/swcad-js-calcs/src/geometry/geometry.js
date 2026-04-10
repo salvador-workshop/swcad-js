@@ -41,8 +41,8 @@ const ptCentroid = (points, mode = '3d') => {
     return output;
 }
 
-const geometryUtils = ({ lib, swLib }) => {
-    const { maths } = swLib.core;
+const geometryUtils = ({ jscad, swcadJs }) => {
+    const { math } = swcadJs.calcs;
 
     /**
      * ...
@@ -100,7 +100,7 @@ const geometryUtils = ({ lib, swLib }) => {
             do {
                 let xCtr = 0;
                 do {
-                    if (maths.isEven(yIdxCtr)) {
+                    if (math.isEven(yIdxCtr)) {
                         allPoints.push({ x: xCtr, y: allYCoords[yIdxCtr] });
                     } else {
                         allPoints.push({ x: radius + xCtr, y: allYCoords[yIdxCtr] });
@@ -148,7 +148,7 @@ const geometryUtils = ({ lib, swLib }) => {
                 yCtr = yCtr + diam;
             } while (yCtr <= y);
 
-            const allPoints = maths.arrayCartesianProduct(allXCoords, allYCoords);
+            const allPoints = math.arrayCartesianProduct(allXCoords, allYCoords);
             const outPts = allPoints.map(pt => { return { x: pt[0], y: pt[1] } });
 
             if (!centrePoints) {
@@ -173,7 +173,7 @@ const geometryUtils = ({ lib, swLib }) => {
         points: {
             centroid: ptCentroid,
         },
-        regPoly: geoRegPoly.init({ lib, swLib }),
+        regPoly: geoRegPoly.init({ jscad, swcadJs }),
     }
 }
 

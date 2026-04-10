@@ -6,7 +6,7 @@
  * @namespace regPoly
  */
 
-const geoRegPoly = ({ lib, swLib }) => {
+const geoRegPoly = ({ jscad, swcadJs }) => {
     return {
         /**
          * ...

@@ -6,14 +6,14 @@
  * @namespace rectangle
  */
 
-const geoRectangle = ({ lib, swLib }) => {
+const geoRectangle = ({ jscad, swcadJs }) => {
     const {
         measureDimensions,
         measureBoundingBox,
         measureCenter
-    } = lib.measurements;
+    } = jscad.measurements;
 
-    const { position } = swLib.core
+    const { position } = swcadJs.calcs
 
     /**
      * ...

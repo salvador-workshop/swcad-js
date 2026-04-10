@@ -14,10 +14,10 @@
  */
 const arrayCartesianProduct = (a, b) => a.reduce((acc, x) => [...acc, ...b.map(y => [x, y])], []);
 
-const mathUtils = ({ lib, swLib }) => {
+const mathUtils = ({ jscad, swcadJs }) => {
     const {
         INCHES_MM_FACTOR
-    } = swLib.core.constants;
+    } = swcadJs.data.constants;
 
     return {
         /**

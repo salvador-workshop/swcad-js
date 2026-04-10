@@ -6,9 +6,9 @@
  * @namespace triangle
  */
 
-const geoTriangle = ({ lib, swLib }) => {
-    const { measureDimensions, measureBoundingBox, measureCenter } = lib.measurements;
-    const { TAU } = lib.maths.constants
+const geoTriangle = ({ jscad, swcadJs }) => {
+    const { measureDimensions, measureBoundingBox, measureCenter } = jscad.measurements;
+    const { TAU } = jscad.maths.constants
 
     const getTriangleCtrlPoints = (points) => {
         return null;

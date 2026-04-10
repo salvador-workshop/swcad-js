@@ -10,15 +10,15 @@ const posTriangle = require('./pos-triangle');
  * @namespace position
  */
 
-const positionUtils = ({ lib, swLib }) => {
+const positionUtils = ({ jscad, swcadJs }) => {
     const {
         align,
-    } = lib.transforms
+    } = jscad.transforms
 
     const {
         measureDimensions,
         measureBoundingBox,
-    } = lib.measurements
+    } = jscad.measurements
 
 
     /**
@@ -115,7 +115,7 @@ const positionUtils = ({ lib, swLib }) => {
         return axes[maxDimIdx]
     }
 
-    const position = {
+    const positionCore = {
         measure,
         getGeomCoords,
         findLongAxis,
@@ -134,15 +134,19 @@ const positionUtils = ({ lib, swLib }) => {
         ctrMin,
         ctrMax,
     }
-    const preLib = { ...swLib }
-    preLib.core.position = position
-    console.log(preLib)
+
+    const preLib = {
+        ...swcadJs,
+        calcs: {
+            position: positionCore
+        }
+    }
 
     return {
-        ...position,
-        cuboid: posCuboid.init({ lib, swLib: preLib }),
-        rectangle: posRectangle.init({ lib, swLib: preLib }),
-        triangle: posTriangle.init({ lib, swLib: preLib }),
+        ...positionCore,
+        cuboid: posCuboid.init({ jscad, swcadJs: preLib }),
+        rectangle: posRectangle.init({ jscad, swcadJs: preLib }),
+        triangle: posTriangle.init({ jscad, swcadJs: preLib }),
     }
 }
 

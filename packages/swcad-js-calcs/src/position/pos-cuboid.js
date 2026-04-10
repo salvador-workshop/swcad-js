@@ -6,14 +6,14 @@
  * @namespace cuboid
  */
 
-const geoCuboid = ({ lib, swLib }) => {
+const geoCuboid = ({ jscad, swcadJs }) => {
     const {
         measureDimensions,
         measureBoundingBox,
         measureCenter
-    } = lib.measurements;
+    } = jscad.measurements;
 
-    const { position } = swLib.core
+    const { position } = swcadJs.calcs
 
     /**
      * ...

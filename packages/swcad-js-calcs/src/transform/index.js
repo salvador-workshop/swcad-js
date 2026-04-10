@@ -6,12 +6,12 @@
  * @namespace transform
  */
 
-const transformUtils = ({ lib, swLib }) => {
-    const { subtract } = lib.booleans
-    const { measureDimensions } = lib.measurements;
-    const { cuboid } = lib.primitives
-    const { align, mirror, rotate } = lib.transforms
-    const { colorize } = lib.colors
+const transformUtils = ({ jscad, swcadJs }) => {
+    const { subtract } = jscad.booleans
+    const { measureDimensions } = jscad.measurements;
+    const { cuboid } = jscad.primitives
+    const { align, mirror, rotate } = jscad.transforms
+    const { colorize } = jscad.colors
 
     /**
      * ...

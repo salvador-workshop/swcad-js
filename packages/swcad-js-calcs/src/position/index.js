@@ -1,7 +1,7 @@
 "use strict"
 
-const positionInit = ({ lib, swLib }) => {
-    return require('./position').init({ lib, swLib })
+const positionInit = ({ jscad, swcadJs }) => {
+    return require('./position').init({ jscad, swcadJs })
 }
 
 module.exports = { init: positionInit };

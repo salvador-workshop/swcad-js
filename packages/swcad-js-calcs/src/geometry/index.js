@@ -1,7 +1,7 @@
 "use strict"
 
-const geometryInit = ({ lib, swLib }) => {
-    return require('./geometry').init({ lib, swLib })
+const geometryInit = ({ jscad, swcadJs }) => {
+    return require('./geometry').init({ jscad, swcadJs })
 }
 
 module.exports = { init: geometryInit };
