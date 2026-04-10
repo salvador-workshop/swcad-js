@@ -1,16 +1,17 @@
 "use strict"
 
+const inchesToMm = (numIn) => numIn * 25.4
+
 /**
  * Masonry standards
  * @namespace masonry
  * @memberof data.standards
  */
-const masonryStd = ({ lib, swLib }) => {
-    const { constants, maths } = swLib.core
+const masonryStd = ({ jscad }) => {
 
     const masonry = {
-        MORTAR_JOINT: maths.inchesToMm(3 / 8),
-        MORTAR_JOINT_LG: maths.inchesToMm(1 / 2),
+        MORTAR_JOINT: inchesToMm(3 / 8),
+        MORTAR_JOINT_LG: inchesToMm(1 / 2),
     }
 
     /**
@@ -18,9 +19,9 @@ const masonryStd = ({ lib, swLib }) => {
      * @memberof data.standards.masonry
      */
     const brick = {
-        US_BRICK_LENGTH_NOM: maths.inchesToMm(8),
-        US_BRICK_WIDTH_NOM: maths.inchesToMm(4),
-        US_BRICK_HEIGHT_NOM: maths.inchesToMm(2 + (2 / 3)),
+        US_BRICK_LENGTH_NOM: inchesToMm(8),
+        US_BRICK_WIDTH_NOM: inchesToMm(4),
+        US_BRICK_HEIGHT_NOM: inchesToMm(2 + (2 / 3)),
         UK_BRICK_LENGTH_NOM: 215,
         UK_BRICK_WIDTH_NOM: 102.5,
         UK_BRICK_HEIGHT_NOM: 65,
@@ -41,16 +42,16 @@ const masonryStd = ({ lib, swLib }) => {
         CMU_FACE_THICKNESS: 36,
         CMU_WEB_THICKNESS: 32,
         CMU_WEB_THICKNESS_SM: 26,
-        CMU_4_NOM: [maths.inchesToMm(16), maths.inchesToMm(4), maths.inchesToMm(8)],
-        CMU_6_NOM: [maths.inchesToMm(16), maths.inchesToMm(6), maths.inchesToMm(8)],
-        CMU_8_NOM: [maths.inchesToMm(16), maths.inchesToMm(8), maths.inchesToMm(8)],
-        CMU_10_NOM: [maths.inchesToMm(16), maths.inchesToMm(10), maths.inchesToMm(8)],
-        CMU_12_NOM: [maths.inchesToMm(16), maths.inchesToMm(12), maths.inchesToMm(8)],
-        CMU_4HALF_NOM: [maths.inchesToMm(8), maths.inchesToMm(4), maths.inchesToMm(8)],
-        CMU_6HALF_NOM: [maths.inchesToMm(8), maths.inchesToMm(6), maths.inchesToMm(8)],
-        CMU_8HALF_NOM: [maths.inchesToMm(8), maths.inchesToMm(8), maths.inchesToMm(8)],
-        CMU_10HALF_NOM: [maths.inchesToMm(8), maths.inchesToMm(10), maths.inchesToMm(8)],
-        CMU_12HALF_NOM: [maths.inchesToMm(8), maths.inchesToMm(12), maths.inchesToMm(8)],
+        CMU_4_NOM: [inchesToMm(16), inchesToMm(4), inchesToMm(8)],
+        CMU_6_NOM: [inchesToMm(16), inchesToMm(6), inchesToMm(8)],
+        CMU_8_NOM: [inchesToMm(16), inchesToMm(8), inchesToMm(8)],
+        CMU_10_NOM: [inchesToMm(16), inchesToMm(10), inchesToMm(8)],
+        CMU_12_NOM: [inchesToMm(16), inchesToMm(12), inchesToMm(8)],
+        CMU_4HALF_NOM: [inchesToMm(8), inchesToMm(4), inchesToMm(8)],
+        CMU_6HALF_NOM: [inchesToMm(8), inchesToMm(6), inchesToMm(8)],
+        CMU_8HALF_NOM: [inchesToMm(8), inchesToMm(8), inchesToMm(8)],
+        CMU_10HALF_NOM: [inchesToMm(8), inchesToMm(10), inchesToMm(8)],
+        CMU_12HALF_NOM: [inchesToMm(8), inchesToMm(12), inchesToMm(8)],
     }
 
     Object.entries(concrete).forEach(([concKey, concVal]) => {

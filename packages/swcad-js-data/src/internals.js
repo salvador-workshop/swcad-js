@@ -1,6 +1,6 @@
 "use strict"
 
-const internals = ({ lib, swLib }) => {
+const internals = ({ jscad }) => {
 
     //-------------------
     // Master Prop List
@@ -66,7 +66,6 @@ const internals = ({ lib, swLib }) => {
         colourList,
         layerList,
     }
-
 }
 
 module.exports = { init: internals };

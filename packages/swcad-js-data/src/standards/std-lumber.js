@@ -1,54 +1,55 @@
 "use strict"
 
+const inchesToMm = (numIn) => numIn * 25.4
+
 /**
  * Lumber standards
  * @namespace lumber
  * @memberof data.standards
  */
 
-const lumberStd = ({ lib, swLib }) => {
-    const { constants, maths } = swLib.core
+const lumberStd = ({ jscad }) => {
 
     const baseLumberSizes = {
         '1': {
             name: 'ONE',
-            nominal: maths.inchesToMm(1),
-            actual: maths.inchesToMm(3 / 4)
+            nominal: inchesToMm(1),
+            actual: inchesToMm(3 / 4)
         },
         '2': {
             name: 'TWO',
-            nominal: maths.inchesToMm(2),
-            actual: maths.inchesToMm(1.5)
+            nominal: inchesToMm(2),
+            actual: inchesToMm(1.5)
         },
         '3': {
             name: 'THREE',
-            nominal: maths.inchesToMm(3),
-            actual: maths.inchesToMm(2.5)
+            nominal: inchesToMm(3),
+            actual: inchesToMm(2.5)
         },
         '4': {
             name: 'FOUR',
-            nominal: maths.inchesToMm(4),
-            actual: maths.inchesToMm(3.5)
+            nominal: inchesToMm(4),
+            actual: inchesToMm(3.5)
         },
         '6': {
             name: 'SIX',
-            nominal: maths.inchesToMm(6),
-            actual: maths.inchesToMm(5.5)
+            nominal: inchesToMm(6),
+            actual: inchesToMm(5.5)
         },
         '8': {
             name: 'EIGHT',
-            nominal: maths.inchesToMm(8),
-            actual: maths.inchesToMm(7.25)
+            nominal: inchesToMm(8),
+            actual: inchesToMm(7.25)
         },
         '10': {
             name: 'TEN',
-            nominal: maths.inchesToMm(10),
-            actual: maths.inchesToMm(9.25)
+            nominal: inchesToMm(10),
+            actual: inchesToMm(9.25)
         },
         '12': {
             name: 'TWELVE',
-            nominal: maths.inchesToMm(12),
-            actual: maths.inchesToMm(11.25)
+            nominal: inchesToMm(12),
+            actual: inchesToMm(11.25)
         },
     }
 
@@ -60,7 +61,7 @@ const lumberStd = ({ lib, swLib }) => {
      * @memberof data.standards.lumber
      */
     const dimensional = {}
-    const lumberSizes = maths.arrayCartesianProduct(depths, widths)
+    const lumberSizes = arrayCartesianProduct(depths, widths)
     lumberSizes.forEach(lumberDims => {
         const depthDim = baseLumberSizes[`${lumberDims[0]}`];
         const widthDim = baseLumberSizes[`${lumberDims[1]}`];
@@ -83,34 +84,34 @@ const lumberStd = ({ lib, swLib }) => {
     const plywood = {
         thicknesses: {
             EIGHTH: {
-                nominal: maths.inchesToMm(1 / 8),
-                actual: maths.inchesToMm(7 / 64),
+                nominal: inchesToMm(1 / 8),
+                actual: inchesToMm(7 / 64),
             },
             QUARTER: {
-                nominal: maths.inchesToMm(1 / 4),
-                actual: maths.inchesToMm(7 / 32),
+                nominal: inchesToMm(1 / 4),
+                actual: inchesToMm(7 / 32),
             },
             THREE_SEVENTHS: {
-                nominal: maths.inchesToMm(3 / 7),
-                actual: maths.inchesToMm(11 / 32),
+                nominal: inchesToMm(3 / 7),
+                actual: inchesToMm(11 / 32),
             },
             HALF: {
-                nominal: maths.inchesToMm(1 / 2),
-                actual: maths.inchesToMm(15 / 32),
+                nominal: inchesToMm(1 / 2),
+                actual: inchesToMm(15 / 32),
             },
             FIVE_EIGHTHS: {
-                nominal: maths.inchesToMm(5 / 8),
-                actual: maths.inchesToMm(19 / 32),
+                nominal: inchesToMm(5 / 8),
+                actual: inchesToMm(19 / 32),
             },
             THREE_QUARTERS: {
-                nominal: maths.inchesToMm(3 / 4),
-                actual: maths.inchesToMm(23 / 32),
+                nominal: inchesToMm(3 / 4),
+                actual: inchesToMm(23 / 32),
             },
         },
-        SHEET_LENGTH_STD: maths.inchesToMm(96),
-        SHEET_WIDTH_STD: maths.inchesToMm(48),
-        SHEET_LENGTH_SM: maths.inchesToMm(48),
-        SHEET_WIDTH_SM: maths.inchesToMm(24),
+        SHEET_LENGTH_STD: inchesToMm(96),
+        SHEET_WIDTH_STD: inchesToMm(48),
+        SHEET_LENGTH_SM: inchesToMm(48),
+        SHEET_WIDTH_SM: inchesToMm(24),
     }
 
     // TODO: Add data on

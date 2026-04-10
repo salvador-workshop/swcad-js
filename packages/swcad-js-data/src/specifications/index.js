@@ -98,4 +98,4 @@ const specifications = {
     octants,
 }
 
-module.exports = specifications;
+module.exports = specifications

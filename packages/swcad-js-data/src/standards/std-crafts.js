@@ -5,7 +5,7 @@
  * @namespace crafts
  * @memberof data.standards
  */
-const craftStd = ({ lib, swLib }) => {
+const craftStd = ({ jscad }) => {
     return {
         DIAM_TOOTHPICK: 2.30,
         DIAM_BBQ_SKEWER: 3.25,

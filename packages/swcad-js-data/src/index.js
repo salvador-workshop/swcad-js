@@ -1,7 +1,19 @@
 "use strict"
 
-const dataInit = ({ jscad, swcadJs }) => {
-    return null
+const constants = require('./constants')
+const specifications = require('./specifications')
+const standards = require('./standards')
+const errors = require('./errors')
+const internals = require('./internals')
+
+const dataInit = ({ jscad }) => {
+    return {
+        constants: constants,
+        specifications: specifications,
+        standards: standards.init({ jscad }),
+        errors: errors,
+        internals: internals.init({ jscad }),
+    }
 }
 
 module.exports = {

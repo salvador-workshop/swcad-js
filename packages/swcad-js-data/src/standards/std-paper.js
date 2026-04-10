@@ -1,12 +1,13 @@
 "use strict"
 
+const inchesToMm = (numIn) => numIn * 25.4
+
 /**
  * Paper standards
  * @namespace paper
  * @memberof data.standards
  */
-const paperStd = ({ lib, swLib }) => {
-    const { constants, maths } = swLib.core
+const paperStd = ({ jscad }) => {
 
     // STANDARD: [width, height]
     /**
@@ -54,11 +55,11 @@ const paperStd = ({ lib, swLib }) => {
      * @memberof data.standards.paper
      */
     const naAnsi = {
-        ANSI_A: [maths.inchesToMm(8.5), maths.inchesToMm(11)],
-        ANSI_B: [maths.inchesToMm(11), maths.inchesToMm(17)],
-        ANSI_C: [maths.inchesToMm(17), maths.inchesToMm(22)],
-        ANSI_D: [maths.inchesToMm(22), maths.inchesToMm(34)],
-        ANSI_E: [maths.inchesToMm(34), maths.inchesToMm(44)],
+        ANSI_A: [inchesToMm(8.5), inchesToMm(11)],
+        ANSI_B: [inchesToMm(11), inchesToMm(17)],
+        ANSI_C: [inchesToMm(17), inchesToMm(22)],
+        ANSI_D: [inchesToMm(22), inchesToMm(34)],
+        ANSI_E: [inchesToMm(34), inchesToMm(44)],
     }
 
     /**
@@ -66,12 +67,12 @@ const paperStd = ({ lib, swLib }) => {
      * @memberof data.standards.paper
      */
     const naArch = {
-        ARCH_A: [maths.inchesToMm(9), maths.inchesToMm(12)],
-        ARCH_B: [maths.inchesToMm(12), maths.inchesToMm(18)],
-        ARCH_C: [maths.inchesToMm(18), maths.inchesToMm(24)],
-        ARCH_D: [maths.inchesToMm(24), maths.inchesToMm(36)],
-        ARCH_E1: [maths.inchesToMm(30), maths.inchesToMm(42)],
-        ARCH_E: [maths.inchesToMm(36), maths.inchesToMm(48)],
+        ARCH_A: [inchesToMm(9), inchesToMm(12)],
+        ARCH_B: [inchesToMm(12), inchesToMm(18)],
+        ARCH_C: [inchesToMm(18), inchesToMm(24)],
+        ARCH_D: [inchesToMm(24), inchesToMm(36)],
+        ARCH_E1: [inchesToMm(30), inchesToMm(42)],
+        ARCH_E: [inchesToMm(36), inchesToMm(48)],
     }
 
     /**
@@ -82,9 +83,9 @@ const paperStd = ({ lib, swLib }) => {
         ansi: naAnsi,
         arch: naArch,
         LETTER: naAnsi.ANSI_A,
-        LEGAL: [maths.inchesToMm(8.5), maths.inchesToMm(14)],
+        LEGAL: [inchesToMm(8.5), inchesToMm(14)],
         TABLOID: naAnsi.ANSI_B,
-        LEDGER: [maths.inchesToMm(17), maths.inchesToMm(11)],
+        LEDGER: [inchesToMm(17), inchesToMm(11)],
     }
 
     /**
@@ -92,15 +93,15 @@ const paperStd = ({ lib, swLib }) => {
      * @memberof data.standards.paper
      */
     const cards = {
-        BUSINESS_CARD: [maths.inchesToMm(3.5), maths.inchesToMm(2)],
-        BUSINESS_CARD_SQ: [maths.inchesToMm(2.5), maths.inchesToMm(2.5)],
+        BUSINESS_CARD: [inchesToMm(3.5), inchesToMm(2)],
+        BUSINESS_CARD_SQ: [inchesToMm(2.5), inchesToMm(2.5)],
         CREDIT_CARD: [85.6, 53.98],
-        DEVOTIONAL: [maths.inchesToMm(2.5), maths.inchesToMm(4.5)],
-        INDEX_SM: [maths.inchesToMm(5), maths.inchesToMm(3)],
-        INDEX_MD: [maths.inchesToMm(6), maths.inchesToMm(4)],
-        INDEX_LG: [maths.inchesToMm(8), maths.inchesToMm(5)],
-        INDEX_XL: [maths.inchesToMm(9), maths.inchesToMm(6)],
-        POSTCARD: [maths.inchesToMm(6), maths.inchesToMm(4)],
+        DEVOTIONAL: [inchesToMm(2.5), inchesToMm(4.5)],
+        INDEX_SM: [inchesToMm(5), inchesToMm(3)],
+        INDEX_MD: [inchesToMm(6), inchesToMm(4)],
+        INDEX_LG: [inchesToMm(8), inchesToMm(5)],
+        INDEX_XL: [inchesToMm(9), inchesToMm(6)],
+        POSTCARD: [inchesToMm(6), inchesToMm(4)],
     }
 
     /**
@@ -108,9 +109,9 @@ const paperStd = ({ lib, swLib }) => {
      * @memberof data.standards.paper
      */
     const bookmarks = {
-        BOOKMARK_SM: [maths.inchesToMm(1.5), maths.inchesToMm(4.5)],
-        BOOKMARK_MD: [maths.inchesToMm(2), maths.inchesToMm(6.5)],
-        BOOKMARK_LG: [maths.inchesToMm(2.25), maths.inchesToMm(8.5)],
+        BOOKMARK_SM: [inchesToMm(1.5), inchesToMm(4.5)],
+        BOOKMARK_MD: [inchesToMm(2), inchesToMm(6.5)],
+        BOOKMARK_LG: [inchesToMm(2.25), inchesToMm(8.5)],
     }
 
     /**
@@ -119,7 +120,7 @@ const paperStd = ({ lib, swLib }) => {
      */
     const poster = {
         POSTERJAM: metric.B2,
-        ALBUM_COVER: [maths.inchesToMm(12 + (3 / 8)), maths.inchesToMm(12 + (3 / 8))],
+        ALBUM_COVER: [inchesToMm(12 + (3 / 8)), inchesToMm(12 + (3 / 8))],
     }
 
     /**
@@ -128,17 +129,17 @@ const paperStd = ({ lib, swLib }) => {
      */
     const photos = {
         PASSPORT_CAN: [50, 70],
-        PASSPORT_US: [maths.inchesToMm(2), maths.inchesToMm(2)],
-        WALLET: [maths.inchesToMm(2), maths.inchesToMm(3)],
-        R2: [maths.inchesToMm(2.5), maths.inchesToMm(3.5)],
-        R3: [maths.inchesToMm(3.5), maths.inchesToMm(5)],
-        R4: [maths.inchesToMm(5.04), maths.inchesToMm(6)],
-        R5: [maths.inchesToMm(5), maths.inchesToMm(7)],
-        R6: [maths.inchesToMm(6), maths.inchesToMm(8)],
-        R8: [maths.inchesToMm(8), maths.inchesToMm(10)],
-        R10: [maths.inchesToMm(10), maths.inchesToMm(12)],
-        R11: [maths.inchesToMm(11), maths.inchesToMm(14)],
-        R12: [maths.inchesToMm(12), maths.inchesToMm(15)],
+        PASSPORT_US: [inchesToMm(2), inchesToMm(2)],
+        WALLET: [inchesToMm(2), inchesToMm(3)],
+        R2: [inchesToMm(2.5), inchesToMm(3.5)],
+        R3: [inchesToMm(3.5), inchesToMm(5)],
+        R4: [inchesToMm(5.04), inchesToMm(6)],
+        R5: [inchesToMm(5), inchesToMm(7)],
+        R6: [inchesToMm(6), inchesToMm(8)],
+        R8: [inchesToMm(8), inchesToMm(10)],
+        R10: [inchesToMm(10), inchesToMm(12)],
+        R11: [inchesToMm(11), inchesToMm(14)],
+        R12: [inchesToMm(12), inchesToMm(15)],
     }
 
     return {

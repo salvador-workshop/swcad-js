@@ -1,6 +1,3 @@
-const componentsModule = require('./components');
-const profilesModule = require('./profiles');
-
 "use strict"
 
 const coreInit = ({ jscad }) => {

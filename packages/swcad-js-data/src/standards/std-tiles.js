@@ -5,7 +5,7 @@
  * @namespace tiles
  * @memberof data.standards
  */
-const tileStd = ({ lib, swLib }) => {
+const tileStd = ({ jscad }) => {
     return {
 
     }
