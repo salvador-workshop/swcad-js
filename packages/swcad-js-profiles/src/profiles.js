@@ -5,14 +5,14 @@
  * @namespace profiles
  */
 
-const profileBuilder = ({ lib, swLib }) => {
-  const { square, circle, rectangle, triangle, ellipse } = lib.primitives
-  const { intersect, union, subtract } = lib.booleans
-  const { rotate, align } = lib.transforms
-  const { bezier } = lib.curves
-  const { geom2, path2 } = lib.geometries
+const profileBuilder = ({ jscad, swcadJs }) => {
+  const { square, circle, rectangle, triangle, ellipse } = jscad.primitives
+  const { intersect, union, subtract } = jscad.booleans
+  const { rotate, align } = jscad.transforms
+  const { bezier } = jscad.curves
+  const { geom2, path2 } = jscad.geometries
 
-  const { constants, position } = swLib.core
+  const { constants, position } = swcadJs.core
 
   /**
    * Builds various 2D shapes

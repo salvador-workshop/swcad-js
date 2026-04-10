@@ -6,15 +6,15 @@
  * @namespace frameRect
  */
 
-const rectangularFrameInit = ({ lib, swLib }) => {
-    const { circle, rectangle } = lib.primitives
-    const { rotate, align, mirror } = lib.transforms
-    const { subtract, union } = lib.booleans
-    const { measureDimensions } = lib.measurements
-    const { TAU } = lib.maths.constants
+const rectangularFrameInit = ({ jscad, swcadJs }) => {
+    const { circle, rectangle } = jscad.primitives
+    const { rotate, align, mirror } = jscad.transforms
+    const { subtract, union } = jscad.booleans
+    const { measureDimensions } = jscad.measurements
+    const { TAU } = jscad.maths.constants
 
-    const { position } = swLib.core
-    const { profiles } = swLib.models
+    const { profiles } = swcadJs
+    const { position } = swcadJs.calcs
 
     // Defining corner styles and available tag options
     const cornerStyleTypes = ['round', 'tri', 'rect', 'ellipse', 'cornerBez']

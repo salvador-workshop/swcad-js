@@ -6,9 +6,9 @@
  * @namespace trim
  */
 
-const init = ({ lib, swLib }) => {
+const init = ({ jscad, swcadJs }) => {
     const trim = {
-        aranea: require('./trim-aranea').init({ lib, swLib }),
+        aranea: require('./trim-aranea').init({ jscad, swcadJs }),
     }
 
     return trim;

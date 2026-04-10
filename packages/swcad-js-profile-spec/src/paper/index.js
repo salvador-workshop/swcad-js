@@ -6,10 +6,10 @@
  * @namespace paper
  */
 
-const init = ({ lib, swLib }) => {
-    const { rectangle } = lib.primitives;
-    const { standards } = swLib.core
-    const { extras } = swLib.utils
+const init = ({ jscad, swcadJs }) => {
+    const { rectangle } = jscad.primitives;
+    const { standards } = swcadJs.core
+    const { extras } = swcadJs.utils
 
     /**
      * Metric paper sizes

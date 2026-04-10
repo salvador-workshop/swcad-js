@@ -6,12 +6,12 @@
  * @namespace text
  */
 
-const textUtils = ({ lib }) => {
-    const { union } = lib.booleans
-    const { circle } = lib.primitives
-    const { translate } = lib.transforms
-    const { vectorText } = lib.text
-    const { hullChain } = lib.hulls
+const textUtils = ({ jscad, swcadJs }) => {
+    const { union } = jscad.booleans
+    const { circle } = jscad.primitives
+    const { translate } = jscad.transforms
+    const { vectorText } = jscad.text
+    const { hullChain } = jscad.hulls
 
     /**
      * Creates a simple 2D line of text

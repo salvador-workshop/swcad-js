@@ -6,9 +6,9 @@
  * @namespace lumber
  */
 
-const init = ({ lib, swLib }) => {
+const init = ({ jscad, swcadJs }) => {
     const lumber = {
-        northAmerica: require('./lumber-na').init({ lib, swLib }),
+        northAmerica: require('./lumber-na').init({ jscad, swcadJs }),
     }
 
     return lumber;

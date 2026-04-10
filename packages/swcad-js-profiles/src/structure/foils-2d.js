@@ -6,10 +6,10 @@
  * @namespace foil
  */
 
-const foilBuilder = ({ lib, swLib }) => {
-    const { union } = lib.booleans
-    const { rotate, align } = lib.transforms
-    const { circle  } = lib.primitives
+const foilBuilder = ({ jscad, swcadJs }) => {
+    const { union } = jscad.booleans
+    const { rotate, align } = jscad.transforms
+    const { circle  } = jscad.primitives
 
     /**
      * Builds a 2D n-foil opening

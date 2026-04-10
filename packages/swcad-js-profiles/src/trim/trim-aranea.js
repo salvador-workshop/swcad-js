@@ -6,10 +6,10 @@
  * @namespace aranea
  */
 
-const trimAranea = ({ lib, swLib }) => {
-    const { polygon, square } = lib.primitives
-    const { subtract, union } = lib.booleans
-    const { rotate, translate, mirror, center } = lib.transforms
+const trimAranea = ({ jscad, swcadJs }) => {
+    const { polygon, square } = jscad.primitives
+    const { subtract, union } = jscad.booleans
+    const { rotate, translate, mirror, center } = jscad.transforms
 
     const PHI = 1.6180339887;
     const PHI_INV = 0.6180339887;

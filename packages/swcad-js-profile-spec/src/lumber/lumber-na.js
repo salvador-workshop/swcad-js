@@ -6,10 +6,10 @@
  * @namespace northAmerica
  */
 
-const lumberNorthAmerica = ({ lib, swLib }) => {
+const lumberNorthAmerica = ({ jscad, swcadJs }) => {
 
-    const { rectangle } = lib.primitives;
-    const { lumber } = swLib.core.standards;
+    const { rectangle } = jscad.primitives;
+    const { lumber } = swcadJs.core.standards;
 
     const dimLumberModels = []
     for (const [stdKey, stdVal] of Object.entries(lumber.dimensional)) {
