@@ -9,29 +9,29 @@
 // Original color palette by
 // https://www.google.com/design/spec/style/color.html
 
-const paletteUtils = ({ lib }) => {
-    const colours = require('./colors').init({ lib })
+const paletteUtils = ({ jscad, swcadJs }) => {
+    const { colors } = swcadJs.utils
 
     const palette = {
         /** @memberof utils.palette */
         light: {
-            default: colours.blue,
-            primary: colours.indigo,
-            secondary: colours.green,
-            tertiary: colours.pink,
-            layout: colours.translucentDeepOrange,
-            detail: colours.lightBlue,
-            guide: colours.translucentGrey,
+            default: colors.blue,
+            primary: colors.indigo,
+            secondary: colors.green,
+            tertiary: colors.pink,
+            layout: colors.translucentDeepOrange,
+            detail: colors.lightBlue,
+            guide: colors.translucentGrey,
         },
         /** @memberof utils.palette */
         dark: {
-            default: colours.blue,
-            primary: colours.indigo,
-            secondary: colours.green,
-            tertiary: colours.pink,
-            layout: colours.translucentDeepOrange,
-            detail: colours.lightBlue,
-            guide: colours.translucentGrey,
+            default: colors.blue,
+            primary: colors.indigo,
+            secondary: colors.green,
+            tertiary: colors.pink,
+            layout: colors.translucentDeepOrange,
+            detail: colors.lightBlue,
+            guide: colors.translucentGrey,
         },
     }
 

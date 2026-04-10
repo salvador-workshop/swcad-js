@@ -6,17 +6,17 @@
  * @namespace layout
  */
 
-const layoutUtils = ({ lib, swLib }) => {
-    const { cuboid, rectangle } = lib.primitives;
-    const { union, subtract } = lib.booleans;
-    const { translate, align } = lib.transforms;
-    const { measureDimensions } = lib.measurements;
-    const isGeom2 = lib.geometries.geom2.isA
-    const isPath2 = lib.geometries.path2.isA
+const layoutUtils = ({ jscad, swcadJs }) => {
+    const { cuboid, rectangle } = jscad.primitives;
+    const { union, subtract } = jscad.booleans;
+    const { translate, align } = jscad.transforms;
+    const { measureDimensions } = jscad.measurements;
+    const isGeom2 = jscad.geometries.geom2.isA
+    const isPath2 = jscad.geometries.path2.isA
 
-    const { maths } = swLib.core
-    const { text2d } = swLib.models.profiles
-    const { text3d } = swLib.models.prefab
+    const { maths } = swcadJs.core
+    const { text2d } = swcadJs.models.profiles
+    const { text3d } = swcadJs.models.prefab
 
     const layoutElements = new Map();
     let largestDimensionX = 0;

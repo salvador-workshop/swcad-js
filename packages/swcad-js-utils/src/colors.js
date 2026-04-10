@@ -9,8 +9,8 @@
 // Original color palette by
 // https://www.google.com/design/spec/style/color.html
 
-const colourUtils = ({ lib }) => {
-    const { hexToRgb } = lib.colors;
+const colourUtils = ({ jscad, swcadJs }) => {
+    const { hexToRgb } = jscad.colors;
 
     const colors = {
         /** @memberof utils.colors */

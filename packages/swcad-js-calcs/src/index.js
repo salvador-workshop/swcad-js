@@ -6,11 +6,18 @@ const position = require('./position')
 const transform = require('./transform')
 
 const calcsInit = ({ jscad, swcadJs }) => {
+    const mathModule = math.init({ jscad, swcadJs })
+    const preLib = {
+        ...swcadJs,
+        calcs: {
+            math: mathModule,
+        }
+    }
     return {
-        geometry: geometry.init({ jscad, swcadJs }),
-        math: math.init({ jscad, swcadJs }),
-        position: position.init({ jscad, swcadJs }),
-        transform: transform.init({ jscad, swcadJs }),
+        geometry: geometry.init({ jscad, swcadJs: preLib }),
+        math: mathModule,
+        position: position.init({ jscad, swcadJs: preLib }),
+        transform: transform.init({ jscad, swcadJs: preLib }),
     }
 }
 

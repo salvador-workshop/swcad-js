@@ -1,6 +1,7 @@
 "use strict"
 
 const inchesToMm = (numIn) => numIn * 25.4
+const arrayCartesianProduct = (a, b) => a.reduce((acc, x) => [...acc, ...b.map(y => [x, y])], []);
 
 /**
  * Lumber standards
