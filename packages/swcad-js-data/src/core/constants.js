@@ -49,6 +49,13 @@ const constants = {
      * @constant {number}
      */
     TRI_30_FACTOR: tri30Factor,
+    PLASTIC_RATIO: 1.3247179572,
+    SUPERGOLDEN_RATIO: 1.4655712319,
+    GOLDEN_RATIO: phi,
+    SILVER_RATIO: 1 + tri45Factor,         // 2.4142
+    BRONZE_RATIO: 3 + Math.sqrt(13) / 2,     // 3.3028
+    COPPER_RATIO: 2 + Math.sqrt(5),     // 4.2361
+    NICKEL_RATIO: 5 + Math.sqrt(29),     // 5.1925
 }
 
 module.exports = constants;

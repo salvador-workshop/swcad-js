@@ -1,12 +1,11 @@
 {
-  "name": "swcad-js-std-specs",
-  "version": "0.10.1",
-  "description": "Standards and specs for Salvador Workshop's JSCAD utilities and toolkit.",
+  "name": "swcad-js-profiles",
+  "version": "0.11.1",
+  "description": "swcad-js-profiles",
   "homepage": "",
   "main": "src/index.js",
   "scripts": {
-    "docs": "jsdoc src -r -d docs -c jsdoc.json --readme readme.md",
-    "test": "npx gulp"
+    "docs": "jsdoc src -r -d docs -c jsdoc.json --readme readme.md"
   },
   "contributors": [
     {
