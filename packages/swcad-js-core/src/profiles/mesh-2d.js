@@ -71,7 +71,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
      * @returns default values and opts
      * @memberof profiles.mesh
      */
-    const modelDefaults = () => {
+    const meshPanelDefaults = () => {
 
         /** Specific value declarations */
         const defaultValues = {
@@ -120,8 +120,8 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
      * @returns model properties
      * @memberof profiles.mesh
      */
-    const modelProps = (opts) => {
-        const defaults = modelDefaults()
+    const meshPanelProps = (opts) => {
+        const defaults = meshPanelDefaults()
         console.log('panelFrameProps() -- opts', opts)
 
         const {
@@ -240,8 +240,8 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.mesh
      */
-    const model = (opts) => {
-        const defaults = modelDefaults()
+    const meshPanel = (opts) => {
+        const defaults = meshPanelDefaults()
 
         // User options
         const {
@@ -272,7 +272,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             holePattern,
         }
 
-        const modelProperties = modelProps(inOpts)
+        const modelProperties = meshPanelProps(inOpts)
 
         /* ----------------------------------------
          * Modelling, Component/Assembly Modules
@@ -386,7 +386,9 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
         return [mainModel, modelParts, modelProperties]
     }
 
-    return model
+    return {
+        meshPanel
+    }
 }
 
 module.exports = { init: mesh2dInit }

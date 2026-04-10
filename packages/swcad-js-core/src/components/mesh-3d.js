@@ -23,21 +23,11 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
 
     const {
         math,
-        geometry,
-        position
     } = swcadJs.utils
 
     const {
         mesh: mesh2d
     } = swcadJs.profiles
-
-    const getPunchPoints = (pattern, length, width, radius) => {
-        let punchPoints = geometry.getTriangularPtsInArea(length, width, radius)
-        if (pattern === 'square') {
-            punchPoints = geometry.getSquarePtsInArea(length, width, radius)
-        }
-        return punchPoints
-    }
 
     /**
        * Generates an edge flange profile
@@ -108,19 +98,19 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
      */
     const meshPanel = ({
         size,
-        thickness,
-        edgeMargin,
+        thickness = 1.333333,
+        edgeMargin = math.inchesToMm(1/8),
         holeRadius,
         holeDistance,
-        holePattern,
+        holePattern = 'tri',
     }) => {
-        const mPanelProfile = mesh2d({
-            size,
+        const mPanelProfile = mesh2d.meshPanel({
+            size: [size[0], size[1]],
             edgeMargin,
             holeRadius,
             holeDistance,
             holePattern,
-        })
+        })[0]
 
         const mPanel = extrudeLinear({ height: thickness }, mPanelProfile)
 
