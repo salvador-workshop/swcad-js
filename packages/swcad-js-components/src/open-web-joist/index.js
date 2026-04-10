@@ -63,7 +63,7 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
         position,
     } = swcadJs.utils
 
-    const beadsBits = require('./beads-bits').init({ jscad, swcadJs });
+    const beadsBits = require('../beads-bits').init({ jscad, swcadJs });
 
     const {
         interfaceProfileBeads
