@@ -1,12 +1,11 @@
 {
-  "name": "swcad-js-families",
-  "version": "0.11.0",
-  "description": "2D/3D model families for Salvador Workshop's JSCAD utilities and toolkit.",
+  "name": "swcad-js-profile-spec",
+  "version": "0.11.1",
+  "description": "swcad-js-profile-spec",
   "homepage": "",
   "main": "src/index.js",
   "scripts": {
-    "docs": "jsdoc src -r -d docs -c jsdoc.json --readme readme.md",
-    "test": "npx gulp"
+    "docs": "jsdoc src -r -d docs -c jsdoc.json --readme readme.md"
   },
   "contributors": [
     {

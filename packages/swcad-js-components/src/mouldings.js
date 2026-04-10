@@ -6,6 +6,7 @@
  * Input 2D profiles must be centred at (0, 0, 0)
  * @memberof components
  * @namespace moulding
+ * @deprecated
  */
 
 const mouldBuilder = ({ lib, swLib }) => {

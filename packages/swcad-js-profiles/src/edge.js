@@ -93,6 +93,7 @@ const edgeInit = ({ lib, swLib }) => {
      * Edge profiles
      * @memberof profiles
      * @namespace edge
+     * @deprecated
      */
     const edge = {
         circNotch,

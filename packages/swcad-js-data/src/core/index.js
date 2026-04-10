@@ -6,7 +6,6 @@ const init = ({ lib }) => {
         errors: require('./errors'),
     }
 
-    core.maths = require('./maths').init({ lib, swLib: { core } });
     core.standards = require('./standards').init({ lib, swLib: { core: { ...core } } });
     core.internals = require('./internals').init({ lib, swLib: { core: { ...core } } });
     core.specifications = require('./specifications');
