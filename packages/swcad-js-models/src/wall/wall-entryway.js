@@ -6,18 +6,18 @@
  * @namespace entryway
  */
 
-const entrywayBuilder = ({ lib, swLib }) => {
-    const { union, subtract, intersect } = lib.booleans;
-    const { translate, rotate, mirror } = lib.transforms;
-    const { cuboid } = lib.primitives;
-    const { measureDimensions } = lib.measurements;
-    const { extrudeLinear } = lib.extrusions
-    const { hull } = lib.hulls
+const entrywayBuilder = ({ jscad, swcadJs }) => {
+    const { union, subtract, intersect } = jscad.booleans;
+    const { translate, rotate, mirror } = jscad.transforms;
+    const { cuboid } = jscad.primitives;
+    const { measureDimensions } = jscad.measurements;
+    const { extrudeLinear } = jscad.extrusions
+    const { hull } = jscad.hulls
 
     const {
         arches,
         walls,
-    } = swLib.builders
+    } = swcadJs.builders
 
     return {
         /**

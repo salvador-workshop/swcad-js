@@ -6,11 +6,11 @@
  * @namespace northAmerica
  */
 
-const tileNorthAmerica = ({ lib, swLib }) => {
+const tileNorthAmerica = ({ jscad, swcadJs }) => {
 
-    const { cuboid } = lib.primitives
-    const { maths } = swLib.core
-    const { extras } = swLib.utils
+    const { cuboid } = jscad.primitives
+    const { maths } = swcadJs.core
+    const { extras } = swcadJs.utils
 
     const tileStandards = {
         TILE_THICKNESS_LG: maths.inchesToMm(9 / 32), // 7.14375 mm

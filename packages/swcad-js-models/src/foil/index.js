@@ -6,12 +6,12 @@
  * @namespace foil
  */
 
-const foilBuilder = ({ lib, swLib }) => {
-    const { union, subtract, scission } = lib.booleans
-    const { rotate, align, translate, mirror } = lib.transforms
-    const { cuboid, rectangle } = lib.primitives
-    const { measureBoundingBox } = lib.measurements
-    const { extrudeRotate } = lib.extrusions
+const foilBuilder = ({ jscad, swcadJs }) => {
+    const { union, subtract, scission } = jscad.booleans
+    const { rotate, align, translate, mirror } = jscad.transforms
+    const { cuboid, rectangle } = jscad.primitives
+    const { measureBoundingBox } = jscad.measurements
+    const { extrudeRotate } = jscad.extrusions
 
     /**
      * Builds a 3D n-foil opening using a given 2D cross-section profile

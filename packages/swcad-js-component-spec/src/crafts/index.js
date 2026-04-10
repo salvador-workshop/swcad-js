@@ -6,15 +6,15 @@
  * @namespace crafts
  */
 
-const init = ({ lib, swLib }) => {
-    const { rectangle, cuboid, triangle, circle, cylinder, roundedRectangle } = lib.primitives;
-    const { union, subtract } = lib.booleans;
-    const { translate, align, mirror, rotate } = lib.transforms;
-    const { hull } = lib.hulls
-    const { extrudeLinear, extrudeRotate } = lib.extrusions
-    const { TAU } = lib.maths.constants
+const init = ({ jscad, swcadJs }) => {
+    const { rectangle, cuboid, triangle, circle, cylinder, roundedRectangle } = jscad.primitives;
+    const { union, subtract } = jscad.booleans;
+    const { translate, align, mirror, rotate } = jscad.transforms;
+    const { hull } = jscad.hulls
+    const { extrudeLinear, extrudeRotate } = jscad.extrusions
+    const { TAU } = jscad.maths.constants
 
-    const { standards, maths, position } = swLib.core
+    const { standards, maths, position } = swcadJs.core
 
     const toothpickSpecs = {
         radius: standards.crafts.DIAM_TOOTHPICK / 2,

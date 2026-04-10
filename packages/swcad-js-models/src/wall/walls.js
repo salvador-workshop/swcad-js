@@ -6,15 +6,15 @@
  * @namespace wall
  */
 
-const wallBuilder = ({ lib, swLib, swFamilies }) => {
-    const { union, subtract } = lib.booleans
-    const { align } = lib.transforms
-    const { cuboid } = lib.primitives
-    const { measureDimensions } = lib.measurements;
+const wallBuilder = ({ jscad, swcadJs }) => {
+    const { union, subtract } = jscad.booleans
+    const { align } = jscad.transforms
+    const { cuboid } = jscad.primitives
+    const { measureDimensions } = jscad.measurements;
 
-    const { mouldings } = swLib.models.prefab
-    const { aranea } = swFamilies.trim
-    const { PHI_INV } = swLib.core.constants
+    const { mouldings } = swcadJs.models.prefab
+    const { aranea } = swcadJs.trim
+    const { PHI_INV } = swcadJs.core.constants
 
     const crownTrim = ({ totalThickness, totalLength, trimProfile }) => {
         const profileDims = measureDimensions(trimProfile);

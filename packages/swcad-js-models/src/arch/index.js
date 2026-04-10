@@ -6,13 +6,13 @@
  * @namespace arch
  */
 
-const archBuilder = ({ lib }) => {
-  const { path2, geom2 } = lib.geometries
-  const { extrudeRotate } = lib.extrusions
-  const { arc, cuboid } = lib.primitives
-  const { translate, mirror, rotate, align } = lib.transforms
-  const { union, subtract, intersect } = lib.booleans
-  const { measureDimensions } = lib.measurements;
+const archBuilder = ({ jscad, swcadJs }) => {
+  const { path2, geom2 } = jscad.geometries
+  const { extrudeRotate } = jscad.extrusions
+  const { arc, cuboid } = jscad.primitives
+  const { translate, mirror, rotate, align } = jscad.transforms
+  const { union, subtract, intersect } = jscad.booleans
+  const { measureDimensions } = jscad.measurements;
 
   return {
     /**

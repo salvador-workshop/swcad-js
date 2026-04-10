@@ -9,14 +9,14 @@
 const DEFAULT_EXTRUDE_HEIGHT = 1;
 const DEFAULT_PANEL_HEIGHT = 2;
 
-const textUtils = ({ lib, swLib }) => {
-    const { subtract } = lib.booleans
-    const { cuboid } = lib.primitives
-    const { align } = lib.transforms
-    const { extrudeLinear } = lib.extrusions
-    const { measureDimensions } = lib.measurements;
+const textUtils = ({ jscad, swcadJs }) => {
+    const { subtract } = jscad.booleans
+    const { cuboid } = jscad.primitives
+    const { align } = jscad.transforms
+    const { extrudeLinear } = jscad.extrusions
+    const { measureDimensions } = jscad.measurements;
 
-    const { text2d } = swLib.models.profiles
+    const { text2d } = swcadJs.models.profiles
 
     /**
      * Creates a simple 3D line of text

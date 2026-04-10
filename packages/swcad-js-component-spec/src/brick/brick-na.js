@@ -6,10 +6,10 @@
  * @namespace northAmerica
  */
 
-const brickNorthAmerica = ({ lib, swLib }) => {
+const brickNorthAmerica = ({ jscad, swcadJs }) => {
 
-    const { cuboid } = lib.primitives;
-    const { masonry } = swLib.core.standards;
+    const { cuboid } = jscad.primitives;
+    const { masonry } = swcadJs.core.standards;
 
     const brickNorAm = {}
     const brickNorAmSpecs = [

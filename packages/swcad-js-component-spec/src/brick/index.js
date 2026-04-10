@@ -6,9 +6,9 @@
  * @namespace brick
  */
 
-const init = ({ lib, swLib }) => {
+const init = ({ jscad, swcadJs }) => {
     const brick = {
-        northAmerica: require('./brick-na').init({ lib, swLib }),
+        northAmerica: require('./brick-na').init({ jscad, swcadJs }),
     }
 
     return brick;
