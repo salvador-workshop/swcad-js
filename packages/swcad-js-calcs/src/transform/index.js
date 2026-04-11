@@ -7,11 +7,15 @@
  */
 
 const transformUtils = ({ jscad, swcadJs }) => {
-    const { subtract } = jscad.booleans
+    const { subtract, union } = jscad.booleans
     const { measureDimensions } = jscad.measurements;
-    const { cuboid } = jscad.primitives
+    const { cuboid, rectangle } = jscad.primitives
     const { align, mirror, rotate } = jscad.transforms
     const { colorize } = jscad.colors
+
+    const {
+        position,
+    } = swcadJs.calcs
 
     /**
      * ...

@@ -241,14 +241,6 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
 
         /** Components used by model */
         const modelComponents = {
-            interface: {
-                profileBeads: beadsBits.interfaceProfileBeads(
-                    interfaceThickness,
-                    smProfileBeadWidth,
-                    mdProfileBeadWidth,
-                    lgProfileBeadWidth,
-                ),
-            }
         }
 
         /* ---------------------------------------------

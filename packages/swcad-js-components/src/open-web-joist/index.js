@@ -63,11 +63,15 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
         position,
     } = swcadJs.calcs
 
-    const beadsBits = require('../beads-bits').init({ jscad, swcadJs });
+    // const beadsBits = require('../beads-bits').init({ jscad, swcadJs });
+
+    // const {
+    //     interfaceProfileBeads
+    // } = beadsBits
 
     const {
-        interfaceProfileBeads
-    } = beadsBits
+        beadsBits
+    } = swcadJs.components
 
     /**
      * Builds default values and opts for the model
@@ -208,7 +212,7 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
 
         /** Components used by model */
         const modelComponents = {
-            interfaceProfileBeads: interfaceProfileBeads(
+            interfaceProfileBeads: beadsBits.interface.profileBeads(
                 interfaceThickness,
                 smProfileBeadWidth,
                 mdProfileBeadWidth,
