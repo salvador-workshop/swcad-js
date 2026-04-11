@@ -31,7 +31,7 @@
     "swcad-js-models": "*",
     "swcad-js-profile-spec": "*",
     "swcad-js-profiles": "*",
-    "swcad-js-utils": "*0"
+    "swcad-js-utils": "*"
   },
   "devDependencies": {
     "jsdoc": "^4.0.4"

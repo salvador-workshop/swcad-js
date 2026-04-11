@@ -12,7 +12,7 @@ API Docs: [salvador-workshop.github.io/swcad-js/](https://salvador-workshop.gith
 
 NPM package: [npmjs.com/package/swcad-js](https://www.npmjs.com/package/swcad-js)  
 
-![swcad-js demo - walls-roof](./static/img/collage-walls-roof.jpg "swcad-js demo - walls-roof")
+![swcad-js demo - walls-entryway](./static/img/entryways-1.png "swcad-js demo - walls-entryway")
 
 ## Usage
 
@@ -156,5 +156,3 @@ const main = () => {
 
 module.exports = { main }
 ```
-
-![swcad-js demo - mesh-fam](./static/img/collage-mesh-fam.jpg "swcad-js demo - mesh-fam")
