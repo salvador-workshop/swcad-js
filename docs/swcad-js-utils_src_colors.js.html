@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: swcad-js-utils/src/colors.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: swcad-js-utils/src/colors.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict"
+
+/**
+ * ...
+ * @memberof utils
+ * @namespace colors
+ */
+
+// Original color palette by
+// https://www.google.com/design/spec/style/color.html
+
+const colourUtils = ({ jscad, swcadJs }) => {
+    const { hexToRgb } = jscad.colors;
+
+    const colors = {
+        /** @memberof utils.colors */
+        red: hexToRgb('#f44336'),
+        /** @memberof utils.colors */
+        pink: hexToRgb('#e91e63'),
+        /** @memberof utils.colors */
+        purple: hexToRgb('#9c27b0'),
+        /** @memberof utils.colors */
+        deepPurple: hexToRgb('#673ab7'),
+        /** @memberof utils.colors */
+        indigo: hexToRgb('#3f51b5'),
+        /** @memberof utils.colors */
+        blue: hexToRgb('#2196f3'),
+        /** @memberof utils.colors */
+        lightBlue: hexToRgb('#03a9f4'),
+        /** @memberof utils.colors */
+        cyan: hexToRgb('#00bcd4'),
+        /** @memberof utils.colors */
+        teal: hexToRgb('#009688'),
+        /** @memberof utils.colors */
+        green: hexToRgb('#4caf50'),
+        /** @memberof utils.colors */
+        lightGreen: hexToRgb('#8bc34a'),
+        /** @memberof utils.colors */
+        lime: hexToRgb('#cddc39'),
+        /** @memberof utils.colors */
+        yellow: hexToRgb('#ffeb3b'),
+        /** @memberof utils.colors */
+        amber: hexToRgb('#ffc107'),
+        /** @memberof utils.colors */
+        orange: hexToRgb('#ff9800'),
+        /** @memberof utils.colors */
+        deepOrange: hexToRgb('#ff5722'),
+        /** @memberof utils.colors */
+        brown: hexToRgb('#795548'),
+        /** @memberof utils.colors */
+        grey: hexToRgb('#9e9e9e'),
+        /** @memberof utils.colors */
+        blueGrey: hexToRgb('#607d8b'),
+        /** @memberof utils.colors */
+        white: hexToRgb('#ffffff'),
+    }
+
+    // Adding translucent colours
+    for (const [colour, rgbVal] of Object.entries(colors)) {
+        const capColName = colour.slice(0, 1).toUpperCase() + colour.slice(1);
+        colors[`translucent${capColName}1`] = [...rgbVal, 0.3];
+        colors[`translucent${capColName}2`] = [...rgbVal, 0.5];
+        // using 2nd one as default value
+        colors[`translucent${capColName}`] = [...rgbVal, 0.5];
+        colors[`translucent${capColName}3`] = [...rgbVal, 0.7];
+    }
+
+    return colors;
+}
+module.exports = { init: colourUtils }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.position.cuboid.html">calcs.position.cuboid</a></li><li><a href="calcs.position.rectangle.html">calcs.position.rectangle</a></li><li><a href="calcs.position.triangle.html">calcs.position.triangle</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="componentSpec.brick.html">componentSpec.brick</a></li><li><a href="componentSpec.brick.northAmerica.html">componentSpec.brick.northAmerica</a></li><li><a href="componentSpec.crafts.html">componentSpec.crafts</a></li><li><a href="componentSpec.tile.html">componentSpec.tile</a></li><li><a href="componentSpec.tile.northAmerica.html">componentSpec.tile.northAmerica</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.moulding.html">components.moulding</a></li><li><a href="components.openWebJoist.html">components.openWebJoist</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.functions.html">data.functions</a></li><li><a href="data.specifications.html">data.specifications</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="data.standards.crafts.html">data.standards.crafts</a></li><li><a href="data.standards.lumber.html">data.standards.lumber</a></li><li><a href="data.standards.masonry.html">data.standards.masonry</a></li><li><a href="data.standards.paper.html">data.standards.paper</a></li><li><a href="data.standards.tiles.html">data.standards.tiles</a></li><li><a href="models.arch.html">models.arch</a></li><li><a href="models.foil.html">models.foil</a></li><li><a href="models.wall.html">models.wall</a></li><li><a href="models.wall.entryway.html">models.wall.entryway</a></li><li><a href="profileSpec.lumber.html">profileSpec.lumber</a></li><li><a href="profileSpec.lumber.northAmerica.html">profileSpec.lumber.northAmerica</a></li><li><a href="profileSpec.paper.html">profileSpec.paper</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.curve.html">profiles.curve</a></li><li><a href="profiles.frameRect.html">profiles.frameRect</a></li><li><a href="profiles.reinforcement.html">profiles.reinforcement</a></li><li><a href="profiles.shapes.html">profiles.shapes</a></li><li><a href="profiles.shapes.ellipse.html">profiles.shapes.ellipse</a></li><li><a href="profiles.shapes.rectangle.html">profiles.shapes.rectangle</a></li><li><a href="profiles.shapes.square.html">profiles.shapes.square</a></li><li><a href="profiles.shapes.triangle.html">profiles.shapes.triangle</a></li><li><a href="profiles.structure.arch.html">profiles.structure.arch</a></li><li><a href="profiles.structure.foil.html">profiles.structure.foil</a></li><li><a href="profiles.structure.mesh.html">profiles.structure.mesh</a></li><li><a href="profiles.text.html">profiles.text</a></li><li><a href="profiles.trim.html">profiles.trim</a></li><li><a href="profiles.trim.aranea.html">profiles.trim.aranea</a></li><li><a href="utils.colors.html">utils.colors</a></li><li><a href="utils.layout.html">utils.layout</a></li><li><a href="utils.palette.html">utils.palette</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Apr 10 2026 21:19:28 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

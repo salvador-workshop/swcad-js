@@ -26,119 +26,67 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const componentsModule = require('./components');
-const profilesModule = require('./profiles');
+            <pre class="prettyprint source linenums"><code>"use strict"
 
-const init = ({ jscad }) => {
-    const swJscad = require('./sw-jscad').init({ lib: jscad });
-    console.log('swJscad initialized', swJscad);
-
-    const coreProfiles = {
-        text: swJscad.models.profiles.text2d,
-        mesh: swJscad.models.profiles.mesh2d,
-        foil: swJscad.models.profiles.foils2d,
-        arch: swJscad.models.profiles.arch,
-        trim: swJscad.families.trim,
-        lumber: swJscad.families.lumber,
-        paper: swJscad.families.paper,
-        connections: swJscad.models.profiles.connections,
-        curves: swJscad.models.profiles.curves,
-        edge: swJscad.models.profiles.edge,
-        frameRect: swJscad.models.profiles.frameRect,
-        shapes: {
-            ellipse: swJscad.models.profiles.ellipse,
-            octagon: swJscad.models.profiles.octagonal,
-            rectangle: swJscad.models.profiles.rectangle,
-            triangle: swJscad.models.profiles.triangle,
-            square: {
-                sqCornerCircNotch: swJscad.models.profiles.sqCornerCircNotch,
-                sqCornerCircles: swJscad.models.profiles.sqCornerCircles,
-            }
-        }
-    }
-
-    const coreComponents = {
-        text: swJscad.models.prefab.text3d,
-        mesh: swJscad.models.prefab.mesh3d,
-        tile: swJscad.families.tile,
-        crafts: swJscad.families.crafts,
-        moulding: swJscad.models.prefab.mouldings,
-        dowelFittings: swJscad.families.dowelFittings,
-        brick: swJscad.families.brick,
-    }
-
-    const coreModels = {
-        foil: swJscad.models.prefab.foils3d,
-        arch: swJscad.models.prefab.arch,
-        buttress: swJscad.builders.buttress,
-        wall: {
-            ...swJscad.builders.walls,
-            entryway: swJscad.builders.entryways
-        },
-        column: swJscad.builders.columns,
-        roof: swJscad.builders.roofs,
-    }
-
-    const coreUtils = {
-        math: swJscad.core.maths,
-        geometry: swJscad.core.geometry,
-        position: swJscad.core.position,
-        extras: swJscad.utils.extras,
-        transform: swJscad.utils.transform,
-        colors: swJscad.ui.ux.colors,
-        layout: swJscad.ui.ux.layout,
-    }
+const coreInit = ({ jscad }) => {
 
     /**
-     * Constants, standards, specs
-     * @namespace data
-     */
-    const coreData = {
-        constants: swJscad.core.constants,
-        specifications: swJscad.core.specifications,
-        standards: swJscad.core.standards,
-    }
-
-    /**
-     * Old functions organized in the new style
-     * @since 0.10.8
+     * First step to building the library
+     * @since 0.11.1
      * */
     const swcadJsCore = {
-        profiles: coreProfiles,
-        components: coreComponents,
-        models: coreModels,
-        utils: coreUtils,
-        data: coreData,
+        data: require('swcad-js-data').init({ jscad }),
+        calcs: null,
+        profiles: null,
+        profileSpec: null,
+        components: null,
+        componentSpec: null,
+        utils: null,
+        models: null,
     }
 
 
-    // ----------------
-    // New Components
-    // ----------------
+    /**
+     * Intermediate step to building the library
+     * @since 0.11.1
+     * */
+    let swcadJsAssembly = swcadJsCore
 
-    const swcadJsProfiles = profilesModule.init({ jscad, swcadJs: swcadJsCore })
-    const profiles = {
-        ...coreProfiles,
-        ...swcadJsProfiles,
-    }
-    swcadJsCore.profiles = profiles
+    const assemblyCalcs = require('swcad-js-calcs').init({ jscad, swcadJs: swcadJsAssembly })
+    swcadJsAssembly.calcs = assemblyCalcs
 
-    const swcadJsComponents = componentsModule.init({ jscad, swcadJs: swcadJsCore });
-    const components = {
-        ...coreComponents,
-        ...swcadJsComponents,
-    }
+    const assemblyProfiles = require('swcad-js-profiles').init({ jscad, swcadJs: swcadJsAssembly })
+    swcadJsAssembly.profiles = assemblyProfiles
+
+    const assemblyProfileSpec = require('swcad-js-profile-spec').init({ jscad, swcadJs: swcadJsAssembly })
+    swcadJsAssembly.profileSpec = assemblyProfileSpec
+
+    const assemblyComponents = require('swcad-js-components').init({ jscad, swcadJs: swcadJsAssembly })
+    swcadJsAssembly.components = assemblyComponents
+
+    const assemblyComponentSpec = require('swcad-js-component-spec').init({ jscad, swcadJs: swcadJsAssembly })
+    swcadJsAssembly.componentSpec = assemblyComponentSpec
+
+    const assemblyUtils = require('swcad-js-utils').init({ jscad, swcadJs: swcadJsAssembly })
+    swcadJsAssembly.utils = assemblyUtils
+
+    const assemblyModels = require('swcad-js-models').init({ jscad, swcadJs: swcadJsAssembly })
+    swcadJsAssembly.models = assemblyModels
+
 
     /**
      * User-facing library
-     * @since 0.10.8
+     * @since 0.11.1
      * */
     const swcadJs = {
-        components,
-        profiles: swcadJsCore.profiles,
-        models: swcadJsCore.models,
-        utils: swcadJsCore.utils,
-        data: swcadJsCore.data,
+        data: swcadJsAssembly.data,
+        calcs: swcadJsAssembly.calcs,
+        profiles: swcadJsAssembly.profiles,
+        profileSpec: swcadJsAssembly.profileSpec,
+        components: swcadJsAssembly.components,
+        componentSpec: swcadJsAssembly.componentSpec,
+        utils: swcadJsAssembly.utils,
+        models: swcadJsAssembly.models,
     }
 
     console.log('swcadJs initialized', swcadJs);
@@ -146,7 +94,9 @@ const init = ({ jscad }) => {
     return swcadJs
 }
 
-module.exports = { init };
+module.exports = {
+    init: coreInit,
+};
 </code></pre>
         </article>
     </section>
@@ -157,13 +107,13 @@ module.exports = { init };
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.brick.html">components.brick</a></li><li><a href="components.brick.northAmerica.html">components.brick.northAmerica</a></li><li><a href="components.crafts.html">components.crafts</a></li><li><a href="components.dowelFittings.html">components.dowelFittings</a></li><li><a href="components.dowelFittings.dowelCouplers.html">components.dowelFittings.dowelCouplers</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.moulding.html">components.moulding</a></li><li><a href="components.openWebJoist.html">components.openWebJoist</a></li><li><a href="components.text.html">components.text</a></li><li><a href="components.tile.html">components.tile</a></li><li><a href="components.tile.northAmerica.html">components.tile.northAmerica</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.specifications.html">data.specifications</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="data.standards.crafts.html">data.standards.crafts</a></li><li><a href="data.standards.lumber.html">data.standards.lumber</a></li><li><a href="data.standards.masonry.html">data.standards.masonry</a></li><li><a href="data.standards.paper.html">data.standards.paper</a></li><li><a href="data.standards.tiles.html">data.standards.tiles</a></li><li><a href="models.html">models</a></li><li><a href="models.arch.html">models.arch</a></li><li><a href="models.buttress.html">models.buttress</a></li><li><a href="models.column.html">models.column</a></li><li><a href="models.foil.html">models.foil</a></li><li><a href="models.roof.html">models.roof</a></li><li><a href="models.wall.html">models.wall</a></li><li><a href="models.wall.entryway.html">models.wall.entryway</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.arch.html">profiles.arch</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.curves.html">profiles.curves</a></li><li><a href="profiles.edge.html">profiles.edge</a></li><li><a href="profiles.foil.html">profiles.foil</a></li><li><a href="profiles.frameRect.html">profiles.frameRect</a></li><li><a href="profiles.lumber.html">profiles.lumber</a></li><li><a href="profiles.lumber.northAmerica.html">profiles.lumber.northAmerica</a></li><li><a href="profiles.mesh.html">profiles.mesh</a></li><li><a href="profiles.paper.html">profiles.paper</a></li><li><a href="profiles.reinforcement.html">profiles.reinforcement</a></li><li><a href="profiles.shapes.html">profiles.shapes</a></li><li><a href="profiles.shapes.ellipse.html">profiles.shapes.ellipse</a></li><li><a href="profiles.shapes.rectangle.html">profiles.shapes.rectangle</a></li><li><a href="profiles.shapes.square.html">profiles.shapes.square</a></li><li><a href="profiles.shapes.triangle.html">profiles.shapes.triangle</a></li><li><a href="profiles.text.html">profiles.text</a></li><li><a href="profiles.trim.html">profiles.trim</a></li><li><a href="profiles.trim.aranea.html">profiles.trim.aranea</a></li><li><a href="utils.html">utils</a></li><li><a href="utils.colors.html">utils.colors</a></li><li><a href="utils.extras.html">utils.extras</a></li><li><a href="utils.geometry.html">utils.geometry</a></li><li><a href="utils.geometry.points.html">utils.geometry.points</a></li><li><a href="utils.geometry.regPoly.html">utils.geometry.regPoly</a></li><li><a href="utils.layout.html">utils.layout</a></li><li><a href="utils.math.html">utils.math</a></li><li><a href="utils.palette.html">utils.palette</a></li><li><a href="utils.position.html">utils.position</a></li><li><a href="utils.position.cuboid.html">utils.position.cuboid</a></li><li><a href="utils.position.rectangle.html">utils.position.rectangle</a></li><li><a href="utils.position.triangle.html">utils.position.triangle</a></li><li><a href="utils.transform.html">utils.transform</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.position.cuboid.html">calcs.position.cuboid</a></li><li><a href="calcs.position.rectangle.html">calcs.position.rectangle</a></li><li><a href="calcs.position.triangle.html">calcs.position.triangle</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="componentSpec.brick.html">componentSpec.brick</a></li><li><a href="componentSpec.brick.northAmerica.html">componentSpec.brick.northAmerica</a></li><li><a href="componentSpec.crafts.html">componentSpec.crafts</a></li><li><a href="componentSpec.tile.html">componentSpec.tile</a></li><li><a href="componentSpec.tile.northAmerica.html">componentSpec.tile.northAmerica</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.moulding.html">components.moulding</a></li><li><a href="components.openWebJoist.html">components.openWebJoist</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.functions.html">data.functions</a></li><li><a href="data.specifications.html">data.specifications</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="data.standards.crafts.html">data.standards.crafts</a></li><li><a href="data.standards.lumber.html">data.standards.lumber</a></li><li><a href="data.standards.masonry.html">data.standards.masonry</a></li><li><a href="data.standards.paper.html">data.standards.paper</a></li><li><a href="data.standards.tiles.html">data.standards.tiles</a></li><li><a href="models.arch.html">models.arch</a></li><li><a href="models.foil.html">models.foil</a></li><li><a href="models.wall.html">models.wall</a></li><li><a href="models.wall.entryway.html">models.wall.entryway</a></li><li><a href="profileSpec.lumber.html">profileSpec.lumber</a></li><li><a href="profileSpec.lumber.northAmerica.html">profileSpec.lumber.northAmerica</a></li><li><a href="profileSpec.paper.html">profileSpec.paper</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.curve.html">profiles.curve</a></li><li><a href="profiles.frameRect.html">profiles.frameRect</a></li><li><a href="profiles.reinforcement.html">profiles.reinforcement</a></li><li><a href="profiles.shapes.html">profiles.shapes</a></li><li><a href="profiles.shapes.ellipse.html">profiles.shapes.ellipse</a></li><li><a href="profiles.shapes.rectangle.html">profiles.shapes.rectangle</a></li><li><a href="profiles.shapes.square.html">profiles.shapes.square</a></li><li><a href="profiles.shapes.triangle.html">profiles.shapes.triangle</a></li><li><a href="profiles.structure.arch.html">profiles.structure.arch</a></li><li><a href="profiles.structure.foil.html">profiles.structure.foil</a></li><li><a href="profiles.structure.mesh.html">profiles.structure.mesh</a></li><li><a href="profiles.text.html">profiles.text</a></li><li><a href="profiles.trim.html">profiles.trim</a></li><li><a href="profiles.trim.aranea.html">profiles.trim.aranea</a></li><li><a href="utils.colors.html">utils.colors</a></li><li><a href="utils.layout.html">utils.layout</a></li><li><a href="utils.palette.html">utils.palette</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Apr 10 2026 11:53:45 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Apr 10 2026 21:19:28 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
