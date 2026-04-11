@@ -1,6 +1,6 @@
 {
   "name": "swcad-js-core",
-  "version": "0.11.1-alpha.0",
+  "version": "0.11.1",
   "description": "swcad-js-core",
   "homepage": "",
   "repository": {
@@ -24,14 +24,14 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "swcad-js-calcs": "0.11.1-alpha.0",
-    "swcad-js-component-spec": "0.11.1-alpha.0",
-    "swcad-js-components": "0.11.1-alpha.0",
-    "swcad-js-data": "0.11.1-alpha.0",
-    "swcad-js-models": "0.11.1-alpha.0",
-    "swcad-js-profile-spec": "0.11.1-alpha.0",
-    "swcad-js-profiles": "0.11.1-alpha.0",
-    "swcad-js-utils": "0.11.1-alpha.0"
+    "swcad-js-calcs": "*",
+    "swcad-js-component-spec": "*",
+    "swcad-js-components": "*",
+    "swcad-js-data": "*",
+    "swcad-js-models": "*",
+    "swcad-js-profile-spec": "*",
+    "swcad-js-profiles": "*",
+    "swcad-js-utils": "*0"
   },
   "devDependencies": {
     "jsdoc": "^4.0.4"
