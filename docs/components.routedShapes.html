@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Namespace: arch</title>
+    <title>JSDoc: Namespace: routedShapes</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Namespace: arch</h1>
+    <h1 class="page-title">Namespace: routedShapes</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2>arch</h2>
+        <h2>routedShapes</h2>
         
     
 </header>
@@ -36,8 +36,6 @@
 <article>
     <div class="container-overview">
     
-        
-            <div class="description">Builds circle-based arches.</div>
         
 
         
@@ -72,7 +70,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-profiles_src_structure_arch-2d.js.html">swcad-js-profiles/src/structure/arch-2d.js</a>, <a href="swcad-js-profiles_src_structure_arch-2d.js.html#line3">line 3</a>
+        <a href="swcad-js-components_src_routed-shapes_index.js.html">swcad-js-components/src/routed-shapes/index.js</a>, <a href="swcad-js-components_src_routed-shapes_index.js.html#line552">line 552</a>
     </li></ul></dd>
     
 
@@ -111,7 +109,7 @@
     
 
     
-    <h4 class="name" id="onePtArch"><span class="type-signature"></span>onePtArch<span class="signature">(opts)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".modelCuboidOpts"><span class="type-signature">(static) </span>modelCuboidOpts<span class="signature">(opts)</span><span class="type-signature"></span></h4>
     
 
     
@@ -119,7 +117,7 @@
 
 
 <div class="description">
-    Builds a one-centre (semicircular) arch.
+    Initializes cuboid options with user input
 </div>
 
 
@@ -161,7 +159,7 @@
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">*</span>
 
 
             
@@ -171,56 +169,7 @@
 
             
 
-            <td class="description last">
-                <h6>Properties</h6>
-                
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>arcRadius</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">arc radius</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
+            <td class="description last"></td>
         </tr>
 
     
@@ -261,7 +210,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-profiles_src_structure_arch-2d.js.html">swcad-js-profiles/src/structure/arch-2d.js</a>, <a href="swcad-js-profiles_src_structure_arch-2d.js.html#line25">line 25</a>
+        <a href="swcad-js-components_src_routed-shapes_index.js.html">swcad-js-components/src/routed-shapes/index.js</a>, <a href="swcad-js-components_src_routed-shapes_index.js.html#line153">line 153</a>
     </li></ul></dd>
     
 
@@ -286,6 +235,16 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    model properties
+</div>
+
+
+
+    
 
 
 
@@ -297,7 +256,7 @@
     
 
     
-    <h4 class="name" id="twoPtArch"><span class="type-signature"></span>twoPtArch<span class="signature">(opts)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".modelCylinderEllipticOpts"><span class="type-signature">(static) </span>modelCylinderEllipticOpts<span class="signature">(opts)</span><span class="type-signature"></span></h4>
     
 
     
@@ -305,7 +264,7 @@
 
 
 <div class="description">
-    Builds a two-centre pointed arch.
+    Initializes cylinder elliptic options with user input
 </div>
 
 
@@ -347,7 +306,7 @@
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">*</span>
 
 
             
@@ -357,79 +316,7 @@
 
             
 
-            <td class="description last">
-                <h6>Properties</h6>
-                
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>arcRadius</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">arc radius</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>archWidth</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">arch width</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
+            <td class="description last"></td>
         </tr>
 
     
@@ -470,7 +357,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-profiles_src_structure_arch-2d.js.html">swcad-js-profiles/src/structure/arch-2d.js</a>, <a href="swcad-js-profiles_src_structure_arch-2d.js.html#line38">line 38</a>
+        <a href="swcad-js-components_src_routed-shapes_index.js.html">swcad-js-components/src/routed-shapes/index.js</a>, <a href="swcad-js-components_src_routed-shapes_index.js.html#line198">line 198</a>
     </li></ul></dd>
     
 
@@ -495,6 +382,604 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    model properties
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".modelDefaults"><span class="type-signature">(static) </span>modelDefaults<span class="signature">(opts)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Builds default values and opts for the model
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>opts</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="swcad-js-components_src_routed-shapes_index.js.html">swcad-js-components/src/routed-shapes/index.js</a>, <a href="swcad-js-components_src_routed-shapes_index.js.html#line78">line 78</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    default values and opts
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".modelProps"><span class="type-signature">(static) </span>modelProps<span class="signature">(opts)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Builds model properties from the given opts
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>opts</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="swcad-js-components_src_routed-shapes_index.js.html">swcad-js-components/src/routed-shapes/index.js</a>, <a href="swcad-js-components_src_routed-shapes_index.js.html#line248">line 248</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    model properties
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".routedCuboid"><span class="type-signature">(static) </span>routedCuboid<span class="signature">(opts)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Routed cuboid
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>opts</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="swcad-js-components_src_routed-shapes_index.js.html">swcad-js-components/src/routed-shapes/index.js</a>, <a href="swcad-js-components_src_routed-shapes_index.js.html#line452">line 452</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".routedCylinderElliptic"><span class="type-signature">(static) </span>routedCylinderElliptic<span class="signature">(opts)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Routed elliptical cylinder
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>opts</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="swcad-js-components_src_routed-shapes_index.js.html">swcad-js-components/src/routed-shapes/index.js</a>, <a href="swcad-js-components_src_routed-shapes_index.js.html#line505">line 505</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+</div>
+
+
+
+    
 
 
 
