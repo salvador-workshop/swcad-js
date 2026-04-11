@@ -2,7 +2,7 @@
 
 /**
  * ...
- * @memberof utils
+ * @memberof calcs
  * @namespace transform
  */
 
@@ -15,7 +15,7 @@ const transformUtils = ({ jscad, swcadJs }) => {
 
     /**
      * ...
-     * @memberof utils.transform
+     * @memberof calcs.transform
      * @param {object} opts 
      * @param {boolean} opts.reverse 
      * @param {object[]} geoms 
@@ -33,7 +33,7 @@ const transformUtils = ({ jscad, swcadJs }) => {
     return {
         /**
          * Cuts a given geometry in half.
-         * @memberof utils.transform
+         * @memberof calcs.transform
          * @instance
          * @param {Object} opts
          * @param {string} opts.axis - Axis direction pointing to the remaining geometry. This could be negative, specified like "x" or "-y"
@@ -79,7 +79,7 @@ const transformUtils = ({ jscad, swcadJs }) => {
         },
         /**
          * Cuts a slice of an object
-         * @memberof utils.transform
+         * @memberof calcs.transform
          * @instance
          * @param {Object} opts
          * @param {number} opts.centralAngle

@@ -6,7 +6,7 @@ const posTriangle = require('./pos-triangle');
 
 /**
  * ...
- * @memberof utils
+ * @memberof calcs
  * @namespace position
  */
 
@@ -23,7 +23,7 @@ const positionUtils = ({ jscad, swcadJs }) => {
 
     /**
      * ...
-     * @memberof utils.position
+     * @memberof calcs.position
      */
     const alignModes = {
         ctr: ['center', 'center', 'center'],
@@ -33,7 +33,7 @@ const positionUtils = ({ jscad, swcadJs }) => {
 
     /**
      * ...
-     * @memberof utils.position
+     * @memberof calcs.position
      * @param {*} inGeom 
      * @param {*} pt 
      * @returns ...
@@ -43,7 +43,7 @@ const positionUtils = ({ jscad, swcadJs }) => {
     }
     /**
      * ...
-     * @memberof utils.position
+     * @memberof calcs.position
      * @param {*} inGeom 
      * @param {*} pt 
      * @returns ...
@@ -53,7 +53,7 @@ const positionUtils = ({ jscad, swcadJs }) => {
     }
     /**
      * ...
-     * @memberof utils.position
+     * @memberof calcs.position
      * @param {*} inGeom 
      * @param {*} pt 
      * @returns ...
@@ -64,7 +64,7 @@ const positionUtils = ({ jscad, swcadJs }) => {
 
     /**
      * Measures key info, and presents it in a readable manner, like `{ size: { x: 99, y: 99, z: 99 }, min: { ... }, max: { ... } }`
-     * @memberof utils.position
+     * @memberof calcs.position
      * @instance
      * @returns ...
      */
@@ -77,7 +77,7 @@ const positionUtils = ({ jscad, swcadJs }) => {
 
     /**
      * Gets 3D bounding coordinates of a given geometry
-     * @memberof utils.position
+     * @memberof calcs.position
      * @param {object} geom 
      * @returns Bounding coords (right, left, back, front, top, bottom)
      */
@@ -96,7 +96,7 @@ const positionUtils = ({ jscad, swcadJs }) => {
 
     /**
      * Finds long axis of a coord set
-     * @memberof utils.position
+     * @memberof calcs.position
      * @param {number[]} size - [x, y, z]
      * @returns axis with longest value (either "x", "y", or "z") or `null` if invalid
      */
@@ -121,7 +121,7 @@ const positionUtils = ({ jscad, swcadJs }) => {
         findLongAxis,
         /**
          * Gets the keypoints for a given object
-         * @memberof utils.position
+         * @memberof calcs.position
          * @instance
          * @returns ...
          */

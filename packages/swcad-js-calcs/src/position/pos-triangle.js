@@ -2,7 +2,7 @@
 
 /**
  * Triangle calculations
- * @memberof utils.position
+ * @memberof calcs.position
  * @namespace triangle
  */
 

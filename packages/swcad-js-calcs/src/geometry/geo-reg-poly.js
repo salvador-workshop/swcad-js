@@ -2,7 +2,7 @@
 
 /**
  * Functions related to regular polygons
- * @memberof utils.geometry
+ * @memberof calcs.geometry
  * @namespace regPoly
  */
 
@@ -10,7 +10,7 @@ const geoRegPoly = ({ jscad, swcadJs }) => {
     return {
         /**
          * ...
-         * @memberof utils.geometry.regPoly
+         * @memberof calcs.geometry.regPoly
          * @returns ...
          */
         sideLengthFromApothem: (apothem, numSides) => {
@@ -18,7 +18,7 @@ const geoRegPoly = ({ jscad, swcadJs }) => {
         },
         /**
          * ...
-         * @memberof utils.geometry.regPoly
+         * @memberof calcs.geometry.regPoly
          * @returns ...
          */
         sideLengthFromCircumRadius: (circumradius, numSides) => {
@@ -26,7 +26,7 @@ const geoRegPoly = ({ jscad, swcadJs }) => {
         },
         /**
          * ...
-         * @memberof utils.geometry.regPoly
+         * @memberof calcs.geometry.regPoly
          * @returns ...
          */
         apothemFromCircumradius: (circumradius, numSides) => {
@@ -34,7 +34,7 @@ const geoRegPoly = ({ jscad, swcadJs }) => {
         },
         /**
          * ...
-         * @memberof utils.geometry.regPoly
+         * @memberof calcs.geometry.regPoly
          * @returns ...
          */
         apothemFromSideLength: (sideLength, numSides) => {
@@ -42,7 +42,7 @@ const geoRegPoly = ({ jscad, swcadJs }) => {
         },
         /**
          * ...
-         * @memberof utils.geometry.regPoly
+         * @memberof calcs.geometry.regPoly
          * @returns ...
          */
         circumradiusFromApothem: (apothem, numSides) => {
@@ -50,7 +50,7 @@ const geoRegPoly = ({ jscad, swcadJs }) => {
         },
         /**
          * ...
-         * @memberof utils.geometry.regPoly
+         * @memberof calcs.geometry.regPoly
          * @returns ...
          */
         circumradiusFromSideLength: (sideLength, numSides) => {
@@ -58,7 +58,7 @@ const geoRegPoly = ({ jscad, swcadJs }) => {
         },
         /**
          * ...
-         * @memberof utils.geometry.regPoly
+         * @memberof calcs.geometry.regPoly
          * @returns ...
          */
         interiorAngle: (numSides) => {

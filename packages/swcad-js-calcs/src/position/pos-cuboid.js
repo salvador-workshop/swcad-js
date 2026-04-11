@@ -2,7 +2,7 @@
 
 /**
  * Cuboid calculations
- * @memberof utils.position
+ * @memberof calcs.position
  * @namespace cuboid
  */
 
@@ -17,7 +17,7 @@ const geoCuboid = ({ jscad, swcadJs }) => {
 
     /**
      * ...
-     * @memberof utils.position.cuboid
+     * @memberof calcs.position.cuboid
      * @param {object} cuboidGeom 
      * @returns ...
      */
@@ -27,7 +27,7 @@ const geoCuboid = ({ jscad, swcadJs }) => {
 
     /**
      * ...
-     * @memberof utils.position.cuboid
+     * @memberof calcs.position.cuboid
      * @param {object} cuboidGeom 
      * @returns ...
      */
@@ -49,7 +49,7 @@ const geoCuboid = ({ jscad, swcadJs }) => {
 
     /**
      * ...
-     * @memberof utils.position.cuboid
+     * @memberof calcs.position.cuboid
      * @param {object} cuboidGeom 
      * @returns ...
      */
@@ -59,7 +59,7 @@ const geoCuboid = ({ jscad, swcadJs }) => {
 
     /**
      * ...
-     * @memberof utils.position.cuboid
+     * @memberof calcs.position.cuboid
      * @param {*} cuboidGeom 
      * @returns ...
      */

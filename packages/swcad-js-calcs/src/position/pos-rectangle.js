@@ -2,7 +2,7 @@
 
 /**
  * Rectangle calculations
- * @memberof utils.position
+ * @memberof calcs.position
  * @namespace rectangle
  */
 
@@ -17,7 +17,7 @@ const geoRectangle = ({ jscad, swcadJs }) => {
 
     /**
      * ...
-     * @memberof utils.position.rectangle
+     * @memberof calcs.position.rectangle
      * @param {object} rectGeom 
      * @returns ...
      */
@@ -27,7 +27,7 @@ const geoRectangle = ({ jscad, swcadJs }) => {
 
     /**
      * ...
-     * @memberof utils.position.rectangle
+     * @memberof calcs.position.rectangle
      * @param {object} rectGeom 
      * @returns ...
      */
@@ -45,7 +45,7 @@ const geoRectangle = ({ jscad, swcadJs }) => {
 
     /**
      * ...
-     * @memberof utils.position.rectangle
+     * @memberof calcs.position.rectangle
      * @param {object} rectGeom 
      * @returns ...
      */
@@ -55,7 +55,7 @@ const geoRectangle = ({ jscad, swcadJs }) => {
 
     /**
      * ...
-     * @memberof utils.position.rectangle
+     * @memberof calcs.position.rectangle
      * @param {object} rectGeom 
      * @returns ...
      */

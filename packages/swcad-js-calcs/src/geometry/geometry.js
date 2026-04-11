@@ -2,7 +2,7 @@
 
 /**
  * Geometry
- * @memberof utils
+ * @memberof calcs
  * @namespace geometry
  */
 
@@ -11,7 +11,7 @@ const geoRegPoly = require('./geo-reg-poly');
 /**
  * Finds the central point (avg.) between the given points
  * @param {number[]} points
- * @memberof utils.geometry.points
+ * @memberof calcs.geometry.points
  * @returns central point (avg.) between the given points
  */
 const ptCentroid = (points, mode = '3d') => {
@@ -46,7 +46,7 @@ const geometryUtils = ({ jscad, swcadJs }) => {
 
     /**
      * ...
-     * @memberof utils.geometry
+     * @memberof calcs.geometry
      * @param {*} startPt 
      * @param {*} endPt 
      * @param {*} mode 
@@ -63,7 +63,7 @@ const geometryUtils = ({ jscad, swcadJs }) => {
 
     /**
      * ...
-     * @memberof utils.geometry
+     * @memberof calcs.geometry
      * @param {*} angleRad 
      * @param {*} dist 
      * @returns ...
@@ -79,7 +79,7 @@ const geometryUtils = ({ jscad, swcadJs }) => {
         pointFromAngleAndDist,
         /**
          * Gets triangular points in area
-         * @memberof utils.geometry
+         * @memberof calcs.geometry
          * @param {*} x 
          * @param {*} y 
          * @param {*} radius 
@@ -126,7 +126,7 @@ const geometryUtils = ({ jscad, swcadJs }) => {
         },
         /**
          * Gets square points in area
-         * @memberof utils.geometry
+         * @memberof calcs.geometry
          * @param {*} x 
          * @param {*} y 
          * @param {*} radius 
@@ -167,7 +167,7 @@ const geometryUtils = ({ jscad, swcadJs }) => {
         },
         /**
          * Functions related to sets of Cartesian points
-         * @memberof utils.geometry
+         * @memberof calcs.geometry
          * @namespace points
          */
         points: {

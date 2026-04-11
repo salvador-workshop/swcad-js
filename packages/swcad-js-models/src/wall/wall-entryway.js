@@ -19,6 +19,10 @@ const entrywayBuilder = ({ jscad, swcadJs }) => {
         wall,
     } = swcadJs.models
 
+    const {
+        arch: arch2d,
+    } = swcadJs.profiles.structure
+
     return {
         /**
          * Builds a gothic entryway.
@@ -116,7 +120,7 @@ const entrywayBuilder = ({ jscad, swcadJs }) => {
             const trimArchDims = measureDimensions(trimArch);
 
             const innerOpeningSpecs = [opts.entryLength, 5 * opts.wallThickness, null];
-            const innerOpeningProfile = arch.twoPtArch({ arcRadius: innerOpeningSpecs[0] * archRadFactor, archWidth: innerOpeningSpecs[0] });
+            const innerOpeningProfile = arch2d.twoPtArch({ arcRadius: innerOpeningSpecs[0] * archRadFactor, archWidth: innerOpeningSpecs[0] });
             const innerOpening = rotate([Math.PI / 2, 0, 0], extrudeLinear({ height: innerOpeningSpecs[1] }, innerOpeningProfile));
             const adjInnerOpening = translate([0, innerOpeningSpecs[1] / 2, wall1Dims[2]], innerOpening);
 

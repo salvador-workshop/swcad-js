@@ -2,12 +2,12 @@
 
 /**
  * ...
- * @memberof utils
+ * @memberof calcs
  * @namespace math
  */
 
 /**
- * @memberof utils.math
+ * @memberof calcs.math
  * @param {*} a 
  * @param {*} b 
  * @returns ...
@@ -24,14 +24,14 @@ const mathUtils = ({ jscad, swcadJs }) => {
          * ...
          * @param {*} n 
          * @returns ...
-         * @memberof utils.math
+         * @memberof calcs.math
          */
         isEven: (n) => {
             return n % 2 == 0;
         },
         /**
          * ...
-         * @memberof utils.math
+         * @memberof calcs.math
          * @param {*} n 
          * @returns ...
          */
@@ -41,21 +41,21 @@ const mathUtils = ({ jscad, swcadJs }) => {
         arrayCartesianProduct,
         /**
          * ...
-         * @memberof utils.math
+         * @memberof calcs.math
          * @param {*} numInches 
          * @returns ...
          */
         inchesToMm: (numInches) => numInches * INCHES_MM_FACTOR,
         /**
          * ...
-         * @memberof utils.math
+         * @memberof calcs.math
          * @param {*} numInches 
          * @returns ...
          */
         mmToInches: (numMils) => numMils / INCHES_MM_FACTOR,
         /**
          * ...
-         * @memberof utils.math
+         * @memberof calcs.math
          * @param {*} numInches 
          * @returns ...
          */
