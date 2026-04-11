@@ -15,17 +15,16 @@ const profilesInit = ({ jscad, swcadJs }) => {
     const preLib = {
         ...swcadJs,
         profiles: {
-            ...shapesCore,
+            shapes: shapesCore,
         }
     }
 
     return {
-        ...shapesCore,
+        shapes: shapesCore,
         beadsBits: beadsBits.init({ jscad, swcadJs: preLib }),
         connections: connections.init({ jscad, swcadJs: preLib }),
         curve: curve.init({ jscad, swcadJs: preLib }),
         reinforcement: reinforcement.init({ jscad, swcadJs: preLib }),
-        shapes: shapes.init({ jscad, swcadJs: preLib }),
         structure: structure.init({ jscad, swcadJs: preLib }),
         text: text.init({ jscad, swcadJs: preLib }),
         trim: trim.init({ jscad, swcadJs: preLib }),
