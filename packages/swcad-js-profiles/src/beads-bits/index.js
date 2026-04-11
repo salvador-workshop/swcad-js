@@ -585,13 +585,20 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
         return [mainModel, modelParts, modelProperties]
     }
 
+    /**
+     * Corner bits
+     * @namespace corner
+     * @memberof profiles.beadsBits
+     */
+    const corner = {
+        rabbet,
+        chamfer,
+        roundOver,
+        cove,
+    }
+
     return {
-        corner: {
-            rabbet,
-            chamfer,
-            roundOver,
-            cove,
-        }
+        corner,
     }
 }
 

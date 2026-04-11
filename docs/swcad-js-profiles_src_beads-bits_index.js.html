@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: swcad-js-components/src/beads-bits/index.js</title>
+    <title>JSDoc: Source: swcad-js-profiles/src/beads-bits/index.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: swcad-js-components/src/beads-bits/index.js</h1>
+    <h1 class="page-title">Source: swcad-js-profiles/src/beads-bits/index.js</h1>
 
     
 
@@ -27,13 +27,6 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>"use strict"
-
-/**
- * Beads and Bits
- * @namespace beadsBits
- * @memberof components 
- * @author R. J. Salvador (Salvador Workshop)
- */
 
 const beadsBitsInit = ({ jscad, swcadJs }) => {
     const {
@@ -48,6 +41,8 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
         roundedRectangle,
         rectangle,
         triangle,
+        polygon,
+        ellipse,
     } = jscad.primitives
 
     const {
@@ -87,24 +82,20 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     const { colorize } = jscad.colors
 
     const {
-        constants,
-    } = swcadJs.data
-
-    const {
         math,
         position,
+        transform,
     } = swcadJs.calcs
 
-    const {
-        beadsBits,
-    } = swcadJs.profiles
+
+    //==============================================================================
 
 
     /**
      * Builds default values and opts for the model
      * @param {*} opts 
      * @returns default values and opts
-     * @memberof components.beadsBits
+     * @memberof profiles.beadsBits
      */
     const modelDefaults = () => {
         /** Specific value declarations */
@@ -158,7 +149,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * Initializes options with user input
      * @param {*} opts 
      * @returns model properties
-     * @memberof components.beadsBits
+     * @memberof profiles.beadsBits
      */
     const modelOpts = (opts) => {
         const defaults = modelDefaults()
@@ -207,7 +198,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * Builds model properties from the given opts
      * @param {*} opts 
      * @returns model properties
-     * @memberof components.beadsBits
+     * @memberof profiles.beadsBits
      */
     const modelProps = (opts) => {
         const defaults = modelDefaults()
@@ -299,23 +290,87 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     }
 
 
+    //------------------------------------------------------------------------------
+
+
     /**
      * Rabbet bit
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
-     * @memberof components.beadsBits.corner
+     * @memberof profiles.beadsBits.corner
      */
     const rabbet = (opts) => {
         const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
 
-        const bitProfile = beadsBits.corner.rabbet(opts)[0]
-        const extrudedBit = extrudeRotate({ segments: 32 }, bitProfile)
+        const {
+            radius1,
+            radius2,
+            offset1,
+            offset2,
+            offset3,
+            offset4,
+        } = modelProperties.dims
 
-        const mainModel = extrudedBit
+        const baseRect = rectangle({
+            size: [radius1 * 2, radius2 * 2]
+        })
+        const baseShape = transform.cutQuadrant(baseRect)
+        let offsetRectX = null
+        let offsetRectY = null
+        let offsetShape = baseShape
+
+        const hasOffsetRectX = offset1 &amp;&amp; offset2
+
+        if (hasOffsetRectX) {
+            offsetRectX = rectangle({
+                size: [radius1 + offset1, offset2]
+            })
+
+            offsetRectX = align(
+                { modes: ['min', 'max', 'center'] },
+                offsetRectX,
+            )
+
+            offsetShape = union(
+                offsetShape,
+                offsetRectX,
+            )
+        }
+
+        if (offset3 &amp;&amp; offset4) {
+            const extraOffset = hasOffsetRectX ? offset2 : 0
+            const nudgeDist = hasOffsetRectX ? -offset4 : 0
+
+            offsetRectY = rectangle({
+                size: [offset3, radius2 + offset4 + extraOffset]
+            })
+
+            offsetRectY = align(
+                { modes: ['max', 'min', 'center'] },
+                offsetRectY,
+            )
+
+            offsetRectY = translate([0, nudgeDist, 0], offsetRectY)
+
+            offsetShape = union(
+                offsetShape,
+                offsetRectY,
+            )
+        }
+
+        const cornerBit = align(
+            { modes: ['min', 'min', 'center'] },
+            offsetShape,
+        )
+
+        const fullBit = transform.cloneQuadrant(cornerBit)
+
+        const mainModel = fullBit
         const modelParts = {
             mainModel,
+            fullBit,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -325,17 +380,73 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * Chamfer bit
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
-     * @memberof components.beadsBits.corner
+     * @memberof profiles.beadsBits.corner
      */
     const chamfer = (opts) => {
         const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
 
-        const bitProfile = beadsBits.corner.chamfer(opts)[0]
-        const extrudedBit = extrudeRotate({ segments: 32 }, bitProfile)
+        const {
+            radius1,
+            radius2,
+            offset1,
+            offset2,
+            offset3,
+            offset4,
+        } = modelProperties.dims
 
-        const mainModel = extrudedBit
+        const diamondPts = [
+            [0, -radius2],
+            [radius1, 0],
+            [0, radius2],
+            [-radius1, 0],
+        ]
+        const baseDiamond = polygon({ points: diamondPts })
+        const baseShape = transform.cutQuadrant(baseDiamond)
+        let offsetRectX = null
+        let offsetRectY = null
+        let offsetShape = baseShape
+
+        if (offset1) {
+            offsetRectX = rectangle({
+                size: [radius1, offset1]
+            })
+            offsetRectX = align(
+                { modes: ['min', 'max', 'center'] },
+                offsetRectX,
+            )
+
+            offsetShape = union(
+                offsetShape,
+                offsetRectX,
+            )
+        }
+
+        if (offset2) {
+            offsetRectY = rectangle({
+                size: [offset2, radius2 + offset1],
+            })
+            offsetRectY = align(
+                { modes: ['max', 'min', 'center'] },
+                offsetRectY,
+            )
+            offsetRectY = translate([0, -offset1, 0], offsetRectY)
+
+            offsetShape = union(
+                offsetShape,
+                offsetRectY,
+            )
+        }
+
+        const cornerBit = align(
+            { modes: ['min', 'min', 'center'] },
+            offsetShape,
+        )
+
+        const fullBit = transform.cloneQuadrant(cornerBit)
+
+        const mainModel = fullBit
         const modelParts = {
             mainModel,
         }
@@ -344,20 +455,77 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Round-Over Bit
+     * Round-Over bit
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
-     * @memberof components.beadsBits.corner
+     * @memberof profiles.beadsBits.corner
      */
     const roundOver = (opts) => {
         const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
 
-        const bitProfile = beadsBits.corner.roundOver(opts)[0]
-        const extrudedBit = extrudeRotate({ segments: 32 }, bitProfile)
+        const {
+            radius1,
+            radius2,
+            offset1,
+            offset2,
+            offset3,
+            offset4,
+        } = modelProperties.dims
 
-        const mainModel = extrudedBit
+        const baseRect = rectangle({
+            size: [radius1, radius2],
+            center: [radius1 / -2, radius2 / -2],
+        })
+        const baseEllipse = ellipse({ radius: [radius1, radius2] })
+        const baseShape = align(
+            { modes: ['min', 'min', 'center'] },
+            subtract(baseRect, baseEllipse),
+        )
+        let offsetRectX = null
+        let offsetRectY = null
+        let offsetShape = baseShape
+
+        if (offset1) {
+            offsetRectX = rectangle({
+                size: [radius1, offset1]
+            })
+            offsetRectX = align(
+                { modes: ['min', 'max', 'center'] },
+                offsetRectX,
+            )
+
+            offsetShape = union(
+                offsetShape,
+                offsetRectX,
+            )
+        }
+
+        if (offset2) {
+            offsetRectY = rectangle({
+                size: [offset2, radius2 + offset1],
+            })
+            offsetRectY = align(
+                { modes: ['max', 'min', 'center'] },
+                offsetRectY,
+            )
+            offsetRectY = translate([0, -offset1, 0], offsetRectY)
+
+            offsetShape = union(
+                offsetShape,
+                offsetRectY,
+            )
+        }
+
+        const cornerBit = align(
+            { modes: ['min', 'min', 'center'] },
+            offsetShape,
+        )
+
+        const fullBit = transform.cloneQuadrant(cornerBit)
+
+        const mainModel = fullBit
         const modelParts = {
             mainModel,
         }
@@ -369,17 +537,75 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * Cove bit
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
-     * @memberof components.beadsBits.corner
+     * @memberof profiles.beadsBits.corner
      */
     const cove = (opts) => {
         const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
 
-        const bitProfile = beadsBits.corner.cove(opts)[0]
-        const extrudedBit = extrudeRotate({ segments: 32 }, bitProfile)
+        const {
+            radius1,
+            radius2,
+            offset1,
+            offset2,
+            offset3,
+            offset4,
+        } = modelProperties.dims
 
-        const mainModel = extrudedBit
+        const baseEllipse = ellipse({ radius: [radius1, radius2] })
+        const baseShape = transform.cutQuadrant(baseEllipse)
+        let offsetRectX = null
+        let offsetRectY = null
+        let offsetShape = baseShape
+
+        const hasOffsetRectX = offset1 &amp;&amp; offset2
+
+        if (hasOffsetRectX) {
+            offsetRectX = rectangle({
+                size: [radius1 + offset1, offset2]
+            })
+
+            offsetRectX = align(
+                { modes: ['min', 'max', 'center'] },
+                offsetRectX,
+            )
+
+            offsetShape = union(
+                offsetShape,
+                offsetRectX,
+            )
+        }
+
+        if (offset3 &amp;&amp; offset4) {
+            const extraOffset = hasOffsetRectX ? offset2 : 0
+            const nudgeDist = hasOffsetRectX ? -offset4 : 0
+
+            offsetRectY = rectangle({
+                size: [offset3, radius2 + offset4 + extraOffset]
+            })
+
+            offsetRectY = align(
+                { modes: ['max', 'min', 'center'] },
+                offsetRectY,
+            )
+
+            offsetRectY = translate([0, nudgeDist, 0], offsetRectY)
+
+            offsetShape = union(
+                offsetShape,
+                offsetRectY,
+            )
+        }
+
+        const cornerBit = align(
+            { modes: ['min', 'min', 'center'] },
+            offsetShape,
+        )
+
+        const fullBit = transform.cloneQuadrant(cornerBit)
+
+        const mainModel = fullBit
         const modelParts = {
             mainModel,
         }
@@ -390,7 +616,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     /**
      * Corner bits
      * @namespace corner
-     * @memberof components.beadsBits
+     * @memberof profiles.beadsBits
      */
     const corner = {
         rabbet,
@@ -399,61 +625,10 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
         cove,
     }
 
-    /**
- * Standard bead profiles for interface connections
- * @param {number} baseThickness - Thickness of the bead profile
- * @param {number} smWidth - Width of the small bead profile
- * @param {number} mdWidth - Width of the medium bead profile
- * @param {number} lgWidth - Width of the large bead profile
- * @returns {Object&lt;string, geom3>} - Small, Medium, and Large bead profiles
- * @memberof components.beadsBits.interface3d
- */
-    const profileBeads = (baseThickness, smWidth, mdWidth, lgWidth) => {
-        const edgeOffset = baseThickness / constants.TRI_30_FACTOR / 2
-        const lgTopWidth = lgWidth - (edgeOffset * 2)
-        const mdTopWidth = mdWidth - (edgeOffset * 2)
-        const smTopWidth = smWidth - (edgeOffset * 2)
-
-        const lgProfile = cylinderElliptic({
-            height: baseThickness,
-            startRadius: [lgWidth / 2, lgWidth / 2],
-            endRadius: [lgTopWidth / 2, lgTopWidth / 2]
-        })
-
-        const mdProfile = cylinderElliptic({
-            height: baseThickness,
-            startRadius: [mdWidth / 2, mdWidth / 2],
-            endRadius: [mdTopWidth / 2, mdTopWidth / 2]
-        })
-
-        const smProfile = cylinderElliptic({
-            height: baseThickness,
-            startRadius: [smWidth / 2, smWidth / 2],
-            endRadius: [smTopWidth / 2, smTopWidth / 2]
-        })
-
-        return {
-            lg: lgProfile,
-            md: mdProfile,
-            sm: smProfile,
-        }
-    }
-
-    /**
-     * Interface components
-     * @namespace interface3d
-     * @memberof components.beadsBits
-     */
-    const interface3d = {
-        profileBeads
-    }
-
     return {
-        interface3d,
         corner,
     }
 }
-
 
 module.exports = {
     init: beadsBitsInit
