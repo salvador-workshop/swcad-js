@@ -62,6 +62,223 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
         constants,
     } = swcadJs.data
 
+    const {
+        math,
+        position,
+    } = swcadJs.calcs
+
+    const {
+        beadsBits,
+    } = swcadJs.profiles
+
+
+    /**
+     * Builds default values and opts for the model
+     * @param {*} opts 
+     * @returns default values and opts
+     * @memberof components.beadsBits
+     */
+    const modelDefaults = () => {
+        /** Specific value declarations */
+        const defaultValues = {
+            dims: {
+                size: [
+                    math.inchesToMm(2),
+                    math.inchesToMm(4),
+                    math.inchesToMm(1),
+                ],
+            },
+            points: {
+                centre: [0, 0, 0]
+            },
+            types: {
+                default: { id: 'default', desc: 'Default' },
+                alt: { id: 'alt', desc: 'Alternate' },
+            },
+        }
+
+        /** Options used by SW models */
+        const standardOpts = {
+            type: defaultValues.types.default.id,
+            scale: 1,
+            interfaceThickness: 1.333333,
+            fitGap: math.inchesToMm(1 / 128),
+        }
+
+        /** Computed values for option defaults */
+        const defaultOpts = {
+            ...standardOpts,
+            radius1: math.inchesToMm(1 / 2),
+            radius2: math.inchesToMm(3 / 4),
+            offset1: 0,
+            offset2: 0,
+            offset3: 0,
+            offset4: 0,
+        }
+
+        return {
+            opts: defaultOpts,
+            vals: defaultValues,
+        }
+    }
+
+
+    //------------------------------------------------------------------------------
+
+
+    /**
+     * Initializes options with user input
+     * @param {*} opts 
+     * @returns model properties
+     * @memberof components.beadsBits
+     */
+    const modelOpts = (opts) => {
+        const defaults = modelDefaults()
+        console.log('modelOpts() -- opts', opts)
+
+        // User options
+        const {
+            radius1 = defaults.opts.radius1,
+            radius2 = defaults.opts.radius2,
+            offset1 = defaults.opts.offset1,
+            offset2 = defaults.opts.offset2,
+            offset3 = defaults.opts.offset3,
+            offset4 = defaults.opts.offset4,
+            type = defaults.opts.type,
+            scale = defaults.opts.scale,
+            interfaceThickness = defaults.opts.interfaceThickness,
+            fitGap = defaults.opts.fitGap,
+        } = opts
+
+        const stdOpts = {
+            type,
+            scale,
+            interfaceThickness,
+            fitGap,
+        }
+
+        const initOpts = {
+            radius1,
+            radius2,
+            offset1,
+            offset2,
+            offset3,
+            offset4,
+            ...stdOpts,
+        }
+        console.log('modelOpts() -- initOpts', initOpts)
+
+        return initOpts
+    }
+
+
+    //------------------------------------------------------------------------------
+
+
+    /**
+     * Builds model properties from the given opts
+     * @param {*} opts 
+     * @returns model properties
+     * @memberof components.beadsBits
+     */
+    const modelProps = (opts) => {
+        const defaults = modelDefaults()
+        console.log('modelProps() -- opts', opts)
+
+        const {
+            radius1,
+            radius2,
+            offset1,
+            offset2,
+            offset3,
+            offset4,
+            type,
+            scale,
+            interfaceThickness,
+            fitGap,
+        } = opts
+
+        /* ----------------------------------------
+        * Prop calculations
+        * ------------------------------------- */
+
+        const lgProfileBeadWidth = interfaceThickness * 1.75
+        const mdProfileBeadWidth = interfaceThickness * 1.5
+        const smProfileBeadWidth = interfaceThickness * 1.125
+
+        /* ----------------------------------------
+        * Preparing Model Properties, Dimensions
+        * ------------------------------------- */
+
+        /** Constant values for model */
+        const modelConstants = {
+            type,
+            scale,
+        }
+
+        /** Derived user options for the model */
+        const modelOpts = {
+            type,
+            scale,
+        }
+
+        /** Various dimensions for model */
+        const modelDims = {
+            radius1,
+            radius2,
+            offset1,
+            offset2,
+            offset3,
+            offset4,
+            interfaceThickness,
+            fitGap,
+        }
+
+        /** Various key points for model */
+        const modelPoints = {
+            centre: defaults.vals.points.centre,
+        }
+
+        /** Components used by model */
+        const modelComponents = {
+            interface: {
+                profileBeads: beadsBits.interfaceProfileBeads(
+                    interfaceThickness,
+                    smProfileBeadWidth,
+                    mdProfileBeadWidth,
+                    lgProfileBeadWidth,
+                ),
+            }
+        }
+
+        /* ---------------------------------------------
+        *  Model Properties
+        * ----------------------------------------------
+        * Properties accessible to all model functions.
+        * --------------------------------------------- */
+
+        const modelProperties = {
+            metadata: {
+                id: '9999',
+                name: 'New Model',
+                project: 'New Project',
+                author: 'Somebody Somewhere',
+                organization: 'Salvador Workshop',
+                client: null,
+            },
+            constants: modelConstants,
+            opts: modelOpts,
+            dims: modelDims,
+            points: modelPoints,
+            components: modelComponents,
+        }
+
+        console.log('modelProps() -- modelProperties', modelProperties)
+
+        return modelProperties
+    }
+
+
     /**
      * Standard bead profiles for interface connections
      * @param {number} baseThickness - Thickness of the bead profile
@@ -103,8 +320,106 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
         }
     }
 
+
+    /**
+     * Rabbet bit
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof components.beadsBits.corner
+     */
+    const rabbet = (opts) => {
+        const defaults = modelDefaults()
+        const initOpts = modelOpts(opts)
+        const modelProperties = modelProps(initOpts)
+
+        const bitProfile = beadsBits.corner.rabbet(opts)[0]
+        const extrudedBit = extrudeRotate({ segments: 32 }, bitProfile)
+
+        const mainModel = extrudedBit
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
+     * Chamfer bit
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof components.beadsBits.corner
+     */
+    const chamfer = (opts) => {
+        const defaults = modelDefaults()
+        const initOpts = modelOpts(opts)
+        const modelProperties = modelProps(initOpts)
+
+        const bitProfile = beadsBits.corner.chamfer(opts)[0]
+        const extrudedBit = extrudeRotate({ segments: 32 }, bitProfile)
+
+        const mainModel = extrudedBit
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
+     * Round-Over Bit
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof components.beadsBits.corner
+     */
+    const roundOver = (opts) => {
+        const defaults = modelDefaults()
+        const initOpts = modelOpts(opts)
+        const modelProperties = modelProps(initOpts)
+
+        const bitProfile = beadsBits.corner.roundOver(opts)[0]
+        const extrudedBit = extrudeRotate({ segments: 32 }, bitProfile)
+
+        const mainModel = extrudedBit
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
+     * Cove bit
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof components.beadsBits.corner
+     */
+    const cove = (opts) => {
+        const defaults = modelDefaults()
+        const initOpts = modelOpts(opts)
+        const modelProperties = modelProps(initOpts)
+
+        const bitProfile = beadsBits.corner.cove(opts)[0]
+        const extrudedBit = extrudeRotate({ segments: 32 }, bitProfile)
+
+        const mainModel = extrudedBit
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+
     return {
-        interfaceProfileBeads,
+        interface: {
+            profileBeads: interfaceProfileBeads
+        },
+        corner: {
+            rabbet,
+            chamfer,
+            roundOver,
+            cove,
+        }
     }
 }
 

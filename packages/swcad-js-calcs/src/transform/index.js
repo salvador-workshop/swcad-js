@@ -30,6 +30,60 @@ const transformUtils = ({ jscad, swcadJs }) => {
         })
     }
 
+    /**
+     * ...
+     * @param {*} inShape 
+     * @returns ...
+     * @memberof calcs.transform
+     */
+    const cutQuadrant = (inShape) => {
+        const inShapeDims = measureDimensions(inShape)
+        const maskDims = [
+            inShapeDims[0] + 5,
+            inShapeDims[1] + 5,
+        ]
+        const cornerCutDims = [
+            maskDims[0] / 2,
+            maskDims[1] / 2,
+        ]
+        const cornerCutCtr = [cornerCutDims[0] / 2, cornerCutDims[1] / 2, 0]
+
+        const mask = subtract(
+            rectangle({
+                size: maskDims
+            }),
+            rectangle({
+                size: cornerCutDims,
+                center: cornerCutCtr,
+            }),
+        )
+
+        return subtract(
+            position.ctr(inShape),
+            mask,
+        )
+    }
+
+    /**
+     * ...
+     * @param {*} inShape 
+     * @returns ...
+     * @memberof calcs.transform
+     */
+    const cloneQuadrant = (inShape) => {
+        const firstMirror = mirror({ normal: [0, 1, 0] }, inShape)
+        const firstHalf = union(
+            inShape,
+            firstMirror,
+        )
+        const otherHalf = mirror({ normal: [1, 0, 0] }, firstHalf)
+
+        return union(
+            firstHalf,
+            otherHalf,
+        )
+    }
+
     return {
         /**
          * Cuts a given geometry in half.
@@ -106,7 +160,9 @@ const transformUtils = ({ jscad, swcadJs }) => {
 
             return cutAssembly
         },
-        stack
+        stack,
+        cutQuadrant,
+        cloneQuadrant,
     }
 }
 
