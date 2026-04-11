@@ -4,6 +4,7 @@ const beadsBitsModule = require('./beads-bits')
 const mesh = require('./mesh')
 const moulding = require('./moulding')
 const openWebJoist = require('./open-web-joist')
+const routedShapes = require('./routed-shapes')
 const text = require('./text')
 
 const componentsInit = ({ jscad, swcadJs }) => {
@@ -21,6 +22,7 @@ const componentsInit = ({ jscad, swcadJs }) => {
         mesh: mesh.init({ jscad, swcadJs: preLib }),
         moulding: moulding.init({ jscad, swcadJs: preLib }),
         openWebJoist: openWebJoist.init({ jscad, swcadJs: preLib }),
+        routedShapes: routedShapes.init({ jscad, swcadJs: preLib }),
         text: text.init({ jscad, swcadJs: preLib }),
     }
 }
