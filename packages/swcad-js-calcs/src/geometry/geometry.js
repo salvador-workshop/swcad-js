@@ -74,9 +74,48 @@ const geometryUtils = ({ jscad, swcadJs }) => {
         return [x, y]
     }
 
+    /**
+     * Gets line data from outline points
+     * @param {*} outlinePts 
+     * @returns array of line details
+     * @memberof calcs.geometry
+     * @private
+     */
+    const getLineDataFromOutlinePoints = (outlinePts) => {
+        const lineData = []
+
+        for (let ptIdx = 0; ptIdx < outlinePts.length - 1; ptIdx++) {
+            const startPt = outlinePts[ptIdx];
+            const endPt = outlinePts[ptIdx + 1];
+
+            const coordDiffs = [
+                endPt[0] - startPt[0],
+                endPt[1] - startPt[1],
+            ]
+            const midPt = [
+                startPt[0] + (coordDiffs[0] / 2),
+                startPt[1] + (coordDiffs[1] / 2),
+            ]
+            const lineLength = Math.hypot(coordDiffs[0], coordDiffs[1])
+            const lineAngle = angleOfTwoPtLine(startPt, endPt)
+
+            lineData.push({
+                start: startPt,
+                end: endPt,
+                mid: midPt,
+                length: lineLength,
+                angle: lineAngle,
+            })
+        }
+
+        return lineData
+    }
+
+
     return {
         angleOfTwoPtLine,
         pointFromAngleAndDist,
+        getLineDataFromOutlinePoints,
         /**
          * Gets triangular points in area
          * @memberof calcs.geometry
