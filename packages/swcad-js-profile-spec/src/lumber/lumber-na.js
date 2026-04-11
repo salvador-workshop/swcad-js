@@ -2,7 +2,7 @@
 
 /**
  * ...
- * @memberof profiles.lumber
+ * @memberof profileSpec.lumber
  * @namespace northAmerica
  */
 

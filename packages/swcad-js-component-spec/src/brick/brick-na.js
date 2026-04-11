@@ -2,7 +2,7 @@
 
 /**
  * ...
- * @memberof components.brick
+ * @memberof componentSpec.brick
  * @namespace northAmerica
  */
 

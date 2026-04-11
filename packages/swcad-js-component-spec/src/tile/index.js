@@ -2,7 +2,7 @@
 
 /**
  * ...
- * @memberof components
+ * @memberof componentSpec
  * @namespace tile
  */
 

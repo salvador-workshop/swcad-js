@@ -1,12 +1,12 @@
 /**
- * Utilities
- * @memberof utils
- * @namespace extras
+ * Odd utilities
+ * @memberof data
+ * @namespace functions
  */
 
 /**
  * ...
- * @memberof utils.extras
+ * @memberof data.functions
  * @param {string} str 
  * @returns ...
  */
@@ -19,7 +19,7 @@ const camelCase = (str) => {
 
 /**
  * ...
- * @memberof utils.extras
+ * @memberof data.functions
  * @param {string} str 
  * @returns ...
  */

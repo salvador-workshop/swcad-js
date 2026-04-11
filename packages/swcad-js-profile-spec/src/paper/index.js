@@ -2,7 +2,7 @@
 
 /**
  * ...
- * @memberof profiles
+ * @memberof profileSpec
  * @namespace paper
  */
 

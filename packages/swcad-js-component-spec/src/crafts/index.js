@@ -2,7 +2,7 @@
 
 /**
  * ...
- * @memberof components
+ * @memberof componentSpec
  * @namespace crafts
  */
 
@@ -42,7 +42,7 @@ const init = ({ jscad, swcadJs }) => {
      * @param {number} [length] - Length of the toothpick
      * @param {number} [pointLength] - Length of the pointed end of the toothpick
      * @returns {Geom2} Toothpick profile shape
-     * @memberof components.crafts
+     * @memberof componentSpec.crafts
      */
     const toothpickProfile = ({
         radius = toothpickSpecs.radius,
@@ -74,7 +74,7 @@ const init = ({ jscad, swcadJs }) => {
      * @param {number} [length] - Length of the toothpick
      * @param {number} [pointLength] - Length of the pointed end of the toothpick
      * @returns {Geom3} Toothpick model
-     * @memberof components.crafts
+     * @memberof componentSpec.crafts
      */
     const toothpick = ({
         radius = toothpickSpecs.radius,
@@ -92,7 +92,7 @@ const init = ({ jscad, swcadJs }) => {
      * @param {number} [length] - Length of the skewer
      * @param {number} [pointLength] - Length of the pointed end of the skewer
      * @returns {Geom2} BBQ skewer profile
-     * @memberof components.crafts
+     * @memberof componentSpec.crafts
      */
     const bbqSkewerProfile = ({
         radius = bbqSkewerSpecs.radius,
@@ -121,7 +121,7 @@ const init = ({ jscad, swcadJs }) => {
      * @param {number} [length] - Length of the skewer
      * @param {number} [pointLength] - Length of the pointed end of the skewer
      * @returns {Geom3} BBQ skewer model
-     * @memberof components.crafts
+     * @memberof componentSpec.crafts
      */
     const bbqSkewer = ({
         radius = bbqSkewerSpecs.radius,
@@ -140,7 +140,7 @@ const init = ({ jscad, swcadJs }) => {
      * @param {number} [length] - Length of the stick
      * @param {number} [endRadius] - Radii of both ends of the stick
      * @returns {Geom2} Popsicle stick profile
-     * @memberof components.crafts
+     * @memberof componentSpec.crafts
      */
     const popsicleStickProfile = ({
         width = popsicleStickSpecs.width,
@@ -169,7 +169,7 @@ const init = ({ jscad, swcadJs }) => {
      * @param {number} [length] - Length of the stick
      * @param {number} [endRadius] - Radii of both ends of the stick
      * @returns {Geom3} Popsicle stick
-     * @memberof components.crafts
+     * @memberof componentSpec.crafts
      */
     const popsicleStick = ({
         width = popsicleStickSpecs.width,

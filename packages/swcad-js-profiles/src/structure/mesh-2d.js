@@ -1,6 +1,6 @@
 /**
  * Builds 2D mesh models.
- * @memberof profiles
+ * @memberof profiles.structure
  * @namespace mesh
  */
 
@@ -69,7 +69,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
      * Builds default values and opts for the model
      * @param {*} opts 
      * @returns default values and opts
-     * @memberof profiles.mesh
+     * @memberof profiles.structure.mesh
      */
     const meshPanelDefaults = () => {
 
@@ -118,7 +118,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
      * Builds model properties from the given opts
      * @param {*} opts 
      * @returns model properties
-     * @memberof profiles.mesh
+     * @memberof profiles.structure.mesh
      */
     const meshPanelProps = (opts) => {
         const defaults = meshPanelDefaults()
@@ -238,7 +238,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
      * New Model
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof profiles.mesh
+     * @memberof profiles.structure.mesh
      */
     const meshPanel = (opts) => {
         const defaults = meshPanelDefaults()
@@ -280,7 +280,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
 
         /**
          * Calculates points in mesh area
-         * @memberof profiles.mesh
+         * @memberof profiles.structure.mesh
          * @returns ...
          */
         const meshPanelPoints = (modelProps) => {
@@ -309,7 +309,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
 
         /**
          * Builds 2D mesh panel perforations (hole punch)
-         * @memberof profiles.mesh
+         * @memberof profiles.structure.mesh
          * @returns ...
          */
         const meshPanelCutProfile = (modelProps) => {
@@ -335,7 +335,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
 
         /**
          * Builds a 2D mesh panel
-         * @memberof profiles.mesh
+         * @memberof profiles.structure.mesh
          * @returns ...
          */
         const meshPanelProfile = (modelProps) => {

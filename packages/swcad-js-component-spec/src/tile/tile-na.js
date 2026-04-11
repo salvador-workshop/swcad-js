@@ -2,7 +2,7 @@
 
 /**
  * ...
- * @memberof components.tile
+ * @memberof componentSpec.tile
  * @namespace northAmerica
  */
 

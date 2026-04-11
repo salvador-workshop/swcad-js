@@ -2,7 +2,7 @@
 
 /**
  * Builds "foil" shapes such as trefoils, quatrefoils, cinquefoils, etc. Input 2D profiles must be centred at (0, 0, 0)
- * @memberof profiles
+ * @memberof profiles.structure
  * @namespace foil
  */
 
@@ -13,7 +13,7 @@ const foilBuilder = ({ jscad, swcadJs }) => {
 
     /**
      * Builds a 2D n-foil opening
-     * @memberof profiles.foil
+     * @memberof profiles.structure.foil
      * @instance
      * @param {Object} opts
      * @param {number} opts.numLobes - number of lobes
@@ -67,7 +67,7 @@ const foilBuilder = ({ jscad, swcadJs }) => {
         buildFoil2d,
         /**
          * Builds a trefoil opening using a given 2d cross-section profile
-         * @memberof profiles.foil
+         * @memberof profiles.structure.foil
          * @instance
          * @param {Object} opts
          * @param {number} opts.radius - radius of container circle
@@ -80,7 +80,7 @@ const foilBuilder = ({ jscad, swcadJs }) => {
         },
         /**
          * Builds a quatrefoil opening using a given 2d cross-section profile
-         * @memberof profiles.foil
+         * @memberof profiles.structure.foil
          * @instance
          * @param {Object} opts
          * @param {number} opts.radius - radius of container circle
@@ -93,7 +93,7 @@ const foilBuilder = ({ jscad, swcadJs }) => {
         },
         /**
          * Builds a cinquefoil opening using a given 2d cross-section profile
-         * @memberof profiles.foil
+         * @memberof profiles.structure.foil
          * @instance
          * @param {Object} opts
          * @param {number} opts.radius - radius of container circle
@@ -106,7 +106,7 @@ const foilBuilder = ({ jscad, swcadJs }) => {
         },
         /**
          * Builds a sexfoil opening using a given 2d cross-section profile
-         * @memberof profiles.foil
+         * @memberof profiles.structure.foil
          * @instance
          * @param {Object} opts
          * @param {number} opts.radius - radius of container circle
@@ -119,7 +119,7 @@ const foilBuilder = ({ jscad, swcadJs }) => {
         },
         /**
          * Builds an octofoil opening using a given 2d cross-section profile
-         * @memberof profiles.foil
+         * @memberof profiles.structure.foil
          * @instance
          * @param {Object} opts
          * @param {number} opts.radius - radius of container circle

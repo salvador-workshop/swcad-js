@@ -49,13 +49,13 @@ const curveBuilder = ({ jscad, swcadJs }) => {
     /**
      * Curve profiles
      * @memberof profiles
-     * @namespace curves
+     * @namespace curve
      */
     const curves = {
         rightCorner: {
             /**
              * ...
-             * @memberof profiles.curves
+             * @memberof profiles.curve
              * @param {object} opts
              * @returns ...
              */
@@ -64,7 +64,7 @@ const curveBuilder = ({ jscad, swcadJs }) => {
             },
             /**
              * ...
-             * @memberof profiles.curves
+             * @memberof profiles.curve
              * @param {object} opts
              * @returns ...
              */
@@ -73,7 +73,7 @@ const curveBuilder = ({ jscad, swcadJs }) => {
             },
             /**
              * ...
-             * @memberof profiles.curves
+             * @memberof profiles.curve
              * @param {object} opts
              * @returns ...
              */
@@ -82,7 +82,7 @@ const curveBuilder = ({ jscad, swcadJs }) => {
             },
             /**
              * ...
-             * @memberof profiles.curves
+             * @memberof profiles.curve
              * @param {object} opts
              * @returns ...
              */
@@ -91,7 +91,7 @@ const curveBuilder = ({ jscad, swcadJs }) => {
             },
             /**
              * ...
-             * @memberof profiles.curves
+             * @memberof profiles.curve
              * @param {object} opts
              * @returns ...
              */
@@ -100,7 +100,7 @@ const curveBuilder = ({ jscad, swcadJs }) => {
             },
             /**
              * ...
-             * @memberof profiles.curves
+             * @memberof profiles.curve
              * @param {object} opts
              * @returns ...
              */
@@ -109,7 +109,7 @@ const curveBuilder = ({ jscad, swcadJs }) => {
             },
             /**
              * ...
-             * @memberof profiles.curves
+             * @memberof profiles.curve
              * @param {object} opts
              * @returns ...
              */
