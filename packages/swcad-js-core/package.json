@@ -1,7 +1,7 @@
 {
   "name": "swcad-js-core",
-  "version": "0.11.0",
-  "description": "Salvador Workshop's JSCAD utilities and toolkit",
+  "version": "0.11.1",
+  "description": "swcad-js-core",
   "homepage": "",
   "repository": {
     "type": "git",
@@ -24,10 +24,14 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "swcad-js-builders": "0.10.0-alpha.0",
-    "swcad-js-families": "0.10.0-alpha.0",
-    "swcad-js-std-specs": "0.10.0-alpha.0",
-    "swcad-js-ui": "0.10.0-alpha.0"
+    "swcad-js-calcs": "*",
+    "swcad-js-component-spec": "*",
+    "swcad-js-components": "*",
+    "swcad-js-data": "*",
+    "swcad-js-models": "*",
+    "swcad-js-profile-spec": "*",
+    "swcad-js-profiles": "*",
+    "swcad-js-utils": "*0"
   },
   "devDependencies": {
     "jsdoc": "^4.0.4"

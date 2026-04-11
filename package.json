@@ -1,17 +1,12 @@
 {
   "name": "swcad-js",
-  "version": "0.11.0",
+  "version": "0.11.1",
   "description": "Salvador Workshop's JSCAD utilities and toolkit",
   "workspaces": [
     "packages/*"
   ],
   "main": "dist/swcad.min.js",
   "scripts": {
-    "docs:builders": "cd packages/swcad-js-builders && npm run docs",
-    "docs:core": "cd packages/swcad-js-core && npm run docs",
-    "docs:families": "cd packages/swcad-js-families && npm run docs",
-    "docs:std-specs": "cd packages/swcad-js-std-specs && npm run docs",
-    "docs:ui": "cd packages/swcad-js-ui && npm run docs",
     "docs": "jsdoc packages -r -d docs -c jsdoc.json --readme readme.md",
     "build": "node esbuild.mjs"
   },
