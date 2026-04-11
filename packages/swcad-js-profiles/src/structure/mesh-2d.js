@@ -195,12 +195,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
 
         /** Components used by model */
         const modelComponents = {
-            // interfaceProfileBeads: utils.interfaceProfileBeads(
-            //     interfaceThickness,
-            //     smProfileBeadWidth,
-            //     mdProfileBeadWidth,
-            //     lgProfileBeadWidth,
-            // ),
         }
 
         /* ---------------------------------------------

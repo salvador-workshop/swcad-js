@@ -106,7 +106,7 @@ const geometryUtils = ({ jscad, swcadJs }) => {
                         allPoints.push({ x: radius + xCtr, y: allYCoords[yIdxCtr] });
                     }
                     xCtr = xCtr + diam;
-                } while (xCtr <= x);
+                } while (xCtr < x);
                 yIdxCtr = yIdxCtr + 1;
             } while (yIdxCtr < allYCoords.length);
 
