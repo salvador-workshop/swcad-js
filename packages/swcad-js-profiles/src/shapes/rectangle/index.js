@@ -1,7 +1,5 @@
 "use strict"
 
-const rectFrame = require('./frame-rect')
-
 const rectangleInit = ({ jscad, swcadJs }) => {
     const { square, circle, rectangle, triangle, ellipse } = jscad.primitives
     const { intersect, union, subtract } = jscad.booleans

@@ -27,7 +27,7 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
 
     const {
         mesh: mesh2d
-    } = swcadJs.profiles
+    } = swcadJs.profiles.structure
 
     /**
        * Generates an edge flange profile

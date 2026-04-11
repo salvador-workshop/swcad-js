@@ -13,8 +13,7 @@ const rectangularFrameInit = ({ jscad, swcadJs }) => {
     const { measureDimensions } = jscad.measurements
     const { TAU } = jscad.maths.constants
 
-    const { profiles } = swcadJs
-    const { shapes } = swcadJs.profiles
+    const { shapes, curve } = swcadJs.profiles
     const { position } = swcadJs.calcs
 
     // Defining corner styles and available tag options
@@ -162,37 +161,37 @@ const rectangularFrameInit = ({ jscad, swcadJs }) => {
         cornerBezGolden: {
             id: 'cornerBezGolden',
             ...cStDefCornBez,
-            func: profiles.curves.rightCorner.golden
+            func: curve.rightCorner.golden
         },
         cornerBezSixtyThirty: {
             id: 'cornerBezSixtyThirty',
             ...cStDefCornBez,
-            func: profiles.curves.rightCorner.sixtyThirty
+            func: curve.rightCorner.sixtyThirty
         },
         cornerBezSilver: {
             id: 'cornerBezSilver',
             ...cStDefCornBez,
-            func: profiles.curves.rightCorner.silver
+            func: curve.rightCorner.silver
         },
         cornerBezBronze: {
             id: 'cornerBezBronze',
             ...cStDefCornBez,
-            func: profiles.curves.rightCorner.bronze
+            func: curve.rightCorner.bronze
         },
         cornerBezCopper: {
             id: 'cornerBezCopper',
             ...cStDefCornBez,
-            func: profiles.curves.rightCorner.copper
+            func: curve.rightCorner.copper
         },
         cornerBezSuperGolden: {
             id: 'cornerBezSuperGolden',
             ...cStDefCornBez,
-            func: profiles.curves.rightCorner.superGolden
+            func: curve.rightCorner.superGolden
         },
         cornerBezPlastic: {
             id: 'cornerBezPlastic',
             ...cStDefCornBez,
-            func: profiles.curves.rightCorner.plastic
+            func: curve.rightCorner.plastic
         },
     }
 

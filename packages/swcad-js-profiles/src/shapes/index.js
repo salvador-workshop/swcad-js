@@ -16,6 +16,8 @@ const profileBuilder = ({ jscad, swcadJs }) => {
   const { constants } = swcadJs.data
   const { position } = swcadJs.calcs
 
+  const rectangles = rectangleModule.init({ jscad, swcadJs })
+
 
   //-------------
   //  TRIANGLES
@@ -281,19 +283,9 @@ const profileBuilder = ({ jscad, swcadJs }) => {
       }
     },
     triangle: triangles,
-    rectangle: null,
+    rectangle: rectangles,
     ellipse: ellipses,
   }
-
-  const preLib = {
-    ...swcadJs,
-    profiles: {
-      ...swcadJs.profiles,
-      shapes
-    }
-  }
-
-  shapes.rectangle = rectangleModule.init({ jscad, swcadJs: preLib })
 
   return shapes
 }
