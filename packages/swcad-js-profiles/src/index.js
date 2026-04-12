@@ -3,7 +3,6 @@
 const beadsBits = require('./beads-bits')
 const connections = require('./connections')
 const curve = require('./curve')
-const reinforcement = require('./reinforcement')
 const shapes = require('./shapes')
 const rectFrame = require('./shapes/rectangle/frame-rect')
 const structure = require('./structure')
@@ -35,7 +34,6 @@ const profilesInit = ({ jscad, swcadJs }) => {
         beadsBits: beadsBits.init({ jscad, swcadJs: preLib }),
         connections: connections.init({ jscad, swcadJs: preLib }),
         curve: curveCore,
-        reinforcement: reinforcement.init({ jscad, swcadJs: preLib }),
         structure: structure.init({ jscad, swcadJs: preLib }),
         text: text.init({ jscad, swcadJs: preLib }),
         trim: trim.init({ jscad, swcadJs: preLib }),
