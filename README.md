@@ -18,6 +18,10 @@ A heavily customized version of the JSCAD UI ([https://github.com/hrgdavor/jscad
 
 [salvador-workshop.github.io/swcad-js/](https://salvador-workshop.github.io/swcad-js/)  
 
+### Repository
+
+[github.com/salvador-workshop/swcad-js/](https://github.com/salvador-workshop/swcad-js/)  
+
 ### NPM package
 
 [npmjs.com/package/swcad-js](https://www.npmjs.com/package/swcad-js)  
