@@ -47,149 +47,187 @@
 <p>Salvador Workshop's CAD coding tools (in JavaScript)</p>
 <hr>
 <p><img src="./static/img/collage-arch-foils.jpg" alt="swcad-js demo - arch-foils" title="swcad-js demo - arch-foils"></p>
-<p>Online viewer: <a href="https://sw-jscad-viewer.netlify.app/">sw-jscad-viewer.netlify.app/</a></p>
-<p>API Docs: <a href="https://salvador-workshop.github.io/swcad-js/">salvador-workshop.github.io/swcad-js/</a></p>
-<p>NPM package: <a href="https://www.npmjs.com/package/swcad-js">npmjs.com/package/swcad-js</a></p>
+<h2>Overview</h2>
+<h3>Online viewer</h3>
+<p><a href="https://sw-jscad-viewer.netlify.app/">sw-jscad-viewer.netlify.app/</a></p>
+<p>A heavily customized version of the JSCAD UI (<a href="https://github.com/hrgdavor/jscadui">https://github.com/hrgdavor/jscadui</a>)</p>
+<h3>API Docs</h3>
+<p><a href="https://salvador-workshop.github.io/swcad-js/">salvador-workshop.github.io/swcad-js/</a></p>
+<h3>NPM package</h3>
+<p><a href="https://www.npmjs.com/package/swcad-js">npmjs.com/package/swcad-js</a></p>
 <p><img src="./static/img/entryways-1.png" alt="swcad-js demo - walls-entryway" title="swcad-js demo - walls-entryway"></p>
 <h2>Usage</h2>
 <p>Works with JSCAD, however you consume it.</p>
+<p>Try copying the example below into <code>sw-jscad-viewer</code> (<a href="https://sw-jscad-viewer.netlify.app">sw-jscad-viewer.netlify.app</a>).</p>
 <pre class="prettyprint source lang-javascript"><code>&quot;use strict&quot;
 const jscad = require('@jscad/modeling')
 
-const swCadJs = require('swcad-js').init({ lib: jscad });
-console.log('swCadJs', swCadJs)
+const { intersect, subtract } = jscad.booleans
+const { colorize } = jscad.colors
+const { cube, sphere } = jscad.primitives
+const { translate } = jscad.transforms
+
+const swcadJs = require('swcad-js').init({ jscad });
+console.log('swcadJs', swcadJs)
 
 const {
-    moulding,
-} = swCadJs.components
+  math,
+} = swcadJs.calcs
 
 const {
-    arch,
-    column,
-    wall,
-    foil: foil3d,
-} = swCadJs.models
+  colors,
+} = swcadJs.utils
 
 const {
-    shapes,
-    foil: foil2d,
-} = swCadJs.profiles
+  openWebJoist,
+} = swcadJs.components
 
-const {
-    aranea,
-} = swCadJs.profiles.trim
+function main() {
+  const outer = subtract(
+    cube({ size: 10 }),
+    sphere({ radius: 6.8 })
+  )
 
-const {
-    layout,
-} = swCadJs.utils
+  const inner = intersect(
+    sphere({ radius: 4 }),
+    cube({ size: 7 })
+  )
 
+  const spaceUnit = math.inchesToMm(2.25)
 
-const main = () => {
-    const layoutOpts = {
-        layoutMargin: 18,
-        layoutSpace: 5,
-    }
+  const openWebJoistOpts1 = {
+    length: math.inchesToMm(6),
+    width: math.inchesToMm(1.25),
+  }
 
+  const openWebJoistOpts2 = {
+    length: math.inchesToMm(6.5),
+    width: math.inchesToMm(1.5),
+    reinforcementLevel: 2
+  }
 
-    //-----------
-    // Profiles
+  const openWebJoistOpts3 = {
+    length: math.inchesToMm(7),
+    width: math.inchesToMm(1.75),
+    reinforcementLevel: 3
+  }
 
-    const profile1 = shapes.square.sqCornerCircNotch({ sqLength: 5 });
-    const profile3 = shapes.octagon({ sqLength: 5 });
+  const openWebJoistData1 = openWebJoist(openWebJoistOpts1)
+  const openWebJoistData2 = openWebJoist(openWebJoistOpts2)
+  const openWebJoistData3 = openWebJoist(openWebJoistOpts3)
 
-    const tFamilyBasic = aranea.buildTrimFamily({ unitHeight: 20, unitDepth: 10 });
-    const dadoTrim = [
-        tFamilyBasic.dado.small,
-        tFamilyBasic.dado.medium,
-        tFamilyBasic.dado.large,
-        tFamilyBasic.dado.mediumOrn1,
-    ];
-    dadoTrim.forEach((trim, idx) => {
-        layout.addToLayout({ name: `dado-${idx}`, desc: '...', layoutOpts }, trim);
-    })
+  const openWebJoistModel1 = openWebJoistData1[0]
+  const openWebJoistModel2 = openWebJoistData2[0]
+  const openWebJoistModel3 = openWebJoistData3[0]
 
+  return [
+    translate([spaceUnit * 0, spaceUnit * 0, spaceUnit * 0], colorize(colors.lightGreen, outer)),
+    translate([spaceUnit * 0, spaceUnit * 0, spaceUnit * 0], colorize(colors.orange, inner)),
 
-    //-----------
-    // Mouldings
-
-    const mould3 = moulding.circularMoulding({ radius: 20, height: 5 }, profile1);
-    layout.addToLayout({ name: 'mould3', desc: '...', layoutOpts }, mould3);
-
-
-    //-----------
-    // Foils
-
-    const foil1 = foil2d.trefoil({ radius: 10 });
-    layout.addToLayout({ name: 'foil1', desc: '...', layoutOpts }, foil1);
-
-    const foil5 = foil2d.quatrefoil({ radius: 10, lobeRadiusType: 'inSlice' });
-    layout.addToLayout({ name: 'foil5', desc: '...', layoutOpts }, foil5);
-
-    const foil7 = foil3d.trefoil({ radius: 15, lobeRadiusType: 'halfRadius', cutCentre: true }, profile1);
-    layout.addToLayout({ name: 'foil7', desc: '...', layoutOpts }, foil7);
-
-    const foil8 = foil3d.quatrefoil({ radius: 15, lobeRadiusType: 'mean', cutCentre: true }, profile3);
-    layout.addToLayout({ name: 'foil8', desc: '...', layoutOpts }, foil8);
-
-
-    //-----------
-    // Columns
-
-    const col2 = column.threePtColumn({
-        base: ['roundCylinder', 2, 3.5],
-        shaft: ['extrude', null, profile1],
-        capital: ['roundCylinder', 2, 3.5],
-        height: 20,
-    });
-    layout.addToLayout({ name: 'col2', desc: '...', layoutOpts }, col2);
-
-
-    //-----------
-    // Arches
-
-    const arch1 = arch.twoPtArch({ arcRadius: 30, archWidth: 35, profileWidth: 5 }, profile1);
-    layout.addToLayout({ name: 'arch1', desc: '...', layoutOpts }, arch1);
-
-    const arch2 = arch.twoPtArch({ arcRadius: 30, archWidth: 35 });
-    layout.addToLayout({ name: 'arch2', desc: '...', layoutOpts }, arch2);
-
-
-    //-----------
-    // Walls
-
-    const wall2 = wall.buildWall({
-        height: 100,
-        thickness: 10,
-        length: 80,
-        // wallOpts: 0,
-        trimOpts: ['base', 'crown'],
-        crownUnits: 1,
-        baseUnits: 2,
-        trimUnitHeight: 4,
-        trimUnitDepth: 1.25,
-        trimSides: 4,
-    });
-    layout.addToLayout({ name: 'Wall (2)', desc: '...', layoutOpts }, wall2);
-
-    const wallDado1 = wall.buildWall({
-        height: 100,
-        thickness: 10,
-        length: 70,
-        // wallOpts: 0,
-        trimOpts: ['base', 'dado', 'crown'],
-        dadoUnits: 1,
-        trimUnitHeight: 4,
-        trimUnitDepth: 1.25,
-        trimSides: 4,
-    });
-    layout.addToLayout({ name: 'Dado Wall (1)', desc: '...', layoutOpts }, wallDado1)
-
-    const layoutContent = layout.gridLayout({ layoutOpts });
-    return layoutContent;
+    translate([spaceUnit * 1, spaceUnit * 0, spaceUnit * 0], openWebJoistModel1),
+    translate([spaceUnit * 2, spaceUnit * 0, spaceUnit * 0], openWebJoistModel2),
+    translate([spaceUnit * 3, spaceUnit * 0, spaceUnit * 0], openWebJoistModel3),
+  ]
 }
 
 module.exports = { main }
-</code></pre></article>
+</code></pre>
+<p><img src="./static/img/router-bits-1.png" alt="swcad-js demo - router bits" title="swcad-js demo - router bits"></p>
+<h2>API</h2>
+<p>The <code>swcad-js</code> library's main functional divisions:</p>
+<h3><code>Data</code> — Static info</h3>
+<ul>
+<li>Constants</li>
+<li>Specifications</li>
+<li>Standards</li>
+</ul>
+<h3><code>Calcs</code> — Calculations of all sorts</h3>
+<ul>
+<li>Math</li>
+<li>Geometry</li>
+<li>Position</li>
+<li>Transform</li>
+</ul>
+<h3><code>Profiles</code> — 2D profiles, surfaces, sections</h3>
+<ul>
+<li>Connection</li>
+<li>Curve</li>
+<li>Edge</li>
+<li>Text</li>
+<li>Trim</li>
+</ul>
+<p>STRUCTURE — More complex profiles</p>
+<ul>
+<li>Arch</li>
+<li>Foil</li>
+<li>Mesh</li>
+</ul>
+<p>SHAPES — Basic shapes, and profiles built around them</p>
+<ul>
+<li>Triangle</li>
+<li>Circle</li>
+<li>Ellipse</li>
+<li>Square</li>
+<li>Rectangle
+<ul>
+<li>Frame</li>
+</ul>
+</li>
+<li>Hexagon</li>
+<li>Octagon</li>
+</ul>
+<h3><code>ProfileSpec</code> — 2D profiles conforming to specs</h3>
+<ul>
+<li>Lumber</li>
+<li>Paper</li>
+</ul>
+<h3><code>Components</code> — Basic reusable 3D units</h3>
+<ul>
+<li>BeadsBits</li>
+<li>DowelFittings</li>
+<li>OpenWebJoist</li>
+<li>Mesh</li>
+<li>Moulding</li>
+<li>Text</li>
+</ul>
+<h3><code>ComponentSpec</code> — 3D components conforming to specs</h3>
+<ul>
+<li>Tile</li>
+<li>Brick</li>
+<li>Crafts</li>
+</ul>
+<h3><code>Models</code> — Complex 3D models</h3>
+<ul>
+<li>Arch</li>
+<li>Buttress</li>
+<li>Foil</li>
+<li>Column</li>
+<li>Roof</li>
+<li>Wall
+<ul>
+<li>Entryway</li>
+</ul>
+</li>
+</ul>
+<h3><code>Utils</code> — Auxiliary utilities</h3>
+<ul>
+<li>Colors</li>
+<li>Layout</li>
+</ul>
+<p><img src="./static/img/joist-1.png" alt="swcad-js demo - joist" title="swcad-js demo - joist"></p>
+<h2>Structure</h2>
+<p>Internally, the library is split into several packages that follow the main API divisions:</p>
+<p><code>swcad-js-calcs</code> — Calculations of all sorts</p>
+<p><code>swcad-js-component-spec</code> — 3D components conforming to specs</p>
+<p><code>swcad-js-components</code> — Basic reusable 3D units</p>
+<p><code>swcad-js-core</code> — Integrates all these packages together into the final package</p>
+<p><code>swcad-js-data</code> — Static info</p>
+<p><code>swcad-js-models</code> — Complex 3D models</p>
+<p><code>swcad-js-profile-spec</code> — 2D profiles conforming to specs</p>
+<p><code>swcad-js-profiles</code> — 2D profiles, surfaces, sections</p>
+<p><code>swcad-js-utils</code> — Auxiliary utilities</p>
+<p><img src="./static/img/routed-shapes-1.png" alt="swcad-js demo - routed shapes 1" title="swcad-js demo - routed shapes 1"></p>
+<p><img src="./static/img/routed-shapes-2.png" alt="swcad-js demo - routed shapes 2" title="swcad-js demo - routed shapes 2"></p></article>
     </section>
 
 
@@ -200,13 +238,13 @@ module.exports = { main }
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.position.cuboid.html">calcs.position.cuboid</a></li><li><a href="calcs.position.rectangle.html">calcs.position.rectangle</a></li><li><a href="calcs.position.triangle.html">calcs.position.triangle</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="componentSpec.brick.html">componentSpec.brick</a></li><li><a href="componentSpec.brick.northAmerica.html">componentSpec.brick.northAmerica</a></li><li><a href="componentSpec.crafts.html">componentSpec.crafts</a></li><li><a href="componentSpec.tile.html">componentSpec.tile</a></li><li><a href="componentSpec.tile.northAmerica.html">componentSpec.tile.northAmerica</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.beadsBits.interface3d.html">components.beadsBits.interface3d</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.moulding.html">components.moulding</a></li><li><a href="components.openWebJoist.html">components.openWebJoist</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.functions.html">data.functions</a></li><li><a href="data.specifications.html">data.specifications</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="data.standards.crafts.html">data.standards.crafts</a></li><li><a href="data.standards.lumber.html">data.standards.lumber</a></li><li><a href="data.standards.masonry.html">data.standards.masonry</a></li><li><a href="data.standards.paper.html">data.standards.paper</a></li><li><a href="data.standards.tiles.html">data.standards.tiles</a></li><li><a href="models.arch.html">models.arch</a></li><li><a href="models.foil.html">models.foil</a></li><li><a href="models.wall.html">models.wall</a></li><li><a href="models.wall.entryway.html">models.wall.entryway</a></li><li><a href="profileSpec.lumber.html">profileSpec.lumber</a></li><li><a href="profileSpec.lumber.northAmerica.html">profileSpec.lumber.northAmerica</a></li><li><a href="profileSpec.paper.html">profileSpec.paper</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.curve.html">profiles.curve</a></li><li><a href="profiles.frameRect.html">profiles.frameRect</a></li><li><a href="profiles.reinforcement.html">profiles.reinforcement</a></li><li><a href="profiles.shapes.html">profiles.shapes</a></li><li><a href="profiles.shapes.ellipse.html">profiles.shapes.ellipse</a></li><li><a href="profiles.shapes.rectangle.html">profiles.shapes.rectangle</a></li><li><a href="profiles.shapes.square.html">profiles.shapes.square</a></li><li><a href="profiles.shapes.triangle.html">profiles.shapes.triangle</a></li><li><a href="profiles.structure.arch.html">profiles.structure.arch</a></li><li><a href="profiles.structure.foil.html">profiles.structure.foil</a></li><li><a href="profiles.structure.mesh.html">profiles.structure.mesh</a></li><li><a href="profiles.text.html">profiles.text</a></li><li><a href="profiles.trim.html">profiles.trim</a></li><li><a href="profiles.trim.aranea.html">profiles.trim.aranea</a></li><li><a href="utils.colors.html">utils.colors</a></li><li><a href="utils.layout.html">utils.layout</a></li><li><a href="utils.palette.html">utils.palette</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.position.cuboid.html">calcs.position.cuboid</a></li><li><a href="calcs.position.rectangle.html">calcs.position.rectangle</a></li><li><a href="calcs.position.triangle.html">calcs.position.triangle</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="componentSpec.brick.html">componentSpec.brick</a></li><li><a href="componentSpec.brick.northAmerica.html">componentSpec.brick.northAmerica</a></li><li><a href="componentSpec.crafts.html">componentSpec.crafts</a></li><li><a href="componentSpec.tile.html">componentSpec.tile</a></li><li><a href="componentSpec.tile.northAmerica.html">componentSpec.tile.northAmerica</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.beadsBits.interface3d.html">components.beadsBits.interface3d</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.moulding.html">components.moulding</a></li><li><a href="components.openWebJoist.html">components.openWebJoist</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.functions.html">data.functions</a></li><li><a href="data.specifications.html">data.specifications</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="data.standards.crafts.html">data.standards.crafts</a></li><li><a href="data.standards.lumber.html">data.standards.lumber</a></li><li><a href="data.standards.masonry.html">data.standards.masonry</a></li><li><a href="data.standards.paper.html">data.standards.paper</a></li><li><a href="data.standards.tiles.html">data.standards.tiles</a></li><li><a href="models.arch.html">models.arch</a></li><li><a href="models.foil.html">models.foil</a></li><li><a href="models.wall.html">models.wall</a></li><li><a href="models.wall.entryway.html">models.wall.entryway</a></li><li><a href="profileSpec.lumber.html">profileSpec.lumber</a></li><li><a href="profileSpec.lumber.northAmerica.html">profileSpec.lumber.northAmerica</a></li><li><a href="profileSpec.paper.html">profileSpec.paper</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.curve.html">profiles.curve</a></li><li><a href="profiles.shapes.html">profiles.shapes</a></li><li><a href="profiles.shapes.ellipse.html">profiles.shapes.ellipse</a></li><li><a href="profiles.shapes.rectangle.html">profiles.shapes.rectangle</a></li><li><a href="profiles.shapes.square.html">profiles.shapes.square</a></li><li><a href="profiles.shapes.triangle.html">profiles.shapes.triangle</a></li><li><a href="profiles.structure.arch.html">profiles.structure.arch</a></li><li><a href="profiles.structure.foil.html">profiles.structure.foil</a></li><li><a href="profiles.structure.mesh.html">profiles.structure.mesh</a></li><li><a href="profiles.text.html">profiles.text</a></li><li><a href="profiles.trim.html">profiles.trim</a></li><li><a href="profiles.trim.aranea.html">profiles.trim.aranea</a></li><li><a href="utils.colors.html">utils.colors</a></li><li><a href="utils.layout.html">utils.layout</a></li><li><a href="utils.palette.html">utils.palette</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sat Apr 11 2026 18:43:49 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sat Apr 11 2026 22:07:56 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
