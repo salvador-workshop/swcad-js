@@ -477,14 +477,21 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
         const cutPathBottom = routerCut(baseShapeProfileOutlinePts, bottomBitType, bottomBit)
 
         let cutShape = baseShape
-        cutShape = subtract(
-            cutShape,
-            translate([0, 0, size[2] / 2], cutPathTop),
-        )
-        cutShape = subtract(
-            cutShape,
-            translate([0, 0, size[2] / -2], cutPathBottom),
-        )
+        const hasTop = !!topBitType && topBitType != 'none'
+        const hasBottom = !!bottomBitType && bottomBitType != 'none'
+
+        if (hasTop) {
+            cutShape = subtract(
+                cutShape,
+                translate([0, 0, size[2] / 2], cutPathTop),
+            )
+        }
+        if (hasBottom) {
+            cutShape = subtract(
+                cutShape,
+                translate([0, 0, size[2] / -2], cutPathBottom),
+            )
+        }
 
         const mainModel = cutShape
         const modelParts = {
@@ -532,14 +539,21 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
         const cutPathBottom = routerCut(baseShapeProfileOutlinePts, bottomBitType, bottomBit)
 
         let cutShape = baseShape
-        cutShape = subtract(
-            cutShape,
-            translate([0, 0, height / 2], cutPathTop),
-        )
-        cutShape = subtract(
-            cutShape,
-            translate([0, 0, height / -2], cutPathBottom),
-        )
+        const hasTop = !!topBitType && topBitType != 'none'
+        const hasBottom = !!bottomBitType && bottomBitType != 'none'
+
+        if (hasTop) {
+            cutShape = subtract(
+                cutShape,
+                translate([0, 0, height / 2], cutPathTop),
+            )
+        }
+        if (hasBottom) {
+            cutShape = subtract(
+                cutShape,
+                translate([0, 0, height / -2], cutPathBottom),
+            )
+        }
 
         const mainModel = cutShape
         const modelParts = {
