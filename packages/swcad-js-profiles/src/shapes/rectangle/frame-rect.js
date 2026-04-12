@@ -1,10 +1,10 @@
 "use strict"
 
-/**
- * Builds rectangular frames with varying corner details
- * @memberof profiles
- * @namespace frameRect
- */
+// /**
+//  * Builds rectangular frames with varying corner details
+//  * @memberof profiles.shapes.rectangle
+//  * @namespace frame
+//  */
 
 const rectangularFrameInit = ({ jscad, swcadJs }) => {
     const { circle, rectangle } = jscad.primitives
@@ -216,7 +216,7 @@ const rectangularFrameInit = ({ jscad, swcadJs }) => {
 
     /**
      * Builds a shaped rectangle with the given corner options
-     * @memberof profiles.frameRect
+     * @memberof profiles.shapes.rectangle
      * @param {object} opts 
      * @param {number[]} opts.size
      * @param {object} opts.cornerOpts - options for interior side
@@ -228,6 +228,7 @@ const rectangularFrameInit = ({ jscad, swcadJs }) => {
      * @param {string} opts.cornerOpts.longAxis
      * @param {string} opts.cornerOpts.opt - Option for each corner. Choose between "inv", "inset", "offset"
      * @returns ...
+     * @private
      */
     const shapedRectangle = ({
         size,
@@ -349,7 +350,7 @@ const rectangularFrameInit = ({ jscad, swcadJs }) => {
 
     /**
      * Builds a rectangular frame with the given corner options (interior and exterior)
-     * @memberof profiles.frameRect
+     * @memberof profiles.shapes.rectangle
      * @param {object} opts 
      * @param {number[]} opts.size - Size of interior space
      * @param {string} opts.direction - Where ornaments are applied. Choose between "in" (default), "out", or "both"
@@ -363,6 +364,8 @@ const rectangularFrameInit = ({ jscad, swcadJs }) => {
      * @param {string} opts.cornerOpts.longAxis
      * @param {string} opts.cornerOpts.opt - Option for each corner. Choose between "inv", "inset", "offset"
      * @param {object} opts.outCornerOpts - options for exterior side
+     * @name frame
+     * @static
      * @returns ...
      */
     const rectangularFrame = ({
@@ -409,9 +412,7 @@ const rectangularFrameInit = ({ jscad, swcadJs }) => {
         return subtract(outRect, inRect);
     }
 
-    return {
-        rectangularFrame,
-    }
+    return rectangularFrame
 }
 
 module.exports = { init: rectangularFrameInit };
