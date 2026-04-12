@@ -105,18 +105,110 @@ function main() {
 module.exports = { main }
 ```
 
+![swcad-js demo - router bits](./static/img/router-bits-1.png "swcad-js demo - router bits")
+
 ## API
 
-...
+The `swcad-js` library's main functional divisions:
+
+### `Data` — Static info
+
+- Constants
+- Specifications
+- Standards
+
+### `Calcs` — Calculations of all sorts
+
+- Math
+- Geometry
+- Position
+- Transform
+
+### `Profiles` — 2D profiles, surfaces, sections
+
+- Connection
+- Curve
+- Edge
+- Text
+- Trim
+
+STRUCTURE — More complex profiles
+
+- Arch
+- Foil
+- Mesh
+
+SHAPES — Basic shapes, and profiles built around them
+
+- Triangle
+- Circle
+- Ellipse
+- Square
+- Rectangle
+  - Frame
+- Hexagon
+- Octagon
+
+### `ProfileSpec` — 2D profiles conforming to specs
+
+- Lumber
+- Paper
+
+### `Components` — Basic reusable 3D units
+
+- BeadsBits
+- DowelFittings
+- OpenWebJoist
+- Mesh
+- Moulding
+- Text
+
+### `ComponentSpec` — 3D components conforming to specs
+
+- Tile
+- Brick
+- Crafts
+
+### `Models` — Complex 3D models
+
+- Arch
+- Buttress
+- Foil
+- Column
+- Roof
+- Wall
+  - Entryway
+
+### `Utils` — Auxiliary utilities
+
+- Colors
+- Layout
 
 ![swcad-js demo - joist](./static/img/joist-1.png "swcad-js demo - joist")
 
 ## Structure
 
-...
+Internally, the library is split into several packages that follow the main API divisions:
+
+`swcad-js-calcs` — Calculations of all sorts
+
+`swcad-js-component-spec` — 3D components conforming to specs
+
+`swcad-js-components` — Basic reusable 3D units
+
+`swcad-js-core` — Integrates all these packages together into the final package
+
+`swcad-js-data` — Static info
+
+`swcad-js-models` — Complex 3D models
+
+`swcad-js-profile-spec` — 2D profiles conforming to specs
+
+`swcad-js-profiles` — 2D profiles, surfaces, sections
+
+`swcad-js-utils` — Auxiliary utilities
+
 
 ![swcad-js demo - routed shapes 1](./static/img/routed-shapes-1.png "swcad-js demo - routed shapes 1")
-
-...
 
 ![swcad-js demo - routed shapes 2](./static/img/routed-shapes-2.png "swcad-js demo - routed shapes 2")
