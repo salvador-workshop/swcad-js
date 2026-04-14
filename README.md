@@ -194,7 +194,7 @@ function main() {
 module.exports = { main }
 ```
 
-![swcad-js demo - router bits](./static/img/router-bits-1.png "swcad-js demo - router bits")
+![swcad-js demo - plinth + joist](./static/img/plinth-joist-1.png "swcad-js demo - plinth + joist")
 
 ## API
 
@@ -215,8 +215,8 @@ The `swcad-js` library's main functional divisions:
 
 ### `Profiles` — 2D profiles, surfaces, sections
 
-- Connection
 - Curve
+- BeadsBits
 - Edge
 - Text
 - Trim
@@ -238,6 +238,8 @@ SHAPES — Basic shapes, and profiles built around them
 - Hexagon
 - Octagon
 
+![swcad-js demo - router-bits](./static/img/router-bits-1.png "swcad-js demo - router-bits")
+
 ### `ProfileSpec` — 2D profiles conforming to specs
 
 - Lumber
@@ -251,6 +253,10 @@ SHAPES — Basic shapes, and profiles built around them
 - Mesh
 - Moulding
 - Text
+
+![swcad-js demo - routed shapes 1](./static/img/routed-shapes-1.png "swcad-js demo - routed shapes 1")
+
+![swcad-js demo - routed shapes 2](./static/img/routed-shapes-2.png "swcad-js demo - routed shapes 2")
 
 ### `ComponentSpec` — 3D components conforming to specs
 
@@ -273,9 +279,9 @@ SHAPES — Basic shapes, and profiles built around them
 - Colors
 - Layout
 
-![swcad-js demo - joist](./static/img/joist-1.png "swcad-js demo - joist")
-
 ## Structure
+
+![swcad-js demo - joist](./static/img/joist-1.png "swcad-js demo - joist")
 
 Internally, the library is split into several packages that follow the main API divisions:
 
@@ -297,7 +303,3 @@ Internally, the library is split into several packages that follow the main API 
 
 `swcad-js-utils` — Auxiliary utilities
 
-
-![swcad-js demo - routed shapes 1](./static/img/routed-shapes-1.png "swcad-js demo - routed shapes 1")
-
-![swcad-js demo - routed shapes 2](./static/img/routed-shapes-2.png "swcad-js demo - routed shapes 2")
