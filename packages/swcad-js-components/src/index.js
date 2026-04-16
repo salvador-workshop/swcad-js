@@ -1,6 +1,7 @@
 "use strict"
 
 const beadsBitsModule = require('./beads-bits')
+const componentLineModule = require('./component-line')
 const meshModule = require('./mesh')
 const moulding = require('./moulding')
 const openWebJoist = require('./open-web-joist')
@@ -17,19 +18,21 @@ const componentsInit = ({ jscad, swcadJs }) => {
         }
     }
 
-    
     const routedShapes = routedShapesModule.init({ jscad, swcadJs: preLib })
     const mesh = meshModule.init({ jscad, swcadJs: preLib })
+    const componentLine = componentLineModule.init({ jscad, swcadJs: preLib })
     preLib.components = {
         beadsBits,
         routedShapes,
         mesh,
+        componentLine,
     }
 
     return {
         beadsBits,
         routedShapes,
         mesh,
+        componentLine,
         moulding: moulding.init({ jscad, swcadJs: preLib }),
         openWebJoist: openWebJoist.init({ jscad, swcadJs: preLib }),
         sheetMould: sheetMould.init({ jscad, swcadJs: preLib }),
