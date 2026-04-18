@@ -65,10 +65,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         position,
     } = swcadJs.calcs
 
-    const {
-        beadsBits,
-    } = swcadJs.components
-
 
     //==============================================================================
 
@@ -226,10 +222,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         const depth = size[1]
         const height = size[2]
 
-        const lgProfileBeadWidth = interfaceThickness * 1.75
-        const mdProfileBeadWidth = interfaceThickness * 1.5
-        const smProfileBeadWidth = interfaceThickness * 1.125
-
         /* ----------------------------------------
         * Preparing Model Properties, Dimensions
         * ------------------------------------- */
@@ -268,14 +260,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
         /** Components used by model */
         const modelComponents = {
-            interface: {
-                profileBeads: beadsBits.interface3d.profileBeads(
-                    interfaceThickness,
-                    smProfileBeadWidth,
-                    mdProfileBeadWidth,
-                    lgProfileBeadWidth,
-                ),
-            }
         }
 
         /* ---------------------------------------------
