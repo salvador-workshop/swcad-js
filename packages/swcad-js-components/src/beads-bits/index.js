@@ -77,6 +77,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns default values and opts
      * @memberof components.beadsBits
+     * @access private
      */
     const modelDefaults = () => {
         /** Specific value declarations */
@@ -131,6 +132,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns model properties
      * @memberof components.beadsBits
+     * @access private
      */
     const modelOpts = (opts) => {
         const defaults = modelDefaults()
@@ -180,6 +182,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns model properties
      * @memberof components.beadsBits
+     * @access private
      */
     const modelProps = (opts) => {
         const defaults = modelDefaults()

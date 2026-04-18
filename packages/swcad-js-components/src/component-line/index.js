@@ -82,6 +82,7 @@ const moduleInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns default values and opts
      * @memberof components.componentLine
+     * @access private
      */
     const modelDefaults = () => {
         /** Specific value declarations */
@@ -145,6 +146,7 @@ const moduleInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns model properties
      * @memberof components.componentLine
+     * @access private
      */
     const modelOpts = (opts) => {
         const defaults = modelDefaults()
@@ -194,6 +196,7 @@ const moduleInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns model properties
      * @memberof components.componentLine
+     * @access private
      */
     const modelProps = (opts) => {
         const defaults = modelDefaults()
@@ -333,6 +336,7 @@ const moduleInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns `geom3` or `geom3[]`
      * @author R. J. Salvador (Salvador Workshop)
+     * @memberof components.componentLine
      */
     const model = (opts) => {
         const defaults = modelDefaults()

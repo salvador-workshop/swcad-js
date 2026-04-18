@@ -1,10 +1,5 @@
 "use strict"
 
-/**
- * Builds various 2D profiles
- * @namespace profiles
- */
-
 const curveBuilder = ({ jscad, swcadJs }) => {
     const { square, circle, rectangle, triangle, ellipse } = jscad.primitives
     const { intersect, union, subtract } = jscad.booleans
