@@ -26,33 +26,321 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const connectionsInit = ({ jscad, swcadJs }) => {
-    const { circle, rectangle, triangle, cuboid, cylinder } = jscad.primitives
-    const { union, subtract, scission } = jscad.booleans
-    const { align, translate, mirror } = jscad.transforms
-    const { hull, hullChain } = jscad.hulls
-    const { degToRad } = jscad.utils
-    const { project } = jscad.extrusions
+            <pre class="prettyprint source linenums"><code>"use strict"
+
+/**
+ * Connection Profiles
+ * @author R. J. Salvador
+ * @namespace connections
+ * @memberof profiles
+ * @version 1.3.0
+ * @requires jscad v2, swcad-js v0.11.5
+ */
+
+const connectionProfilesInit = ({ jscad, swcadJs }) => {
+    const {
+        cube,
+        cylinder,
+        sphere,
+        cylinderElliptic,
+        circle,
+        cuboid,
+        roundedCuboid,
+        roundedCylinder,
+        roundedRectangle,
+        rectangle,
+        triangle,
+    } = jscad.primitives
+
+    const {
+        align,
+        translate,
+        rotate,
+        mirror
+    } = jscad.transforms
+
+    const {
+        intersect,
+        subtract,
+        union,
+        scission
+    } = jscad.booleans
+
+    const {
+        extrudeLinear,
+        extrudeRotate,
+        project
+    } = jscad.extrusions
+
+    const {
+        measureDimensions,
+        measureBoundingBox,
+        measureVolume
+    } = jscad.measurements
+
+    const {
+        hull,
+        hullChain
+    } = jscad.hulls
+
+    const { vectorText } = jscad.text
+    const { toOutlines } = jscad.geometries.geom2
+    const { TAU } = jscad.maths.constants
+    const { colorize } = jscad.colors
+
+    const {
+        math,
+        position,
+    } = swcadJs.calcs
+
+    const {
+        beadsBits,
+    } = swcadJs.components
 
 
-    const { position, math } = swcadJs.calcs
+    //==============================================================================
 
-    //---------------
-    //  CONNECTIONS
-    //---------------
 
-    const connectionDefaults = {
-        interfaceThickness: 1.333333,
-        tolerance: math.inchesToMm(1 / 128),
-        fit: math.inchesToMm(1 / 128),
-        cornerRadius: math.inchesToMm(1 / 4),
-        dovetailAngle: degToRad(8),
-        dovetailMargin: 1,
-        tabAngle: degToRad(8),
-        tabMargin: 1,
+    /**
+     * Builds default values and opts for the model
+     * @param {*} opts 
+     * @returns default values and opts
+     * @access private
+     * @memberof profiles.connections
+     */
+    const modelDefaults = () => {
+        /** Specific value declarations */
+        const defaultValues = {
+            constants: {
+                sampleThickness: 1, // scission only works with 3D objects. Need a filler thickness for now
+            },
+            opts: {
+                segments: 6,
+                unitSegments: 24,
+            },
+            dims: {
+                size: [
+                    math.inchesToMm(2.5),
+                    math.inchesToMm(1.625),
+                    math.inchesToMm(1),
+                ],
+                unitSpacing: math.inchesToMm(1),
+                unitRadius: 6.35,
+                radius: 12.7,
+                interfaceMargin: math.inchesToMm(3 / 8),
+            },
+            points: {
+                centre: [0, 0, 0]
+            },
+            types: {
+                default: { id: 'default', desc: 'Default' },
+                alt: { id: 'alt', desc: 'Alternate' },
+            },
+        }
+
+        /** Options used by SW models */
+        const standardOpts = {
+            type: defaultValues.types.default.id,
+            scale: 1,
+            interfaceThickness: 1.333333,
+            fitGap: math.inchesToMm(1 / 128),
+        }
+
+        /** Computed values for option defaults */
+        const defaultOpts = {
+            ...standardOpts,
+            size: defaultValues.dims.size,
+            radius: defaultValues.dims.radius,
+            unitSpacing: defaultValues.dims.unitSpacing,
+            unitRadius: defaultValues.dims.unitRadius,
+            segments: defaultValues.opts.segments,
+            unitSegments: defaultValues.opts.unitSegments,
+            interfaceMargin: defaultValues.dims.interfaceMargin,
+        }
+
+        return {
+            opts: defaultOpts,
+            vals: defaultValues,
+        }
     }
 
-    const createConnTrapezoid = ({ depth, width, angle, reverse = false }) => {
+
+    //------------------------------------------------------------------------------
+
+
+    /**
+     * Initializes options with user input
+     * @param {*} opts 
+     * @returns model properties
+     * @access private
+     * @memberof profiles.connections
+     */
+    const modelOpts = (opts) => {
+        const defaults = modelDefaults()
+        console.log('modelOpts() -- opts', opts)
+
+        // User options
+        const {
+            size = defaults.opts.size,
+            radius = defaults.opts.radius,
+            unitSpacing = defaults.opts.unitSpacing,
+            unitRadius = defaults.opts.unitRadius,
+            unitSegments = defaults.opts.unitSegments,
+            segments = defaults.opts.segments,
+            interfaceMargin = defaults.opts.interfaceMargin,
+            type = defaults.opts.type,
+            scale = defaults.opts.scale,
+            interfaceThickness = defaults.opts.interfaceThickness,
+            fitGap = defaults.opts.fitGap,
+        } = opts
+
+        const stdOpts = {
+            type,
+            scale,
+            interfaceThickness,
+            fitGap,
+        }
+
+        const initOpts = {
+            ...stdOpts,
+            size,
+            radius,
+            unitSpacing,
+            unitRadius,
+            segments,
+            unitSegments,
+            interfaceMargin,
+        }
+
+        console.log('modelOpts() -- initOpts', initOpts)
+
+        return initOpts
+    }
+
+
+    //------------------------------------------------------------------------------
+
+
+    /**
+     * Builds model properties from the given opts
+     * @param {*} opts 
+     * @returns model properties
+     * @access private
+     * @memberof profiles.connections
+     */
+    const modelProps = (opts) => {
+        const defaults = modelDefaults()
+        console.log('modelProps() -- opts', opts)
+
+        const {
+            size,
+            radius,
+            unitSpacing,
+            unitRadius,
+            segments,
+            unitSegments,
+            interfaceMargin,
+            type,
+            scale,
+            interfaceThickness,
+            fitGap,
+        } = opts
+
+        /* ----------------------------------------
+        * Prop calculations
+        * ------------------------------------- */
+
+        const width = size[0]
+        const depth = size[1]
+        const height = size[2]
+
+        const lgProfileBeadWidth = interfaceThickness * 1.75
+        const mdProfileBeadWidth = interfaceThickness * 1.5
+        const smProfileBeadWidth = interfaceThickness * 1.125
+
+        /* ----------------------------------------
+        * Preparing Model Properties, Dimensions
+        * ------------------------------------- */
+
+        /** Constant values for model */
+        const modelConstants = {
+            sampleThickness: defaults.vals.constants.sampleThickness,
+        }
+
+        /** Derived user options for the model */
+        const modelOpts = {
+            type,
+            scale,
+            segments,
+            unitSegments,
+        }
+
+        /** Various dimensions for model */
+        const modelDims = {
+            size,
+            interfaceThickness,
+            fitGap,
+            width,
+            depth,
+            height,
+            radius,
+            unitSpacing,
+            unitRadius,
+            interfaceMargin,
+        }
+
+        /** Various key points for model */
+        const modelPoints = {
+            centre: defaults.vals.points.centre,
+        }
+
+        /** Components used by model */
+        const modelComponents = {
+            interface: {
+                profileBeads: beadsBits.interface3d.profileBeads(
+                    interfaceThickness,
+                    smProfileBeadWidth,
+                    mdProfileBeadWidth,
+                    lgProfileBeadWidth,
+                ),
+            }
+        }
+
+        /* ---------------------------------------------
+        *  Model Properties
+        * ----------------------------------------------
+        * Properties accessible to all model functions.
+        * --------------------------------------------- */
+
+        const modelProperties = {
+            metadata: {
+                id: '9999',
+                name: 'New Model',
+                project: 'New Project',
+                author: 'Somebody Somewhere',
+                organization: 'Salvador Workshop',
+                client: null,
+            },
+            constants: modelConstants,
+            opts: modelOpts,
+            dims: modelDims,
+            points: modelPoints,
+            components: modelComponents,
+        }
+
+        console.log('modelProps() -- modelProperties', modelProperties)
+
+        return modelProperties
+    }
+
+    /**
+     * old function for dovetail/tab connections
+     * @param {*} param0
+     * @access private
+     * @returns ...
+     * @deprecated
+     */
+    const connectionTrapezoid = ({ depth, width, angle, reverse = false }) => {
         const baseRect = rectangle({ size: [depth, width] })
         const baseRectCoords = position.getGeomCoords(baseRect)
         const triOpts = position.triangle.rightTriangleOpts({ long: depth, longAngle: angle })
@@ -75,50 +363,69 @@
         return outShape
     }
 
-    const interlockingProfiles = (
-        unitWidth,
-        unitLength,
-        fitGap,
-    ) => {
-        console.log('interlockingProfiles()', unitWidth, unitLength, fitGap)
-        const sampleThickness = 1 // scission only works with 3D objects. Need a filler thickness for now
-        const widthUnit = unitWidth / 3
-        const lengthUnit = unitLength / 3
+
+    //------------------------------------------------------------------------------
+
+
+    /**
+     * Generate dovetail connectors
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
+     * @memberof profiles.connections
+     */
+    const dovetail = (opts) => {
+        const defaults = modelDefaults()
+        const initOpts = modelOpts(opts)
+        const modelProperties = modelProps(initOpts)
+
+        const {
+            width,
+            depth,
+            fitGap,
+            interfaceMargin,
+        } = modelProperties.dims
+
+        const {
+            sampleThickness
+        } = modelProperties.constants
+
+        const dovetailWidth = width - (interfaceMargin * 2)
+        const dovetailLength = depth - (interfaceMargin * 2)
 
         const dovetailEndSize = [
-            lengthUnit / 6,
-            lengthUnit,
+            dovetailLength / 6,
+            dovetailLength,
         ]
 
         const widthCoords = [
-            widthUnit,
-            widthUnit * 2,
+            interfaceMargin,
+            interfaceMargin + dovetailWidth,
         ]
         const lengthCoords = [
-            lengthUnit,
-            lengthUnit * 2,
+            interfaceMargin,
+            interfaceMargin + dovetailLength,
         ]
 
         const dovetailPanelMidpoint = [
-            unitWidth / 2,
-            unitLength / 2,
+            width / 2,
+            depth / 2,
         ]
 
         const baseProfilePanel = cuboid({
-            size: [unitWidth, unitLength, sampleThickness],
+            size: [width, depth, sampleThickness],
             center: [dovetailPanelMidpoint[0], dovetailPanelMidpoint[1], 0]
         })
 
         const lowerPts = [
             [0, lengthCoords[0]],
-            [widthCoords[0], lengthCoords[0]],
-            [widthCoords[1], lengthCoords[0]],
-            [unitWidth, lengthCoords[0]],
+            [widthCoords[0] + dovetailEndSize[0], lengthCoords[0]],
+            [widthCoords[1] - dovetailEndSize[0], lengthCoords[0]],
+            [width, lengthCoords[0]],
         ]
 
         const upperPts = [
-            [widthCoords[0] - dovetailEndSize[0], lengthCoords[1]],
-            [widthCoords[1] + dovetailEndSize[0], lengthCoords[1]],
+            [widthCoords[0], lengthCoords[1]],
+            [widthCoords[1], lengthCoords[1]],
         ]
 
         const allPts = [
@@ -150,193 +457,330 @@
             align({ modes: ['center', 'center', 'center'] }, cutParts[0]),
         ]
 
-        return [
+        const dovetailProfiles = [
             project({}, dTailProfiles[0]),
             project({}, dTailProfiles[1]),
         ]
+
+        const mainModel = [
+            dovetailProfiles[1],
+            dovetailProfiles[0],
+        ]
+
+        const modelParts = {
+            male: dovetailProfiles[1],
+            female: dovetailProfiles[0],
+        }
+
+        return [mainModel, modelParts, modelProperties]
     }
 
     /**
-     * Connection profiles
-     * @memberof profiles
-     * @namespace connections
+     * Generate tab connectors
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
+     * @memberof profiles.connections
      */
-    const connections = {
-        /**
-         * ...
-         * @memberof profiles.connections
-         * @param {object} opts 
-         * @returns ...
-         */
-        pegboard: ({
-            spacing,
-            radius,
-            margin,
-            cornerRadius = connectionDefaults.cornerRadius,
-            fit = connectionDefaults.fit,
-            tolerance = connectionDefaults.tolerance
-        }) => {
-            const diametre = radius * 2
-            const totalGap = fit / 4 + (tolerance / 4)
-            const specs = {
-                ...connectionDefaults,
-                diametre,
-                fitDowelRadius: -totalGap + radius,
-                fitHoleRadius: totalGap + radius,
-                margin: margin || radius,
-            }
-            specs.totalWidth = specs.margin * 2 + (radius * 2 + spacing)
-            const halfWidth = specs.totalWidth / 2
-            specs.cornerPoints = [
-                [halfWidth - cornerRadius, halfWidth - cornerRadius, 0],
-                [-halfWidth + cornerRadius, halfWidth - cornerRadius, 0],
-                [-halfWidth + cornerRadius, -halfWidth + cornerRadius, 0],
-                [halfWidth - cornerRadius, -halfWidth + cornerRadius, 0],
-            ]
-            const halfUnit = spacing / 2
-            specs.dowelPoints = [
-                [halfUnit, halfUnit, 0],
-                [-halfUnit, halfUnit, 0],
-                [-halfUnit, -halfUnit, 0],
-                [halfUnit, -halfUnit, 0],
-            ]
+    const tab = (opts) => {
+        const defaults = modelDefaults()
+        const initOpts = modelOpts(opts)
+        const modelProperties = modelProps(initOpts)
 
-            const corners = specs.cornerPoints.map(cPt => {
-                return translate(cPt, circle({ radius: cornerRadius }))
-            })
-            const dowels = specs.dowelPoints.map(dPt => {
-                return translate(dPt, circle({ radius: specs.fitDowelRadius }))
-            })
-            const dowelDies = specs.dowelPoints.map(dPt => {
-                return translate(dPt, circle({ radius: specs.fitHoleRadius }))
-            })
-
-            const basePlate = hull(corners)
-            const dowelAssembly = union(dowels)
-
-            const male = dowelAssembly
-            const female = subtract(basePlate, dowelDies)
-
-            return {
-                male,
-                female,
-                size: [specs.totalWidth, specs.totalWidth],
-            }
-        },
-        /**
-         * ...
-         * @memberof profiles.connections
-         * @param {object} opts
-         * @returns ...
-         */
-        polygon: ({
-            radius,
-            segments,
-            margin,
-            cornerRadius = connectionDefaults.cornerRadius,
-            fit = connectionDefaults.fit,
-            tolerance = connectionDefaults.tolerance
-        }) => {
-            const diametre = radius * 2
-            const totalGap = fit / 4 + (tolerance / 4)
-            const specs = {
-                ...connectionDefaults,
-                diametre,
-                fitDowelRadius: -totalGap + radius,
-                fitHoleRadius: totalGap + radius,
-                margin: margin || radius,
-            }
-            specs.totalWidth = specs.margin * 2 + specs.diametre
-            const halfWidth = specs.totalWidth / 2
-            specs.cornerPoints = [
-                [halfWidth - cornerRadius, halfWidth - cornerRadius, 0],
-                [-halfWidth + cornerRadius, halfWidth - cornerRadius, 0],
-                [-halfWidth + cornerRadius, -halfWidth + cornerRadius, 0],
-                [halfWidth - cornerRadius, -halfWidth + cornerRadius, 0],
-            ]
-
-            const dowel = circle({ radius: specs.fitDowelRadius, segments })
-            const dowelDie = circle({ radius: specs.fitHoleRadius, segments })
-
-            const corners = specs.cornerPoints.map(cPt => {
-                return translate(cPt, circle({ radius: cornerRadius }))
-            })
-            const basePlate = hull(corners)
-
-            const male = dowel
-            const female = subtract(basePlate, dowelDie)
-
-            return {
-                male,
-                female,
-                size: [specs.totalWidth, specs.totalWidth],
-            }
-        },
-        /**
-         * Tab and Dovetail profiles are designed to fit right against the male edge.
-         * With a margin (1mm default) extending into the female edge to ensure one shape that holds both dovetail ends.
-         * @memberof profiles.connections
-         * @param {*} opts 
-         * @returns ...
-         */
-        tab: ({
+        const {
             width,
             depth,
-            margin = connectionDefaults.tabMargin,
-            angle = connectionDefaults.tabAngle,
-            fit = connectionDefaults.fit,
-            tolerance = connectionDefaults.tolerance
-        }) => {
-            const specs = {
-                ...connectionDefaults,
-                totalWidth: margin * 2 + width,
-                totalTabDepth: margin + depth,
-            }
+            fitGap,
+            interfaceMargin,
+        } = modelProperties.dims
 
-            const baseRect = rectangle({ size: [specs.totalTabDepth, specs.totalWidth] })
-            const baseRectCoords = position.getGeomCoords(baseRect)
+        const {
+            sampleThickness
+        } = modelProperties.constants
 
-            const male = align(
-                { modes: ['max', 'center', 'center'], relativeTo: [baseRectCoords.right, 0, 0] },
-                createConnTrapezoid({ depth, width, angle })
-            )
-            const female = align(
-                { modes: ['min', 'center', 'center'], relativeTo: [baseRectCoords.left, 0, 0] },
-                subtract(baseRect, male)
-            )
+        const tabWidth = width - (interfaceMargin * 2)
+        const tabLength = depth - (interfaceMargin * 2)
 
-            return {
-                male,
-                female,
-                size: [specs.totalTabDepth, specs.totalWidth],
-            }
-        },
-        /**
-         * Tab and Dovetail profiles are designed to fit right against the male edge.
-         * @memberof profiles.connections
-         * @param {*} opts 
-         * @returns ...
-         */
-        dovetail: ({
-            width,
-            depth,
-            fitGap = connectionDefaults.fit,
-        }) => {
-            console.log('dovetail()', width, depth, fitGap)
-            const dovetailProfiles = interlockingProfiles(width, depth, fitGap)
+        const tabEndSize = [
+            tabLength / 6,
+            tabLength,
+        ]
 
-            return {
-                male: dovetailProfiles[1],
-                female: dovetailProfiles[0],
-                size: [width, depth],
-            }
-        },
+        const widthCoords = [
+            interfaceMargin,
+            interfaceMargin + tabWidth,
+        ]
+        const lengthCoords = [
+            interfaceMargin,
+            interfaceMargin + tabLength,
+        ]
+
+        const tabPanelMidpoint = [
+            width / 2,
+            depth / 2,
+        ]
+
+        const baseProfilePanel = cuboid({
+            size: [width, depth, sampleThickness],
+            center: [tabPanelMidpoint[0], tabPanelMidpoint[1], 0]
+        })
+
+        const lowerPts = [
+            [0, lengthCoords[0]],
+            [widthCoords[0], lengthCoords[0]],
+            [widthCoords[1], lengthCoords[0]],
+            [width, lengthCoords[0]],
+        ]
+
+        const upperPts = [
+            [widthCoords[0] + tabEndSize[0], lengthCoords[1]],
+            [widthCoords[1] - tabEndSize[0], lengthCoords[1]],
+        ]
+
+        const allPts = [
+            lowerPts[0],
+            lowerPts[1],
+            ...upperPts,
+            lowerPts[2],
+            lowerPts[3],
+        ]
+
+        let tabCutPoints = allPts.map(dtPt => {
+            return cylinder({
+                radius: fitGap / 2,
+                height: sampleThickness * 10,
+                center: [dtPt[0], dtPt[1], 0],
+            })
+        })
+
+        let tabCut = hullChain(tabCutPoints)
+
+        const cutPanel = subtract(
+            baseProfilePanel,
+            tabCut
+        )
+
+        const cutParts = scission(cutPanel)
+        const dTailProfiles = [
+            align({ modes: ['center', 'center', 'center'] }, cutParts[1]),
+            align({ modes: ['center', 'center', 'center'] }, cutParts[0]),
+        ]
+
+        const tabProfiles = [
+            project({}, dTailProfiles[0]),
+            project({}, dTailProfiles[1]),
+        ]
+
+        const mainModel = [
+            tabProfiles[1],
+            tabProfiles[0],
+        ]
+
+        const modelParts = {
+            male: tabProfiles[1],
+            female: tabProfiles[0],
+        }
+
+        return [mainModel, modelParts, modelProperties]
     }
 
-    return connections;
+    /**
+     * Generate polygon connectors
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
+     * @memberof profiles.connections
+     */
+    const polygon = (opts) => {
+        const defaults = modelDefaults()
+        const initOpts = modelOpts(opts)
+        const modelProperties = modelProps(initOpts)
+
+        const {
+            segments,
+        } = modelProperties.opts
+
+        const {
+            width,
+            depth,
+            radius,
+            fitGap,
+            interfaceMargin,
+        } = modelProperties.dims
+
+        const {
+            sampleThickness
+        } = modelProperties.constants
+
+        const diametre = radius * 2
+        const halfGap = fitGap / 2
+        const cornerRadius = math.inchesToMm(1 / 4)
+
+        const specs = {
+            diametre,
+            fitDowelRadius: -halfGap + radius,
+            fitHoleRadius: halfGap + radius,
+        }
+
+        specs.totalWidth = interfaceMargin * 2 + specs.diametre
+        const halfWidth = specs.totalWidth / 2
+        specs.cornerPoints = [
+            [halfWidth - cornerRadius, halfWidth - cornerRadius, 0],
+            [-halfWidth + cornerRadius, halfWidth - cornerRadius, 0],
+            [-halfWidth + cornerRadius, -halfWidth + cornerRadius, 0],
+            [halfWidth - cornerRadius, -halfWidth + cornerRadius, 0],
+        ]
+
+        const dowel = circle({ radius: specs.fitDowelRadius, segments })
+        const dowelDie = circle({ radius: specs.fitHoleRadius, segments })
+
+        const corners = specs.cornerPoints.map(cPt => {
+            return translate(cPt, circle({ radius: cornerRadius }))
+        })
+        const basePlate = hull(corners)
+
+        const male = dowel
+        const female = subtract(basePlate, dowelDie)
+
+        const polygonProfiles = [
+            female,
+            male,
+        ]
+
+        const mainModel = [
+            polygonProfiles[1],
+            polygonProfiles[0],
+        ]
+
+        const modelParts = {
+            male: polygonProfiles[1],
+            female: polygonProfiles[0],
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
+     * Generate pegboard connectors
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
+     * @memberof profiles.connections
+     */
+    const pegboard = (opts) => {
+        const defaults = modelDefaults()
+        const initOpts = modelOpts(opts)
+        const modelProperties = modelProps(initOpts)
+
+        const {
+            unitSegments,
+        } = modelProperties.opts
+
+        const {
+            width,
+            depth,
+            unitRadius,
+            unitSpacing,
+            fitGap,
+            interfaceMargin,
+        } = modelProperties.dims
+
+        const {
+            sampleThickness
+        } = modelProperties.constants
+
+        const diametre = unitRadius * 2
+        const halfGap = fitGap / 2
+        const cornerRadius = diametre * 0.75
+
+        const specs = {
+            diametre,
+            fitDowelRadius: -halfGap + unitRadius,
+            fitHoleRadius: halfGap + unitRadius,
+        }
+
+        specs.totalWidth = interfaceMargin * 2 + (unitRadius * 2 + unitSpacing)
+        const halfWidth = specs.totalWidth / 2
+        specs.cornerPoints = [
+            [halfWidth - cornerRadius, halfWidth - cornerRadius, 0],
+            [-halfWidth + cornerRadius, halfWidth - cornerRadius, 0],
+            [-halfWidth + cornerRadius, -halfWidth + cornerRadius, 0],
+            [halfWidth - cornerRadius, -halfWidth + cornerRadius, 0],
+        ]
+        const halfUnit = unitSpacing / 2
+        specs.dowelPoints = [
+            [halfUnit, halfUnit, 0],
+            [-halfUnit, halfUnit, 0],
+            [-halfUnit, -halfUnit, 0],
+            [halfUnit, -halfUnit, 0],
+        ]
+
+        const corners = specs.cornerPoints.map(cPt => {
+            return translate(cPt, circle({ radius: cornerRadius }))
+        })
+        const dowels = specs.dowelPoints.map(dPt => {
+            return translate(dPt, circle({ radius: specs.fitDowelRadius, segments: unitSegments }))
+        })
+        const dowelDies = specs.dowelPoints.map(dPt => {
+            return translate(dPt, circle({ radius: specs.fitHoleRadius, segments: unitSegments }))
+        })
+
+        const basePlate = hull(corners)
+        const dowelAssembly = union(dowels)
+
+        const male = dowelAssembly
+        const female = subtract(basePlate, dowelDies)
+
+        const pegboardProfiles = [
+            female,
+            male,
+        ]
+
+        const mainModel = [
+            pegboardProfiles[1],
+            pegboardProfiles[0],
+        ]
+
+        const modelParts = {
+            male: pegboardProfiles[1],
+            female: pegboardProfiles[0],
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
+     * Generate bolt ring connectors
+     * @param {*} opts 
+     * @access private
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
+     * @memberof profiles.connections
+     */
+    const boltRing = (opts) => {
+        const defaults = modelDefaults()
+        const initOpts = modelOpts(opts)
+        const modelProperties = modelProps(initOpts)
+
+        const mainModel = cuboid()
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    return {
+        defaults: modelDefaults,
+        props: modelProps,
+        dovetail,
+        tab,
+        polygon,
+        pegboard,
+        boltRing,
+    }
 }
 
-module.exports = { init: connectionsInit }</code></pre>
+module.exports = {
+    init: connectionProfilesInit
+}
+</code></pre>
         </article>
     </section>
 
@@ -352,7 +796,7 @@ module.exports = { init: connectionsInit }</code></pre>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Wed Apr 15 2026 22:42:23 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sat Apr 18 2026 10:37:15 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
