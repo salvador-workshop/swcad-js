@@ -77,7 +77,8 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * Builds default values and opts for the model
      * @param {*} opts 
      * @returns default values and opts
-     * @memberof connections
+     * @access private
+     * @memberof profiles.connections
      */
     const modelDefaults = () => {
         /** Specific value declarations */
@@ -143,7 +144,8 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * Initializes options with user input
      * @param {*} opts 
      * @returns model properties
-     * @memberof connections
+     * @access private
+     * @memberof profiles.connections
      */
     const modelOpts = (opts) => {
         const defaults = modelDefaults()
@@ -195,7 +197,8 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * Builds model properties from the given opts
      * @param {*} opts 
      * @returns model properties
-     * @memberof connections
+     * @access private
+     * @memberof profiles.connections
      */
     const modelProps = (opts) => {
         const defaults = modelDefaults()
@@ -305,6 +308,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     /**
      * old function for dovetail/tab connections
      * @param {*} param0
+     * @access private
      * @returns ...
      * @deprecated
      */
@@ -336,10 +340,10 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
 
     /**
-     * New Model 1
+     * Generate dovetail connectors
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof connections
+     * @memberof profiles.connections
      */
     const dovetail = (opts) => {
         const defaults = modelDefaults()
@@ -444,10 +448,10 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * New Model 2
+     * Generate tab connectors
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof connections
+     * @memberof profiles.connections
      */
     const tab = (opts) => {
         const defaults = modelDefaults()
@@ -552,9 +556,10 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * ...
+     * Generate polygon connectors
      * @param {*} opts 
-     * @returns ...
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof profiles.connections
      */
     const polygon = (opts) => {
         const defaults = modelDefaults()
@@ -626,9 +631,10 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * ...
+     * Generate pegboard connectors
      * @param {*} opts 
-     * @returns ...
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof profiles.connections
      */
     const pegboard = (opts) => {
         const defaults = modelDefaults()
@@ -713,9 +719,11 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * ...
+     * Generate bolt ring connectors
      * @param {*} opts 
-     * @returns ...
+     * @access private
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof profiles.connections
      */
     const boltRing = (opts) => {
         const defaults = modelDefaults()
