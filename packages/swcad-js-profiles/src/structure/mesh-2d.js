@@ -70,6 +70,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns default values and opts
      * @memberof profiles.structure.mesh
+     * @access private
      */
     const meshPanelDefaults = () => {
 
@@ -119,6 +120,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns model properties
      * @memberof profiles.structure.mesh
+     * @access private
      */
     const meshPanelProps = (opts) => {
         const defaults = meshPanelDefaults()
@@ -276,6 +278,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
          * Calculates points in mesh area
          * @memberof profiles.structure.mesh
          * @returns ...
+         * @access private
          */
         const meshPanelPoints = (modelProps) => {
             const {
@@ -305,6 +308,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
          * Builds 2D mesh panel perforations (hole punch)
          * @memberof profiles.structure.mesh
          * @returns ...
+         * @access private
          */
         const meshPanelCutProfile = (modelProps) => {
             const {
@@ -331,6 +335,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
          * Builds a 2D mesh panel
          * @memberof profiles.structure.mesh
          * @returns ...
+         * @access private
          */
         const meshPanelProfile = (modelProps) => {
             const {

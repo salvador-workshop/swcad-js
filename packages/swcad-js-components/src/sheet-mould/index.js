@@ -78,6 +78,7 @@ const moduleInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns default values and opts
      * @memberof components.sheetMould
+     * @access private
      */
     const modelDefaults = () => {
         /** Specific value declarations */
@@ -201,6 +202,7 @@ const moduleInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns model properties
      * @memberof components.sheetMould
+     * @access private
      */
     const modelOpts = (opts) => {
         const defaults = modelDefaults()
@@ -249,6 +251,7 @@ const moduleInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns model properties
      * @memberof components.sheetMould
+     * @access private
      */
     const modelProps = (opts) => {
         const defaults = modelDefaults()

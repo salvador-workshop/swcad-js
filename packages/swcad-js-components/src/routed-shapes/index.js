@@ -74,6 +74,7 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns default values and opts
      * @memberof components.routedShapes
+     * @access private
      */
     const modelDefaults = () => {
         /** Specific value declarations */
@@ -149,6 +150,7 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns model properties
      * @memberof components.routedShapes
+     * @access private
      */
     const modelCuboidOpts = (opts) => {
         const defaults = modelDefaults()
@@ -194,6 +196,7 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns model properties
      * @memberof components.routedShapes
+     * @access private
      */
     const modelCylinderEllipticOpts = (opts) => {
         const defaults = modelDefaults()
@@ -244,6 +247,7 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns model properties
      * @memberof components.routedShapes
+     * @access private
      */
     const modelProps = (opts) => {
         const defaults = modelDefaults()
@@ -344,7 +348,7 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
      * @param {*} bitModel 
      * @returns geom3
      * @memberof components.routedShapes
-     * @private
+     * @access private
      */
     const generateRouterCutPath = (outlinePts, bitProfile, bitModel) => {
         const closedOutlinePts = [
@@ -400,7 +404,7 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
      * @param {*} bitOpts 
      * @returns geom3
      * @memberof components.routedShapes
-     * @private
+     * @access private
      */
     const routerCut = (outlinePts, bitType, bitOpts) => {
         console.log('routerCut()', outlinePts, bitType, bitOpts)
