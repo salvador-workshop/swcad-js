@@ -3,11 +3,12 @@
 const beadsBitsModule = require('./beads-bits')
 const componentLineModule = require('./component-line')
 const meshModule = require('./mesh')
-const moulding = require('./moulding')
-const openWebJoist = require('./open-web-joist')
+const mouldingModule = require('./moulding')
+const openWebJoistModule = require('./open-web-joist')
 const routedShapesModule = require('./routed-shapes')
-const sheetMould = require('./sheet-mould')
-const text = require('./text')
+const sheetMouldModule = require('./sheet-mould')
+const textModule = require('./text')
+const trimFamilyFrameModule = require('./trim-family-frame')
 
 const componentsInit = ({ jscad, swcadJs }) => {
     const beadsBits = beadsBitsModule.init({ jscad, swcadJs })
@@ -33,10 +34,11 @@ const componentsInit = ({ jscad, swcadJs }) => {
         routedShapes,
         mesh,
         componentLine,
-        moulding: moulding.init({ jscad, swcadJs: preLib }),
-        openWebJoist: openWebJoist.init({ jscad, swcadJs: preLib }),
-        sheetMould: sheetMould.init({ jscad, swcadJs: preLib }),
-        text: text.init({ jscad, swcadJs: preLib }),
+        moulding: mouldingModule.init({ jscad, swcadJs: preLib }),
+        openWebJoist: openWebJoistModule.init({ jscad, swcadJs: preLib }),
+        sheetMould: sheetMouldModule.init({ jscad, swcadJs: preLib }),
+        text: textModule.init({ jscad, swcadJs: preLib }),
+        trimFamilyFrame: trimFamilyFrameModule.init({ jscad, swcadJs: preLib }),
     }
 }
 

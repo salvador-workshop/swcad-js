@@ -1,0 +1,854 @@
+"use strict"
+
+/**
+ * Rectangular frame using the system trim families
+ * @namespace trimFamilyFrame
+ * @memberof components
+ * @author R. J. Salvador
+ * @version 1.7.1
+ * @requires jscad v2, swcad-js v0.12.0
+ */
+
+const trimFamilyFrameInit = ({ jscad, swcadJs }) => {
+    const {
+        cube,
+        cylinder,
+        sphere,
+        cylinderElliptic,
+        circle,
+        cuboid,
+        roundedCuboid,
+        roundedCylinder,
+        roundedRectangle,
+        rectangle,
+        triangle,
+    } = jscad.primitives
+
+    const {
+        align,
+        translate,
+        rotate,
+        mirror
+    } = jscad.transforms
+
+    const {
+        intersect,
+        subtract,
+        union,
+        scission
+    } = jscad.booleans
+
+    const {
+        extrudeLinear,
+        extrudeRotate,
+        project
+    } = jscad.extrusions
+
+    const {
+        measureDimensions,
+        measureBoundingBox,
+        measureVolume
+    } = jscad.measurements
+
+    const {
+        hull,
+        hullChain
+    } = jscad.hulls
+
+    const { vectorText } = jscad.text
+    const { toOutlines } = jscad.geometries.geom2
+    const { TAU } = jscad.maths.constants
+    const { colorize } = jscad.colors
+
+    const {
+        math,
+        position,
+    } = swcadJs.calcs
+
+    const {
+        aranea,
+    } = swcadJs.profiles.trim
+
+
+    //==============================================================================
+
+
+    /**
+     * Builds default values and opts for the model
+     * @param {*} opts 
+     * @returns default values and opts
+     * @memberof components.trimFamilyFrame
+     * @access private
+     */
+    const modelDefaults = () => {
+        /** Specific value declarations */
+        const cornerThickness = math.inchesToMm(1 / 4)
+
+        const defaultValues = {
+            opts: {
+                trimType: 'plain',
+                frameForm: 'half',
+                trimJointType: 'plain',
+                cornerType: 'plain',
+                backingType: 'none',
+                ornaments: {
+                    trimLevels: 1,
+                },
+            },
+            dims: {
+                size: [math.inchesToMm(2.5), math.inchesToMm(3)],
+                interfaceThickness: 1.333,
+                fitGap: math.inchesToMm(1 / 128),
+                backingThickness: 1.333,
+                trimWidth: math.inchesToMm(3 / 8),
+                trimThickness: math.inchesToMm(3 / 16),
+                trimJointWidth: math.inchesToMm(1 / 2),
+                trimJointThickness: math.inchesToMm(7 / 32),
+                trimJointLength: math.inchesToMm(1 / 4),
+                cornerWidth: math.inchesToMm(5 / 8),
+                cornerThickness,
+                cornerRadius: cornerThickness / 2,
+                rabbetWidth: math.inchesToMm(1 / 8),
+                rabbetDepth: math.inchesToMm(1 / 8),
+            },
+            points: {
+                centre: [0, 0, 0]
+            },
+            types: {
+                default: { id: 'default', desc: 'Default' },
+                alt: { id: 'alt', desc: 'Alternate' },
+            },
+        }
+
+        /** Options used by SW models */
+        const standardOpts = {
+            type: defaultValues.types.default.id,
+            scale: 1,
+            interfaceThickness: 1.333333,
+            fitGap: math.inchesToMm(1 / 128),
+        }
+
+        /** Computed values for option defaults */
+        const defaultOpts = {
+            ...standardOpts,
+            size: defaultValues.dims.size,
+            trimType: defaultValues.opts.trimType,
+            frameForm: defaultValues.opts.frameForm,
+            trimJointType: defaultValues.opts.trimJointType,
+            cornerType: defaultValues.opts.cornerType,
+            backingType: defaultValues.opts.backingType,
+            backingThickness: defaultValues.dims.backingThickness,
+            ornaments: defaultValues.opts.ornaments,
+            trimWidth: defaultValues.dims.trimWidth,
+            trimThickness: defaultValues.dims.trimThickness,
+            cornerWidth: defaultValues.dims.cornerWidth,
+            cornerThickness: defaultValues.dims.cornerThickness,
+            cornerRadius: defaultValues.dims.cornerRadius,
+            trimJointWidth: defaultValues.dims.trimJointWidth,
+            trimJointThickness: defaultValues.dims.trimJointThickness,
+            trimJointLength: defaultValues.dims.trimJointLength,
+            rabbetWidth: defaultValues.dims.rabbetWidth,
+            rabbetDepth: defaultValues.dims.rabbetDepth,
+        }
+
+        return {
+            opts: defaultOpts,
+            vals: defaultValues,
+        }
+    }
+
+
+    //------------------------------------------------------------------------------
+
+
+    /**
+     * Initializes options with user input
+     * @param {*} opts 
+     * @returns model properties
+     * @memberof components.trimFamilyFrame
+     * @access private
+     */
+    const modelOpts = (opts) => {
+        const defaults = modelDefaults()
+        console.log('modelOpts() -- opts', opts)
+
+        // User options
+        const {
+            type = defaults.opts.type,
+            scale = defaults.opts.scale,
+            interfaceThickness = defaults.opts.interfaceThickness,
+            fitGap = defaults.opts.fitGap,
+            size = defaults.opts.size,
+            trimType = defaults.opts.trimType,
+            frameForm = defaults.opts.frameForm,
+            trimJointType = defaults.opts.trimJointType,
+            cornerType = defaults.opts.cornerType,
+            backingType = defaults.opts.backingType,
+            backingThickness = defaults.opts.backingThickness,
+            ornaments = defaults.opts.ornaments,
+            trimWidth = defaults.opts.trimWidth,
+            trimThickness = defaults.opts.trimThickness,
+            cornerWidth = defaults.opts.cornerWidth,
+            cornerThickness = defaults.opts.cornerThickness,
+            cornerRadius = defaults.opts.cornerRadius,
+            trimJointWidth = defaults.opts.trimJointWidth,
+            trimJointThickness = defaults.opts.trimJointThickness,
+            trimJointLength = defaults.opts.trimJointLength,
+            rabbetWidth = defaults.opts.rabbetWidth,
+            rabbetDepth = defaults.opts.rabbetDepth,
+        } = opts
+
+        const stdOpts = {
+            type,
+            scale,
+            interfaceThickness,
+            fitGap,
+        }
+
+        const initOpts = {
+            size,
+            trimType,
+            frameForm,
+            trimJointType,
+            cornerType,
+            backingType,
+            backingThickness,
+            ornaments,
+            trimWidth,
+            trimThickness,
+            cornerWidth,
+            cornerThickness,
+            cornerRadius,
+            trimJointWidth,
+            trimJointThickness,
+            trimJointLength,
+            rabbetWidth,
+            rabbetDepth,
+            ...stdOpts,
+        }
+
+        console.log('modelOpts() -- initOpts', initOpts)
+
+        return initOpts
+    }
+
+    //------------------------------------------------------------------------------
+
+
+    /**
+     * Builds model properties from the given opts
+     * @param {*} opts 
+     * @returns model properties
+     * @memberof components.trimFamilyFrame
+     * @access private
+     */
+    const modelProps = (opts) => {
+        const defaults = modelDefaults()
+        console.log('modelProps() -- opts', opts)
+
+        const {
+            size,
+            type,
+            scale,
+            interfaceThickness,
+            fitGap,
+            trimType,
+            frameForm,
+            trimJointType,
+            cornerType,
+            backingType,
+            backingThickness,
+            ornaments,
+            trimWidth,
+            trimThickness,
+            cornerWidth,
+            cornerThickness,
+            cornerRadius,
+            trimJointWidth,
+            trimJointThickness,
+            trimJointLength,
+            rabbetWidth,
+            rabbetDepth,
+        } = opts
+
+        /* ----------------------------------------
+        * Prop calculations
+        * ------------------------------------- */
+
+        const width = size[0]
+        const depth = size[1]
+
+        const hasCorner = cornerType && cornerType != 'none'
+        const hasCornerJoint = trimJointType && trimJointType != 'none'
+
+        const cWidth = hasCorner ? cornerWidth : 0
+        const cThickness = hasCorner ? cornerThickness : 0
+        const cRadius = hasCorner ? cornerRadius : 0
+        const cornerDiff = cWidth - trimWidth
+        const tJointWidth = hasCorner && hasCornerJoint ? trimJointWidth : 0
+        const tJointThickness = hasCorner && hasCornerJoint ? trimJointThickness : 0
+        const tJointLength = hasCorner && hasCornerJoint ? trimJointLength : 0
+
+        const cornerWidthOffset = hasCorner ? cWidth * 2 : 0
+        const trimJointOffset = hasCorner && hasCornerJoint ? trimJointLength * 2 : 0
+
+        let trimOffset = 0
+        let trimCentreOffset = (trimWidth / 2)
+
+        if (cornerDiff > 0) {
+            trimOffset = cornerDiff / 2
+            trimCentreOffset = trimOffset + (trimWidth / 2)
+        }
+
+        const trimLengthX = width - (trimOffset * 2)
+        const trimLengthY = depth - (trimOffset * 2)
+
+        const backingWidth = width - (trimCentreOffset * 2)
+        const backingHeight = depth - (trimCentreOffset * 2)
+
+        const frameInnerWidth = trimLengthX - (trimWidth * 2)
+        const frameInnerHeight = trimLengthY - (trimWidth * 2)
+
+        const cornerPoints = [
+            [0, 0, 0],
+            [width, 0, 0],
+            [0, depth, 0],
+            [width, depth, 0],
+        ]
+
+        const centrePoint = [width / 2, depth / 2, 0]
+
+        const trimPoints = [
+            [centrePoint[0], trimOffset, 0],
+            [centrePoint[0], depth - trimOffset, 0],
+            [trimOffset, centrePoint[1], 0],
+            [width - trimOffset, centrePoint[1], 0],
+        ]
+
+        /* ----------------------------------------
+        * Preparing Model Properties, Dimensions
+        * ------------------------------------- */
+
+        /** Constant values for model */
+        const modelConstants = {
+        }
+
+        /** Derived user options for the model */
+        const modelOpts = {
+            type,
+            scale,
+            trimType,
+            frameForm,
+            trimJointType,
+            cornerType,
+            backingType,
+            ornaments,
+        }
+
+        /** Various dimensions for model */
+        const modelDims = {
+            size,
+            width,
+            depth,
+            interfaceThickness,
+            fitGap,
+            trimWidth,
+            trimThickness,
+            frameInnerWidth,
+            frameInnerHeight,
+            trimJointWidth: tJointWidth,
+            trimJointThickness: tJointThickness,
+            trimJointLength: tJointLength,
+            cornerWidth: cWidth,
+            cornerThickness: cThickness,
+            cornerRadius: cRadius,
+            backingThickness,
+            cornerWidthOffset,
+            trimJointOffset,
+            trimLengthX,
+            trimLengthY,
+            trimOffset,
+            trimCentreOffset,
+            backingWidth,
+            backingHeight,
+            rabbetWidth,
+            rabbetDepth,
+        }
+
+        /** Various key points for model */
+        const modelPoints = {
+            centre: centrePoint,
+            corners: cornerPoints,
+            trimEdges: trimPoints,
+        }
+
+        /** Components used by model */
+        const modelComponents = {
+        }
+
+        /* ---------------------------------------------
+        *  Model Properties
+        * ----------------------------------------------
+        * Properties accessible to all model functions.
+        * --------------------------------------------- */
+
+        const modelProperties = {
+            metadata: {
+                id: '9999',
+                name: 'New Model',
+                project: 'New Project',
+                author: 'Somebody Somewhere',
+                organization: 'Salvador Workshop',
+                client: null,
+            },
+            constants: modelConstants,
+            opts: modelOpts,
+            dims: modelDims,
+            points: modelPoints,
+            components: modelComponents,
+        }
+
+        console.log('modelProps() -- modelProperties', modelProperties)
+
+        return modelProperties
+    }
+
+
+    //------------------------------------------------------------------------------
+
+
+    /**
+     * New Model
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof components.trimFamilyFrame
+     */
+    const model = (opts) => {
+        const defaults = modelDefaults()
+        const initOpts = modelOpts(opts)
+        const modelProperties = modelProps(initOpts)
+
+        /* ----------------------------------------
+         * Modelling, Component/Assembly Modules
+         * ------------------------------------- */
+
+        /**
+     * Frame corner piece
+     * @param {*} modelProps
+     * @returns geom3 object. `null` if given invalid params or with `cornerType` = `'none'`
+     */
+        const frameCorner = (modelProps) => {
+            const {
+                opts,
+                dims,
+                points,
+            } = modelProps
+
+            let fCorner = null
+            if (!opts.cornerType || opts.cornerType == 'none') {
+                return fCorner
+            } else {
+                switch (opts.cornerType) {
+                    case 'rounded':
+                        fCorner = cylinder({
+                            height: dims.cornerThickness,
+                            radius: dims.cornerRadius || 0.5
+                        })
+                        break;
+                    case 'plain':
+                    default:
+                        // default to cuboid
+                        fCorner = cuboid({
+                            size: [dims.cornerWidth, dims.cornerWidth, dims.cornerThickness]
+                        })
+                        break;
+                }
+            }
+
+            return fCorner
+        }
+
+
+        /**
+         * Frame corner joint piece
+         * @param {*} modelProps
+         * @returns geom3
+         */
+        const frameCornerJoint = (modelProps) => {
+            const {
+                opts,
+                dims,
+                points,
+            } = modelProps
+
+            let fCornerJoint = null
+            if (!opts.trimJointType || opts.trimJointType == 'none') {
+                return fCornerJoint
+            } else {
+                switch (opts.trimJointType) {
+                    case 'rounded':
+                        fCornerJoint = roundedCuboid({
+                            size: [dims.trimJointWidth, dims.trimJointLength, dims.trimJointThickness],
+                            radius: radius || 0.5
+                        })
+                        break;
+                    case 'plain':
+                    default:
+                        // default to cuboid
+                        fCornerJoint = cuboid({
+                            size: [dims.trimJointWidth, dims.trimJointLength, dims.trimJointThickness]
+                        })
+                        break;
+                }
+            }
+
+            return fCornerJoint
+        }
+
+
+        /**
+         * Frame corner assembly
+         * @param {*} modelProps
+         * @returns geom3
+         */
+        const cornerFrameAssembly = (modelProps) => {
+            const {
+                opts,
+                dims,
+                points,
+            } = modelProps
+
+            if ((!opts.cornerType || opts.cornerType == 'none') && (!opts.trimJointType || opts.trimJointType == 'none')) {
+                return null
+            }
+
+            let corner = frameCorner(modelProps)
+            const cornerBbox = measureBoundingBox(corner)
+            const cornerJoint = frameCornerJoint(modelProps)
+
+            const jointX = align({
+                modes: ['min', 'center', 'min'],
+                relativeTo: [
+                    cornerBbox[1][0],
+                    0,
+                    cornerBbox[0][2],
+                ]
+            }, rotate([0, 0, Math.PI / 2], cornerJoint))
+
+            const jointY = align({
+                modes: ['center', 'min', 'min'],
+                relativeTo: [
+                    0,
+                    cornerBbox[1][1],
+                    cornerBbox[0][2],
+                ]
+            }, cornerJoint)
+
+            let cornerAssembly = corner
+
+            if (jointX) {
+                cornerAssembly = union(cornerAssembly, jointX)
+            }
+            if (jointY) {
+                cornerAssembly = union(cornerAssembly, jointY)
+            }
+
+            return cornerAssembly
+        }
+
+
+        /**
+         * Frame trim length
+         * @param {*} modelProps
+         * @returns geom3
+         */
+        const frameTrim = (modelProps, length) => {
+            const {
+                opts,
+                dims,
+                points,
+            } = modelProps
+
+            let fTrim = null
+            if (!opts.trimType || opts.trimType == 'none') {
+                return fTrim
+            } else {
+                let mitredTrimProfile = triangle({
+                    type: 'ASA', values: [
+                        Math.PI / 4,
+                        length,
+                        Math.PI / 4,
+                    ]
+                })
+                mitredTrimProfile = rotate([0, 0, Math.PI / 2], mitredTrimProfile)
+                let mitredTrimArea = extrudeLinear({ height: dims.trimThickness * 2 }, mitredTrimProfile)
+                mitredTrimArea = translate([dims.trimWidth / 2, 0, -dims.trimThickness], mitredTrimArea)
+
+                switch (opts.trimType) {
+                    case 'aranea':
+                        const unitHeight = dims.trimWidth / opts.ornaments.trimLevels
+                        const unitDepth = dims.trimThickness / opts.ornaments.trimLevels
+
+                        const detailDepth = unitDepth / 3
+                        const trimStyle = 'dado'
+                        let trimSize = 'small'
+                        switch (opts.ornaments.trimLevels) {
+                            case 3:
+                                trimSize = 'largeOrn1'
+                                break;
+                            case 2:
+                                trimSize = 'mediumOrn1'
+                                break;
+                            case 1:
+                            default:
+                                trimSize = 'smallOrn1'
+                                break;
+                        }
+
+                        const tFamilyAranea = aranea.buildTrimFamily({
+                            unitHeight,
+                            unitDepth,
+                            detailDepth,
+                        });
+                        let frameProfile = tFamilyAranea[trimStyle][trimSize]
+                        let araneaTrim = extrudeLinear({ height: length }, frameProfile)
+                        araneaTrim = rotate([Math.PI / -2, Math.PI / -2, 0], araneaTrim)
+
+                        fTrim = extrudeLinear({ height: length }, araneaTrim)
+                        break;
+                    case 'rounded':
+                        fTrim = roundedCuboid({
+                            size: [dims.trimWidth, length, dims.trimThickness],
+                            radius: dims.interfaceThickness
+                        })
+                        break;
+                    case 'plain':
+                    default:
+                        // default to cuboid
+                        fTrim = cuboid({
+                            size: [dims.trimWidth, length, dims.trimThickness]
+                        })
+                        break;
+                }
+
+                fTrim = intersect(
+                    fTrim,
+                    mitredTrimArea,
+                )
+            }
+
+            return fTrim
+        }
+
+
+        /**
+         * Assembled trim
+         * @param {*} modelProps
+         * @returns geom3
+         */
+        const assembledTrim = (modelProps) => {
+            const {
+                opts,
+                dims,
+                points,
+            } = modelProps
+
+            const trimX = frameTrim(modelProps, dims.trimLengthX)
+            const trimY = frameTrim(modelProps, dims.trimLengthY)
+
+            const trimLengths = [
+                align({
+                    modes: ['center', 'min', 'min'],
+                    relativeTo: points.trimEdges[0],
+                }, rotate([0, 0, Math.PI / -2], trimX)),
+                align({
+                    modes: ['center', 'max', 'min'],
+                    relativeTo: points.trimEdges[1],
+                }, rotate([0, 0, Math.PI / 2], trimX)),
+                align({
+                    modes: ['min', 'center', 'min'],
+                    relativeTo: points.trimEdges[2],
+                }, rotate([0, 0, Math.PI], trimY)),
+                align({
+                    modes: ['max', 'center', 'min'],
+                    relativeTo: points.trimEdges[3],
+                }, trimY),
+            ]
+
+            let aTrim = union(...trimLengths)
+            return aTrim
+        }
+
+
+        /**
+         * Assembled frame
+         * @param {*} modelProps
+         * @returns geom3
+         */
+        const assembledFrame = (modelProps) => {
+            const {
+                opts,
+                dims,
+                points,
+            } = modelProps
+
+            let aFrame = assembledTrim(modelProps)
+
+            let corners = null
+            if (!opts.cornerType || opts.cornerType == 'none') {
+                corners = null
+            } else {
+                const cornerOffset = dims.trimThickness / 2
+                const cornerPts = [
+                    {
+                        point: [
+                            points.corners[0][0],
+                            points.corners[0][1],
+                            points.corners[0][2],
+                        ],
+                        rotation: [0, 0, 0],
+                        alignmentMode: ['min', 'min', 'min'],
+                    },
+                    {
+                        point: [
+                            points.corners[1][0],
+                            points.corners[1][1],
+                            points.corners[1][2],
+                        ],
+                        rotation: [0, 0, Math.PI / 2],
+                        alignmentMode: ['max', 'min', 'min'],
+                    },
+                    {
+                        point: [
+                            points.corners[2][0],
+                            points.corners[2][1],
+                            points.corners[2][2],
+                        ],
+                        rotation: [0, 0, Math.PI / -2],
+                        alignmentMode: ['min', 'max', 'min'],
+                    },
+                    {
+                        point: [
+                            points.corners[3][0],
+                            points.corners[3][1],
+                            points.corners[3][2],
+                        ],
+                        rotation: [0, 0, Math.PI],
+                        alignmentMode: ['max', 'max', 'min'],
+                    },
+                ]
+
+                const cornerAssemblies = cornerPts.map((cornerPt, idx) => {
+                    const corner = cornerFrameAssembly(modelProps)
+                    return align({
+                        modes: cornerPt.alignmentMode,
+                        relativeTo: cornerPt.point,
+                    }, rotate(cornerPt.rotation, corner))
+                })
+
+                corners = union(...cornerAssemblies)
+                aFrame = union(aFrame, corners)
+            }
+
+            let backing = null
+            aFrame = align({ modes: ['center', 'center', 'min'] }, aFrame)
+
+            if (opts.backingType && opts.backingType != 'none') {
+                backing = cuboid({
+                    size: [
+                        dims.backingWidth,
+                        dims.backingHeight,
+                        dims.backingThickness
+                    ]
+                })
+                backing = align({ modes: ['center', 'center', 'min'], }, backing)
+
+                aFrame = union(aFrame, backing)
+            }
+
+            return aFrame
+        }
+
+        /**
+        * Back side assembly for full- size frames
+        * @param {*} modelProps
+        * @returns geom3
+        */
+        const fullFrameBack = (modelProps, backOutline) => {
+            const {
+                opts,
+                dims,
+                points,
+            } = modelProps
+
+            const extBox = extrudeLinear({ height: dims.rabbetDepth }, backOutline)
+            const intBox = cuboid({
+                size: [
+                    dims.frameInnerWidth + (dims.rabbetWidth * 2),
+                    dims.frameInnerHeight + (dims.rabbetWidth * 2),
+                    dims.rabbetDepth
+                ]
+            })
+
+            return subtract(
+                position.ctr(extBox),
+                position.ctr(intBox)
+            );
+        }
+
+        /* ----------------------------------------
+         * Complete Assembly
+         * ------------------------------------- */
+
+        /** Final Assembly */
+        const finalAssembly = (modelProps) => {
+            const aFrame = assembledFrame(modelProps)
+            let mainPart = aFrame
+
+            if (modelProps.opts.frameForm == 'full') {
+                const aFrameBackOutline = project(
+                    {},
+                    align({ modes: ['center', 'center', 'min'] }, aFrame)
+                )
+                const fBack = fullFrameBack(modelProps, aFrameBackOutline)
+                // add frame back to main thing
+                mainPart = union(
+                    align({ modes: ['center', 'center', 'min'] }, mainPart),
+                    align({ modes: ['center', 'center', 'max'] }, fBack),
+                )
+            }
+
+            return mainPart
+        }
+
+        /* ----------------------------------------
+         * Outputs
+         * ------------------------------------- */
+
+        const frameCornerInst = frameCorner(modelProperties)
+        const frameCornerJointInst = frameCornerJoint(modelProperties)
+        const cornerFrameAssemblyInst = cornerFrameAssembly(modelProperties)
+        const frameTrimInst = frameTrim(modelProperties, 25.4)
+        const assembledTrimInst = assembledTrim(modelProperties)
+        const assembledFrameInst = assembledFrame(modelProperties)
+
+        let mainModel = finalAssembly(modelProperties)
+
+        let modelParts = {
+            frameCorner: frameCornerInst,
+            frameCornerJoint: frameCornerJointInst,
+            cornerFrameAssembly: cornerFrameAssemblyInst,
+            frameTrim: frameTrimInst,
+            assembledTrim: assembledTrimInst,
+            assembledFrame: assembledFrameInst,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    return model
+}
+
+module.exports = {
+    init: trimFamilyFrameInit
+}
