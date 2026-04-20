@@ -1,13 +1,5 @@
 "use strict"
 
-/**
- * Component Line
- * @namespace componentLine
- * @memberof components
- * @author R. J. Salvador (Salvador Workshop)
- * @version 1.3.0
- */
-
 const moduleInit = ({ jscad, swcadJs }) => {
     const {
         cube,
@@ -81,7 +73,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
      * Builds default values and opts for the model
      * @param {*} opts 
      * @returns default values and opts
-     * @memberof components.componentLine
      * @access private
      */
     const modelDefaults = () => {
@@ -145,7 +136,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
      * Initializes options with user input
      * @param {*} opts 
      * @returns model properties
-     * @memberof components.componentLine
      * @access private
      */
     const modelOpts = (opts) => {
@@ -195,7 +185,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
      * Builds model properties from the given opts
      * @param {*} opts 
      * @returns model properties
-     * @memberof components.componentLine
      * @access private
      */
     const modelProps = (opts) => {
@@ -336,7 +325,8 @@ const moduleInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns `geom3` or `geom3[]`
      * @author R. J. Salvador (Salvador Workshop)
-     * @memberof components.componentLine
+     * @memberof components
+     * @name componentLine
      */
     const model = (opts) => {
         const defaults = modelDefaults()

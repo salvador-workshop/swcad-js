@@ -4,6 +4,7 @@
  * Cuboid calculations
  * @memberof calcs.position
  * @namespace cuboid
+ * @deprecated Not really used
  */
 
 const geoCuboid = ({ jscad, swcadJs }) => {
