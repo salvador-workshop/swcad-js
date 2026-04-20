@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: swcad-js-calcs/src/position/pos-triangle.js</title>
+    <title>JSDoc: Namespace: trimFamilyFrame</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,148 +17,266 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: swcad-js-calcs/src/position/pos-triangle.js</h1>
+    <h1 class="page-title">Namespace: trimFamilyFrame</h1>
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>"use strict"
+        <h2>trimFamilyFrame</h2>
+        
+    
+</header>
 
-/**
- * Triangle calculations
- * @memberof calcs.position
- * @namespace triangle
- */
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Rectangular frame using the system trim families</div>
+        
 
-const geoTriangle = ({ jscad, swcadJs }) => {
-    const { measureDimensions, measureBoundingBox, measureCenter } = jscad.measurements;
-    const { TAU } = jscad.maths.constants
+        
 
-    const getTriangleCtrlPoints = (points) => {
-        return null;
-    }
 
-    const centroid = (points) => {
-        return null;
-    }
+<dl class="details">
 
-    const orthocentre = (points) => {
-        return null;
-    }
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.7.1</li></ul></dd>
+    
 
-    const circumcentre = (points) => {
-        return null;
-    }
+    
 
-    const circumradius = (points) => {
-        return null;
-    }
+    
 
-    const incentre = (points) => {
-        return null;
-    }
+    
 
-    const incircleRadius = (points) => {
-        return null;
-    }
+    
 
-    const eulerLine = (points) => {
-        return null;
-    }
+    
 
-    /**
-     * ...
-     * @param {object} opts 
-     * @param {number} opts.hypot 
-     * @param {number} opts.long 
-     * @param {number} opts.short 
-     * @param {number} opts.longAngle 
-     * @param {number} opts.shortAngle 
-     * @returns If valid, returns triangle creation strategy (AAS, ASA, SAS, etc) and values for `jscad.primitives.triangle()`. If invalid, returns `null`
-     */
-    const rightTriangleOpts = ({
-        hypot,
-        long,
-        short,
-        longAngle,
-        shortAngle,
-    }) => {
+    
 
-        const isValueValid = (val) => {
-            return typeof val == 'number' &amp;&amp; val >= 0
-        }
+    
 
-        const sides = { hypot, long, short }
-        const angles = { longAngle, shortAngle }
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>R. J. Salvador</li>
+        </ul>
+    </dd>
+    
 
-        const validSides = Object.entries(sides).filter(([sideName, sideVal]) => {
-            return isValueValid(sideVal)
-        })
-        const validAngles = Object.entries(angles).filter(([angleName, angleVal]) => {
-            return isValueValid(angleVal)
-        })
+    
 
-        if (validSides.length == 0 &amp;&amp; validAngles.length == 0) {
-            return null
-        }
+    
 
-        const sideKeys = validSides.map(vSide => vSide[0]);
-        const angleKeys = validAngles.map(vSide => vSide[0]);
+    
 
-        // follows JSCAD defaults
-        let outType = 'SSS'
-        let outValues = [1, 1, 1]
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="swcad-js-components_src_trim-family-frame_index.js.html">swcad-js-components/src/trim-family-frame/index.js</a>, <a href="swcad-js-components_src_trim-family-frame_index.js.html#line3">line 3</a>
+    </li></ul></dd>
+    
 
-        if (validSides.length == 3) {
-            outType = 'SSS'
-            outValues = [short, hypot, long]
-        } else if (sideKeys.includes('long') &amp;&amp; sideKeys.includes('short')) {
-            outType = 'SAS'
-            outValues = [short, TAU / 4, long]
-        } else if (sideKeys.includes('long') &amp;&amp; angleKeys.includes('shortAngle')) {
-            outType = 'AAS'
-            outValues = [TAU / 4, shortAngle, long]
-        } else if (sideKeys.includes('long') &amp;&amp; angleKeys.includes('longAngle')) {
-            outType = 'ASA'
-            outValues = [TAU / 4, long, longAngle]
-        } else if (sideKeys.includes('short') &amp;&amp; angleKeys.includes('longAngle')) {
-            outType = 'AAS'
-            outValues = [TAU / 4, longAngle, short]
-        } else if (sideKeys.includes('short') &amp;&amp; angleKeys.includes('shortAngle')) {
-            outType = 'ASA'
-            outValues = [TAU / 4, short, shortAngle]
-        } else if (sideKeys.includes('hypot') &amp;&amp; angleKeys.includes('longAngle') &amp;&amp; angleKeys.includes('shortAngle')) {
-            outType = 'ASA'
-            outValues = [longAngle, hypot, shortAngle]
-        }
+    
 
-        return {
-            type: outType,
-            values: outValues,
-        }
-    }
+    
 
-    return {
-        getTriangleCtrlPoints,
-        centroid,
-        orthocentre,
-        circumcentre,
-        circumradius,
-        incentre,
-        incircleRadius,
-        eulerLine,
-        rightTriangleOpts,
-    }
-}
+    
+</dl>
 
-module.exports = { init: geoTriangle };
-</code></pre>
-        </article>
-    </section>
+
+        
+    
+    </div>
+
+    
+
+    
+        <h3 class="subsection-title">Requires</h3>
+
+        <ul>
+            <li>module:jscad</li>
+        </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".model"><span class="type-signature">(static) </span>model<span class="signature">(opts)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    New Model
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>opts</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="swcad-js-components_src_trim-family-frame_index.js.html">swcad-js-components/src/trim-family-frame/index.js</a>, <a href="swcad-js-components_src_trim-family-frame_index.js.html#line426">line 426</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+</div>
+
+
+
+    
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
