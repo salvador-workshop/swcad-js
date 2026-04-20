@@ -1,29 +1,23 @@
 "use strict"
 
-const arch = require('./arch')
-const foil = require('./foil')
-const wall = require('./wall')
-const wallEntryway = require('./wall/wall-entryway')
+const archModule = require('./arch')
+const foilModule = require('./foil')
+const structureModule = require('./structure')
 
 const modelsInit = ({ jscad, swcadJs }) => {
-    const archModule = arch.init({ jscad, swcadJs })
-    const wallModule = wall.init({ jscad, swcadJs })
+    const arch = archModule.init({ jscad, swcadJs })
 
     const preLib = {
         ...swcadJs,
         models: {
-            arch: archModule,
-            wall: wallModule,
+            arch,
         }
     }
 
     return {
-        arch: archModule,
-        foil: foil.init({ jscad, swcadJs: preLib }),
-        wall: {
-            ...wallModule,
-            entryway: wallEntryway.init({ jscad, swcadJs: preLib })
-        },
+        arch,
+        foil: foilModule.init({ jscad, swcadJs: preLib }),
+        structure: structureModule.init({ jscad, swcadJs: preLib }),
     }
 }
 

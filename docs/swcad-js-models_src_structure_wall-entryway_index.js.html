@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: swcad-js-models/src/structure/wall-entryway/index.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: swcad-js-models/src/structure/wall-entryway/index.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict"
+
+/**
+ * ...
+ * @namespace wallEntryway
+ * @memberof models.structure
+ */
+
+const entrywayBuilder = ({ jscad, swcadJs }) => {
+    const { union, subtract, intersect } = jscad.booleans;
+    const { translate, rotate, mirror } = jscad.transforms;
+    const { cuboid } = jscad.primitives;
+    const { measureDimensions } = jscad.measurements;
+    const { extrudeLinear } = jscad.extrusions
+    const { hull } = jscad.hulls
+
+    const {
+        arch,
+        wall,
+    } = swcadJs.models
+
+    const {
+        arch: arch2d,
+    } = swcadJs.profiles.structure
+
+    return {
+        /**
+         * Builds a gothic entryway.
+         * @memberof models.structure.wallEntryway
+         * @instance
+         * @param {Object} opts 
+         * @param {number} opts.wallLength
+         * @param {number} opts.wallThickness
+         * @param {number} opts.wallHeight
+         * @param {number} opts.entryLength
+         * @param {number} opts.trimUnitHeight
+         * @param {number} opts.trimUnitDepth
+         * @param {number} opts.crownUnits
+         * @param {number} opts.dadoHeight
+         * @param {number} opts.dadoUnits
+         * @param {number} opts.baseUnits
+         * @param {number} opts.wallOpts
+         * @param {number} opts.trimSides
+         * @param {string[]} opts.trimOpts - ['base', 'dado', 'crown']
+         * @param {string[]} opts.entryOpts 
+         * @param {number} opts.archRadFactor - arch radius factor
+         * @returns Entryway geometry
+         */
+        buildGothicEntryway: (opts) => {
+            const wallSpace = opts.wallLength - opts.entryLength;
+
+            const wall1Specs = [wallSpace / 2, opts.wallThickness, opts.wallHeight];
+            const wall2Specs = [wallSpace / 2, opts.wallThickness, opts.wallHeight];
+            const topWallSpecs = [opts.wallLength, opts.wallThickness, opts.wallHeight];
+
+            const trimUnits = wall.verifyTrimUnits({
+                trimOpts: opts.trimOpts,
+                baseUnits: opts.baseUnits,
+                dadoUnits: opts.dadoUnits,
+                crownUnits: opts.crownUnits,
+            })
+
+            const wall1 = wall.buildWall({
+                height: wall1Specs[2],
+                thickness: wall1Specs[1],
+                length: wall1Specs[0],
+                // wallOpts: 0,
+                half: 'lower',
+                trimOpts: opts.trimOpts,
+                baseUnits: trimUnits.baseUnits,
+                dadoUnits: trimUnits.dadoUnits,
+                crownUnits: trimUnits.crownUnits,
+                dadoHeight: opts.dadoHeight,
+                trimUnitHeight: opts.trimUnitHeight,
+                trimUnitDepth: opts.trimUnitDepth,
+            });
+            const wall1Dims = measureDimensions(wall1);
+
+            const wall2 = wall.buildWall({
+                height: wall2Specs[2],
+                thickness: wall2Specs[1],
+                length: wall2Specs[0],
+                half: 'lower',
+                trimOpts: opts.trimOpts,
+                baseUnits: trimUnits.baseUnits,
+                dadoUnits: trimUnits.dadoUnits,
+                crownUnits: trimUnits.crownUnits,
+                dadoHeight: opts.dadoHeight,
+                trimUnitHeight: opts.trimUnitHeight,
+                trimUnitDepth: opts.trimUnitDepth,
+            });
+
+            const topWall = wall.buildWall({
+                height: topWallSpecs[2],
+                thickness: topWallSpecs[1],
+                length: topWallSpecs[0],
+                half: 'upper',
+                trimOpts: opts.trimOpts,
+                baseUnits: trimUnits.baseUnits,
+                dadoUnits: trimUnits.dadoUnits,
+                crownUnits: trimUnits.crownUnits,
+                dadoHeight: opts.dadoHeight,
+                trimUnitHeight: opts.trimUnitHeight,
+                trimUnitDepth: opts.trimUnitDepth,
+            });
+
+            let archTrimProfile = wall.getEntryTrimForDadoUnits({
+                dadoUnits: trimUnits.dadoUnits,
+                trimUnitHeight: opts.trimUnitHeight,
+                trimUnitDepth: opts.trimUnitDepth,
+            });
+            archTrimProfile = rotate([0, 0, Math.PI * 1.5], archTrimProfile);
+            const archTrimProfileSpecs = measureDimensions(archTrimProfile);
+            const archRadFactor = opts.archRadFactor || 0.75;
+            const thinWallThickness = opts.wallThickness - (archTrimProfileSpecs[1] * 2);
+
+            const trimArch = arch.twoPtArch({ arcRadius: opts.entryLength * archRadFactor, archWidth: opts.entryLength, profileWidth: 5 }, archTrimProfile);
+            const adjTrimArch = translate([0, (thinWallThickness + archTrimProfileSpecs[1]) / 2, wall1Dims[2]], trimArch);
+            const adjTrimArchOpp = mirror({ normal: [0, 1, 0] }, adjTrimArch);
+            const trimArchDims = measureDimensions(trimArch);
+
+            const innerOpeningSpecs = [opts.entryLength, 5 * opts.wallThickness, null];
+            const innerOpeningProfile = arch2d.twoPtArch({ arcRadius: innerOpeningSpecs[0] * archRadFactor, archWidth: innerOpeningSpecs[0] });
+            const innerOpening = rotate([Math.PI / 2, 0, 0], extrudeLinear({ height: innerOpeningSpecs[1] }, innerOpeningProfile));
+            const adjInnerOpening = translate([0, innerOpeningSpecs[1] / 2, wall1Dims[2]], innerOpening);
+
+            const trimOpeningSpecs = [
+                archTrimProfileSpecs[0] * 2 + opts.entryLength,
+                4 * opts.wallThickness,
+                wall1Dims[2] + trimArchDims[2]
+            ];
+            const trimOpening = hull([
+                translate([0, trimOpeningSpecs[1] / -2, 0], adjTrimArch),
+                translate([0, trimOpeningSpecs[1] / 2, 0], adjTrimArch),
+            ]);
+            const adjTrimOpening = translate([0, 0, 0], trimOpening);
+            const thinWall = intersect(
+                translate([0, 0, opts.wallHeight / 2], cuboid({
+                    size: [
+                        opts.wallLength,
+                        thinWallThickness,
+                        opts.wallHeight,
+                    ]
+                })),
+                topWall,
+            );
+
+            let punchedTopWall = subtract(topWall, adjInnerOpening);
+            if (opts.trimOpts.includes('dado')) {
+                punchedTopWall = subtract(punchedTopWall, adjTrimOpening);
+                punchedTopWall = union(punchedTopWall, thinWall);
+                punchedTopWall = subtract(punchedTopWall, adjInnerOpening);
+            }
+
+            const wallAdj = wallSpace / 4 + (opts.entryLength / 2)
+            const trimArches = union(
+                adjTrimArch,
+                adjTrimArchOpp,
+            )
+            const entryway = union(
+                translate([-wallAdj, 0, 0], wall1),
+                translate([wallAdj, 0, 0], wall2),
+                translate([0, 0, 0], punchedTopWall),
+            );
+
+            return union(entryway, trimArches);
+        }
+    };
+}
+
+module.exports = { init: entrywayBuilder }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.position.cuboid.html">calcs.position.cuboid</a></li><li><a href="calcs.position.rectangle.html">calcs.position.rectangle</a></li><li><a href="calcs.position.triangle.html">calcs.position.triangle</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="componentSpec.brick.html">componentSpec.brick</a></li><li><a href="componentSpec.brick.northAmerica.html">componentSpec.brick.northAmerica</a></li><li><a href="componentSpec.crafts.html">componentSpec.crafts</a></li><li><a href="componentSpec.tile.html">componentSpec.tile</a></li><li><a href="componentSpec.tile.northAmerica.html">componentSpec.tile.northAmerica</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.moulding.html">components.moulding</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.functions.html">data.functions</a></li><li><a href="data.specifications.html">data.specifications</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="data.standards.crafts.html">data.standards.crafts</a></li><li><a href="data.standards.lumber.html">data.standards.lumber</a></li><li><a href="data.standards.masonry.html">data.standards.masonry</a></li><li><a href="data.standards.paper.html">data.standards.paper</a></li><li><a href="data.standards.tiles.html">data.standards.tiles</a></li><li><a href="models.arch.html">models.arch</a></li><li><a href="models.foil.html">models.foil</a></li><li><a href="models.structure.html">models.structure</a></li><li><a href="models.structure.wall.html">models.structure.wall</a></li><li><a href="models.structure.wallEntryway.html">models.structure.wallEntryway</a></li><li><a href="profileSpec.lumber.html">profileSpec.lumber</a></li><li><a href="profileSpec.lumber.northAmerica.html">profileSpec.lumber.northAmerica</a></li><li><a href="profileSpec.paper.html">profileSpec.paper</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.curve.html">profiles.curve</a></li><li><a href="profiles.shapes.html">profiles.shapes</a></li><li><a href="profiles.shapes.ellipse.html">profiles.shapes.ellipse</a></li><li><a href="profiles.shapes.rectangle.html">profiles.shapes.rectangle</a></li><li><a href="profiles.shapes.square.html">profiles.shapes.square</a></li><li><a href="profiles.shapes.triangle.html">profiles.shapes.triangle</a></li><li><a href="profiles.structure.arch.html">profiles.structure.arch</a></li><li><a href="profiles.structure.foil.html">profiles.structure.foil</a></li><li><a href="profiles.structure.mesh.html">profiles.structure.mesh</a></li><li><a href="profiles.text.html">profiles.text</a></li><li><a href="profiles.trim.html">profiles.trim</a></li><li><a href="profiles.trim.aranea.html">profiles.trim.aranea</a></li><li><a href="utils.colors.html">utils.colors</a></li><li><a href="utils.layout.html">utils.layout</a></li><li><a href="utils.palette.html">utils.palette</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Mon Apr 20 2026 12:58:26 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

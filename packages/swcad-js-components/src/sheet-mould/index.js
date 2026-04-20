@@ -1,13 +1,5 @@
 "use strict"
 
-/**
- * Sheet Mould Module
- * @namespace sheetMould
- * @memberof components
- * @author R. J. Salvador
- * @version 1.1.0
- */
-
 const moduleInit = ({ jscad, swcadJs }) => {
     const {
         cube,
@@ -383,7 +375,7 @@ const moduleInit = ({ jscad, swcadJs }) => {
         /** Components used by model */
         const modelComponents = {
             interface: {
-                profileBeads: beadsBits.interface3d.profileBeads(
+                profileBeads: beadsBits.profileBeads(
                     interfaceThickness,
                     smProfileBeadWidth,
                     mdProfileBeadWidth,
@@ -424,12 +416,12 @@ const moduleInit = ({ jscad, swcadJs }) => {
 
 
     /**
-     * New Model
+     * Sheet Mould Module
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof components.sheetMould
+     * @memberof components
      */
-    const model = (opts) => {
+    const sheetMould = (opts) => {
         const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
@@ -670,7 +662,7 @@ const moduleInit = ({ jscad, swcadJs }) => {
         return [mainModel, modelParts, modelProperties]
     }
 
-    return model
+    return sheetMould
 }
 
 module.exports = {

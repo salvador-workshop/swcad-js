@@ -1,10 +1,3 @@
-/**
- * Component for generating an open web joist, with various options for dimensions and reinforcement levels.
- * @namespace openWebJoist
- * @memberof components
- * @author R. J. Salvador (Salvador Workshop)
- */
-
 "use strict"
 
 const openWebJoistInit = ({ jscad, swcadJs }) => {
@@ -212,7 +205,7 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
 
         /** Components used by model */
         const modelComponents = {
-            interfaceProfileBeads: beadsBits.interface3d.profileBeads(
+            interfaceProfileBeads: beadsBits.profileBeads(
                 interfaceThickness,
                 smProfileBeadWidth,
                 mdProfileBeadWidth,
@@ -252,7 +245,7 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
 
 
     /**
-     * Open Web Joist component`
+     * Component for generating an open web joist, with various options for dimensions and reinforcement levels.
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @param {Object} opts - Options for the model
       * @param {string} opts.type - Type of the model, for future use with different design variations
@@ -265,10 +258,10 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
       * @param {number} opts.reinforcementLevel - Level of reinforcement (1: basic, 2: moderate, 3: high)
       * @param {number} opts.unitLength - Length of each unit section for webbing
       * @param {number} opts.dowelHolderLength - Length of the dowel holder sections
-     * @instance
-     * @memberof components.openWebJoist
+     * @memberof components
+     * @author R. J. Salvador (Salvador Workshop)
      */
-    const model = (opts) => {
+    const openWebJoist = (opts) => {
         const defaults = modelDefaults()
 
         // User options
@@ -479,7 +472,7 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
         return [mainModel, modelParts, modelProperties]
     }
 
-    return model
+    return openWebJoist
 }
 
 module.exports = {

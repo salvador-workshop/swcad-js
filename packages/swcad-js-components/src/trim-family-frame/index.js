@@ -1,14 +1,5 @@
 "use strict"
 
-/**
- * Rectangular frame using the system trim families
- * @namespace trimFamilyFrame
- * @memberof components
- * @author R. J. Salvador
- * @version 1.7.1
- * @requires jscad v2, swcad-js v0.12.0
- */
-
 const trimFamilyFrameInit = ({ jscad, swcadJs }) => {
     const {
         cube,
@@ -418,12 +409,13 @@ const trimFamilyFrameInit = ({ jscad, swcadJs }) => {
 
 
     /**
-     * New Model
+     * Rectangular frame using the system trim families
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof components.trimFamilyFrame
+     * @memberof components
+     * @author R. J. Salvador
      */
-    const model = (opts) => {
+    const trimFamilyFrame = (opts) => {
         const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
@@ -846,7 +838,7 @@ const trimFamilyFrameInit = ({ jscad, swcadJs }) => {
         return [mainModel, modelParts, modelProperties]
     }
 
-    return model
+    return trimFamilyFrame
 }
 
 module.exports = {

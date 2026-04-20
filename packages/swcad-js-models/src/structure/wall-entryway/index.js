@@ -2,8 +2,8 @@
 
 /**
  * ...
- * @memberof models.wall
- * @namespace entryway
+ * @namespace wallEntryway
+ * @memberof models.structure
  */
 
 const entrywayBuilder = ({ jscad, swcadJs }) => {
@@ -16,8 +16,11 @@ const entrywayBuilder = ({ jscad, swcadJs }) => {
 
     const {
         arch,
-        wall,
     } = swcadJs.models
+
+    const {
+        wall,
+    } = swcadJs.models.structure
 
     const {
         arch: arch2d,
@@ -26,7 +29,7 @@ const entrywayBuilder = ({ jscad, swcadJs }) => {
     return {
         /**
          * Builds a gothic entryway.
-         * @memberof models.wall.entryway
+         * @memberof models.structure.wallEntryway
          * @instance
          * @param {Object} opts 
          * @param {number} opts.wallLength

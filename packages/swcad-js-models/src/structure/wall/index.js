@@ -2,8 +2,8 @@
 
 /**
  * ...
- * @memberof models
  * @namespace wall
+ * @memberof models.structure
  */
 
 const wallBuilder = ({ jscad, swcadJs }) => {
@@ -69,7 +69,7 @@ const wallBuilder = ({ jscad, swcadJs }) => {
         verifyTrimUnits,
         /**
          * Builds a wall.
-         * @memberof models.wall
+         * @memberof models.structure.wall
          * @instance
          * @param {Object} opts 
          * @param {number} opts.length
