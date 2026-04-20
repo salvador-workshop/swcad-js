@@ -1,7 +1,7 @@
 "use strict"
 
 /**
- * Salvador Workshop's JSCAD + swcad-js module pack template (v1.0.0)
+ * Reinforcement layout for basic geometries (rectangle, triangle, ellipse)
  * @namespace reinforcement
  * @memberof calcs.geometry
  * @author R. J. Salvador
@@ -556,7 +556,7 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
     /**
      * New Model 2
      * @param {*} opts 
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns Modelling data
      * @memberof calcs.geometry.reinforcement
      * @access private
      */
@@ -576,7 +576,7 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
     /**
      * New Model 1
      * @param {*} opts 
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns Modelling data
      * @memberof calcs.geometry.reinforcement
      */
     const reinforcedRectangle = (opts) => {
@@ -596,7 +596,7 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
     /**
      * ...
      * @param {*} opts 
-     * @returns ...
+     * @returns Modelling data
      * @memberof calcs.geometry.reinforcement
      * @access private
      */
