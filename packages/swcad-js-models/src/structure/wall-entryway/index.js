@@ -16,8 +16,11 @@ const entrywayBuilder = ({ jscad, swcadJs }) => {
 
     const {
         arch,
-        wall,
     } = swcadJs.models
+
+    const {
+        wall,
+    } = swcadJs.models.structure
 
     const {
         arch: arch2d,

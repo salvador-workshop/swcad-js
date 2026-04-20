@@ -283,7 +283,7 @@ const moduleInit = ({ jscad, swcadJs }) => {
         const modelComponents = {
             component,
             interface: {
-                profileBeads: beadsBits.interface3d.profileBeads(
+                profileBeads: beadsBits.profileBeads(
                     interfaceThickness,
                     smProfileBeadWidth,
                     mdProfileBeadWidth,

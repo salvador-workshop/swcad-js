@@ -205,7 +205,7 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
 
         /** Components used by model */
         const modelComponents = {
-            interfaceProfileBeads: beadsBits.interface3d.profileBeads(
+            interfaceProfileBeads: beadsBits.profileBeads(
                 interfaceThickness,
                 smProfileBeadWidth,
                 mdProfileBeadWidth,

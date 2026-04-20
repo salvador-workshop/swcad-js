@@ -2,20 +2,20 @@
 
 const archModule = require('./arch')
 const foilModule = require('./foil')
-const structureModule = require('./wall')
+const structureModule = require('./structure')
 
 const modelsInit = ({ jscad, swcadJs }) => {
-    const archModule = archModule.init({ jscad, swcadJs })
+    const arch = archModule.init({ jscad, swcadJs })
 
     const preLib = {
         ...swcadJs,
         models: {
-            arch: archModule,
+            arch,
         }
     }
 
     return {
-        arch: archModule,
+        arch,
         foil: foilModule.init({ jscad, swcadJs: preLib }),
         structure: structureModule.init({ jscad, swcadJs: preLib }),
     }
