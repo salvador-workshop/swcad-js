@@ -326,9 +326,8 @@ const moduleInit = ({ jscad, swcadJs }) => {
      * @returns `geom3` or `geom3[]`
      * @author R. J. Salvador (Salvador Workshop)
      * @memberof components
-     * @name componentLine
      */
-    const model = (opts) => {
+    const componentLine = (opts) => {
         const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
@@ -536,7 +535,7 @@ const moduleInit = ({ jscad, swcadJs }) => {
         return [mainPart, auxParts, modelProperties]
     }
 
-    return model
+    return componentLine
 }
 
 module.exports = {

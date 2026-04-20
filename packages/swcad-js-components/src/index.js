@@ -29,7 +29,12 @@ const componentsInit = ({ jscad, swcadJs }) => {
         componentLine,
     }
 
-    return {
+    /**
+     * Components
+     * @namespace components
+     * @author R. J. Salvador (Salvador Workshop)
+     */
+    const components = {
         beadsBits,
         routedShapes,
         mesh,
@@ -40,6 +45,8 @@ const componentsInit = ({ jscad, swcadJs }) => {
         text: textModule.init({ jscad, swcadJs: preLib }),
         trimFamilyFrame: trimFamilyFrameModule.init({ jscad, swcadJs: preLib }),
     }
+
+    return components
 }
 
 module.exports = {
