@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: swcad-js-data/src/standards/index.js</title>
+    <title>JSDoc: Namespace: reinforcement</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,81 +17,267 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: swcad-js-data/src/standards/index.js</h1>
+    <h1 class="page-title">Namespace: reinforcement</h1>
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>"use strict"
+        <h2>
+            <span class="ancestors"><a href="calcs.geometry.html">.geometry</a>.</span>reinforcement</h2>
+        
+    
+</header>
 
-const craftStd = require('./std-crafts')
-const lumberStd = require('./std-lumber')
-const masonryStd = require('./std-masonry')
-const paperStd = require('./std-paper')
-const tileStd = require('./std-tiles')
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Reinforcement layout for basic geometries (rectangle, triangle, ellipse)</div>
+        
 
-const inchesToMm = (numIn) => numIn * 25.4
+        
 
-/**
- * ...
- * @memberof data
- * @namespace standards
- */
 
-const standards = ({ jscad }) => {
+<dl class="details">
 
-    /**
-     * Pegboard standards
-     * @memberof data.standards
-     */
-    const pegboard = {
-        PEGBOARD_SPACING: inchesToMm(1),
-        PEGBOARD_HOLE_DIAM: inchesToMm(7 / 32),
-        MICRO_PEGBOARD_SPACING: inchesToMm(1 / 2),
-        MICRO_PEGBOARD_HOLE_DIAM: inchesToMm(1 / 8),
-    }
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    
 
-    /**
-     * Gridfinity standards
-     * @memberof data.standards
-     */
-    const gridfinity = {
-        GRIDFINITY_SPACING: 42,
-        GRIDFINITY_RAIL_WIDTH: 7,
-    }
+    
 
-    /**
-     * SW Panel Thicknesses
-     * @memberof data.standards
-     */
-    const swDefaults = {
-        PANEL_THICKNESS_XS: inchesToMm(2 / 64),  // 1/32"
-        PANEL_THICKNESS_SM: inchesToMm(3 / 64),
-        PANEL_THICKNESS_MD: inchesToMm(4 / 64),   // 1/16"
-        PANEL_THICKNESS_LG: inchesToMm(5 / 64),
-        PANEL_THICKNESS_XL: inchesToMm(6 / 64),   // 3/32"
-    }
+    
 
-    return {
-        pegboard,
-        gridfinity,
-        swDefaults,
-        crafts: craftStd.init({ jscad }),
-        lumber: lumberStd.init({ jscad }),
-        masonry: masonryStd.init({ jscad }),
-        paper: paperStd.init({ jscad }),
-        tiles: tileStd.init({ jscad }),
-    }
-}
+    
 
-module.exports = { init: standards };
-</code></pre>
-        </article>
-    </section>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>R. J. Salvador</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="swcad-js-calcs_src_geometry_reinforcement_index.js.html">swcad-js-calcs/src/geometry/reinforcement/index.js</a>, <a href="swcad-js-calcs_src_geometry_reinforcement_index.js.html#line3">line 3</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+        <h3 class="subsection-title">Requires</h3>
+
+        <ul>
+            <li>module:jscad</li>
+        </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".reinforcedRectangle"><span class="type-signature">(static) </span>reinforcedRectangle<span class="signature">(opts)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    New Model 1
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>opts</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="swcad-js-calcs_src_geometry_reinforcement_index.js.html">swcad-js-calcs/src/geometry/reinforcement/index.js</a>, <a href="swcad-js-calcs_src_geometry_reinforcement_index.js.html#line582">line 582</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Modelling data
+</div>
+
+
+
+    
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

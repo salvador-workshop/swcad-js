@@ -2,8 +2,8 @@
 
 /**
  * Functions related to regular polygons
- * @memberof calcs.geometry
  * @namespace regPoly
+ * @memberof calcs.geometry
  */
 
 const geoRegPoly = ({ jscad, swcadJs }) => {
