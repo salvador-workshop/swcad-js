@@ -578,11 +578,13 @@ const moduleInit = ({ jscad, swcadJs }) => {
 
                 const lineSet = linePoints.map((linePt) => {
 
-                    return translate([
-                        linePt[0],
-                        linePt[1],
-                        0
-                    ], mouldPtAssembly(modelProps))
+                    return align(
+                        {
+                            modes: ['center', 'center', 'min'],
+                            relativeTo: [linePt[0], linePt[1], 0],
+                        },
+                        mouldPtAssembly(modelProps)
+                    )
                 })
                 lineMouldPoints.push(hullChain(...lineSet))
             })
@@ -607,7 +609,10 @@ const moduleInit = ({ jscad, swcadJs }) => {
                 points,
             } = modelProps
 
-            let mainPart = position.ctrMin(mouldBase(modelProps))
+            let mainPart = position.ctrMin(
+                mouldBase(modelProps),
+                [points.centre[0], points.centre[1], 0],
+            )
 
             const dMould = dotMoulds(modelProps)
             const lMould = lineMoulds(modelProps)
@@ -615,14 +620,14 @@ const moduleInit = ({ jscad, swcadJs }) => {
             if (dMould) {
                 mainPart = union(
                     mainPart,
-                    position.ctrMin(dMould),
+                    dMould,
                 )
             }
 
             if (lMould) {
                 mainPart = union(
                     mainPart,
-                    position.ctrMin(lMould),
+                    lMould,
                 )
             }
 
