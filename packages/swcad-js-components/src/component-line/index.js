@@ -140,7 +140,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
      */
     const modelOpts = (opts) => {
         const defaults = modelDefaults()
-        console.log('modelOpts() -- opts', opts)
 
         // User options
         const {
@@ -173,7 +172,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
             ...stdOpts,
         }
 
-        console.log('modelOpts() -- initOpts', initOpts)
 
         return initOpts
     }
@@ -189,7 +187,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
      */
     const modelProps = (opts) => {
         const defaults = modelDefaults()
-        console.log('modelProps() -- opts', opts)
 
         const {
             interfaceThickness,
@@ -314,7 +311,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
             components: modelComponents,
         }
 
-        console.log('modelProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }
@@ -416,7 +412,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
             const lineComponents = []
 
             for (let idx = 0; idx < componentUnits; idx++) {
-                // console.log('offset', idx * unitLength)
                 lineComponents.push(translate(
                     [idx * componentUnitLength, 0, 0],
                     position.ctr(component)

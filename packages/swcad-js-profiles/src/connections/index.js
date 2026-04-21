@@ -145,7 +145,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      */
     const modelOpts = (opts) => {
         const defaults = modelDefaults()
-        console.log('modelOpts() -- opts', opts)
 
         // User options
         const {
@@ -180,7 +179,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             interfaceMargin,
         }
 
-        console.log('modelOpts() -- initOpts', initOpts)
 
         return initOpts
     }
@@ -198,7 +196,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      */
     const modelProps = (opts) => {
         const defaults = modelDefaults()
-        console.log('modelProps() -- opts', opts)
 
         const {
             size,
@@ -284,7 +281,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             components: modelComponents,
         }
 
-        console.log('modelProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }

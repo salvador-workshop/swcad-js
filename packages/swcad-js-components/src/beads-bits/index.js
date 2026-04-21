@@ -136,7 +136,6 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      */
     const modelOpts = (opts) => {
         const defaults = modelDefaults()
-        console.log('modelOpts() -- opts', opts)
 
         // User options
         const {
@@ -168,7 +167,6 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
             offset4,
             ...stdOpts,
         }
-        console.log('modelOpts() -- initOpts', initOpts)
 
         return initOpts
     }
@@ -186,7 +184,6 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      */
     const modelProps = (opts) => {
         const defaults = modelDefaults()
-        console.log('modelProps() -- opts', opts)
 
         const {
             radius1,
@@ -268,7 +265,6 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
             components: modelComponents,
         }
 
-        console.log('modelProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }

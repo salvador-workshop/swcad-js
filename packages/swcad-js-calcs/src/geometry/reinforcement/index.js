@@ -174,7 +174,6 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
      */
     const modelOpts = (opts) => {
         const defaults = modelDefaults()
-        console.log('modelOpts() -- opts', opts)
 
         // User options
         const {
@@ -197,7 +196,6 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
             ...stdOpts,
         }
 
-        console.log('modelOpts() -- initOpts', initOpts)
 
         return initOpts
     }
@@ -211,7 +209,6 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
      */
     const rectangleOpts = (opts) => {
         const defaults = rectangleDefaults()
-        console.log('rectangleOpts() -- opts', opts)
 
         // User options
         const {
@@ -237,7 +234,6 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
             ...stdOpts,
         }
 
-        console.log('rectangleOpts() -- initOpts', initOpts)
 
         return initOpts
     }
@@ -255,7 +251,6 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
      */
     const modelProps = (opts) => {
         const defaults = modelDefaults()
-        console.log('modelProps() -- opts', opts)
 
         const {
             size,
@@ -328,14 +323,12 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
             components: modelComponents,
         }
 
-        console.log('modelProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }
 
     const rectangleProps = (opts) => {
         const defaults = rectangleDefaults()
-        console.log('rectReinforcementProps() -- opts', opts)
 
         const {
             size,
@@ -544,7 +537,6 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
             points: modelPoints,
         }
 
-        console.log('rectReinforcementProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }

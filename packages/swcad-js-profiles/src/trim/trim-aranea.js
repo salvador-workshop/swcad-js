@@ -82,8 +82,6 @@ const trimAranea = ({ jscad, swcadJs }) => {
      */
     const trimAraneaOpts = (opts) => {
         const defaults = trimAraneaDefaults()
-        console.log('modelOpts() -- opts', opts)
-
         // User options
         const {
             size = defaults.opts.size,
@@ -112,8 +110,6 @@ const trimAranea = ({ jscad, swcadJs }) => {
             ...stdOpts,
         }
 
-        console.log('modelOpts() -- initOpts', initOpts)
-
         return initOpts
     }
 
@@ -129,8 +125,6 @@ const trimAranea = ({ jscad, swcadJs }) => {
      */
     const trimAraneaProps = (opts) => {
         const defaults = trimAraneaDefaults()
-        console.log('modelProps() -- opts', opts)
-
         const {
             size,
             detailDepth,
@@ -231,8 +225,6 @@ const trimAranea = ({ jscad, swcadJs }) => {
             points: modelPoints,
             components: modelComponents,
         }
-
-        console.log('modelProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }
@@ -555,44 +547,54 @@ const trimAranea = ({ jscad, swcadJs }) => {
          * Complete Assembly
          * ------------------------------------- */
 
+        const crownOpts = {
+            ...modelProperties
+        }
+        crownOpts.opts.type = 'crown'
+
         const crown = {
-            extraSmall: center({}, extraSmall({ ...modelProperties, type: 'crown' })),
-            small: center({}, small({ ...modelProperties, type: 'crown' })),
-            medium: center({}, medium({ ...modelProperties, type: 'crown' })),
-            large: center({}, large({ ...modelProperties, type: 'crown' })),
-            smallOrn1: center({}, smallOrnament1({ ...modelProperties, type: 'crown' })),
-            mediumOrn1: center({}, mediumOrnament1({ ...modelProperties, type: 'crown' })),
-            largeOrn1: center({}, largeOrnament1({ ...modelProperties, type: 'crown' })),
+            extraSmall: center({}, extraSmall(crownOpts)),
+            small: center({}, small(crownOpts)),
+            medium: center({}, medium(crownOpts)),
+            large: center({}, large(crownOpts)),
+            smallOrn1: center({}, smallOrnament1(crownOpts)),
+            mediumOrn1: center({}, mediumOrnament1(crownOpts)),
+            largeOrn1: center({}, largeOrnament1(crownOpts)),
         };
+
+        const dadoOpts = {
+            ...modelProperties
+        }
+        dadoOpts.opts.type = 'dado'
 
         const dado = {
             extraSmall: center({}, mirror(
                 { normal: [0, 1, 0] },
-                extraSmall({ ...modelProperties, type: 'dado' })
+                extraSmall(dadoOpts)
             )),
             small: center({}, mirror(
                 { normal: [0, 1, 0] },
-                small({ ...modelProperties, type: 'dado' })
+                small(dadoOpts)
             )),
             smallOrn1: center({}, mirror(
                 { normal: [0, 1, 0] },
-                smallOrnament1({ ...modelProperties, type: 'dado' })
+                smallOrnament1(dadoOpts)
             )),
             medium: center({}, mirror(
                 { normal: [0, 1, 0] },
-                medium({ ...modelProperties, type: 'dado' })
+                medium(dadoOpts)
             )),
             mediumOrn1: center({}, mirror(
                 { normal: [0, 1, 0] },
-                mediumOrnament1({ ...modelProperties, type: 'dado' })
+                mediumOrnament1(dadoOpts)
             )),
             large: center({}, mirror(
                 { normal: [0, 1, 0] },
-                large({ ...modelProperties, type: 'dado' })
+                large(dadoOpts)
             )),
             largeOrn1: center({}, mirror(
                 { normal: [0, 1, 0] },
-                largeOrnament1({ ...modelProperties, type: 'dado' })
+                largeOrnament1(dadoOpts)
             )),
         };
 

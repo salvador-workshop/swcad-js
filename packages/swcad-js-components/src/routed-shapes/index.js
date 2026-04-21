@@ -154,7 +154,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
      */
     const modelCuboidOpts = (opts) => {
         const defaults = modelDefaults()
-        console.log('modelCuboidOpts() -- opts', opts)
 
         // User options
         const {
@@ -185,7 +184,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
             ...stdOpts,
         }
 
-        console.log('modelCuboidOpts() -- initOpts', initOpts)
 
         return initOpts
     }
@@ -200,7 +198,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
      */
     const modelCylinderEllipticOpts = (opts) => {
         const defaults = modelDefaults()
-        console.log('modelCylinderEllipticOpts() -- opts', opts)
 
         // User options
         const {
@@ -233,7 +230,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
             ...stdOpts,
         }
 
-        console.log('modelCylinderEllipticOpts() -- initOpts', initOpts)
 
         return initOpts
     }
@@ -251,7 +247,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
      */
     const modelProps = (opts) => {
         const defaults = modelDefaults()
-        console.log('modelProps() -- opts', opts)
 
         const {
             size,
@@ -335,7 +330,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
             components: modelComponents,
         }
 
-        console.log('modelProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }
@@ -407,7 +401,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
      * @access private
      */
     const routerCut = (outlinePts, bitType, bitOpts) => {
-        console.log('routerCut()', outlinePts, bitType, bitOpts)
         let baseRouterBitProfile = null
         let baseRouterBit = null
         /**
@@ -436,7 +429,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
                 cutPathGenMode = 'naive'
                 break;
         }
-        console.log(baseRouterBit)
 
         const cutPath = generateRouterCutPath(outlinePts, baseRouterBitProfile, baseRouterBit)
 
@@ -474,9 +466,7 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
         })
         const baseShapeProfile = project({}, baseShape)
         const baseShapeProfileOutlinePts = toOutlines(baseShapeProfile)[0]
-        console.log('baseShapeProfileOutlinePts', baseShapeProfileOutlinePts)
 
-        console.log(modelProperties.opts, modelProperties.dims)
         const cutPathTop = routerCut(baseShapeProfileOutlinePts, topBitType, topBit)
         const cutPathBottom = routerCut(baseShapeProfileOutlinePts, bottomBitType, bottomBit)
 
@@ -537,7 +527,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
         })
         const baseShapeProfile = project({}, baseShape)
         const baseShapeProfileOutlinePts = toOutlines(baseShapeProfile)[0]
-        console.log('baseShapeProfileOutlinePts', baseShapeProfileOutlinePts)
 
         const cutPathTop = routerCut(baseShapeProfileOutlinePts, topBitType, topBit)
         const cutPathBottom = routerCut(baseShapeProfileOutlinePts, bottomBitType, bottomBit)
