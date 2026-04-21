@@ -21,10 +21,10 @@ const trimAranea = ({ jscad, swcadJs }) => {
      * Builds default values and opts for the model
      * @param {*} opts 
      * @returns default values and opts
-     * @memberof newModelName
+     * @memberof profiles.trim.aranea
      * @access private
      */
-    const modelDefaults = () => {
+    const trimAraneaDefaults = () => {
         /** Specific value declarations */
         const defaultValues = {
             constants: {
@@ -76,11 +76,11 @@ const trimAranea = ({ jscad, swcadJs }) => {
      * Initializes options with user input
      * @param {*} opts 
      * @returns model properties
-     * @memberof newModelName
+     * @memberof profiles.trim.aranea
      * @access private
      */
-    const modelOpts = (opts) => {
-        const defaults = modelDefaults()
+    const trimAraneaOpts = (opts) => {
+        const defaults = trimAraneaDefaults()
         console.log('modelOpts() -- opts', opts)
 
         // User options
@@ -118,11 +118,11 @@ const trimAranea = ({ jscad, swcadJs }) => {
      * Builds model properties from the given opts
      * @param {*} opts 
      * @returns model properties
-     * @memberof newModelName
+     * @memberof profiles.trim.aranea
      * @access private
      */
-    const modelProps = (opts) => {
-        const defaults = modelDefaults()
+    const trimAraneaProps = (opts) => {
+        const defaults = trimAraneaDefaults()
         console.log('modelProps() -- opts', opts)
 
         const {
@@ -154,7 +154,7 @@ const trimAranea = ({ jscad, swcadJs }) => {
         }
         levelPoints[`lHalf`] = width / 2;
 
-        const controlPoints = {};
+        const controlPts = {};
 
         const getPointsForLevel = (levelPt) => {
             const lPoints = {};
@@ -165,10 +165,10 @@ const trimAranea = ({ jscad, swcadJs }) => {
         }
 
         for (const [ptName, ptValue] of Object.entries(levelPoints)) {
-            controlPoints[ptName] = getPointsForLevel(ptValue);
+            controlPts[ptName] = getPointsForLevel(ptValue);
         }
         for (const [ptName, ptValue] of Object.entries(ornamentPoints)) {
-            controlPoints[ptName] = getPointsForLevel(ptValue);
+            controlPts[ptName] = getPointsForLevel(ptValue);
         }
 
         /* ----------------------------------------
@@ -198,10 +198,7 @@ const trimAranea = ({ jscad, swcadJs }) => {
         /** Various key points for model */
         const modelPoints = {
             centre: defaults.vals.points.centre,
-            controlPts: controlPoints,
-            levelPts: levelPoints,
-            ornamentPts: ornamentPoints,
-            thicknessPts: thicknessPoints,
+            controlPts,
         }
 
         /** Components used by model */
@@ -245,9 +242,9 @@ const trimAranea = ({ jscad, swcadJs }) => {
      * @instance
      */
     const trimFamilyAranea = (opts) => {
-        const defaults = modelDefaults()
-        const initOpts = modelOpts(opts)
-        const modelProperties = modelProps(initOpts)
+        const defaults = trimAraneaDefaults()
+        const initOpts = trimAraneaOpts(opts)
+        const modelProperties = trimAraneaProps(initOpts)
 
         const detailCorner = ({ sideLength }) => {
             const baseSquare = square({ size: Math.hypot(sideLength, sideLength) });
@@ -278,14 +275,14 @@ const trimAranea = ({ jscad, swcadJs }) => {
                 thicknessPts,
             } = mProperties.points
 
-            const cornerPt1 = controlPoints.l0.t1;
-            const cornerPt2 = controlPoints.lHalf.t1;
+            const cornerPt1 = controlPts.l0.t1;
+            const cornerPt2 = controlPts.lHalf.t1;
             const baseShape = polygon({
                 points: [
-                    controlPoints.l0.t0,
+                    controlPts.l0.t0,
                     cornerPt1,
                     cornerPt2,
-                    controlPoints.lHalf.t0,
+                    controlPts.lHalf.t0,
                 ]
             });
             const baseCorner = detailCorner({ sideLength: detailDepth });
@@ -293,7 +290,7 @@ const trimAranea = ({ jscad, swcadJs }) => {
             const corner2 = translate([...cornerPt2, 0], baseCorner);
 
             let cutShape = subtract(baseShape, corner1);
-            if (!['crown', 'base'].includes(styleOpts)) {
+            if (!['crown', 'base'].includes(type)) {
                 cutShape = subtract(cutShape, corner2);
             }
 
@@ -319,14 +316,14 @@ const trimAranea = ({ jscad, swcadJs }) => {
                 thicknessPts,
             } = mProperties.points
 
-            const cornerPt1 = controlPoints.l0.t1;
-            const cornerPt2 = controlPoints.l1.t1;
+            const cornerPt1 = controlPts.l0.t1;
+            const cornerPt2 = controlPts.l1.t1;
             const baseShape = polygon({
                 points: [
-                    controlPoints.l0.t0,
+                    controlPts.l0.t0,
                     cornerPt1,
                     cornerPt2,
-                    controlPoints.l1.t0,
+                    controlPts.l1.t0,
                 ]
             });
             const baseCorner = detailCorner({ sideLength: detailDepth });
@@ -334,7 +331,7 @@ const trimAranea = ({ jscad, swcadJs }) => {
             const corner2 = translate([...cornerPt2, 0], baseCorner);
 
             let cutShape = subtract(baseShape, corner1);
-            if (!['crown', 'base'].includes(styleOpts)) {
+            if (!['crown', 'base'].includes(type)) {
                 cutShape = subtract(cutShape, corner2);
             }
 
@@ -360,9 +357,9 @@ const trimAranea = ({ jscad, swcadJs }) => {
                 thicknessPts,
             } = mProperties.points
 
-            const baseShape = small({ controlPoints, detailDepth, styleOpts });
+            const baseShape = small({ controlPts, detailDepth, type });
 
-            const oPt = controlPoints.o1.t1;
+            const oPt = controlPts.o1.t1;
             const bCorner = detailCorner({ sideLength: detailDepth * constants.PHI_INV });
             const oCorner = translate([...oPt, 0], bCorner);
 
@@ -388,19 +385,19 @@ const trimAranea = ({ jscad, swcadJs }) => {
                 thicknessPts,
             } = mProperties.points
 
-            const cornerPt1 = controlPoints.l0.t1;
-            const cornerPt2 = controlPoints.l1.t1;
-            const cornerPt3 = controlPoints.l1.t2;
-            const cornerPt4 = controlPoints.l2.t2;
+            const cornerPt1 = controlPts.l0.t1;
+            const cornerPt2 = controlPts.l1.t1;
+            const cornerPt3 = controlPts.l1.t2;
+            const cornerPt4 = controlPts.l2.t2;
 
             const baseShape = polygon({
                 points: [
-                    controlPoints.l0.t0,
+                    controlPts.l0.t0,
                     cornerPt1,
                     cornerPt2,
                     cornerPt3,
                     cornerPt4,
-                    controlPoints.l2.t0,
+                    controlPts.l2.t0,
                 ]
             })
 
@@ -413,7 +410,7 @@ const trimAranea = ({ jscad, swcadJs }) => {
             let cutShape = subtract(baseShape, corner1);
             cutShape = union(cutShape, corner2);
             cutShape = subtract(cutShape, corner3);
-            if (!['crown', 'base'].includes(styleOpts)) {
+            if (!['crown', 'base'].includes(type)) {
                 cutShape = subtract(cutShape, corner4);
             }
 
@@ -439,15 +436,15 @@ const trimAranea = ({ jscad, swcadJs }) => {
                 thicknessPts,
             } = mProperties.points
 
-            const baseShape = medium({ controlPoints, detailDepth, styleOpts });
+            const baseShape = medium({ controlPts, detailDepth, type });
 
-            const oPt1 = controlPoints.o2.t2;
-            const oPt2 = controlPoints.o1.t1;
+            const oPt1 = controlPts.o2.t2;
+            const oPt2 = controlPts.o1.t1;
 
             const bCorner = detailCorner({ sideLength: detailDepth * constants.PHI_INV });
             const oCorner1 = translate([...oPt1, 0], bCorner);
             let oCorner2 = translate([...oPt2, 0], bCorner);
-            oCorner2 = mirror({ origin: [0, controlPoints.l1.t1[1] / 2, 0], normal: [0, 1, 0] }, oCorner2);
+            oCorner2 = mirror({ origin: [0, controlPts.l1.t1[1] / 2, 0], normal: [0, 1, 0] }, oCorner2);
 
             let cutShape = subtract(baseShape, oCorner1);
             cutShape = subtract(cutShape, oCorner2);
@@ -474,23 +471,23 @@ const trimAranea = ({ jscad, swcadJs }) => {
                 thicknessPts,
             } = mProperties.points
 
-            const cornerPt1 = controlPoints.l0.t1;
-            const cornerPt2 = controlPoints.l1.t1;
-            const cornerPt3 = controlPoints.l1.t2;
-            const cornerPt4 = controlPoints.l2.t2;
-            const cornerPt5 = controlPoints.l2.t3;
-            const cornerPt6 = controlPoints.l3.t3;
+            const cornerPt1 = controlPts.l0.t1;
+            const cornerPt2 = controlPts.l1.t1;
+            const cornerPt3 = controlPts.l1.t2;
+            const cornerPt4 = controlPts.l2.t2;
+            const cornerPt5 = controlPts.l2.t3;
+            const cornerPt6 = controlPts.l3.t3;
 
             const baseShape = polygon({
                 points: [
-                    controlPoints.l0.t0,
+                    controlPts.l0.t0,
                     cornerPt1,
                     cornerPt2,
                     cornerPt3,
                     cornerPt4,
                     cornerPt5,
                     cornerPt6,
-                    controlPoints.l3.t0,
+                    controlPts.l3.t0,
                 ]
             })
 
@@ -507,7 +504,7 @@ const trimAranea = ({ jscad, swcadJs }) => {
             cutShape = subtract(cutShape, corner3);
             cutShape = union(cutShape, corner4);
             cutShape = subtract(cutShape, corner5);
-            if (!['crown', 'base'].includes(styleOpts)) {
+            if (!['crown', 'base'].includes(type)) {
                 cutShape = subtract(cutShape, corner6);
             }
 
@@ -533,15 +530,15 @@ const trimAranea = ({ jscad, swcadJs }) => {
                 thicknessPts,
             } = mProperties.points
 
-            const baseShape = large({ controlPoints, detailDepth, styleOpts });
+            const baseShape = large({ controlPts, detailDepth, type });
 
-            const oPt1 = controlPoints.o3.t3;
-            const oPt2 = controlPoints.o1.t1;
+            const oPt1 = controlPts.o3.t3;
+            const oPt2 = controlPts.o1.t1;
 
             const bCorner = detailCorner({ sideLength: detailDepth * constants.PHI_INV });
             const oCorner1 = translate([...oPt1, 0], bCorner);
             let oCorner2 = translate([...oPt2, 0], bCorner);
-            oCorner2 = mirror({ origin: [0, controlPoints.l1.t1[1] / 2, 0], normal: [0, 1, 0] }, oCorner2);
+            oCorner2 = mirror({ origin: [0, controlPts.l1.t1[1] / 2, 0], normal: [0, 1, 0] }, oCorner2);
 
             let cutShape = subtract(baseShape, oCorner1);
             cutShape = subtract(cutShape, oCorner2);
