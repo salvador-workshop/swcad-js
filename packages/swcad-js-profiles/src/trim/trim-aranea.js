@@ -11,8 +11,7 @@ const trimAranea = ({ jscad, swcadJs }) => {
     const { subtract, union } = jscad.booleans
     const { rotate, translate, mirror, center } = jscad.transforms
 
-    const PHI = 1.6180339887;
-    const PHI_INV = 0.6180339887;
+    const { constants } = swcadJs.data
 
 
     //==============================================================================
@@ -28,25 +27,29 @@ const trimAranea = ({ jscad, swcadJs }) => {
     const modelDefaults = () => {
         /** Specific value declarations */
         const defaultValues = {
+            constants: {
+                numLevels: 3,
+            },
             dims: {
                 size: [
-                    math.inchesToMm(2),
-                    math.inchesToMm(4),
-                    math.inchesToMm(1),
+                    math.inchesToMm(1.5),
+                    math.inchesToMm(0.75),
                 ],
+                detailDepth: math.inchesToMm(0.75) / 3,
             },
             points: {
                 centre: [0, 0, 0]
             },
             types: {
-                default: { id: 'default', desc: 'Default' },
-                alt: { id: 'alt', desc: 'Alternate' },
+                dado: { id: 'dado', desc: 'Dado Trim' },
+                base: { id: 'base', desc: 'Base Trim' },
+                crown: { id: 'crown', desc: 'Crown Trim' },
             },
         }
 
         /** Options used by SW models */
         const standardOpts = {
-            type: defaultValues.types.default.id,
+            type: defaultValues.types.dado.id,
             scale: 1,
             interfaceThickness: 1.333333,
             fitGap: math.inchesToMm(1 / 128),
@@ -56,6 +59,7 @@ const trimAranea = ({ jscad, swcadJs }) => {
         const defaultOpts = {
             ...standardOpts,
             size: defaultValues.dims.size,
+            detailDepth: defaultValues.dims.detailDepth,
         }
 
         return {
@@ -82,6 +86,7 @@ const trimAranea = ({ jscad, swcadJs }) => {
         // User options
         const {
             size = defaults.opts.size,
+            detailDepth = defaults.opts.detailDepth,
             type = defaults.opts.type,
             scale = defaults.opts.scale,
             interfaceThickness = defaults.opts.interfaceThickness,
@@ -97,6 +102,7 @@ const trimAranea = ({ jscad, swcadJs }) => {
 
         const initOpts = {
             size,
+            detailDepth,
             ...stdOpts,
         }
 
@@ -121,6 +127,7 @@ const trimAranea = ({ jscad, swcadJs }) => {
 
         const {
             size,
+            detailDepth,
             type,
             scale,
             interfaceThickness,
@@ -133,7 +140,36 @@ const trimAranea = ({ jscad, swcadJs }) => {
 
         const width = size[0]
         const depth = size[1]
-        const height = size[2]
+
+        const numLevels = defaults.vals.constants.numLevels;
+        const dDepth = detailDepth || depth / 3;
+        const levelPoints = {};
+        const ornamentPoints = {};
+        const thicknessPoints = {};
+
+        for (let levelIdx = 0; levelIdx <= numLevels; levelIdx++) {
+            levelPoints[`l${levelIdx}`] = width * levelIdx;
+            thicknessPoints[`t${levelIdx}`] = depth * levelIdx;
+            ornamentPoints[`o${levelIdx + 1}`] = width * levelIdx + (width * constants.PHI_INV);
+        }
+        levelPoints[`lHalf`] = width / 2;
+
+        const controlPoints = {};
+
+        const getPointsForLevel = (levelPt) => {
+            const lPoints = {};
+            for (const [tPtName, tPtValue] of Object.entries(thicknessPoints)) {
+                lPoints[tPtName] = [tPtValue, levelPt];
+            }
+            return lPoints;
+        }
+
+        for (const [ptName, ptValue] of Object.entries(levelPoints)) {
+            controlPoints[ptName] = getPointsForLevel(ptValue);
+        }
+        for (const [ptName, ptValue] of Object.entries(ornamentPoints)) {
+            controlPoints[ptName] = getPointsForLevel(ptValue);
+        }
 
         /* ----------------------------------------
         * Preparing Model Properties, Dimensions
@@ -152,16 +188,20 @@ const trimAranea = ({ jscad, swcadJs }) => {
         /** Various dimensions for model */
         const modelDims = {
             size,
+            detailDepth,
             interfaceThickness,
             fitGap,
             width,
             depth,
-            height,
         }
 
         /** Various key points for model */
         const modelPoints = {
             centre: defaults.vals.points.centre,
+            controlPts: controlPoints,
+            levelPts: levelPoints,
+            ornamentPts: ornamentPoints,
+            thicknessPts: thicknessPoints,
         }
 
         /** Components used by model */
@@ -198,29 +238,16 @@ const trimAranea = ({ jscad, swcadJs }) => {
     /**
      * Creates a set of trimwork profiles
      * @param {Object} opts 
-     * @param {number} opts.unitHeight - Typical height for basic trim unit
-     * @param {number} opts.unitDepth - Typical depth for basic trim unit
-     * @param {number} opts.detailDepth - Size of corner details (mm). Defaults to 1/3 of `unitDepth`
-     * @param {number} opts.styleOpts - Style options ("base", "crown", "dado"). Defaults to "dado"
+     * @param {number} opts.size - Typical size for basic trim unit (`[width, depth]`)
+     * @param {number} opts.detailDepth - Size of corner details (mm). Defaults to 1/3 of `size[1]`
+     * @param {number} opts.type - Style options ("base", "crown", "dado"). Defaults to "dado"
      * @memberof profiles.trim.aranea
      * @instance
      */
-    const trimFamilyAranea = ({
-        unitHeight,
-        unitDepth,
-        detailDepth,
-        styleOpts = 'dado',
-    }) => {
+    const trimFamilyAranea = (opts) => {
         const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
-        
-        const numLevels = 3;
-        const dDepth = detailDepth || unitDepth / 3;
-        const levelPoints = {};
-        const ornamentPoints = {};
-        const thicknessPoints = {};
-
 
         const detailCorner = ({ sideLength }) => {
             const baseSquare = square({ size: Math.hypot(sideLength, sideLength) });
@@ -228,7 +255,29 @@ const trimAranea = ({ jscad, swcadJs }) => {
             return rotate([0, 0, Math.PI / 4], baseSquare);
         }
 
-        const extraSmall = ({ controlPoints, detailDepth, styleOpts }) => {
+        /* ----------------------------------------
+         * Modelling, Component/Assembly Modules
+         * ------------------------------------- */
+
+        const extraSmall = (mProperties) => {
+            const {
+                size,
+                width,
+                depth,
+                detailDepth,
+            } = mProperties.dims
+
+            const {
+                type,
+            } = mProperties.opts
+
+            const {
+                controlPts,
+                levelPts,
+                ornamentPts,
+                thicknessPts,
+            } = mProperties.points
+
             const cornerPt1 = controlPoints.l0.t1;
             const cornerPt2 = controlPoints.lHalf.t1;
             const baseShape = polygon({
@@ -251,7 +300,25 @@ const trimAranea = ({ jscad, swcadJs }) => {
             return cutShape;
         }
 
-        const small = ({ controlPoints, detailDepth, styleOpts }) => {
+        const small = (mProperties) => {
+            const {
+                size,
+                width,
+                depth,
+                detailDepth,
+            } = mProperties.dims
+
+            const {
+                type,
+            } = mProperties.opts
+
+            const {
+                controlPts,
+                levelPts,
+                ornamentPts,
+                thicknessPts,
+            } = mProperties.points
+
             const cornerPt1 = controlPoints.l0.t1;
             const cornerPt2 = controlPoints.l1.t1;
             const baseShape = polygon({
@@ -274,17 +341,53 @@ const trimAranea = ({ jscad, swcadJs }) => {
             return cutShape;
         }
 
-        const smallOrnament1 = ({ controlPoints, detailDepth, styleOpts }) => {
+        const smallOrnament1 = (mProperties) => {
+            const {
+                size,
+                width,
+                depth,
+                detailDepth,
+            } = mProperties.dims
+
+            const {
+                type,
+            } = mProperties.opts
+
+            const {
+                controlPts,
+                levelPts,
+                ornamentPts,
+                thicknessPts,
+            } = mProperties.points
+
             const baseShape = small({ controlPoints, detailDepth, styleOpts });
 
             const oPt = controlPoints.o1.t1;
-            const bCorner = detailCorner({ sideLength: detailDepth * PHI_INV });
+            const bCorner = detailCorner({ sideLength: detailDepth * constants.PHI_INV });
             const oCorner = translate([...oPt, 0], bCorner);
 
             return subtract(baseShape, oCorner);
         }
 
-        const medium = ({ controlPoints, detailDepth, styleOpts }) => {
+        const medium = (mProperties) => {
+            const {
+                size,
+                width,
+                depth,
+                detailDepth,
+            } = mProperties.dims
+
+            const {
+                type,
+            } = mProperties.opts
+
+            const {
+                controlPts,
+                levelPts,
+                ornamentPts,
+                thicknessPts,
+            } = mProperties.points
+
             const cornerPt1 = controlPoints.l0.t1;
             const cornerPt2 = controlPoints.l1.t1;
             const cornerPt3 = controlPoints.l1.t2;
@@ -317,13 +420,31 @@ const trimAranea = ({ jscad, swcadJs }) => {
             return cutShape;
         }
 
-        const mediumOrnament1 = ({ controlPoints, detailDepth, styleOpts }) => {
+        const mediumOrnament1 = (mProperties) => {
+            const {
+                size,
+                width,
+                depth,
+                detailDepth,
+            } = mProperties.dims
+
+            const {
+                type,
+            } = mProperties.opts
+
+            const {
+                controlPts,
+                levelPts,
+                ornamentPts,
+                thicknessPts,
+            } = mProperties.points
+
             const baseShape = medium({ controlPoints, detailDepth, styleOpts });
 
             const oPt1 = controlPoints.o2.t2;
             const oPt2 = controlPoints.o1.t1;
 
-            const bCorner = detailCorner({ sideLength: detailDepth * PHI_INV });
+            const bCorner = detailCorner({ sideLength: detailDepth * constants.PHI_INV });
             const oCorner1 = translate([...oPt1, 0], bCorner);
             let oCorner2 = translate([...oPt2, 0], bCorner);
             oCorner2 = mirror({ origin: [0, controlPoints.l1.t1[1] / 2, 0], normal: [0, 1, 0] }, oCorner2);
@@ -334,7 +455,25 @@ const trimAranea = ({ jscad, swcadJs }) => {
             return cutShape;
         }
 
-        const large = ({ controlPoints, detailDepth, styleOpts }) => {
+        const large = (mProperties) => {
+            const {
+                size,
+                width,
+                depth,
+                detailDepth,
+            } = mProperties.dims
+
+            const {
+                type,
+            } = mProperties.opts
+
+            const {
+                controlPts,
+                levelPts,
+                ornamentPts,
+                thicknessPts,
+            } = mProperties.points
+
             const cornerPt1 = controlPoints.l0.t1;
             const cornerPt2 = controlPoints.l1.t1;
             const cornerPt3 = controlPoints.l1.t2;
@@ -375,13 +514,31 @@ const trimAranea = ({ jscad, swcadJs }) => {
             return cutShape;
         }
 
-        const largeOrnament1 = ({ controlPoints, detailDepth, styleOpts }) => {
+        const largeOrnament1 = (mProperties) => {
+            const {
+                size,
+                width,
+                depth,
+                detailDepth,
+            } = mProperties.dims
+
+            const {
+                type,
+            } = mProperties.opts
+
+            const {
+                controlPts,
+                levelPts,
+                ornamentPts,
+                thicknessPts,
+            } = mProperties.points
+
             const baseShape = large({ controlPoints, detailDepth, styleOpts });
 
             const oPt1 = controlPoints.o3.t3;
             const oPt2 = controlPoints.o1.t1;
 
-            const bCorner = detailCorner({ sideLength: detailDepth * PHI_INV });
+            const bCorner = detailCorner({ sideLength: detailDepth * constants.PHI_INV });
             const oCorner1 = translate([...oPt1, 0], bCorner);
             let oCorner2 = translate([...oPt2, 0], bCorner);
             oCorner2 = mirror({ origin: [0, controlPoints.l1.t1[1] / 2, 0], normal: [0, 1, 0] }, oCorner2);
@@ -392,70 +549,51 @@ const trimAranea = ({ jscad, swcadJs }) => {
             return cutShape;
         }
 
-
-        for (let levelIdx = 0; levelIdx <= numLevels; levelIdx++) {
-            levelPoints[`l${levelIdx}`] = unitHeight * levelIdx;
-            thicknessPoints[`t${levelIdx}`] = unitDepth * levelIdx;
-            ornamentPoints[`o${levelIdx + 1}`] = unitHeight * levelIdx + (unitHeight * PHI_INV);
-        }
-        levelPoints[`lHalf`] = unitHeight / 2;
-
-        const controlPoints = {};
-
-        const getPointsForLevel = (levelPt) => {
-            const lPoints = {};
-            for (const [tPtName, tPtValue] of Object.entries(thicknessPoints)) {
-                lPoints[tPtName] = [tPtValue, levelPt];
-            }
-            return lPoints;
-        }
-
-        for (const [ptName, ptValue] of Object.entries(levelPoints)) {
-            controlPoints[ptName] = getPointsForLevel(ptValue);
-        }
-        for (const [ptName, ptValue] of Object.entries(ornamentPoints)) {
-            controlPoints[ptName] = getPointsForLevel(ptValue);
-        }
+        /* ----------------------------------------
+         * Complete Assembly
+         * ------------------------------------- */
 
         const crown = {
-            extraSmall: center({}, extraSmall({ controlPoints, detailDepth: dDepth, styleOpts: 'crown' })),
-            small: center({}, small({ controlPoints, detailDepth: dDepth, styleOpts: 'crown' })),
-            medium: center({}, medium({ controlPoints, detailDepth: dDepth, styleOpts: 'crown' })),
-            large: center({}, large({ controlPoints, detailDepth: dDepth, styleOpts: 'crown' })),
-            smallOrn1: center({}, smallOrnament1({ controlPoints, detailDepth: dDepth, styleOpts: 'crown' })),
-            mediumOrn1: center({}, mediumOrnament1({ controlPoints, detailDepth: dDepth, styleOpts: 'crown' })),
-            largeOrn1: center({}, largeOrnament1({ controlPoints, detailDepth: dDepth, styleOpts: 'crown' })),
+            extraSmall: center({}, extraSmall(modelProperties)),
+            small: center({}, small(modelProperties)),
+            medium: center({}, medium(modelProperties)),
+            large: center({}, large(modelProperties)),
+            smallOrn1: center({}, smallOrnament1(modelProperties)),
+            mediumOrn1: center({}, mediumOrnament1(modelProperties)),
+            largeOrn1: center({}, largeOrnament1(modelProperties)),
         };
+
         const dado = {
             extraSmall: center({}, mirror(
                 { normal: [0, 1, 0] },
-                extraSmall({ controlPoints, detailDepth: dDepth, styleOpts })
+                extraSmall(modelProperties)
             )),
             small: center({}, mirror(
                 { normal: [0, 1, 0] },
-                small({ controlPoints, detailDepth: dDepth, styleOpts })
+                small(modelProperties)
             )),
             smallOrn1: center({}, mirror(
                 { normal: [0, 1, 0] },
-                smallOrnament1({ controlPoints, detailDepth: dDepth, styleOpts })
+                smallOrnament1(modelProperties)
             )),
             medium: center({}, mirror(
                 { normal: [0, 1, 0] },
-                medium({ controlPoints, detailDepth: dDepth, styleOpts })
+                medium(modelProperties)
             )),
             mediumOrn1: center({}, mirror(
                 { normal: [0, 1, 0] },
-                mediumOrnament1({ controlPoints, detailDepth: dDepth, styleOpts })
+                mediumOrnament1(modelProperties)
             )),
             large: center({}, mirror(
                 { normal: [0, 1, 0] },
-                large({ controlPoints, detailDepth: dDepth, styleOpts })
+                large(modelProperties)
             )),
             largeOrn1: center({}, mirror(
                 { normal: [0, 1, 0] },
-                largeOrnament1({ controlPoints, detailDepth: dDepth, styleOpts })
+                largeOrnament1(modelProperties)
             )),
         };
+
         const base = {
             extraSmall: center({}, mirror(
                 { normal: [0, 1, 0] },
