@@ -556,43 +556,43 @@ const trimAranea = ({ jscad, swcadJs }) => {
          * ------------------------------------- */
 
         const crown = {
-            extraSmall: center({}, extraSmall(modelProperties)),
-            small: center({}, small(modelProperties)),
-            medium: center({}, medium(modelProperties)),
-            large: center({}, large(modelProperties)),
-            smallOrn1: center({}, smallOrnament1(modelProperties)),
-            mediumOrn1: center({}, mediumOrnament1(modelProperties)),
-            largeOrn1: center({}, largeOrnament1(modelProperties)),
+            extraSmall: center({}, extraSmall({ ...modelProperties, type: 'crown' })),
+            small: center({}, small({ ...modelProperties, type: 'crown' })),
+            medium: center({}, medium({ ...modelProperties, type: 'crown' })),
+            large: center({}, large({ ...modelProperties, type: 'crown' })),
+            smallOrn1: center({}, smallOrnament1({ ...modelProperties, type: 'crown' })),
+            mediumOrn1: center({}, mediumOrnament1({ ...modelProperties, type: 'crown' })),
+            largeOrn1: center({}, largeOrnament1({ ...modelProperties, type: 'crown' })),
         };
 
         const dado = {
             extraSmall: center({}, mirror(
                 { normal: [0, 1, 0] },
-                extraSmall(modelProperties)
+                extraSmall({ ...modelProperties, type: 'dado' })
             )),
             small: center({}, mirror(
                 { normal: [0, 1, 0] },
-                small(modelProperties)
+                small({ ...modelProperties, type: 'dado' })
             )),
             smallOrn1: center({}, mirror(
                 { normal: [0, 1, 0] },
-                smallOrnament1(modelProperties)
+                smallOrnament1({ ...modelProperties, type: 'dado' })
             )),
             medium: center({}, mirror(
                 { normal: [0, 1, 0] },
-                medium(modelProperties)
+                medium({ ...modelProperties, type: 'dado' })
             )),
             mediumOrn1: center({}, mirror(
                 { normal: [0, 1, 0] },
-                mediumOrnament1(modelProperties)
+                mediumOrnament1({ ...modelProperties, type: 'dado' })
             )),
             large: center({}, mirror(
                 { normal: [0, 1, 0] },
-                large(modelProperties)
+                large({ ...modelProperties, type: 'dado' })
             )),
             largeOrn1: center({}, mirror(
                 { normal: [0, 1, 0] },
-                largeOrnament1(modelProperties)
+                largeOrnament1({ ...modelProperties, type: 'dado' })
             )),
         };
 
