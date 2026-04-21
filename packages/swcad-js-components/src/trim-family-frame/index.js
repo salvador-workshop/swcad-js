@@ -161,7 +161,6 @@ const trimFamilyFrameInit = ({ jscad, swcadJs }) => {
      */
     const modelOpts = (opts) => {
         const defaults = modelDefaults()
-        console.log('modelOpts() -- opts', opts)
 
         // User options
         const {
@@ -218,7 +217,6 @@ const trimFamilyFrameInit = ({ jscad, swcadJs }) => {
             ...stdOpts,
         }
 
-        console.log('modelOpts() -- initOpts', initOpts)
 
         return initOpts
     }
@@ -235,7 +233,6 @@ const trimFamilyFrameInit = ({ jscad, swcadJs }) => {
      */
     const modelProps = (opts) => {
         const defaults = modelDefaults()
-        console.log('modelProps() -- opts', opts)
 
         const {
             size,
@@ -399,7 +396,6 @@ const trimFamilyFrameInit = ({ jscad, swcadJs }) => {
             components: modelComponents,
         }
 
-        console.log('modelProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }

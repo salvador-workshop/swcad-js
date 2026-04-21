@@ -135,7 +135,6 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
      */
     const modelProps = (opts) => {
         const defaults = modelDefaults()
-        console.log('openWebJoist.modelProps() -- opts', opts)
 
         const {
             type,
@@ -235,7 +234,6 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
             components: modelComponents,
         }
 
-        console.log('openWebJoist.modelProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }
@@ -294,8 +292,6 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
             dowelHolderLength,
         }
 
-        console.log('openWebJoist.model() -- opts', opts)
-        console.log('openWebJoist.model() -- inOpts', inOpts)
 
         const modelProperties = modelProps(inOpts)
 

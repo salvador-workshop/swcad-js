@@ -198,7 +198,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
      */
     const modelOpts = (opts) => {
         const defaults = modelDefaults()
-        console.log('modelOpts() -- opts', opts)
 
         // User options
         const {
@@ -230,7 +229,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
             ...stdOpts,
         }
 
-        console.log('modelOpts() -- initOpts', initOpts)
 
         return initOpts
     }
@@ -247,7 +245,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
      */
     const modelProps = (opts) => {
         const defaults = modelDefaults()
-        console.log('modelProps() -- opts', opts)
 
         const {
             size,
@@ -404,7 +401,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
             components: modelComponents,
         }
 
-        console.log('modelProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }
@@ -435,7 +431,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
                 dims,
                 points,
             } = modelProps
-            console.log('mouldBase(), modelProps', modelProps)
 
             const meshTextureSlab = meshLib.meshPanel({
                 size: [dims.width, dims.depth, dims.interfaceThickness],
@@ -546,7 +541,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
                 points,
             } = modelProps
 
-            console.log('dotMoulds() modelProps', modelProps)
 
             let holeMoulds = []
             points.dots.forEach((pt) => {
@@ -578,24 +572,23 @@ const moduleInit = ({ jscad, swcadJs }) => {
                 dims,
                 points,
             } = modelProps
-            console.log('lineMoulds() modelProps', modelProps)
 
             const lineMouldPoints = []
             points.lines.forEach((linePoints) => {
 
                 const lineSet = linePoints.map((linePt) => {
-                    console.log('lineMoulds() linePt', linePt)
 
-                    return translate([
-                        linePt[0],
-                        linePt[1],
-                        0
-                    ], mouldPtAssembly(modelProps))
+                    return align(
+                        {
+                            modes: ['center', 'center', 'min'],
+                            relativeTo: [linePt[0], linePt[1], 0],
+                        },
+                        mouldPtAssembly(modelProps)
+                    )
                 })
                 lineMouldPoints.push(hullChain(...lineSet))
             })
 
-            console.log('lineMoulds() lineMouldPoints', lineMouldPoints)
 
             const lineMouldAssemblies = union(...lineMouldPoints)
 
@@ -616,7 +609,10 @@ const moduleInit = ({ jscad, swcadJs }) => {
                 points,
             } = modelProps
 
-            let mainPart = position.ctrMin(mouldBase(modelProps))
+            let mainPart = position.ctrMin(
+                mouldBase(modelProps),
+                [points.centre[0], points.centre[1], 0],
+            )
 
             const dMould = dotMoulds(modelProps)
             const lMould = lineMoulds(modelProps)
@@ -624,14 +620,14 @@ const moduleInit = ({ jscad, swcadJs }) => {
             if (dMould) {
                 mainPart = union(
                     mainPart,
-                    position.ctrMin(dMould),
+                    dMould,
                 )
             }
 
             if (lMould) {
                 mainPart = union(
                     mainPart,
-                    position.ctrMin(lMould),
+                    lMould,
                 )
             }
 

@@ -124,7 +124,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
      */
     const meshPanelProps = (opts) => {
         const defaults = meshPanelDefaults()
-        console.log('panelFrameProps() -- opts', opts)
 
         const {
             type,
@@ -221,7 +220,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             components: modelComponents,
         }
 
-        console.log('panelFrameProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }
@@ -254,7 +252,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             holePattern = defaults.opts.holePattern,
         } = opts
 
-        console.log('newModel() -- opts', opts)
         const inOpts = {
             type,
             scale,
