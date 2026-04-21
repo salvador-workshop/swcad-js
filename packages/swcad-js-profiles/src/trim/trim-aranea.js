@@ -12,6 +12,7 @@ const trimAranea = ({ jscad, swcadJs }) => {
     const { rotate, translate, mirror, center } = jscad.transforms
 
     const { constants } = swcadJs.data
+    const { math } = swcadJs.calcs
 
 
     //==============================================================================
@@ -86,12 +87,17 @@ const trimAranea = ({ jscad, swcadJs }) => {
         // User options
         const {
             size = defaults.opts.size,
-            detailDepth = defaults.opts.detailDepth,
+            detailDepth,
             type = defaults.opts.type,
             scale = defaults.opts.scale,
             interfaceThickness = defaults.opts.interfaceThickness,
             fitGap = defaults.opts.fitGap,
         } = opts
+
+        let dDepth = size[1] / 3
+        if (detailDepth) {
+            dDepth = detailDepth
+        }
 
         const stdOpts = {
             type,
@@ -102,7 +108,7 @@ const trimAranea = ({ jscad, swcadJs }) => {
 
         const initOpts = {
             size,
-            detailDepth,
+            detailDepth: dDepth,
             ...stdOpts,
         }
 
@@ -142,7 +148,6 @@ const trimAranea = ({ jscad, swcadJs }) => {
         const depth = size[1]
 
         const numLevels = defaults.vals.constants.numLevels;
-        const dDepth = detailDepth || depth / 3;
         const levelPoints = {};
         const ornamentPoints = {};
         const thicknessPoints = {};
@@ -357,7 +362,7 @@ const trimAranea = ({ jscad, swcadJs }) => {
                 thicknessPts,
             } = mProperties.points
 
-            const baseShape = small({ controlPts, detailDepth, type });
+            const baseShape = small(mProperties);
 
             const oPt = controlPts.o1.t1;
             const bCorner = detailCorner({ sideLength: detailDepth * constants.PHI_INV });
@@ -436,7 +441,7 @@ const trimAranea = ({ jscad, swcadJs }) => {
                 thicknessPts,
             } = mProperties.points
 
-            const baseShape = medium({ controlPts, detailDepth, type });
+            const baseShape = medium(mProperties);
 
             const oPt1 = controlPts.o2.t2;
             const oPt2 = controlPts.o1.t1;
@@ -530,7 +535,7 @@ const trimAranea = ({ jscad, swcadJs }) => {
                 thicknessPts,
             } = mProperties.points
 
-            const baseShape = large({ controlPts, detailDepth, type });
+            const baseShape = large(mProperties);
 
             const oPt1 = controlPts.o3.t3;
             const oPt2 = controlPts.o1.t1;
