@@ -10,7 +10,7 @@ Salvador Workshop's CAD coding tools (in JavaScript)
 
 ### Online viewer
 
-[sw-jscad-viewer.netlify.app/](https://sw-jscad-viewer.netlify.app/)  
+[sw-jscad-viewer.netlify.app](https://sw-jscad-viewer.netlify.app/)  
 
 A heavily customized version of the JSCAD UI ([https://github.com/hrgdavor/jscadui](https://github.com/hrgdavor/jscadui))
 

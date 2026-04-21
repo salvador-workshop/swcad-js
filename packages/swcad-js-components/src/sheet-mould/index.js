@@ -331,8 +331,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
 
         /** Constant values for model */
         const modelConstants = {
-            type,
-            scale,
         }
 
         /** Derived user options for the model */
