@@ -13,11 +13,20 @@ const utilsInit = ({ jscad, swcadJs }) => {
             colors: coloursCore
         },
     }
-    return {
+    
+    /**
+     * Utils
+     * @namespace utils
+     * @author R. J. Salvador (Salvador Workshop)
+     */
+
+    const utils = {
         colors: coloursCore,
         layout: layout.init({ jscad, swcadJs: preLib }),
         palette: palette.init({ jscad, swcadJs: preLib }),
     }
+
+    return utils
 }
 
 module.exports = {

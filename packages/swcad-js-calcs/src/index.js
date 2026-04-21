@@ -15,12 +15,21 @@ const calcsInit = ({ jscad, swcadJs }) => {
             position,
         }
     }
-    return {
+
+    /**
+     * Calculations
+     * @namespace calcs
+     * @author R. J. Salvador (Salvador Workshop)
+     */
+
+    const calcs = {
         math,
         position,
         geometry: geometry.init({ jscad, swcadJs: preLib }),
         transform: transform.init({ jscad, swcadJs: preLib }),
     }
+
+    return calcs
 }
 
 module.exports = {

@@ -14,11 +14,19 @@ const modelsInit = ({ jscad, swcadJs }) => {
         }
     }
 
-    return {
+    /**
+     * Models
+     * @namespace models
+     * @author R. J. Salvador (Salvador Workshop)
+     */
+
+    const models = {
         arch,
         foil: foilModule.init({ jscad, swcadJs: preLib }),
         structure: structureModule.init({ jscad, swcadJs: preLib }),
     }
+
+    return models
 }
 
 module.exports = {
