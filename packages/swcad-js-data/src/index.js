@@ -8,7 +8,13 @@ const errors = require('./errors')
 const internals = require('./internals')
 
 const dataInit = ({ jscad }) => {
-    return {
+    /**
+     * Data
+     * @namespace data
+     * @author R. J. Salvador (Salvador Workshop)
+     */
+
+    const data = {
         constants: constants,
         functions: functions,
         specifications: specifications,
@@ -16,6 +22,8 @@ const dataInit = ({ jscad }) => {
         errors: errors,
         internals: internals.init({ jscad }),
     }
+
+    return data
 }
 
 module.exports = {
