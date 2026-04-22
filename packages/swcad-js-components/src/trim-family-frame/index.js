@@ -57,8 +57,8 @@ const trimFamilyFrameInit = ({ jscad, swcadJs }) => {
     } = swcadJs.calcs
 
     const {
-        aranea,
-    } = swcadJs.profiles.trim
+        trim,
+    } = swcadJs.profiles
 
 
     //==============================================================================
@@ -572,14 +572,14 @@ const trimFamilyFrameInit = ({ jscad, swcadJs }) => {
                 let mitredTrimArea = extrudeLinear({ height: dims.trimThickness * 2 }, mitredTrimProfile)
                 mitredTrimArea = translate([dims.trimWidth / 2, 0, -dims.trimThickness], mitredTrimArea)
 
+                const unitHeight = dims.trimWidth / opts.ornaments.trimLevels
+                const unitDepth = dims.trimThickness / opts.ornaments.trimLevels
+                const trimSizeDims = [unitHeight, unitDepth]
+
+                const trimStyle = 'dado'
+
                 switch (opts.trimType) {
                     case 'aranea':
-                        const unitHeight = dims.trimWidth / opts.ornaments.trimLevels
-                        const unitDepth = dims.trimThickness / opts.ornaments.trimLevels
-                        const trimSizeDims = [unitHeight, unitDepth]
-
-                        const trimStyle = 'dado'
-                        let trimSize = 'small'
                         switch (opts.ornaments.trimLevels) {
                             case 3:
                                 trimSize = 'largeOrn1'
@@ -593,7 +593,7 @@ const trimFamilyFrameInit = ({ jscad, swcadJs }) => {
                                 break;
                         }
 
-                        const tFamilyAranea = aranea.trimFamilyAranea({
+                        const tFamilyAranea = trim.aranea({
                             size: trimSizeDims,
                         });
                         let frameProfile = tFamilyAranea[trimStyle][trimSize]
@@ -601,6 +601,29 @@ const trimFamilyFrameInit = ({ jscad, swcadJs }) => {
                         araneaTrim = rotate([Math.PI / -2, Math.PI / -2, 0], araneaTrim)
 
                         fTrim = extrudeLinear({ height: length }, araneaTrim)
+                        break;
+                    case 'bibliopoli':
+                        switch (opts.ornaments.trimLevels) {
+                            case 3:
+                                trimSize = 'largeOrn1'
+                                break;
+                            case 2:
+                                trimSize = 'mediumOrn1'
+                                break;
+                            case 1:
+                            default:
+                                trimSize = 'smallOrn1'
+                                break;
+                        }
+
+                        const tFamilyBibliopoli = trim.bibliopoli({
+                            size: trimSizeDims,
+                        });
+                        let frameProfile = tFamilyBibliopoli[trimStyle][trimSize]
+                        let bibliopoliTrim = extrudeLinear({ height: length }, frameProfile)
+                        bibliopoliTrim = rotate([Math.PI / -2, Math.PI / -2, 0], bibliopoliTrim)
+
+                        fTrim = extrudeLinear({ height: length }, bibliopoliTrim)
                         break;
                     case 'rounded':
                         fTrim = roundedCuboid({
