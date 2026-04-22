@@ -16,6 +16,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         sphere,
         cylinderElliptic,
         circle,
+        ellipse: ellipseShape,
         cuboid,
         roundedCuboid,
         roundedCylinder,
@@ -219,6 +220,9 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         const depth = size[1]
         const height = size[2]
 
+        const diametre = radius * 2
+        const unitDiametre = unitRadius * 2
+
         /* ----------------------------------------
         * Preparing Model Properties, Dimensions
         * ------------------------------------- */
@@ -247,6 +251,8 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             radius,
             unitSpacing,
             unitRadius,
+            diametre,
+            unitDiametre,
             interfaceMargin,
         }
 
@@ -555,6 +561,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             depth,
             radius,
             fitGap,
+            diametre,
             interfaceMargin,
         } = modelProperties.dims
 
@@ -562,17 +569,15 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             sampleThickness
         } = modelProperties.constants
 
-        const diametre = radius * 2
         const halfGap = fitGap / 2
         const cornerRadius = math.inchesToMm(1 / 4)
 
         const specs = {
-            diametre,
-            fitDowelRadius: -halfGap + radius,
-            fitHoleRadius: halfGap + radius,
+            dowelRadius: -halfGap + radius,
+            holeRadius: halfGap + radius,
         }
 
-        specs.totalWidth = interfaceMargin * 2 + specs.diametre
+        specs.totalWidth = interfaceMargin * 2 + diametre
         const halfWidth = specs.totalWidth / 2
         specs.cornerPoints = [
             [halfWidth - cornerRadius, halfWidth - cornerRadius, 0],
@@ -581,8 +586,8 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             [halfWidth - cornerRadius, -halfWidth + cornerRadius, 0],
         ]
 
-        const dowel = circle({ radius: specs.fitDowelRadius, segments })
-        const dowelDie = circle({ radius: specs.fitHoleRadius, segments })
+        const dowel = circle({ radius: specs.dowelRadius, segments })
+        const dowelDie = circle({ radius: specs.holeRadius, segments })
 
         const corners = specs.cornerPoints.map(cPt => {
             return translate(cPt, circle({ radius: cornerRadius }))
@@ -628,7 +633,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         const {
             width,
             depth,
-            radius,
             fitGap,
             interfaceMargin,
         } = modelProperties.dims
@@ -637,49 +641,87 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             sampleThickness
         } = modelProperties.constants
 
-        const diametre = radius * 2
         const halfGap = fitGap / 2
         const cornerRadius = math.inchesToMm(1 / 4)
 
-        const specs = {
-            diametre,
-            fitDowelRadius: -halfGap + radius,
-            fitHoleRadius: halfGap + radius,
-        }
-
-        specs.totalWidth = interfaceMargin * 2 + specs.diametre
-        const halfWidth = specs.totalWidth / 2
-        specs.cornerPoints = [
-            [halfWidth - cornerRadius, halfWidth - cornerRadius, 0],
-            [-halfWidth + cornerRadius, halfWidth - cornerRadius, 0],
-            [-halfWidth + cornerRadius, -halfWidth + cornerRadius, 0],
-            [halfWidth - cornerRadius, -halfWidth + cornerRadius, 0],
+        const diam = [
+            width - (interfaceMargin * 2),
+            (depth - (interfaceMargin * 2)) * 2,
+        ]
+        const radius = [
+            diam[0] / 2,
+            diam[1] / 2,
+        ]
+        const holeRadius = [
+            radius[0] + (fitGap / 2),
+            radius[1] + (fitGap / 2),
         ]
 
-        const dowel = circle({ radius: specs.fitDowelRadius, segments })
-        const dowelDie = circle({ radius: specs.fitHoleRadius, segments })
+        // const totalWidth = interfaceMargin * 2 + diams[0]
+        // const halfWidth = totalWidth / 2
 
-        const corners = specs.cornerPoints.map(cPt => {
-            return translate(cPt, circle({ radius: cornerRadius }))
+        // const totalDepth = interfaceMargin * 2 + diams[1]
+        // const halfDepth = totalDepth / 2
+
+        const dowelCtr = [0, depth / -2 + interfaceMargin + (fitGap / 2), 0]
+        const dowel = ellipseShape({ radius, segments, center: dowelCtr })
+        const dowelDie = ellipseShape({ radius: holeRadius, segments, center: dowelCtr })
+
+        const mPlate = rectangle({
+            size: [
+                width,
+                interfaceMargin,
+                0,
+            ]
         })
-        const basePlate = hull(corners)
+        let malePlate = align({
+            modes: ['center', 'min', 'center'],
+            relativeTo: [0, depth / -2, 0],
+        }, mPlate)
 
-        const male = dowel
-        const female = subtract(basePlate, dowelDie)
+        const dowelCutPt = [0, depth / -2 + interfaceMargin, 0]
+        let cutDowel = subtract(
+            align({
+                modes: ['center', 'center', 'center'],
+            }, dowel),
+            align({
+                modes: ['center', 'max', 'center'],
+            }, rectangle({ size: [holeRadius[0] * 2, holeRadius[1] * 2] }))
+        )
+        cutDowel = align({
+            modes: ['center', 'min', 'center'],
+            relativeTo: dowelCutPt,
+        }, cutDowel)
 
-        const polygonProfiles = [
+        const fPlate = rectangle({
+            size: [
+                width,
+                depth - interfaceMargin - fitGap,
+                0,
+            ]
+        })
+        let femalePlate = align({
+            modes: ['center', 'max', 'center'],
+            relativeTo: [0, depth / 2, 0],
+        }, fPlate)
+
+        const male = union(cutDowel, malePlate)
+
+        const female = subtract(femalePlate, dowelDie)
+
+        const ellipseProfiles = [
             female,
             male,
         ]
 
         const mainModel = [
-            polygonProfiles[1],
-            polygonProfiles[0],
+            ellipseProfiles[1],
+            ellipseProfiles[0],
         ]
 
         const modelParts = {
-            male: polygonProfiles[1],
-            female: polygonProfiles[0],
+            male: ellipseProfiles[1],
+            female: ellipseProfiles[0],
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -706,6 +748,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             unitRadius,
             unitSpacing,
             fitGap,
+            unitDiametre,
             interfaceMargin,
         } = modelProperties.dims
 
@@ -713,14 +756,12 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             sampleThickness
         } = modelProperties.constants
 
-        const diametre = unitRadius * 2
         const halfGap = fitGap / 2
-        const cornerRadius = diametre * 0.75
+        const cornerRadius = unitDiametre * 0.75
 
         const specs = {
-            diametre,
-            fitDowelRadius: -halfGap + unitRadius,
-            fitHoleRadius: halfGap + unitRadius,
+            dowelRadius: -halfGap + unitRadius,
+            holeRadius: halfGap + unitRadius,
         }
 
         specs.totalWidth = interfaceMargin * 2 + (unitRadius * 2 + unitSpacing)
@@ -743,10 +784,10 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             return translate(cPt, circle({ radius: cornerRadius }))
         })
         const dowels = specs.dowelPoints.map(dPt => {
-            return translate(dPt, circle({ radius: specs.fitDowelRadius, segments: unitSegments }))
+            return translate(dPt, circle({ radius: specs.dowelRadius, segments: unitSegments }))
         })
         const dowelDies = specs.dowelPoints.map(dPt => {
-            return translate(dPt, circle({ radius: specs.fitHoleRadius, segments: unitSegments }))
+            return translate(dPt, circle({ radius: specs.holeRadius, segments: unitSegments }))
         })
 
         const basePlate = hull(corners)
@@ -779,7 +820,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
      */
-    const boltRing = (opts) => {
+    const boltCircle = (opts) => {
         const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
@@ -794,6 +835,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             unitRadius,
             unitSpacing,
             fitGap,
+            unitDiametre,
             interfaceMargin,
         } = modelProperties.dims
 
@@ -801,14 +843,12 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             sampleThickness
         } = modelProperties.constants
 
-        const diametre = unitRadius * 2
         const halfGap = fitGap / 2
-        const cornerRadius = diametre * 0.75
+        const cornerRadius = unitDiametre * 0.75
 
         const specs = {
-            diametre,
-            fitDowelRadius: -halfGap + unitRadius,
-            fitHoleRadius: halfGap + unitRadius,
+            dowelRadius: -halfGap + unitRadius,
+            holeRadius: halfGap + unitRadius,
         }
 
         specs.totalWidth = interfaceMargin * 2 + (unitRadius * 2 + unitSpacing)
@@ -831,10 +871,10 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             return translate(cPt, circle({ radius: cornerRadius }))
         })
         const dowels = specs.dowelPoints.map(dPt => {
-            return translate(dPt, circle({ radius: specs.fitDowelRadius, segments: unitSegments }))
+            return translate(dPt, circle({ radius: specs.dowelRadius, segments: unitSegments }))
         })
         const dowelDies = specs.dowelPoints.map(dPt => {
-            return translate(dPt, circle({ radius: specs.fitHoleRadius, segments: unitSegments }))
+            return translate(dPt, circle({ radius: specs.holeRadius, segments: unitSegments }))
         })
 
         const basePlate = hull(corners)
@@ -867,8 +907,9 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         dovetail,
         tab,
         polygon,
+        ellipse,
         pegboard,
-        boltRing,
+        boltCircle,
     }
 }
 
