@@ -1,11 +1,5 @@
 "use strict"
 
-/**
- * ...
- * @memberof profiles.trim
- * @namespace aranea
- */
-
 const trimAranea = ({ jscad, swcadJs }) => {
     const { polygon, square } = jscad.primitives
     const { subtract, union } = jscad.booleans
@@ -235,10 +229,10 @@ const trimAranea = ({ jscad, swcadJs }) => {
      * @param {number} opts.size - Typical size for basic trim unit (`[width, depth]`)
      * @param {number} opts.detailDepth - Size of corner details (mm). Defaults to 1/3 of `size[1]`
      * @param {number} opts.type - Style options ("base", "crown", "dado"). Defaults to "dado"
-     * @memberof profiles.trim.aranea
+     * @memberof profiles.trim
      * @instance
      */
-    const trimFamilyAranea = (opts) => {
+    const aranea = (opts) => {
         const defaults = trimAraneaDefaults()
         const initOpts = trimAraneaOpts(opts)
         const modelProperties = trimAraneaProps(initOpts)
@@ -636,9 +630,7 @@ const trimAranea = ({ jscad, swcadJs }) => {
         }
     }
 
-    return {
-        trimFamilyAranea
-    }
+    return aranea
 }
 
 module.exports = { init: trimAranea }

@@ -1,11 +1,5 @@
 "use strict"
 
-/**
- * ...
- * @memberof profiles.trim
- * @namespace bibliopoli
- */
-
 const trimBibliopoli = ({ jscad, swcadJs }) => {
     const { polygon, square } = jscad.primitives
     const { subtract, union } = jscad.booleans
@@ -235,10 +229,10 @@ const trimBibliopoli = ({ jscad, swcadJs }) => {
      * @param {number} opts.size - Typical size for basic trim unit (`[width, depth]`)
      * @param {number} opts.detailDepth - Size of corner details (mm). Defaults to 1/3 of `size[1]`
      * @param {number} opts.type - Style options ("base", "crown", "dado"). Defaults to "dado"
-     * @memberof profiles.trim.bibliopoli
+     * @memberof profiles.trim
      * @instance
      */
-    const trimFamilyBibliopoli = (opts) => {
+    const bibliopoli = (opts) => {
         const defaults = trimBibliopoliDefaults()
         const initOpts = trimBibliopoliOpts(opts)
         const modelProperties = trimBibliopoliProps(initOpts)
@@ -636,9 +630,7 @@ const trimBibliopoli = ({ jscad, swcadJs }) => {
         }
     }
 
-    return {
-        trimFamilyBibliopoli
-    }
+    return bibliopoli
 }
 
 module.exports = { init: trimBibliopoli }
