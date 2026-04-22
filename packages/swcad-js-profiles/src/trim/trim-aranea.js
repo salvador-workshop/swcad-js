@@ -7,6 +7,9 @@ const trimAranea = ({ jscad, swcadJs }) => {
 
     const { constants } = swcadJs.data
     const { math } = swcadJs.calcs
+    const {
+        beadsBits: beadsBitsProfiles,
+    } = swcadJs.profiles
 
 
     //==============================================================================
@@ -237,10 +240,37 @@ const trimAranea = ({ jscad, swcadJs }) => {
         const initOpts = trimAraneaOpts(opts)
         const modelProperties = trimAraneaProps(initOpts)
 
-        const detailCorner = ({ sideLength }) => {
-            const baseSquare = square({ size: Math.hypot(sideLength, sideLength) });
+        const detailCornerExt = ({ sideLength }) => {
+            const chamferOpts = {
+                radius1: sideLength,
+                radius2: sideLength,
+            }
+            const chamferData = beadsBitsProfiles.corner.chamfer(chamferOpts)
+            const chamferModel = chamferData[0]
 
-            return rotate([0, 0, Math.PI / 4], baseSquare);
+            return chamferModel;
+        }
+
+        const detailCornerInt = ({ sideLength }) => {
+            const chamferOpts = {
+                radius1: sideLength,
+                radius2: sideLength,
+            }
+            const chamferData = beadsBitsProfiles.corner.chamfer(chamferOpts)
+            const chamferModel = chamferData[0]
+
+            return chamferModel;
+        }
+
+        const detailOrnament = ({ sideLength }) => {
+            const chamferOpts = {
+                radius1: sideLength,
+                radius2: sideLength,
+            }
+            const chamferData = beadsBitsProfiles.corner.chamfer(chamferOpts)
+            const chamferModel = chamferData[0]
+
+            return chamferModel;
         }
 
         /* ----------------------------------------
@@ -276,9 +306,10 @@ const trimAranea = ({ jscad, swcadJs }) => {
                     controlPts.lHalf.t0,
                 ]
             });
-            const baseCorner = detailCorner({ sideLength: detailDepth });
-            const corner1 = translate([...cornerPt1, 0], baseCorner);
-            const corner2 = translate([...cornerPt2, 0], baseCorner);
+            const baseCornerExt = detailCornerExt({ sideLength: detailDepth });
+            const baseCornerInt = detailCornerInt({ sideLength: detailDepth });
+            const corner1 = translate([...cornerPt1, 0], baseCornerExt);
+            const corner2 = translate([...cornerPt2, 0], baseCornerExt);
 
             let cutShape = subtract(baseShape, corner1);
             if (!['crown', 'base'].includes(type)) {
@@ -317,9 +348,10 @@ const trimAranea = ({ jscad, swcadJs }) => {
                     controlPts.l1.t0,
                 ]
             });
-            const baseCorner = detailCorner({ sideLength: detailDepth });
-            const corner1 = translate([...cornerPt1, 0], baseCorner);
-            const corner2 = translate([...cornerPt2, 0], baseCorner);
+            const baseCornerExt = detailCornerExt({ sideLength: detailDepth });
+            const baseCornerInt = detailCornerInt({ sideLength: detailDepth });
+            const corner1 = translate([...cornerPt1, 0], baseCornerExt);
+            const corner2 = translate([...cornerPt2, 0], baseCornerExt);
 
             let cutShape = subtract(baseShape, corner1);
             if (!['crown', 'base'].includes(type)) {
@@ -351,7 +383,7 @@ const trimAranea = ({ jscad, swcadJs }) => {
             const baseShape = small(mProperties);
 
             const oPt = controlPts.o1.t1;
-            const bCorner = detailCorner({ sideLength: detailDepth * constants.PHI_INV });
+            const bCorner = detailOrnament({ sideLength: detailDepth / 2 });
             const oCorner = translate([...oPt, 0], bCorner);
 
             return subtract(baseShape, oCorner);
@@ -392,11 +424,12 @@ const trimAranea = ({ jscad, swcadJs }) => {
                 ]
             })
 
-            const baseCorner = detailCorner({ sideLength: detailDepth });
-            const corner1 = translate([...cornerPt1, 0], baseCorner);
-            const corner2 = translate([...cornerPt2, 0], baseCorner);
-            const corner3 = translate([...cornerPt3, 0], baseCorner);
-            const corner4 = translate([...cornerPt4, 0], baseCorner);
+            const baseCornerExt = detailCornerExt({ sideLength: detailDepth });
+            const baseCornerInt = detailCornerInt({ sideLength: detailDepth });
+            const corner1 = translate([...cornerPt1, 0], baseCornerExt);
+            const corner2 = translate([...cornerPt2, 0], baseCornerInt);
+            const corner3 = translate([...cornerPt3, 0], baseCornerExt);
+            const corner4 = translate([...cornerPt4, 0], baseCornerExt);
 
             let cutShape = subtract(baseShape, corner1);
             cutShape = union(cutShape, corner2);
@@ -432,7 +465,7 @@ const trimAranea = ({ jscad, swcadJs }) => {
             const oPt1 = controlPts.o2.t2;
             const oPt2 = controlPts.o1.t1;
 
-            const bCorner = detailCorner({ sideLength: detailDepth * constants.PHI_INV });
+            const bCorner = detailOrnament({ sideLength: detailDepth / 2 });
             const oCorner1 = translate([...oPt1, 0], bCorner);
             let oCorner2 = translate([...oPt2, 0], bCorner);
             oCorner2 = mirror({ origin: [0, controlPts.l1.t1[1] / 2, 0], normal: [0, 1, 0] }, oCorner2);
@@ -482,13 +515,14 @@ const trimAranea = ({ jscad, swcadJs }) => {
                 ]
             })
 
-            const baseCorner = detailCorner({ sideLength: detailDepth });
-            const corner1 = translate([...cornerPt1, 0], baseCorner);
-            const corner2 = translate([...cornerPt2, 0], baseCorner);
-            const corner3 = translate([...cornerPt3, 0], baseCorner);
-            const corner4 = translate([...cornerPt4, 0], baseCorner);
-            const corner5 = translate([...cornerPt5, 0], baseCorner);
-            const corner6 = translate([...cornerPt6, 0], baseCorner);
+            const baseCornerExt = detailCornerExt({ sideLength: detailDepth });
+            const baseCornerInt = detailCornerInt({ sideLength: detailDepth });
+            const corner1 = translate([...cornerPt1, 0], baseCornerExt);
+            const corner2 = translate([...cornerPt2, 0], baseCornerInt);
+            const corner3 = translate([...cornerPt3, 0], baseCornerExt);
+            const corner4 = translate([...cornerPt4, 0], baseCornerInt);
+            const corner5 = translate([...cornerPt5, 0], baseCornerExt);
+            const corner6 = translate([...cornerPt6, 0], baseCornerExt);
 
             let cutShape = subtract(baseShape, corner1);
             cutShape = union(cutShape, corner2);
@@ -526,7 +560,7 @@ const trimAranea = ({ jscad, swcadJs }) => {
             const oPt1 = controlPts.o3.t3;
             const oPt2 = controlPts.o1.t1;
 
-            const bCorner = detailCorner({ sideLength: detailDepth * constants.PHI_INV });
+            const bCorner = detailOrnament({ sideLength: detailDepth / 2 });
             const oCorner1 = translate([...oPt1, 0], bCorner);
             let oCorner2 = translate([...oPt2, 0], bCorner);
             oCorner2 = mirror({ origin: [0, controlPts.l1.t1[1] / 2, 0], normal: [0, 1, 0] }, oCorner2);

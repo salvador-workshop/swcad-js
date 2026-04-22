@@ -1,42 +1,44 @@
 "use strict"
 
-const beadsBits = require('./beads-bits')
-const connections = require('./connections')
-const curve = require('./curve')
-const shapes = require('./shapes')
-const rectFrame = require('./shapes/rectangle/frame-rect')
-const structure = require('./structure')
-const text = require('./text')
-const trim = require('./trim')
+const beadsBitsModule = require('./beads-bits')
+const connectionsModule = require('./connections')
+const curveModule = require('./curve')
+const shapesModule = require('./shapes')
+const rectFrameModule = require('./shapes/rectangle/frame-rect')
+const structureModule = require('./structure')
+const textModule = require('./text')
+const trimModule = require('./trim')
 
 const profilesInit = ({ jscad, swcadJs }) => {
-    const shapesCore = shapes.init({ jscad, swcadJs })
-    const curveCore = curve.init({ jscad, swcadJs })
+    const shapesCore = shapesModule.init({ jscad, swcadJs })
+    const curve = curveModule.init({ jscad, swcadJs })
+    const beadsBits = beadsBitsModule.init({ jscad, swcadJs })
 
     const preLib = {
         ...swcadJs,
         profiles: {
             shapes: shapesCore,
-            curve: curveCore,
+            curve,
+            beadsBits,
         }
     }
 
-    const outShapes = {
+    const shapes = {
         ...shapesCore,
         rectangle: {
             ...shapesCore.rectangle,
-            frame: rectFrame.init({ jscad, swcadJs: preLib }),
+            frame: rectFrameModule.init({ jscad, swcadJs: preLib }),
         }
     }
 
     return {
-        shapes: outShapes,
-        beadsBits: beadsBits.init({ jscad, swcadJs: preLib }),
-        connections: connections.init({ jscad, swcadJs: preLib }),
-        curve: curveCore,
-        structure: structure.init({ jscad, swcadJs: preLib }),
-        text: text.init({ jscad, swcadJs: preLib }),
-        trim: trim.init({ jscad, swcadJs: preLib }),
+        shapes,
+        beadsBits,
+        connections: connectionsModule.init({ jscad, swcadJs: preLib }),
+        curve,
+        structure: structureModule.init({ jscad, swcadJs: preLib }),
+        text: textModule.init({ jscad, swcadJs: preLib }),
+        trim: trimModule.init({ jscad, swcadJs: preLib }),
     }
 }
 
