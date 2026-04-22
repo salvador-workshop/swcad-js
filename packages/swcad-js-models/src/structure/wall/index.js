@@ -32,7 +32,7 @@ const wallBuilder = ({ jscad, swcadJs }) => {
     }
 
     const getEntryTrimForDadoUnits = ({ dadoUnits, trimUnitHeight, trimUnitDepth }) => {
-        const tFamilyAranea = aranea.buildTrimFamily({ unitHeight: trimUnitHeight, unitDepth: trimUnitDepth });
+        const tFamilyAranea = aranea.trimFamilyAranea({ size: [trimUnitHeight, trimUnitDepth] });
         let entryTrim = tFamilyAranea.crown.small;
         if (dadoUnits === 1) {
             entryTrim = tFamilyAranea.crown.medium;
@@ -103,7 +103,9 @@ const wallBuilder = ({ jscad, swcadJs }) => {
                 size: [opts.length, opts.thickness, opts.height],
             }));
 
-            const tFamilyAranea = aranea.buildTrimFamily({ unitHeight: opts.trimUnitHeight, unitDepth: opts.trimUnitDepth });
+            const tFamilyAranea = aranea.trimFamilyAranea({
+                size: [opts.trimUnitHeight, opts.trimUnitDepth],
+            });
 
             const dadoHt = opts.dadoHeight || opts.height * (1 - PHI_INV);
             // has to be adjusted or it clips through trimwork

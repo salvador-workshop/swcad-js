@@ -576,8 +576,8 @@ const trimFamilyFrameInit = ({ jscad, swcadJs }) => {
                     case 'aranea':
                         const unitHeight = dims.trimWidth / opts.ornaments.trimLevels
                         const unitDepth = dims.trimThickness / opts.ornaments.trimLevels
+                        const trimSizeDims = [unitHeight, unitDepth]
 
-                        const detailDepth = unitDepth / 3
                         const trimStyle = 'dado'
                         let trimSize = 'small'
                         switch (opts.ornaments.trimLevels) {
@@ -593,10 +593,8 @@ const trimFamilyFrameInit = ({ jscad, swcadJs }) => {
                                 break;
                         }
 
-                        const tFamilyAranea = aranea.buildTrimFamily({
-                            unitHeight,
-                            unitDepth,
-                            detailDepth,
+                        const tFamilyAranea = aranea.trimFamilyAranea({
+                            size: trimSizeDims,
                         });
                         let frameProfile = tFamilyAranea[trimStyle][trimSize]
                         let araneaTrim = extrudeLinear({ height: length }, frameProfile)
