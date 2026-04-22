@@ -35,8 +35,6 @@ Works with JSCAD, however you consume it.
 Try copying the example below into `sw-jscad-viewer` ([sw-jscad-viewer.netlify.app](https://sw-jscad-viewer.netlify.app)).  
 
 ```javascript
-"use strict"
-
 /* ----------------------------------------
  * Initialization
  * ------------------------------------- */
@@ -114,12 +112,6 @@ const baseOpts = {
   },
   bottomBit: 'none',
   bottomBitOpts: {
-    radius1: 6,
-    radius2: 8,
-    offset1: 3,
-    offset2: 2,
-    offset3: 3,
-    offset4: 2,
   },
 }
 
@@ -198,61 +190,67 @@ module.exports = { main }
 
 ## API
 
+_as of version 0.12.5_
+
 The `swcad-js` library's main functional divisions:
 
 ### `Data` — Static info
 
-- Constants
-- Specifications
-- Standards
+- constants
+- functions
+- specifications
+- standards
+- standards.crafts
+- standards.lumber
+- standards.masonry
+- standards.paper
+- standards.tiles
 
 ### `Calcs` — Calculations of all sorts
 
-- Math
-- Geometry
-- Position
-- Transform
+- geometry
+- geometry.points
+- geometry.regPoly
+- geometry.reinforcement
+- math
+- position
+- position.cuboid
+- position.rectangle
+- position.triangle
+- transform
 
 ### `Profiles` — 2D profiles, surfaces, sections
 
-- Curve
-- BeadsBits
-- Edge
-- Text
-- Trim
-
-STRUCTURE — More complex profiles
-
-- Arch
-- Foil
-- Mesh
-
-SHAPES — Basic shapes, and profiles built around them
-
-- Triangle
-- Circle
-- Ellipse
-- Square
-- Rectangle
-  - Frame
-- Hexagon
-- Octagon
+- beadsBits.corner
+- connections
+- curve
+- shapes
+- shapes.ellipse
+- shapes.rectangle
+- shapes.square
+- shapes.triangle
+- structure.arch
+- structure.foil
+- structure.mesh
+- text
+- trim
+- trim.aranea
 
 ![swcad-js demo - router-bits](./static/img/router-bits-1.png "swcad-js demo - router-bits")
 
 ### `ProfileSpec` — 2D profiles conforming to specs
 
-- Lumber
-- Paper
+- lumber
+- paper
 
 ### `Components` — Basic reusable 3D units
 
-- BeadsBits
-- DowelFittings
-- OpenWebJoist
-- Mesh
-- Moulding
-- Text
+- beadsBits
+- beadsBits.corner
+- mesh
+- moulding
+- routedShapes
+- text
 
 ![swcad-js demo - routed shapes 1](./static/img/routed-shapes-1.png "swcad-js demo - routed shapes 1")
 
@@ -260,24 +258,23 @@ SHAPES — Basic shapes, and profiles built around them
 
 ### `ComponentSpec` — 3D components conforming to specs
 
-- Tile
-- Brick
-- Crafts
+- brick
+- crafts
+- tile
 
 ### `Models` — Complex 3D models
 
-- Arch
-- Buttress
-- Foil
-- Column
-- Roof
-- Wall
-  - Entryway
+- arch
+- foil
+- structure
+- structure.wall
+- structure.wallEntryway
 
 ### `Utils` — Auxiliary utilities
 
-- Colors
-- Layout
+- colors
+- layout
+- palette
 
 ## Structure
 
