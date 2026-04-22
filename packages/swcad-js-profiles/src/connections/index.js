@@ -611,6 +611,81 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
+     * Generate ellipse connectors
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof profiles.connections
+     */
+    const ellipse = (opts) => {
+        const defaults = modelDefaults()
+        const initOpts = modelOpts(opts)
+        const modelProperties = modelProps(initOpts)
+
+        const {
+            segments,
+        } = modelProperties.opts
+
+        const {
+            width,
+            depth,
+            radius,
+            fitGap,
+            interfaceMargin,
+        } = modelProperties.dims
+
+        const {
+            sampleThickness
+        } = modelProperties.constants
+
+        const diametre = radius * 2
+        const halfGap = fitGap / 2
+        const cornerRadius = math.inchesToMm(1 / 4)
+
+        const specs = {
+            diametre,
+            fitDowelRadius: -halfGap + radius,
+            fitHoleRadius: halfGap + radius,
+        }
+
+        specs.totalWidth = interfaceMargin * 2 + specs.diametre
+        const halfWidth = specs.totalWidth / 2
+        specs.cornerPoints = [
+            [halfWidth - cornerRadius, halfWidth - cornerRadius, 0],
+            [-halfWidth + cornerRadius, halfWidth - cornerRadius, 0],
+            [-halfWidth + cornerRadius, -halfWidth + cornerRadius, 0],
+            [halfWidth - cornerRadius, -halfWidth + cornerRadius, 0],
+        ]
+
+        const dowel = circle({ radius: specs.fitDowelRadius, segments })
+        const dowelDie = circle({ radius: specs.fitHoleRadius, segments })
+
+        const corners = specs.cornerPoints.map(cPt => {
+            return translate(cPt, circle({ radius: cornerRadius }))
+        })
+        const basePlate = hull(corners)
+
+        const male = dowel
+        const female = subtract(basePlate, dowelDie)
+
+        const polygonProfiles = [
+            female,
+            male,
+        ]
+
+        const mainModel = [
+            polygonProfiles[1],
+            polygonProfiles[0],
+        ]
+
+        const modelParts = {
+            male: polygonProfiles[1],
+            female: polygonProfiles[0],
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
      * Generate pegboard connectors
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
@@ -701,7 +776,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     /**
      * Generate bolt ring connectors
      * @param {*} opts 
-     * @access private
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
      */
@@ -710,9 +784,78 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
 
-        const mainModel = cuboid()
+        const {
+            unitSegments,
+        } = modelProperties.opts
+
+        const {
+            width,
+            depth,
+            unitRadius,
+            unitSpacing,
+            fitGap,
+            interfaceMargin,
+        } = modelProperties.dims
+
+        const {
+            sampleThickness
+        } = modelProperties.constants
+
+        const diametre = unitRadius * 2
+        const halfGap = fitGap / 2
+        const cornerRadius = diametre * 0.75
+
+        const specs = {
+            diametre,
+            fitDowelRadius: -halfGap + unitRadius,
+            fitHoleRadius: halfGap + unitRadius,
+        }
+
+        specs.totalWidth = interfaceMargin * 2 + (unitRadius * 2 + unitSpacing)
+        const halfWidth = specs.totalWidth / 2
+        specs.cornerPoints = [
+            [halfWidth - cornerRadius, halfWidth - cornerRadius, 0],
+            [-halfWidth + cornerRadius, halfWidth - cornerRadius, 0],
+            [-halfWidth + cornerRadius, -halfWidth + cornerRadius, 0],
+            [halfWidth - cornerRadius, -halfWidth + cornerRadius, 0],
+        ]
+        const halfUnit = unitSpacing / 2
+        specs.dowelPoints = [
+            [halfUnit, halfUnit, 0],
+            [-halfUnit, halfUnit, 0],
+            [-halfUnit, -halfUnit, 0],
+            [halfUnit, -halfUnit, 0],
+        ]
+
+        const corners = specs.cornerPoints.map(cPt => {
+            return translate(cPt, circle({ radius: cornerRadius }))
+        })
+        const dowels = specs.dowelPoints.map(dPt => {
+            return translate(dPt, circle({ radius: specs.fitDowelRadius, segments: unitSegments }))
+        })
+        const dowelDies = specs.dowelPoints.map(dPt => {
+            return translate(dPt, circle({ radius: specs.fitHoleRadius, segments: unitSegments }))
+        })
+
+        const basePlate = hull(corners)
+        const dowelAssembly = union(dowels)
+
+        const male = dowelAssembly
+        const female = subtract(basePlate, dowelDies)
+
+        const pegboardProfiles = [
+            female,
+            male,
+        ]
+
+        const mainModel = [
+            pegboardProfiles[1],
+            pegboardProfiles[0],
+        ]
+
         const modelParts = {
-            mainModel,
+            male: pegboardProfiles[1],
+            female: pegboardProfiles[0],
         }
 
         return [mainModel, modelParts, modelProperties]
