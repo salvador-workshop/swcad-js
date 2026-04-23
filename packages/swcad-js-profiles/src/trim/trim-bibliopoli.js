@@ -1,6 +1,6 @@
 "use strict"
 
-const trimAranea = ({ jscad, swcadJs }) => {
+const trimBibliopoli = ({ jscad, swcadJs }) => {
     const { polygon, square } = jscad.primitives
     const { subtract, union } = jscad.booleans
     const { rotate, translate, mirror, center } = jscad.transforms
@@ -19,10 +19,10 @@ const trimAranea = ({ jscad, swcadJs }) => {
      * Builds default values and opts for the model
      * @param {*} opts 
      * @returns default values and opts
-     * @memberof profiles.trim.aranea
+     * @memberof profiles.trim.bibliopoli
      * @access private
      */
-    const trimAraneaDefaults = () => {
+    const trimBibliopoliDefaults = () => {
         /** Specific value declarations */
         const defaultValues = {
             constants: {
@@ -74,11 +74,11 @@ const trimAranea = ({ jscad, swcadJs }) => {
      * Initializes options with user input
      * @param {*} opts 
      * @returns model properties
-     * @memberof profiles.trim.aranea
+     * @memberof profiles.trim.bibliopoli
      * @access private
      */
-    const trimAraneaOpts = (opts) => {
-        const defaults = trimAraneaDefaults()
+    const trimBibliopoliOpts = (opts) => {
+        const defaults = trimBibliopoliDefaults()
         // User options
         const {
             size = defaults.opts.size,
@@ -117,11 +117,11 @@ const trimAranea = ({ jscad, swcadJs }) => {
      * Builds model properties from the given opts
      * @param {*} opts 
      * @returns model properties
-     * @memberof profiles.trim.aranea
+     * @memberof profiles.trim.bibliopoli
      * @access private
      */
-    const trimAraneaProps = (opts) => {
-        const defaults = trimAraneaDefaults()
+    const trimBibliopoliProps = (opts) => {
+        const defaults = trimBibliopoliDefaults()
         const {
             size,
             detailDepth,
@@ -235,42 +235,42 @@ const trimAranea = ({ jscad, swcadJs }) => {
      * @memberof profiles.trim
      * @instance
      */
-    const aranea = (opts) => {
-        const defaults = trimAraneaDefaults()
-        const initOpts = trimAraneaOpts(opts)
-        const modelProperties = trimAraneaProps(initOpts)
+    const bibliopoli = (opts) => {
+        const defaults = trimBibliopoliDefaults()
+        const initOpts = trimBibliopoliOpts(opts)
+        const modelProperties = trimBibliopoliProps(initOpts)
 
         const detailCornerExt = ({ sideLength }) => {
-            const chamferOpts = {
+            const coveOpts = {
                 radius1: sideLength,
                 radius2: sideLength,
             }
-            const chamferData = beadsBitsProfiles.corner.chamfer(chamferOpts)
-            const chamferModel = chamferData[0]
+            const coveData = beadsBitsProfiles.corner.cove(coveOpts)
+            const coveModel = coveData[0]
 
-            return chamferModel;
+            return coveModel
         }
 
         const detailCornerInt = ({ sideLength }) => {
-            const chamferOpts = {
+            const roundOverOpts = {
                 radius1: sideLength,
                 radius2: sideLength,
             }
-            const chamferData = beadsBitsProfiles.corner.chamfer(chamferOpts)
-            const chamferModel = chamferData[0]
+            const roundOverData = beadsBitsProfiles.corner.roundOver(roundOverOpts)
+            const roundOverModel = roundOverData[0]
 
-            return chamferModel;
+            return roundOverModel
         }
 
         const detailOrnament = ({ sideLength }) => {
-            const chamferOpts = {
+            const coveOpts = {
                 radius1: sideLength,
                 radius2: sideLength,
             }
-            const chamferData = beadsBitsProfiles.corner.chamfer(chamferOpts)
-            const chamferModel = chamferData[0]
+            const coveData = beadsBitsProfiles.corner.cove(coveOpts)
+            const coveModel = coveData[0]
 
-            return chamferModel;
+            return coveModel
         }
 
         /* ----------------------------------------
@@ -664,7 +664,7 @@ const trimAranea = ({ jscad, swcadJs }) => {
         }
     }
 
-    return aranea
+    return bibliopoli
 }
 
-module.exports = { init: trimAranea }
+module.exports = { init: trimBibliopoli }

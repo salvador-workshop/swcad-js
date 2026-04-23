@@ -13,7 +13,7 @@ const wallBuilder = ({ jscad, swcadJs }) => {
     const { measureDimensions } = jscad.measurements;
 
     const { moulding } = swcadJs.components
-    const { aranea } = swcadJs.profiles.trim
+    const { trim } = swcadJs.profiles
     const { PHI_INV } = swcadJs.data.constants
 
     const crownTrim = ({ totalThickness, totalLength, trimProfile }) => {
@@ -32,7 +32,7 @@ const wallBuilder = ({ jscad, swcadJs }) => {
     }
 
     const getEntryTrimForDadoUnits = ({ dadoUnits, trimUnitHeight, trimUnitDepth }) => {
-        const tFamilyAranea = aranea.trimFamilyAranea({ size: [trimUnitHeight, trimUnitDepth] });
+        const tFamilyAranea = trim.aranea({ size: [trimUnitHeight, trimUnitDepth] });
         let entryTrim = tFamilyAranea.crown.small;
         if (dadoUnits === 1) {
             entryTrim = tFamilyAranea.crown.medium;
@@ -103,7 +103,7 @@ const wallBuilder = ({ jscad, swcadJs }) => {
                 size: [opts.length, opts.thickness, opts.height],
             }));
 
-            const tFamilyAranea = aranea.trimFamilyAranea({
+            const tFamilyAranea = trim.aranea({
                 size: [opts.trimUnitHeight, opts.trimUnitDepth],
             });
 

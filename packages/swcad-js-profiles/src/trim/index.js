@@ -1,5 +1,8 @@
 "use strict"
 
+const araneaModule = require('./trim-aranea')
+const bibliopoliModule = require('./trim-bibliopoli')
+
 /**
  * ...
  * @memberof profiles
@@ -8,7 +11,8 @@
 
 const init = ({ jscad, swcadJs }) => {
     const trim = {
-        aranea: require('./trim-aranea').init({ jscad, swcadJs }),
+        aranea: araneaModule.init({ jscad, swcadJs }),
+        bibliopoli: bibliopoliModule.init({ jscad, swcadJs }),
     }
 
     return trim;
