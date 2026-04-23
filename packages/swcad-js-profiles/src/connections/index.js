@@ -467,87 +467,51 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             sampleThickness
         } = modelProperties.constants
 
-        const dovetailWidth = width - (interfaceMargin * 2)
-        const dovetailLength = depth - (interfaceMargin * 2)
+        ////////
 
-        const dovetailEndSize = [
-            dovetailLength / 6,
-            dovetailLength,
-        ]
+        const numMargins = numConnectors + 1
 
-        const widthCoords = [
-            interfaceMargin,
-            interfaceMargin + dovetailWidth,
-        ]
-        const lengthCoords = [
-            interfaceMargin,
-            interfaceMargin + dovetailLength,
-        ]
+        const totalConnectionWidths = width - (interfaceMargin * numMargins)
+        const connectionWidth = totalConnectionWidths / numConnectors
+        const connectionUnitWidth = 2 * interfaceMargin + connectionWidth
 
-        const dovetailPanelMidpoint = [
-            width / 2,
-            depth / 2,
-        ]
-
-        const baseProfilePanel = cuboid({
-            size: [width, depth, sampleThickness],
-            center: [dovetailPanelMidpoint[0], dovetailPanelMidpoint[1], 0]
+        const dovetailCutOpts = modelOpts({
+            ...opts,
+            size: [connectionUnitWidth, depth]
         })
 
-        const lowerPts = [
-            [0, lengthCoords[0]],
-            [widthCoords[0] + dovetailEndSize[0], lengthCoords[0]],
-            [widthCoords[1] - dovetailEndSize[0], lengthCoords[0]],
-            [width, lengthCoords[0]],
-        ]
+        console.log('dovetailRow() width, depth', width, depth)
+        console.log('dovetailRow() numConnectors, numMargins', numConnectors, numMargins)
+        console.log('dovetailRow() connectionWidth, connectionUnitWidth', connectionWidth, connectionUnitWidth)
+        console.log('dovetailRow() dovetailCutOpts', dovetailCutOpts)
 
-        const upperPts = [
-            [widthCoords[0], lengthCoords[1]],
-            [widthCoords[1], lengthCoords[1]],
-        ]
+        const dovetailCutData = dovetail(dovetailCutOpts)
+        const dovetailCutBase = dovetailCutData[1].cut
 
-        const allPts = [
-            lowerPts[0],
-            lowerPts[1],
-            ...upperPts,
-            lowerPts[2],
-            lowerPts[3],
-        ]
+        console.log('dovetailRow() dovetailCutData', dovetailCutData)
+        console.log('dovetailRow() dovetailCutBase', dovetailCutBase)
 
-        let dovetailCutPoints = allPts.map(dtPt => {
-            return cylinder({
-                radius: fitGap / 2,
-                height: sampleThickness * 10,
-                center: [dtPt[0], dtPt[1], 0],
-            })
-        })
+        let dovetailCut = dovetailCutBase
 
-        let dovetailCut = hullChain(dovetailCutPoints)
+        const translateDistBase = interfaceMargin + connectionWidth
+        for (let idx = 1; idx < numConnectors; idx++) {
+            const translateDist = translateDistBase * idx
+            dovetailCut = union(
+                dovetailCut,
+                translate([translateDist, 0, 0], dovetailCutBase)
+            )
+        }
 
-        const cutPanel = subtract(
-            baseProfilePanel,
-            dovetailCut
-        )
-
-        const cutParts = scission(cutPanel)
-        const dTailProfiles = [
-            align({ modes: ['center', 'center', 'center'] }, cutParts[1]),
-            align({ modes: ['center', 'center', 'center'] }, cutParts[0]),
-        ]
-
-        const dovetailProfiles = [
-            project({}, dTailProfiles[0]),
-            project({}, dTailProfiles[1]),
-        ]
+        ////////
 
         const mainModel = [
-            dovetailProfiles[1],
-            dovetailProfiles[0],
+            dovetailCutBase,
+            dovetailCut,
         ]
 
         const modelParts = {
-            male: dovetailProfiles[1],
-            female: dovetailProfiles[0],
+            male: dovetailCut,
+            female: dovetailCut,
             cut: dovetailCut,
         }
 
@@ -691,87 +655,51 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             sampleThickness
         } = modelProperties.constants
 
-        const tabWidth = width - (interfaceMargin * 2)
-        const tabLength = depth - (interfaceMargin * 2)
+        ////////
 
-        const tabEndSize = [
-            tabLength / 6,
-            tabLength,
-        ]
+        const numMargins = numConnectors + 1
 
-        const widthCoords = [
-            interfaceMargin,
-            interfaceMargin + tabWidth,
-        ]
-        const lengthCoords = [
-            interfaceMargin,
-            interfaceMargin + tabLength,
-        ]
+        const totalConnectionWidths = width - (interfaceMargin * numMargins)
+        const connectionWidth = totalConnectionWidths / numConnectors
+        const connectionUnitWidth = 2 * interfaceMargin + connectionWidth
 
-        const tabPanelMidpoint = [
-            width / 2,
-            depth / 2,
-        ]
-
-        const baseProfilePanel = cuboid({
-            size: [width, depth, sampleThickness],
-            center: [tabPanelMidpoint[0], tabPanelMidpoint[1], 0]
+        const tabCutOpts = modelOpts({
+            ...opts,
+            size: [connectionUnitWidth, depth]
         })
 
-        const lowerPts = [
-            [0, lengthCoords[0]],
-            [widthCoords[0], lengthCoords[0]],
-            [widthCoords[1], lengthCoords[0]],
-            [width, lengthCoords[0]],
-        ]
+        console.log('tabRow() width, depth', width, depth)
+        console.log('tabRow() numConnectors, numMargins', numConnectors, numMargins)
+        console.log('tabRow() connectionWidth, connectionUnitWidth', connectionWidth, connectionUnitWidth)
+        console.log('tabRow() tabCutOpts', tabCutOpts)
+        // console.log('tabRow() tabCutProps', tabCutProps)
+        
+        const tabCutData = tab(tabCutOpts)
+        const tabCutBase = tabCutData[1].cut
+        console.log('tabRow() tabCutData', tabCutData)
+        console.log('tabRow() tabCutBase', tabCutBase)
 
-        const upperPts = [
-            [widthCoords[0] + tabEndSize[0], lengthCoords[1]],
-            [widthCoords[1] - tabEndSize[0], lengthCoords[1]],
-        ]
+        let tabCut = tabCutBase
 
-        const allPts = [
-            lowerPts[0],
-            lowerPts[1],
-            ...upperPts,
-            lowerPts[2],
-            lowerPts[3],
-        ]
+        const translateDistBase = interfaceMargin + connectionWidth
+        for (let idx = 1; idx < numConnectors; idx++) {
+            const translateDist = translateDistBase * idx
+            tabCut = union(
+                tabCut,
+                translate([translateDist, 0, 0], tabCutBase)
+            )
+        }
 
-        let tabCutPoints = allPts.map(dtPt => {
-            return cylinder({
-                radius: fitGap / 2,
-                height: sampleThickness * 10,
-                center: [dtPt[0], dtPt[1], 0],
-            })
-        })
-
-        let tabCut = hullChain(tabCutPoints)
-
-        const cutPanel = subtract(
-            baseProfilePanel,
-            tabCut
-        )
-
-        const cutParts = scission(cutPanel)
-        const dTailProfiles = [
-            align({ modes: ['center', 'center', 'center'] }, cutParts[1]),
-            align({ modes: ['center', 'center', 'center'] }, cutParts[0]),
-        ]
-
-        const tabProfiles = [
-            project({}, dTailProfiles[0]),
-            project({}, dTailProfiles[1]),
-        ]
+        ////////
 
         const mainModel = [
-            tabProfiles[1],
-            tabProfiles[0],
+            tabCutBase,
+            tabCut,
         ]
 
         const modelParts = {
-            male: tabProfiles[1],
-            female: tabProfiles[0],
+            male: tabCut,
+            female: tabCut,
             cut: tabCut,
         }
 
