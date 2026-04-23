@@ -428,6 +428,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         const modelParts = {
             male: dovetailProfiles[1],
             female: dovetailProfiles[0],
+            cut: dovetailCut,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -537,6 +538,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         const modelParts = {
             male: tabProfiles[1],
             female: tabProfiles[0],
+            cut: tabCut,
         }
 
         return [mainModel, modelParts, modelProperties]
