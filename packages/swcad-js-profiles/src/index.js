@@ -3,6 +3,7 @@
 const beadsBitsModule = require('./beads-bits')
 const connectionsModule = require('./connections')
 const curveModule = require('./curve')
+const jointPanelModule = require('./joint-panel')
 const shapesModule = require('./shapes')
 const rectFrameModule = require('./shapes/rectangle/frame-rect')
 const structureModule = require('./structure')
@@ -14,7 +15,7 @@ const profilesInit = ({ jscad, swcadJs }) => {
     const curve = curveModule.init({ jscad, swcadJs })
     const beadsBits = beadsBitsModule.init({ jscad, swcadJs })
 
-    const preLib = {
+    let preLib = {
         ...swcadJs,
         profiles: {
             shapes: shapesCore,
@@ -31,12 +32,24 @@ const profilesInit = ({ jscad, swcadJs }) => {
         }
     }
 
+    const connections = connectionsModule.init({ jscad, swcadJs: preLib })
+    preLib = {
+        ...swcadJs,
+        profiles: {
+            shapes,
+            curve,
+            beadsBits,
+            connections
+        }
+    }
+
     return {
         shapes,
         beadsBits,
-        connections: connectionsModule.init({ jscad, swcadJs: preLib }),
+        connections,
         curve,
         structure: structureModule.init({ jscad, swcadJs: preLib }),
+        jointPanel: jointPanelModule.init({ jscad, swcadJs: preLib }),
         text: textModule.init({ jscad, swcadJs: preLib }),
         trim: trimModule.init({ jscad, swcadJs: preLib }),
     }

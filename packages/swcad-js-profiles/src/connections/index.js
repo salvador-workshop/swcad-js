@@ -408,7 +408,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             })
         })
 
-        let dovetailCut = hullChain(dovetailCutPoints)
+        const dovetailCut = hullChain(dovetailCutPoints)
 
         const cutPanel = subtract(
             baseProfilePanel,
@@ -434,84 +434,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         const modelParts = {
             male: dovetailProfiles[1],
             female: dovetailProfiles[0],
-            cut: dovetailCut,
-        }
-
-        return [mainModel, modelParts, modelProperties]
-    }
-
-    /**
-     * Generate dovetail row connectors
-     * @param {*} opts 
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof profiles.connections
-     * @since 0.13.4
-     */
-    const dovetailRow = (opts) => {
-        const defaults = modelDefaults()
-        const initOpts = modelOpts(opts)
-        const modelProperties = modelProps(initOpts)
-
-        const {
-            numConnectors
-        } = modelProperties.opts
-
-        const {
-            width,
-            depth,
-            fitGap,
-            interfaceMargin,
-        } = modelProperties.dims
-
-        const {
-            sampleThickness
-        } = modelProperties.constants
-
-        ////////
-
-        const numMargins = numConnectors + 1
-
-        const totalConnectionWidths = width - (interfaceMargin * numMargins)
-        const connectionWidth = totalConnectionWidths / numConnectors
-        const connectionUnitWidth = 2 * interfaceMargin + connectionWidth
-
-        const dovetailCutOpts = modelOpts({
-            ...opts,
-            size: [connectionUnitWidth, depth]
-        })
-
-        console.log('dovetailRow() width, depth', width, depth)
-        console.log('dovetailRow() numConnectors, numMargins', numConnectors, numMargins)
-        console.log('dovetailRow() connectionWidth, connectionUnitWidth', connectionWidth, connectionUnitWidth)
-        console.log('dovetailRow() dovetailCutOpts', dovetailCutOpts)
-
-        const dovetailCutData = dovetail(dovetailCutOpts)
-        const dovetailCutBase = dovetailCutData[1].cut
-
-        console.log('dovetailRow() dovetailCutData', dovetailCutData)
-        console.log('dovetailRow() dovetailCutBase', dovetailCutBase)
-
-        let dovetailCut = dovetailCutBase
-
-        const translateDistBase = interfaceMargin + connectionWidth
-        for (let idx = 1; idx < numConnectors; idx++) {
-            const translateDist = translateDistBase * idx
-            dovetailCut = union(
-                dovetailCut,
-                translate([translateDist, 0, 0], dovetailCutBase)
-            )
-        }
-
-        ////////
-
-        const mainModel = [
-            dovetailCutBase,
-            dovetailCut,
-        ]
-
-        const modelParts = {
-            male: dovetailCut,
-            female: dovetailCut,
             cut: dovetailCut,
         }
 
@@ -596,7 +518,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             })
         })
 
-        let tabCut = hullChain(tabCutPoints)
+        const tabCut = hullChain(tabCutPoints)
 
         const cutPanel = subtract(
             baseProfilePanel,
@@ -622,84 +544,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         const modelParts = {
             male: tabProfiles[1],
             female: tabProfiles[0],
-            cut: tabCut,
-        }
-
-        return [mainModel, modelParts, modelProperties]
-    }
-
-    /**
-     * Generate tab row connectors
-     * @param {*} opts 
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof profiles.connections
-     * @since 0.13.4
-     */
-    const tabRow = (opts) => {
-        const defaults = modelDefaults()
-        const initOpts = modelOpts(opts)
-        const modelProperties = modelProps(initOpts)
-
-        const {
-            numConnectors
-        } = modelProperties.opts
-
-        const {
-            width,
-            depth,
-            fitGap,
-            interfaceMargin,
-        } = modelProperties.dims
-
-        const {
-            sampleThickness
-        } = modelProperties.constants
-
-        ////////
-
-        const numMargins = numConnectors + 1
-
-        const totalConnectionWidths = width - (interfaceMargin * numMargins)
-        const connectionWidth = totalConnectionWidths / numConnectors
-        const connectionUnitWidth = 2 * interfaceMargin + connectionWidth
-
-        const tabCutOpts = modelOpts({
-            ...opts,
-            size: [connectionUnitWidth, depth]
-        })
-
-        console.log('tabRow() width, depth', width, depth)
-        console.log('tabRow() numConnectors, numMargins', numConnectors, numMargins)
-        console.log('tabRow() connectionWidth, connectionUnitWidth', connectionWidth, connectionUnitWidth)
-        console.log('tabRow() tabCutOpts', tabCutOpts)
-        // console.log('tabRow() tabCutProps', tabCutProps)
-        
-        const tabCutData = tab(tabCutOpts)
-        const tabCutBase = tabCutData[1].cut
-        console.log('tabRow() tabCutData', tabCutData)
-        console.log('tabRow() tabCutBase', tabCutBase)
-
-        let tabCut = tabCutBase
-
-        const translateDistBase = interfaceMargin + connectionWidth
-        for (let idx = 1; idx < numConnectors; idx++) {
-            const translateDist = translateDistBase * idx
-            tabCut = union(
-                tabCut,
-                translate([translateDist, 0, 0], tabCutBase)
-            )
-        }
-
-        ////////
-
-        const mainModel = [
-            tabCutBase,
-            tabCut,
-        ]
-
-        const modelParts = {
-            male: tabCut,
-            female: tabCut,
             cut: tabCut,
         }
 
@@ -1048,9 +892,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         defaults: modelDefaults,
         props: modelProps,
         dovetail,
-        dovetailRow,
         tab,
-        tabRow,
         polygon,
         ellipse,
         pegboard,
