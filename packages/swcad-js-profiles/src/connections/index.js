@@ -85,6 +85,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             opts: {
                 segments: 6,
                 unitSegments: 24,
+                numConnectors: 3,
             },
             dims: {
                 size: [
@@ -123,6 +124,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             unitRadius: defaultValues.dims.unitRadius,
             segments: defaultValues.opts.segments,
             unitSegments: defaultValues.opts.unitSegments,
+            numConnectors: defaultValues.opts.numConnectors,
             interfaceMargin: defaultValues.dims.interfaceMargin,
         }
 
@@ -153,6 +155,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             unitSpacing = defaults.opts.unitSpacing,
             unitRadius = defaults.opts.unitRadius,
             unitSegments = defaults.opts.unitSegments,
+            numConnectors = defaults.opts.numConnectors,
             segments = defaults.opts.segments,
             interfaceMargin = defaults.opts.interfaceMargin,
             type = defaults.opts.type,
@@ -176,6 +179,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             unitRadius,
             segments,
             unitSegments,
+            numConnectors,
             interfaceMargin,
         }
 
@@ -204,6 +208,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             unitRadius,
             segments,
             unitSegments,
+            numConnectors,
             interfaceMargin,
             type,
             scale,
@@ -237,6 +242,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             scale,
             segments,
             unitSegments,
+            numConnectors,
         }
 
         /** Various dimensions for model */
@@ -435,6 +441,120 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
+     * Generate dovetail row connectors
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof profiles.connections
+     * @since 0.13.4
+     */
+    const dovetailRow = (opts) => {
+        const defaults = modelDefaults()
+        const initOpts = modelOpts(opts)
+        const modelProperties = modelProps(initOpts)
+
+        const {
+            numConnectors
+        } = modelProperties.opts
+
+        const {
+            width,
+            depth,
+            fitGap,
+            interfaceMargin,
+        } = modelProperties.dims
+
+        const {
+            sampleThickness
+        } = modelProperties.constants
+
+        const dovetailWidth = width - (interfaceMargin * 2)
+        const dovetailLength = depth - (interfaceMargin * 2)
+
+        const dovetailEndSize = [
+            dovetailLength / 6,
+            dovetailLength,
+        ]
+
+        const widthCoords = [
+            interfaceMargin,
+            interfaceMargin + dovetailWidth,
+        ]
+        const lengthCoords = [
+            interfaceMargin,
+            interfaceMargin + dovetailLength,
+        ]
+
+        const dovetailPanelMidpoint = [
+            width / 2,
+            depth / 2,
+        ]
+
+        const baseProfilePanel = cuboid({
+            size: [width, depth, sampleThickness],
+            center: [dovetailPanelMidpoint[0], dovetailPanelMidpoint[1], 0]
+        })
+
+        const lowerPts = [
+            [0, lengthCoords[0]],
+            [widthCoords[0] + dovetailEndSize[0], lengthCoords[0]],
+            [widthCoords[1] - dovetailEndSize[0], lengthCoords[0]],
+            [width, lengthCoords[0]],
+        ]
+
+        const upperPts = [
+            [widthCoords[0], lengthCoords[1]],
+            [widthCoords[1], lengthCoords[1]],
+        ]
+
+        const allPts = [
+            lowerPts[0],
+            lowerPts[1],
+            ...upperPts,
+            lowerPts[2],
+            lowerPts[3],
+        ]
+
+        let dovetailCutPoints = allPts.map(dtPt => {
+            return cylinder({
+                radius: fitGap / 2,
+                height: sampleThickness * 10,
+                center: [dtPt[0], dtPt[1], 0],
+            })
+        })
+
+        let dovetailCut = hullChain(dovetailCutPoints)
+
+        const cutPanel = subtract(
+            baseProfilePanel,
+            dovetailCut
+        )
+
+        const cutParts = scission(cutPanel)
+        const dTailProfiles = [
+            align({ modes: ['center', 'center', 'center'] }, cutParts[1]),
+            align({ modes: ['center', 'center', 'center'] }, cutParts[0]),
+        ]
+
+        const dovetailProfiles = [
+            project({}, dTailProfiles[0]),
+            project({}, dTailProfiles[1]),
+        ]
+
+        const mainModel = [
+            dovetailProfiles[1],
+            dovetailProfiles[0],
+        ]
+
+        const modelParts = {
+            male: dovetailProfiles[1],
+            female: dovetailProfiles[0],
+            cut: dovetailCut,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
      * Generate tab connectors
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
@@ -445,6 +565,120 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
+
+        const {
+            width,
+            depth,
+            fitGap,
+            interfaceMargin,
+        } = modelProperties.dims
+
+        const {
+            sampleThickness
+        } = modelProperties.constants
+
+        const tabWidth = width - (interfaceMargin * 2)
+        const tabLength = depth - (interfaceMargin * 2)
+
+        const tabEndSize = [
+            tabLength / 6,
+            tabLength,
+        ]
+
+        const widthCoords = [
+            interfaceMargin,
+            interfaceMargin + tabWidth,
+        ]
+        const lengthCoords = [
+            interfaceMargin,
+            interfaceMargin + tabLength,
+        ]
+
+        const tabPanelMidpoint = [
+            width / 2,
+            depth / 2,
+        ]
+
+        const baseProfilePanel = cuboid({
+            size: [width, depth, sampleThickness],
+            center: [tabPanelMidpoint[0], tabPanelMidpoint[1], 0]
+        })
+
+        const lowerPts = [
+            [0, lengthCoords[0]],
+            [widthCoords[0], lengthCoords[0]],
+            [widthCoords[1], lengthCoords[0]],
+            [width, lengthCoords[0]],
+        ]
+
+        const upperPts = [
+            [widthCoords[0] + tabEndSize[0], lengthCoords[1]],
+            [widthCoords[1] - tabEndSize[0], lengthCoords[1]],
+        ]
+
+        const allPts = [
+            lowerPts[0],
+            lowerPts[1],
+            ...upperPts,
+            lowerPts[2],
+            lowerPts[3],
+        ]
+
+        let tabCutPoints = allPts.map(dtPt => {
+            return cylinder({
+                radius: fitGap / 2,
+                height: sampleThickness * 10,
+                center: [dtPt[0], dtPt[1], 0],
+            })
+        })
+
+        let tabCut = hullChain(tabCutPoints)
+
+        const cutPanel = subtract(
+            baseProfilePanel,
+            tabCut
+        )
+
+        const cutParts = scission(cutPanel)
+        const dTailProfiles = [
+            align({ modes: ['center', 'center', 'center'] }, cutParts[1]),
+            align({ modes: ['center', 'center', 'center'] }, cutParts[0]),
+        ]
+
+        const tabProfiles = [
+            project({}, dTailProfiles[0]),
+            project({}, dTailProfiles[1]),
+        ]
+
+        const mainModel = [
+            tabProfiles[1],
+            tabProfiles[0],
+        ]
+
+        const modelParts = {
+            male: tabProfiles[1],
+            female: tabProfiles[0],
+            cut: tabCut,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
+     * Generate tab row connectors
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof profiles.connections
+     * @since 0.13.4
+     */
+    const tabRow = (opts) => {
+        const defaults = modelDefaults()
+        const initOpts = modelOpts(opts)
+        const modelProperties = modelProps(initOpts)
+
+        const {
+            numConnectors
+        } = modelProperties.opts
 
         const {
             width,
@@ -886,7 +1120,9 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         defaults: modelDefaults,
         props: modelProps,
         dovetail,
+        dovetailRow,
         tab,
+        tabRow,
         polygon,
         ellipse,
         pegboard,
