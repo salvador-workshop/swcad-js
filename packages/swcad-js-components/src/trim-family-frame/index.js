@@ -625,6 +625,29 @@ const trimFamilyFrameInit = ({ jscad, swcadJs }) => {
 
                         fTrim = extrudeLinear({ height: length }, bibliopoliTrim)
                         break;
+                    case 'catonis':
+                        switch (opts.ornaments.trimLevels) {
+                            case 3:
+                                trimSize = 'largeOrn1'
+                                break;
+                            case 2:
+                                trimSize = 'mediumOrn1'
+                                break;
+                            case 1:
+                            default:
+                                trimSize = 'smallOrn1'
+                                break;
+                        }
+
+                        const tFamilyCatonis = trim.catonis({
+                            size: trimSizeDims,
+                        });
+                        let frameProfileCatonis = tFamilyCatonis[trimStyle][trimSize]
+                        let catonisTrim = extrudeLinear({ height: length }, frameProfileCatonis)
+                        catonisTrim = rotate([Math.PI / -2, Math.PI / -2, 0], catonisTrim)
+
+                        fTrim = extrudeLinear({ height: length }, catonisTrim)
+                        break;
                     case 'rounded':
                         fTrim = roundedCuboid({
                             size: [dims.trimWidth, length, dims.trimThickness],

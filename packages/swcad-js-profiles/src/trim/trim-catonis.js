@@ -241,14 +241,14 @@ const trimCatonis = ({ jscad, swcadJs }) => {
         const modelProperties = trimCatonisProps(initOpts)
 
         const detailCornerExt = ({ sideLength }) => {
-            const coveOpts = {
+            const roundOverOpts = {
                 radius1: sideLength,
                 radius2: sideLength,
             }
-            const coveData = beadsBitsProfiles.corner.cove(coveOpts)
-            const coveModel = coveData[0]
+            const roundOverData = beadsBitsProfiles.corner.roundOver(roundOverOpts)
+            const roundOverModel = roundOverData[0]
 
-            return coveModel
+            return roundOverModel
         }
 
         const detailCornerInt = ({ sideLength }) => {
