@@ -101,7 +101,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             logMode: 'normal',
             edgeMargin: math.inchesToMm(3 / 16),
             holeRadius: math.inchesToMm(0.125),
-            holeDistance: math.inchesToMm(0.5),
+            holeDistance: math.inchesToMm(1),
             holePattern: 'tri',
         }
 
@@ -144,13 +144,8 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
 
         const width = size[0]
         const depth = size[1]
-        const height = size[2]
 
         const holeDiam = holeRadius * 2
-
-        // const lgProfileBeadWidth = interfaceThickness * 1.75
-        // const mdProfileBeadWidth = interfaceThickness * 1.5
-        // const smProfileBeadWidth = interfaceThickness * 1.125
 
         const meshAreaSize = [
             size[0] - holeDiam - (edgeMargin * 2),
@@ -180,9 +175,8 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             meshAreaSize,
             interfaceThickness,
             fitGap,
-            // width,
-            // depth,
-            // height,
+            width,
+            depth,
             edgeMargin,
             holeRadius,
             holeDiam,

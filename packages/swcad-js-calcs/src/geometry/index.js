@@ -44,6 +44,7 @@ const ptCentroid = (points, mode = '3d') => {
 
 const geometryInit = ({ jscad, swcadJs }) => {
     const { math } = swcadJs.calcs;
+    const { constants } = swcadJs.data;
 
     /**
      * ...
@@ -82,6 +83,7 @@ const geometryInit = ({ jscad, swcadJs }) => {
      * @memberof calcs.geometry
      * @private
      */
+
     const getLineDataFromOutlinePoints = (outlinePts) => {
         const lineData = []
 
@@ -113,23 +115,27 @@ const geometryInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-         * Gets triangular points in area
-         * @memberof calcs.geometry
-         * @param {*} x 
-         * @param {*} y 
-         * @param {*} radius 
-         * @returns ...
-         */
-    const getTriangularPtsInArea = (x, y, radius, centrePoints = true) => {
-        const diam = radius * 2;
+     * Gets triangular points in area
+     * @memberof calcs.geometry
+     * @param {*} x 
+     * @param {*} y 
+     * @param {*} distance 
+     * @param {*} centrePoints 
+     * @returns ...
+     */
+
+    const getTriangularPtsInArea = (x, y, distance, centrePoints = true) => {
+        const halfDist = distance / 2;
         const allPoints = [];
 
         const allYCoords = [];
         let yCoordCtr = 0;
         do {
             allYCoords.push(yCoordCtr);
-            yCoordCtr = diam * 0.86603 + yCoordCtr;
-        } while (yCoordCtr <= y);
+            yCoordCtr = distance * constants.EQUI_TRIANGLE_HEIGHT_FACTOR + yCoordCtr;
+        } while (yCoordCtr < y);
+
+        const hasOffsetCollision = false
 
         let yIdxCtr = 0;
         do {
@@ -138,9 +144,11 @@ const geometryInit = ({ jscad, swcadJs }) => {
                 if (math.isEven(yIdxCtr)) {
                     allPoints.push({ x: xCtr, y: allYCoords[yIdxCtr] });
                 } else {
-                    allPoints.push({ x: radius + xCtr, y: allYCoords[yIdxCtr] });
+                    if (halfDist + xCtr <= x) {
+                        allPoints.push({ x: halfDist + xCtr, y: allYCoords[yIdxCtr] });
+                    }
                 }
-                xCtr = xCtr + diam;
+                xCtr = xCtr + distance;
             } while (xCtr < x);
             yIdxCtr = yIdxCtr + 1;
         } while (yIdxCtr < allYCoords.length);
@@ -165,23 +173,24 @@ const geometryInit = ({ jscad, swcadJs }) => {
      * @memberof calcs.geometry
      * @param {*} x 
      * @param {*} y 
-     * @param {*} radius 
+     * @param {*} distance 
+     * @param {*} centrePoints 
      * @returns ...
      */
-    const getSquarePtsInArea = (x, y, radius, centrePoints = true) => {
-        const diam = radius * 2;
+    const getSquarePtsInArea = (x, y, distance, centrePoints = true) => {
+        const halfDist = distance / 2;
         const allXCoords = [];
         let xCtr = 0;
         do {
             allXCoords.push(xCtr);
-            xCtr = xCtr + diam;
+            xCtr = xCtr + distance;
         } while (xCtr <= x);
 
         const allYCoords = [];
         let yCtr = 0;
         do {
             allYCoords.push(yCtr);
-            yCtr = yCtr + diam;
+            yCtr = yCtr + distance;
         } while (yCtr <= y);
 
         const allPoints = math.arrayCartesianProduct(allXCoords, allYCoords);
