@@ -44,6 +44,7 @@ const ptCentroid = (points, mode = '3d') => {
 
 const geometryInit = ({ jscad, swcadJs }) => {
     const { math } = swcadJs.calcs;
+    const { constants } = swcadJs.data;
 
     /**
      * ...
@@ -120,16 +121,18 @@ const geometryInit = ({ jscad, swcadJs }) => {
          * @param {*} radius 
          * @returns ...
          */
-    const getTriangularPtsInArea = (x, y, radius, centrePoints = true) => {
-        const diam = radius * 2;
+    const getTriangularPtsInArea = (x, y, base, centrePoints = true) => {
+        const halfBase = base / 2;
         const allPoints = [];
 
         const allYCoords = [];
         let yCoordCtr = 0;
         do {
             allYCoords.push(yCoordCtr);
-            yCoordCtr = diam * 0.86603 + yCoordCtr;
-        } while (yCoordCtr <= y);
+            yCoordCtr = base * constants.EQUI_TRIANGLE_HEIGHT_FACTOR + yCoordCtr;
+        } while (yCoordCtr < y);
+
+        const hasOffsetCollision = false
 
         let yIdxCtr = 0;
         do {
@@ -138,9 +141,11 @@ const geometryInit = ({ jscad, swcadJs }) => {
                 if (math.isEven(yIdxCtr)) {
                     allPoints.push({ x: xCtr, y: allYCoords[yIdxCtr] });
                 } else {
-                    allPoints.push({ x: radius + xCtr, y: allYCoords[yIdxCtr] });
+                    if (halfBase + xCtr <= x) {
+                        allPoints.push({ x: halfBase + xCtr, y: allYCoords[yIdxCtr] });
+                    }
                 }
-                xCtr = xCtr + diam;
+                xCtr = xCtr + base;
             } while (xCtr < x);
             yIdxCtr = yIdxCtr + 1;
         } while (yIdxCtr < allYCoords.length);
@@ -168,8 +173,9 @@ const geometryInit = ({ jscad, swcadJs }) => {
      * @param {*} radius 
      * @returns ...
      */
-    const getSquarePtsInArea = (x, y, radius, centrePoints = true) => {
-        const diam = radius * 2;
+    const getSquarePtsInArea = (x, y, diam, centrePoints = true) => {
+        // const diam = radius * 2;
+        const radius = diam / 2;
         const allXCoords = [];
         let xCtr = 0;
         do {
