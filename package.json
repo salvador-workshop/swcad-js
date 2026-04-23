@@ -1,6 +1,6 @@
 {
   "name": "swcad-js",
-  "version": "0.13.1",
+  "version": "0.13.2",
   "description": "Salvador Workshop's JSCAD utilities and toolkit",
   "workspaces": [
     "packages/*"
