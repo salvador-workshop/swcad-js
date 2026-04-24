@@ -1,5 +1,13 @@
 "use strict"
 
+/**
+ * Jointed panels
+ * @author R. J. Salvador
+ * @namespace jointPanel
+ * @memberof profiles
+ * @since 0.13.5
+ */
+
 const jointPanelsInit = ({ jscad, swcadJs }) => {
     const {
         cube,
@@ -53,7 +61,12 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
 
     const {
         math,
+        position
     } = swcadJs.calcs
+
+    const {
+        connections,
+    } = swcadJs.profiles
 
 
     //==============================================================================
@@ -69,6 +82,13 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
     const modelDefaults = () => {
         /** Specific value declarations */
         const defaultValues = {
+            constants: {
+                sampleThickness: 1, // scission only works with 3D objects. Need a filler thickness for now
+            },
+            opts: {
+                axis: 'x',
+                jointNumConnectors: 3,
+            },
             dims: {
                 size: [
                     math.inchesToMm(2),
@@ -77,6 +97,7 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
                 ],
                 jointWidth: math.inchesToMm(3 / 8),
                 jointMargin: math.inchesToMm(1 / 8),
+                jointInterfaceMargin: math.inchesToMm(3 / 8),
             },
             points: {
                 centre: [0, 0, 0]
@@ -101,6 +122,9 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             size: defaultValues.dims.size,
             jointWidth: defaultValues.dims.jointWidth,
             jointMargin: defaultValues.dims.jointMargin,
+            jointInterfaceMargin: defaultValues.dims.jointInterfaceMargin,
+            jointNumConnectors: defaultValues.opts.jointNumConnectors,
+            axis: defaultValues.opts.axis,
         }
 
         return {
@@ -128,6 +152,9 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             size = defaults.opts.size,
             jointWidth = defaults.opts.jointWidth,
             jointMargin = defaults.opts.jointMargin,
+            jointInterfaceMargin = defaults.opts.jointInterfaceMargin,
+            jointNumConnectors = defaults.opts.jointNumConnectors,
+            axis = defaults.opts.axis,
             type = defaults.opts.type,
             scale = defaults.opts.scale,
             interfaceThickness = defaults.opts.interfaceThickness,
@@ -145,6 +172,9 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             size,
             jointWidth,
             jointMargin,
+            jointInterfaceMargin,
+            jointNumConnectors,
+            axis,
             ...stdOpts,
         }
 
@@ -170,6 +200,9 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             size,
             jointWidth,
             jointMargin,
+            jointInterfaceMargin,
+            jointNumConnectors,
+            axis,
             type,
             scale,
             interfaceThickness,
@@ -183,6 +216,11 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
         const width = size[0]
         const depth = size[1]
 
+        const midPoint = [
+            width / 2,
+            depth / 2,
+        ]
+
         const totalJointWidth = jointMargin * 2 + jointWidth
 
         /* ----------------------------------------
@@ -191,12 +229,15 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
 
         /** Constant values for model */
         const modelConstants = {
+            sampleThickness: defaults.vals.constants.sampleThickness,
         }
 
         /** Derived user options for the model */
         const modelOpts = {
             type,
             scale,
+            axis,
+            jointNumConnectors,
         }
 
         /** Various dimensions for model */
@@ -206,6 +247,7 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             depth,
             jointWidth,
             jointMargin,
+            jointInterfaceMargin,
             totalJointWidth,
             interfaceThickness,
             fitGap,
@@ -213,7 +255,7 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
 
         /** Various key points for model */
         const modelPoints = {
-            centre: defaults.vals.points.centre,
+            centrePt: midPoint,
         }
 
         /** Components used by model */
@@ -253,12 +295,178 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
     * MODELLING FUNCTIONS
     * ------------------------------------- */
 
+    /**
+     * Generate one-joint rectangular panel
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof profiles.jointPanel
+     * @since 0.13.5
+     */
+
     const oneJointRectPanel = (opts) => {
-        return null
+        const defaults = modelDefaults()
+        const initOpts = modelOpts(opts)
+        const modelProperties = modelProps(initOpts)
+
+        const {
+            sampleThickness
+        } = modelProperties.constants
+
+        const {
+            axis,
+            jointNumConnectors,
+        } = modelProperties.opts
+
+        const {
+            size,
+            width,
+            depth,
+            jointWidth,
+            jointMargin,
+            jointInterfaceMargin,
+            totalJointWidth,
+        } = modelProperties.dims
+
+        const {
+            centrePt
+        } = modelProperties.points
+
+        // along X axis
+        let jointSize = [width, totalJointWidth]
+
+        if (axis == 'y') {
+            // along Y axis
+            jointSize = [depth, totalJointWidth]
+        }
+
+        const jointData = connections.dovetailRow({
+            size: jointSize,
+            interfaceMargin: jointInterfaceMargin,
+            numConnectors: jointNumConnectors,
+        })
+        let jointCut = position.ctr(jointData[1].cut)
+        if (axis == 'y') {
+            jointCut = rotate([0, 0, TAU / 4], jointCut)
+        }
+        const oneJointRectBasePanel = cuboid({
+            size: [width, depth, sampleThickness],
+        })
+
+        const cutPanel = subtract(
+            oneJointRectBasePanel,
+            jointCut
+        )
+        const cutParts = scission(cutPanel)
+        const oProfiles = [
+            align({ modes: ['center', 'center', 'center'] }, cutParts[1]),
+            align({ modes: ['center', 'center', 'center'] }, cutParts[0]),
+        ]
+        const outProfiles = [
+            project({}, oProfiles[0]),
+            project({}, oProfiles[1]),
+        ]
+
+        const mainModel = [
+            outProfiles[0],
+            outProfiles[1],
+        ]
+
+        const modelParts = {
+            male: outProfiles[0],
+            female: outProfiles[1],
+            cut: jointCut,
+        }
+
+        return [mainModel, modelParts, modelProperties]
     }
 
+    /**
+     * Generate two-joint rectangular panel
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof profiles.jointPanel
+     * @since 0.13.5
+     */
+
     const twoJointRectPanel = (opts) => {
-        return null
+        const defaults = modelDefaults()
+        const initOpts = modelOpts(opts)
+        const modelProperties = modelProps(initOpts)
+
+        const {
+            sampleThickness
+        } = modelProperties.constants
+
+        const {
+            axis,
+            jointNumConnectors,
+        } = modelProperties.opts
+
+        const {
+            size,
+            width,
+            depth,
+            jointWidth,
+            jointMargin,
+            jointInterfaceMargin,
+            totalJointWidth,
+        } = modelProperties.dims
+
+        const {
+            centrePt
+        } = modelProperties.points
+
+        // along X axis
+        const jointSizeX = [width, totalJointWidth]
+        // along Y axis
+        const jointSizeY = [depth, totalJointWidth]
+
+        const jointDataX = connections.dovetailRow({
+            size: jointSizeX,
+            interfaceMargin: jointInterfaceMargin,
+            numConnectors: jointNumConnectors,
+        })
+        const jointCutX = position.ctr(jointDataX[1].cut)
+
+        const jointDataY = connections.dovetailRow({
+            size: jointSizeY,
+            interfaceMargin: jointInterfaceMargin,
+            numConnectors: jointNumConnectors,
+        })
+        const jointCutY = rotate([0, 0, TAU / 4], position.ctr(jointDataY[1].cut))
+
+        const comboCut = union(jointCutX, jointCutY)
+
+        const twoJointRectBasePanel = cuboid({
+            size: [width, depth, sampleThickness],
+        })
+
+        const cutPanel = subtract(
+            twoJointRectBasePanel,
+            comboCut,
+        )
+        const cutParts = scission(cutPanel)
+        const oProfiles = [
+            align({ modes: ['center', 'center', 'center'] }, cutParts[0]),
+            align({ modes: ['center', 'center', 'center'] }, cutParts[1]),
+            align({ modes: ['center', 'center', 'center'] }, cutParts[2]),
+            align({ modes: ['center', 'center', 'center'] }, cutParts[3]),
+        ]
+        const outProfiles = [
+            project({}, oProfiles[0]),
+            project({}, oProfiles[1]),
+            project({}, oProfiles[2]),
+            project({}, oProfiles[3]),
+        ]
+
+        const mainModel = outProfiles
+
+        const modelParts = {
+            model: outProfiles,
+            cut: comboCut,
+        }
+
+        return [mainModel, modelParts, modelProperties]
     }
 
     return {
