@@ -28,7 +28,10 @@
         <article>
             <pre class="prettyprint source linenums"><code>"use strict"
 
+const ellipseModule = require('./ellipse')
 const rectangleModule = require('./rectangle')
+const squareModule = require('./square')
+const triangleModule = require('./triangle')
 
 /**
  * Builds various 2D profiles
@@ -44,177 +47,10 @@ const profileBuilder = ({ jscad, swcadJs }) => {
   const { constants } = swcadJs.data
   const { position } = swcadJs.calcs
 
+  const ellipses = ellipseModule.init({ jscad, swcadJs })
   const rectangles = rectangleModule.init({ jscad, swcadJs })
-
-
-  //-------------
-  //  TRIANGLES
-  //-------------
-
-  const createRtTriangle = ({ base, height, ratio }) => {
-    const validOpts = {
-      short: base || height / ratio,
-      long: height || base * ratio
-    }
-    const triOpts = position.triangle.rightTriangleOpts({ ...validOpts })
-    return triangle(triOpts);
-  }
-
-  /**
-   * Triangle profiles
-   * @memberof profiles.shapes
-   * @namespace triangle
-   */
-  const triangles = {
-    /**
-     * ...
-     * @memberof profiles.shapes.triangle
-     * @param {object} opts
-     * @returns ...
-     */
-    equilateral: ({ base }) => {
-      return triangle({ type: 'SSS', values: [base, base, base] })
-    },
-    /**
-     * ...
-     * @memberof profiles.shapes.triangle
-     * @param {object} opts
-     * @returns ...
-     */
-    right45: ({ base }) => {
-      const triOpts = position.triangle.rightTriangleOpts({ short: base, long: base })
-      return triangle(triOpts);
-    },
-    /**
-     * ...
-     * @memberof profiles.shapes.triangle
-     * @param {object} opts
-     * @returns ...
-     */
-    right30: ({ base, height }) => {
-      return createRtTriangle({ base, height, ratio: 2 });
-    },
-    /**
-     * ...
-     * @memberof profiles.shapes.triangle
-     * @param {object} opts
-     * @returns ...
-     */
-    rightGolden: ({ base, height }) => {
-      return createRtTriangle({ base, height, ratio: constants.PHI });
-    },
-    /**
-     * ...
-     * @memberof profiles.shapes.triangle
-     * @param {object} opts
-     * @returns ...
-     */
-    rightSilver: ({ base, height }) => {
-      return createRtTriangle({ base, height, ratio: constants.SILVER_RATIO });
-    },
-    /**
-     * ...
-     * @memberof profiles.shapes.triangle
-     * @param {object} opts
-     * @returns ...
-     */
-    rightBronze: ({ base, height }) => {
-      return createRtTriangle({ base, height, ratio: constants.BRONZE_RATIO });
-    },
-    /**
-     * ...
-     * @memberof profiles.shapes.triangle
-     * @param {object} opts
-     * @returns ...
-     */
-    rightCopper: ({ base, height }) => {
-      return createRtTriangle({ base, height, ratio: constants.COPPER_RATIO });
-    },
-  }
-
-
-  //-----------
-  //  ELLIPSE
-  //-----------
-
-  const createEllipse = ({ length, width, ratio }) => {
-    const validSize = [
-      length || width * ratio,
-      width || length / ratio
-    ]
-    return ellipse({ radius: validSize });
-  }
-
-  /**
-   * Ellipse profiles
-   * @memberof profiles.shapes
-   * @namespace ellipse
-   */
-  const ellipses = {
-    /**
-     * ...
-     * @memberof profiles.shapes.ellipse
-     * @param {object} opts
-     * @returns ...
-     */
-    golden: ({ length, width }) => {
-      return createEllipse({ length, width, ratio: constants.PHI })
-    },
-    /**
-     * ...
-     * @memberof profiles.shapes.ellipse
-     * @param {object} opts
-     * @returns ...
-     */
-    sixtyThirty: ({ length, width }) => {
-      return createEllipse({ length, width, ratio: 2 })
-    },
-    /**
-     * ...
-     * @memberof profiles.shapes.ellipse
-     * @param {object} opts
-     * @returns ...
-     */
-    silver: ({ length, width }) => {
-      return createEllipse({ length, width, ratio: constants.SILVER_RATIO })
-    },
-    /**
-     * ...
-     * @memberof profiles.shapes.ellipse
-     * @param {object} opts
-     * @returns ...
-     */
-    bronze: ({ length, width }) => {
-      return createEllipse({ length, width, ratio: constants.BRONZE_RATIO })
-    },
-    /**
-     * ...
-     * @memberof profiles.shapes.ellipse
-     * @param {object} opts
-     * @returns ...
-     */
-    copper: ({ length, width }) => {
-      return createEllipse({ length, width, ratio: constants.COPPER_RATIO })
-    },
-    /**
-     * ...
-     * @memberof profiles.shapes.ellipse
-     * @param {object} opts
-     * @returns ...
-     */
-    superGolden: ({ length, width }) => {
-      return createEllipse({ length, width, ratio: constants.SUPERGOLDEN_RATIO })
-    },
-    /**
-     * ...
-     * @memberof profiles.shapes.ellipse
-     * @param {object} opts
-     * @returns ...
-     */
-    plastic: ({ length, width }) => {
-      return createEllipse({ length, width, ratio: constants.PLASTIC_RATIO })
-    },
-  }
+  const squares = squareModule.init({ jscad, swcadJs })
+  const triangles = triangleModule.init({ jscad, swcadJs })
 
   //----------
   //  OUTPUT
@@ -226,71 +62,10 @@ const profileBuilder = ({ jscad, swcadJs }) => {
    * @namespace shapes
    */
   const shapes = {
-    /**
-     * Builds various 2D squares
-     * @memberof profiles.shapes
-     * @namespace square
-     */
-    square: {
-      /**
-       * Square with circular notches at corners.
-       * @memberof profiles.shapes.square
-       * @instance
-       * @param {Object} opts 
-       * @param {number} opts.sqLength - side length for bounding square 
-       * @param {number} opts.notchRadius - radius of circular notch
-       */
-      cornerCircNotch: (opts) => {
-        // TODO - fix implementation. Everything assumes that cornerRad === sqLen / 4.
-        // So the bounding square probably would be off if it's changed.
-        const sqLen = opts.sqLength;
-        const halfUnit = sqLen / 2
-        const cornerRad = opts.notchRadius || sqLen / 4;
-        const centrePoints = [
-          [halfUnit, halfUnit],
-          [-halfUnit, halfUnit],
-          [halfUnit, -halfUnit],
-          [-halfUnit, -halfUnit],
-        ];
-
-        const baseSquare = square({ size: sqLen });
-        const cornerCircles = union(centrePoints.map(cPt => {
-          return circle({ radius: cornerRad, center: cPt });
-        }));
-
-        return subtract(baseSquare, cornerCircles);
-      },
-      /**
-       * Square with circles at corners.
-       * @memberof profiles.shapes.square
-       * @instance
-       * @param {Object} opts 
-       * @param {number} opts.sqLength - side length for bounding square 
-       * @param {number} opts.cornerRadius - radius of circular corner
-       */
-      cornerCircles: (opts) => {
-        // TODO - fix implementation. Everything assumes that cornerRad === baseSqLen / 4.
-        // So the bounding square probably would be off if it's changed.
-        const sqLen = opts.sqLength;
-
-        const baseSqLen = sqLen * 2 / 3;
-        const halfUnit = baseSqLen / 2;
-        const cornerRad = opts.cornerRadius || baseSqLen / 4;
-        const centrePoints = [
-          [halfUnit, halfUnit],
-          [-halfUnit, halfUnit],
-          [halfUnit, -halfUnit],
-          [-halfUnit, -halfUnit],
-        ];
-
-        const baseSquare = square({ size: baseSqLen });
-        const cornerCircles = union(centrePoints.map(cPt => {
-          return circle({ radius: cornerRad, center: cPt });
-        }));
-
-        return union(baseSquare, cornerCircles);
-      }
-    },
+    ellipse: ellipses,
+    rectangle: rectangles,
+    square: squares,
+    triangle: triangles,
     octagon: {
       /**
        * octFromDiam
@@ -310,9 +85,6 @@ const profileBuilder = ({ jscad, swcadJs }) => {
         return intersect(baseSquare, angledSquare);
       }
     },
-    triangle: triangles,
-    rectangle: rectangles,
-    ellipse: ellipses,
   }
 
   return shapes
@@ -329,13 +101,13 @@ module.exports = { init: profileBuilder }
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.position.cuboid.html">calcs.position.cuboid</a></li><li><a href="calcs.position.rectangle.html">calcs.position.rectangle</a></li><li><a href="calcs.position.triangle.html">calcs.position.triangle</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="componentSpec.html">componentSpec</a></li><li><a href="componentSpec.brick.html">componentSpec.brick</a></li><li><a href="componentSpec.crafts.html">componentSpec.crafts</a></li><li><a href="componentSpec.tile.html">componentSpec.tile</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.moulding.html">components.moulding</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.functions.html">data.functions</a></li><li><a href="data.specifications.html">data.specifications</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="data.standards.crafts.html">data.standards.crafts</a></li><li><a href="data.standards.lumber.html">data.standards.lumber</a></li><li><a href="data.standards.masonry.html">data.standards.masonry</a></li><li><a href="data.standards.paper.html">data.standards.paper</a></li><li><a href="data.standards.tiles.html">data.standards.tiles</a></li><li><a href="models.html">models</a></li><li><a href="models.arch.html">models.arch</a></li><li><a href="models.foil.html">models.foil</a></li><li><a href="models.structure.html">models.structure</a></li><li><a href="models.structure.wall.html">models.structure.wall</a></li><li><a href="models.structure.wallEntryway.html">models.structure.wallEntryway</a></li><li><a href="profileSpec.html">profileSpec</a></li><li><a href="profileSpec.lumber.html">profileSpec.lumber</a></li><li><a href="profileSpec.paper.html">profileSpec.paper</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.curve.html">profiles.curve</a></li><li><a href="profiles.jointPanel.html">profiles.jointPanel</a></li><li><a href="profiles.shapes.html">profiles.shapes</a></li><li><a href="profiles.shapes.ellipse.html">profiles.shapes.ellipse</a></li><li><a href="profiles.shapes.rectangle.html">profiles.shapes.rectangle</a></li><li><a href="profiles.shapes.square.html">profiles.shapes.square</a></li><li><a href="profiles.shapes.triangle.html">profiles.shapes.triangle</a></li><li><a href="profiles.structure.arch.html">profiles.structure.arch</a></li><li><a href="profiles.structure.foil.html">profiles.structure.foil</a></li><li><a href="profiles.structure.mesh.html">profiles.structure.mesh</a></li><li><a href="profiles.text.html">profiles.text</a></li><li><a href="profiles.trim.html">profiles.trim</a></li><li><a href="utils.html">utils</a></li><li><a href="utils.colors.html">utils.colors</a></li><li><a href="utils.layout.html">utils.layout</a></li><li><a href="utils.palette.html">utils.palette</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.position.cuboid.html">calcs.position.cuboid</a></li><li><a href="calcs.position.rectangle.html">calcs.position.rectangle</a></li><li><a href="calcs.position.triangle.html">calcs.position.triangle</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="componentSpec.html">componentSpec</a></li><li><a href="componentSpec.brick.html">componentSpec.brick</a></li><li><a href="componentSpec.crafts.html">componentSpec.crafts</a></li><li><a href="componentSpec.tile.html">componentSpec.tile</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.moulding.html">components.moulding</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.functions.html">data.functions</a></li><li><a href="data.specifications.html">data.specifications</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="data.standards.crafts.html">data.standards.crafts</a></li><li><a href="data.standards.lumber.html">data.standards.lumber</a></li><li><a href="data.standards.masonry.html">data.standards.masonry</a></li><li><a href="data.standards.paper.html">data.standards.paper</a></li><li><a href="data.standards.tiles.html">data.standards.tiles</a></li><li><a href="models.html">models</a></li><li><a href="models.arch.html">models.arch</a></li><li><a href="models.foil.html">models.foil</a></li><li><a href="models.structure.html">models.structure</a></li><li><a href="models.structure.wall.html">models.structure.wall</a></li><li><a href="models.structure.wallEntryway.html">models.structure.wallEntryway</a></li><li><a href="profileSpec.html">profileSpec</a></li><li><a href="profileSpec.lumber.html">profileSpec.lumber</a></li><li><a href="profileSpec.paper.html">profileSpec.paper</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.curve.html">profiles.curve</a></li><li><a href="profiles.jointPanel.html">profiles.jointPanel</a></li><li><a href="profiles.shapes.html">profiles.shapes</a></li><li><a href="profiles.shapes.ellipse.html">profiles.shapes.ellipse</a></li><li><a href="profiles.shapes.rectangle.html">profiles.shapes.rectangle</a></li><li><a href="profiles.shapes.triangle.html">profiles.shapes.triangle</a></li><li><a href="profiles.structure.arch.html">profiles.structure.arch</a></li><li><a href="profiles.structure.foil.html">profiles.structure.foil</a></li><li><a href="profiles.structure.mesh.html">profiles.structure.mesh</a></li><li><a href="profiles.text.html">profiles.text</a></li><li><a href="profiles.trim.html">profiles.trim</a></li><li><a href="utils.html">utils</a></li><li><a href="utils.colors.html">utils.colors</a></li><li><a href="utils.layout.html">utils.layout</a></li><li><a href="utils.palette.html">utils.palette</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Apr 24 2026 11:01:42 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Apr 24 2026 16:01:22 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

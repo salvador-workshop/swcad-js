@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: swcad-js-data/src/standards/index.js</title>
+    <title>JSDoc: Source: swcad-js-profiles/src/shapes/ellipse/index.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: swcad-js-data/src/standards/index.js</h1>
+    <h1 class="page-title">Source: swcad-js-profiles/src/shapes/ellipse/index.js</h1>
 
     
 
@@ -28,67 +28,102 @@
         <article>
             <pre class="prettyprint source linenums"><code>"use strict"
 
-const craftStd = require('./std-crafts')
-const lumberStd = require('./std-lumber')
-const masonryStd = require('./std-masonry')
-const paperStd = require('./std-paper')
-const tileStd = require('./std-tiles')
+const ellipseInit = ({ jscad, swcadJs }) => {
+  const { square, circle, rectangle, triangle, ellipse } = jscad.primitives
+  const { intersect, union, subtract } = jscad.booleans
+  const { rotate, align } = jscad.transforms
+  const { geom2, path2 } = jscad.geometries
 
-const inchesToMm = (numIn) => numIn * 25.4
+  const { constants } = swcadJs.data
+  const { position } = swcadJs.calcs
 
-/**
- * ...
- * @memberof data
- * @namespace standards
- */
+  //-----------
+  //  ELLIPSE
+  //-----------
 
-const standards = ({ jscad }) => {
+  const createEllipse = ({ width, depth, ratio }) => {
+    const validSize = [
+      width || depth / ratio,
+      depth || width * ratio,
+    ]
+    return ellipse({ radius: validSize });
+  }
 
+  /**
+   * Ellipse profiles
+   * @memberof profiles.shapes
+   * @namespace ellipse
+   */
+  const ellipses = {
     /**
-     * Pegboard standards
-     * @memberof data.standards
+     * ...
+     * @memberof profiles.shapes.ellipse
+     * @param {object} opts
+     * @returns ...
      */
-    const pegboard = {
-        PEGBOARD_SPACING: inchesToMm(1),
-        PEGBOARD_HOLE_DIAM: inchesToMm(7 / 32),
-        MICRO_PEGBOARD_SPACING: inchesToMm(1 / 2),
-        MICRO_PEGBOARD_HOLE_DIAM: inchesToMm(1 / 8),
-    }
-
+    golden: ({ width, depth }) => {
+      return createEllipse({ width, depth, ratio: constants.PHI })
+    },
     /**
-     * Gridfinity standards
-     * @memberof data.standards
+     * ...
+     * @memberof profiles.shapes.ellipse
+     * @param {object} opts
+     * @returns ...
      */
-    const gridfinity = {
-        GRIDFINITY_SPACING: 42,
-        GRIDFINITY_RAIL_WIDTH: 7,
-    }
-
+    sixtyThirty: ({ width, depth }) => {
+      return createEllipse({ width, depth, ratio: 2 })
+    },
     /**
-     * SW Panel Thicknesses
-     * @memberof data.standards
+     * ...
+     * @memberof profiles.shapes.ellipse
+     * @param {object} opts
+     * @returns ...
      */
-    const swDefaults = {
-        PANEL_THICKNESS_XS: inchesToMm(2 / 64),  // 1/32"
-        PANEL_THICKNESS_SM: inchesToMm(3 / 64),
-        PANEL_THICKNESS_MD: inchesToMm(4 / 64),   // 1/16"
-        PANEL_THICKNESS_LG: inchesToMm(5 / 64),
-        PANEL_THICKNESS_XL: inchesToMm(6 / 64),   // 3/32"
-    }
+    silver: ({ width, depth }) => {
+      return createEllipse({ width, depth, ratio: constants.SILVER_RATIO })
+    },
+    /**
+     * ...
+     * @memberof profiles.shapes.ellipse
+     * @param {object} opts
+     * @returns ...
+     */
+    bronze: ({ width, depth }) => {
+      return createEllipse({ width, depth, ratio: constants.BRONZE_RATIO })
+    },
+    /**
+     * ...
+     * @memberof profiles.shapes.ellipse
+     * @param {object} opts
+     * @returns ...
+     */
+    copper: ({ width, depth }) => {
+      return createEllipse({ width, depth, ratio: constants.COPPER_RATIO })
+    },
+    /**
+     * ...
+     * @memberof profiles.shapes.ellipse
+     * @param {object} opts
+     * @returns ...
+     */
+    superGolden: ({ width, depth }) => {
+      return createEllipse({ width, depth, ratio: constants.SUPERGOLDEN_RATIO })
+    },
+    /**
+     * ...
+     * @memberof profiles.shapes.ellipse
+     * @param {object} opts
+     * @returns ...
+     */
+    plastic: ({ width, depth }) => {
+      return createEllipse({ width, depth, ratio: constants.PLASTIC_RATIO })
+    },
+  }
 
-    return {
-        pegboard,
-        gridfinity,
-        swDefaults,
-        crafts: craftStd.init({ jscad }),
-        lumber: lumberStd.init({ jscad }),
-        masonry: masonryStd.init({ jscad }),
-        paper: paperStd.init({ jscad }),
-        tiles: tileStd.init({ jscad }),
-    }
+  return ellipses
 }
 
-module.exports = { init: standards };
+module.exports = { init: ellipseInit }
 </code></pre>
         </article>
     </section>

@@ -124,21 +124,20 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
                     math.inchesToMm(1),
                 ],
                 jointWidth: math.inchesToMm(3 / 8),
-                jointMargin: math.inchesToMm(1 / 8),
-                jointInterfaceMargin: math.inchesToMm(3 / 8),
+                jointMargin: math.inchesToMm(1 / 4),
             },
             points: {
                 centre: [0, 0, 0]
             },
             types: {
-                default: { id: 'default', desc: 'Default' },
-                alt: { id: 'alt', desc: 'Alternate' },
+                tab: { id: 'tab', desc: 'Tab' },
+                dovetail: { id: 'dovetail', desc: 'Dovetail' },
             },
         }
 
         /** Options used by SW models */
         const standardOpts = {
-            type: defaultValues.types.default.id,
+            type: defaultValues.types.tab.id,
             scale: 1,
             interfaceThickness: 1.333333,
             fitGap: math.inchesToMm(1 / 128),
@@ -150,7 +149,6 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             size: defaultValues.dims.size,
             jointWidth: defaultValues.dims.jointWidth,
             jointMargin: defaultValues.dims.jointMargin,
-            jointInterfaceMargin: defaultValues.dims.jointInterfaceMargin,
             jointNumConnectors: defaultValues.opts.jointNumConnectors,
             axis: defaultValues.opts.axis,
         }
@@ -180,7 +178,6 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             size = defaults.opts.size,
             jointWidth = defaults.opts.jointWidth,
             jointMargin = defaults.opts.jointMargin,
-            jointInterfaceMargin = defaults.opts.jointInterfaceMargin,
             jointNumConnectors = defaults.opts.jointNumConnectors,
             axis = defaults.opts.axis,
             type = defaults.opts.type,
@@ -200,7 +197,6 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             size,
             jointWidth,
             jointMargin,
-            jointInterfaceMargin,
             jointNumConnectors,
             axis,
             ...stdOpts,
@@ -228,7 +224,6 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             size,
             jointWidth,
             jointMargin,
-            jointInterfaceMargin,
             jointNumConnectors,
             axis,
             type,
@@ -275,7 +270,6 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             depth,
             jointWidth,
             jointMargin,
-            jointInterfaceMargin,
             totalJointWidth,
             interfaceThickness,
             fitGap,
@@ -341,6 +335,7 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
         } = modelProperties.constants
 
         const {
+            type,
             axis,
             jointNumConnectors,
         } = modelProperties.opts
@@ -351,7 +346,6 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             depth,
             jointWidth,
             jointMargin,
-            jointInterfaceMargin,
             totalJointWidth,
         } = modelProperties.dims
 
@@ -367,11 +361,17 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             jointSize = [depth, totalJointWidth]
         }
 
-        const jointData = connections.dovetailRow({
+        const jointOpts = {
             size: jointSize,
-            interfaceMargin: jointInterfaceMargin,
+            interfaceMargin: jointMargin,
             numConnectors: jointNumConnectors,
-        })
+        }
+
+        let jointData = connections.tabRow(jointOpts)
+        if (type == 'dovetail') {
+            jointData = connections.dovetailRow(jointOpts)
+        }
+
         let jointCut = position.ctr(jointData[1].cut)
         if (axis == 'y') {
             jointCut = rotate([0, 0, TAU / 4], jointCut)
@@ -426,6 +426,7 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
         } = modelProperties.constants
 
         const {
+            type,
             axis,
             jointNumConnectors,
         } = modelProperties.opts
@@ -436,7 +437,6 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             depth,
             jointWidth,
             jointMargin,
-            jointInterfaceMargin,
             totalJointWidth,
         } = modelProperties.dims
 
@@ -444,23 +444,36 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             centrePt
         } = modelProperties.points
 
-        // along X axis
-        const jointSizeX = [width, totalJointWidth]
-        // along Y axis
-        const jointSizeY = [depth, totalJointWidth]
+        let jNumConnectors = jointNumConnectors
+        if (typeof jointNumConnectors == 'number') {
+            jNumConnectors = [
+                jointNumConnectors,
+                jointNumConnectors
+            ]
+        }
 
-        const jointDataX = connections.dovetailRow({
+        const jointSizeX = [width, totalJointWidth]
+        const jointOptsX = {
             size: jointSizeX,
-            interfaceMargin: jointInterfaceMargin,
-            numConnectors: jointNumConnectors,
-        })
+            interfaceMargin: jointMargin,
+            numConnectors: jNumConnectors[0],
+        }
+        let jointDataX = connections.tabRow(jointOptsX)
+        if (type == 'dovetail') {
+            jointDataX = connections.dovetailRow(jointOptsX)
+        }
         const jointCutX = position.ctr(jointDataX[1].cut)
 
-        const jointDataY = connections.dovetailRow({
+        const jointSizeY = [depth, totalJointWidth]
+        const jointOptsY = {
             size: jointSizeY,
-            interfaceMargin: jointInterfaceMargin,
-            numConnectors: jointNumConnectors,
-        })
+            interfaceMargin: jointMargin,
+            numConnectors: jNumConnectors[1],
+        }
+        let jointDataY = connections.tabRow(jointOptsY)
+        if (type == 'dovetail') {
+            jointDataY = connections.dovetailRow(jointOptsY)
+        }
         const jointCutY = rotate([0, 0, TAU / 4], position.ctr(jointDataY[1].cut))
 
         const comboCut = union(jointCutX, jointCutY)
@@ -518,13 +531,13 @@ module.exports = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.position.cuboid.html">calcs.position.cuboid</a></li><li><a href="calcs.position.rectangle.html">calcs.position.rectangle</a></li><li><a href="calcs.position.triangle.html">calcs.position.triangle</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="componentSpec.html">componentSpec</a></li><li><a href="componentSpec.brick.html">componentSpec.brick</a></li><li><a href="componentSpec.crafts.html">componentSpec.crafts</a></li><li><a href="componentSpec.tile.html">componentSpec.tile</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.moulding.html">components.moulding</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.functions.html">data.functions</a></li><li><a href="data.specifications.html">data.specifications</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="data.standards.crafts.html">data.standards.crafts</a></li><li><a href="data.standards.lumber.html">data.standards.lumber</a></li><li><a href="data.standards.masonry.html">data.standards.masonry</a></li><li><a href="data.standards.paper.html">data.standards.paper</a></li><li><a href="data.standards.tiles.html">data.standards.tiles</a></li><li><a href="models.html">models</a></li><li><a href="models.arch.html">models.arch</a></li><li><a href="models.foil.html">models.foil</a></li><li><a href="models.structure.html">models.structure</a></li><li><a href="models.structure.wall.html">models.structure.wall</a></li><li><a href="models.structure.wallEntryway.html">models.structure.wallEntryway</a></li><li><a href="profileSpec.html">profileSpec</a></li><li><a href="profileSpec.lumber.html">profileSpec.lumber</a></li><li><a href="profileSpec.paper.html">profileSpec.paper</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.curve.html">profiles.curve</a></li><li><a href="profiles.jointPanel.html">profiles.jointPanel</a></li><li><a href="profiles.shapes.html">profiles.shapes</a></li><li><a href="profiles.shapes.ellipse.html">profiles.shapes.ellipse</a></li><li><a href="profiles.shapes.rectangle.html">profiles.shapes.rectangle</a></li><li><a href="profiles.shapes.square.html">profiles.shapes.square</a></li><li><a href="profiles.shapes.triangle.html">profiles.shapes.triangle</a></li><li><a href="profiles.structure.arch.html">profiles.structure.arch</a></li><li><a href="profiles.structure.foil.html">profiles.structure.foil</a></li><li><a href="profiles.structure.mesh.html">profiles.structure.mesh</a></li><li><a href="profiles.text.html">profiles.text</a></li><li><a href="profiles.trim.html">profiles.trim</a></li><li><a href="utils.html">utils</a></li><li><a href="utils.colors.html">utils.colors</a></li><li><a href="utils.layout.html">utils.layout</a></li><li><a href="utils.palette.html">utils.palette</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.position.cuboid.html">calcs.position.cuboid</a></li><li><a href="calcs.position.rectangle.html">calcs.position.rectangle</a></li><li><a href="calcs.position.triangle.html">calcs.position.triangle</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="componentSpec.html">componentSpec</a></li><li><a href="componentSpec.brick.html">componentSpec.brick</a></li><li><a href="componentSpec.crafts.html">componentSpec.crafts</a></li><li><a href="componentSpec.tile.html">componentSpec.tile</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.moulding.html">components.moulding</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.functions.html">data.functions</a></li><li><a href="data.specifications.html">data.specifications</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="data.standards.crafts.html">data.standards.crafts</a></li><li><a href="data.standards.lumber.html">data.standards.lumber</a></li><li><a href="data.standards.masonry.html">data.standards.masonry</a></li><li><a href="data.standards.paper.html">data.standards.paper</a></li><li><a href="data.standards.tiles.html">data.standards.tiles</a></li><li><a href="models.html">models</a></li><li><a href="models.arch.html">models.arch</a></li><li><a href="models.foil.html">models.foil</a></li><li><a href="models.structure.html">models.structure</a></li><li><a href="models.structure.wall.html">models.structure.wall</a></li><li><a href="models.structure.wallEntryway.html">models.structure.wallEntryway</a></li><li><a href="profileSpec.html">profileSpec</a></li><li><a href="profileSpec.lumber.html">profileSpec.lumber</a></li><li><a href="profileSpec.paper.html">profileSpec.paper</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.curve.html">profiles.curve</a></li><li><a href="profiles.jointPanel.html">profiles.jointPanel</a></li><li><a href="profiles.shapes.html">profiles.shapes</a></li><li><a href="profiles.shapes.ellipse.html">profiles.shapes.ellipse</a></li><li><a href="profiles.shapes.rectangle.html">profiles.shapes.rectangle</a></li><li><a href="profiles.shapes.triangle.html">profiles.shapes.triangle</a></li><li><a href="profiles.structure.arch.html">profiles.structure.arch</a></li><li><a href="profiles.structure.foil.html">profiles.structure.foil</a></li><li><a href="profiles.structure.mesh.html">profiles.structure.mesh</a></li><li><a href="profiles.text.html">profiles.text</a></li><li><a href="profiles.trim.html">profiles.trim</a></li><li><a href="utils.html">utils</a></li><li><a href="utils.colors.html">utils.colors</a></li><li><a href="utils.layout.html">utils.layout</a></li><li><a href="utils.palette.html">utils.palette</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Apr 24 2026 11:01:42 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Apr 24 2026 16:01:22 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
