@@ -896,7 +896,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * Generate dovetail row connectors
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof profiles.jointPanel
+     * @memberof profiles.connections
      * @since 0.13.4
      */
     const dovetailRow = (opts) => {
@@ -942,7 +942,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         console.log('dovetailRow() dovetailCutOpts', dovetailCutOpts)
 
         // For some very strange reason, tab and dovetail cuts get reversed?
-        const dovetailCutData = connections.tab(dovetailCutOpts)
+        const dovetailCutData = tab(dovetailCutOpts)
         const dovetailCutBase = dovetailCutData[1].cut
 
         console.log('dovetailRow() dovetailCutData', dovetailCutData)
@@ -980,13 +980,13 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         ////////
 
         const mainModel = [
-            dovetailProfiles[1],
             dovetailProfiles[0],
+            dovetailProfiles[1],
         ]
 
         const modelParts = {
-            male: dovetailProfiles[1],
-            female: dovetailProfiles[0],
+            male: dovetailProfiles[0],
+            female: dovetailProfiles[1],
             cut: dovetailRowCut,
         }
 
@@ -997,7 +997,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * Generate tab row connectors
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof profiles.jointPanel
+     * @memberof profiles.connections
      * @since 0.13.4
      */
     const tabRow = (opts) => {
@@ -1044,7 +1044,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         // console.log('tabRow() tabCutProps', tabCutProps)
 
         // For some very strange reason, tab and dovetail cuts get reversed?
-        const tabCutData = connections.dovetail(tabCutOpts)
+        const tabCutData = dovetail(tabCutOpts)
         const tabCutBase = tabCutData[1].cut
         console.log('tabRow() tabCutData', tabCutData)
         console.log('tabRow() tabCutBase', tabCutBase)
@@ -1081,13 +1081,13 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         ////////
 
         const mainModel = [
-            tabProfiles[1],
             tabProfiles[0],
+            tabProfiles[1],
         ]
 
         const modelParts = {
-            male: tabProfiles[1],
-            female: tabProfiles[0],
+            male: tabProfiles[0],
+            female: tabProfiles[1],
             cut: tabRowCut,
         }
 
