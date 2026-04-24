@@ -55,6 +55,10 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
         math,
     } = swcadJs.calcs
 
+    const {
+        connections,
+    } = swcadJs.profiles
+
 
     //==============================================================================
 
@@ -254,11 +258,38 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
     * ------------------------------------- */
 
     const oneJointRectPanel = (opts) => {
-        return null
+        const defaults = modelDefaults()
+        const initOpts = modelOpts(opts)
+        const modelProperties = modelProps(initOpts)
+
+        const {
+            size,
+            width,
+            depth,
+            jointWidth,
+            jointMargin,
+            totalJointWidth,
+        } = modelProperties.dims
+
+        const mainModel = cuboid()
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
     }
 
     const twoJointRectPanel = (opts) => {
-        return null
+        const defaults = modelDefaults()
+        const initOpts = modelOpts(opts)
+        const modelProperties = modelProps(initOpts)
+
+        const mainModel = cuboid()
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
     }
 
     return {
