@@ -5,6 +5,7 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
         cube,
         cylinder,
         sphere,
+        square,
         cylinderElliptic,
         circle,
         cuboid,
@@ -67,7 +68,7 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
      * Builds default values and opts for the model
      * @param {*} opts 
      * @returns default values and opts
-     * @memberof newModelName
+     * @memberof reinforcedRect
      * @access private
      */
     const reinforcedRectDefaults = () => {
@@ -81,7 +82,7 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
                     math.inchesToMm(3),
                     math.inchesToMm(4),
                 ],
-                reinforcementThickness: [3, 4, 5],
+                reinforcementThickness: [5, 4, 3],
             },
             points: {
                 centrePt: [0, 0, 0]
@@ -104,7 +105,7 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
         const defaultOpts = {
             ...standardOpts,
             size: defaultValues.dims.size,
-            reinforcementPattern: defaultValues.constants.reinforcementPatterns,
+            reinforcementPattern: defaultValues.constants.reinforcementPatterns[0],
             reinforcementThickness: defaultValues.dims.reinforcementThickness,
         }
 
@@ -122,7 +123,7 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
      * Initializes options with user input
      * @param {*} opts 
      * @returns model properties
-     * @memberof newModelName
+     * @memberof reinforcedRect
      * @access private
      */
     const reinforcedRectOpts = (opts) => {
@@ -166,7 +167,7 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
      * Builds model properties from the given opts
      * @param {*} opts 
      * @returns model properties
-     * @memberof newModelName
+     * @memberof reinforcedRect
      * @access private
      */
     const reinforcedRectProps = (opts) => {
@@ -189,11 +190,6 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
 
         const width = size[0]
         const depth = size[1]
-
-        const reinforcementData = reinforcement.reinforcedRectangle({
-            size,
-            reinforcementPattern,
-        })
 
         let rThickness = [
             defaults.vals.dims.reinforcementThickness,
@@ -224,11 +220,22 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
             }
         }
 
-        const reinforcementNodes = [
-            circle({radius: rThickness[0] / 2}),
-            circle({radius: rThickness[1] / 2}),
-            circle({radius: rThickness[2] / 2}),
+        const reinforcementDataSize = [
+            size[0] - reinforcementThickness[0],
+            size[1] - reinforcementThickness[0],
         ]
+        const reinforcementData = reinforcement.reinforcedRectangle({
+            reinforcementDataSize,
+            reinforcementPattern,
+        })
+
+        const reinforcementNodes = [
+            circle({ radius: rThickness[0] / 2 }),
+            circle({ radius: rThickness[1] / 2 }),
+            circle({ radius: rThickness[2] / 2 }),
+        ]
+
+        const cornerNode = square({ size: rThickness[0] })
 
         /* ----------------------------------------
         * Preparing Model Properties, Dimensions
@@ -258,11 +265,13 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
         /** Various key points for model */
         const modelPoints = {
             centrePt: defaults.vals.points.centrePt,
+            ...reinforcementData.points,
         }
 
         /** Components used by model */
         const modelComponents = {
-            reinforcementNodes
+            reinforcementNodes,
+            cornerNode,
         }
 
         /* ---------------------------------------------
@@ -297,10 +306,10 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
 
 
     /**
-     * New Model
+     * Reinforced rectangle
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof newModelName
+     * @memberof profiles.shapes.rectangle
      */
     const reinforcedRect = (opts) => {
         const defaults = reinforcedRectDefaults()
@@ -311,28 +320,78 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
          * Modelling, Component/Assembly Modules
          * ------------------------------------- */
 
-        /** Sub-component 01 */
-        const subcomponent1 = (modelProps) => {
+        const rectOutline = (modelProps) => {
             const {
-                metadata,
-                opts,
-                dims,
-                points,
-            } = modelProps
+                corners,
+            } = modelProps.points
+            const {
+                cornerNode,
+            } = modelProps.components
 
-            return sphere()
+            const hullPts = corners
+            hullPts.push(hullPts[0])
+
+            const hullNodes = hullPts.map(hullPt => {
+                return translate([hullPt[0], hullPt[1], 0], cornerNode)
+            })
+
+            return hullChain(hullNodes)
         }
 
-        /** Sub-component 02 */
-        const subcomponent2 = (modelProps) => {
+        const rectPrimaryBracing = (modelProps) => {
             const {
-                metadata,
-                opts,
-                dims,
-                points,
-            } = modelProps
+                primaryLines,
+            } = modelProps.points
 
-            return cube()
+            const {
+                reinforcementNodes,
+            } = modelProps.components
+
+            let returnBracing = null
+
+            const braceLines = primaryLines.map(pLine => {
+                const lineStartPt = pLine[0]
+                const lineEndPt = pLine[1]
+
+                const nodeStart = translate(lineStartPt, reinforcementNodes[1])
+                const nodeEnd = translate(lineEndPt, reinforcementNodes[1])
+
+                return hull(nodeStart, nodeEnd)
+            })
+
+            if (braceLines.length > 0) {
+                returnBracing = union(...braceLines)
+            }
+
+            return braceLines
+        }
+
+        const rectSecondaryBracing = (modelProps) => {
+            const {
+                secondaryLines,
+            } = modelProps.points
+
+            const {
+                reinforcementNodes,
+            } = modelProps.components
+
+            let returnBracing = null
+
+            const braceLines = secondaryLines.map(pLine => {
+                const lineStartPt = pLine[0]
+                const lineEndPt = pLine[1]
+
+                const nodeStart = translate(lineStartPt, reinforcementNodes[2])
+                const nodeEnd = translate(lineEndPt, reinforcementNodes[2])
+
+                return hull(nodeStart, nodeEnd)
+            })
+
+            if (braceLines.length > 0) {
+                returnBracing = union(...braceLines)
+            }
+
+            return braceLines
         }
 
         /* ----------------------------------------
@@ -341,27 +400,37 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
 
         /** Final Assembly */
         const finalAssembly = (modelProps) => {
-            let subComp1 = subcomponent1(modelProps)
-            let subComp2 = subcomponent2(modelProps)
+            const rectOutlineInst = rectOutline(modelProps)
+            const rectPrimaryBracingInst = rectPrimaryBracing(modelProperties)
+            const rectSecondaryBracingInst = rectSecondaryBracing(modelProperties)
 
-            return union(
-                subComp1,
-                subComp2,
-            )
+            let finalShape = rectOutlineInst
+
+            if (rectPrimaryBracingInst) {
+                finalShape = union(finalShape, rectPrimaryBracingInst)
+            }
+
+            if (rectSecondaryBracingInst) {
+                finalShape = union(finalShape, rectSecondaryBracingInst)
+            }
+
+            return finalShape
         }
 
         /* ----------------------------------------
          * Outputs
          * ------------------------------------- */
 
-        let subComp1 = subcomponent1(modelProperties)
-        let subComp2 = subcomponent2(modelProperties)
+        const rectOutlineInst = rectOutline(modelProperties)
+        const rectPrimaryBracingInst = rectPrimaryBracing(modelProperties)
+        const rectSecondaryBracingInst = rectSecondaryBracing(modelProperties)
 
         let mainModel = finalAssembly(modelProperties)
 
         let modelParts = {
-            subcomponent1: subComp1,
-            subcomponent2: subComp2,
+            rectOutline: rectOutlineInst,
+            rectPrimaryBracing: rectPrimaryBracingInst,
+            rectSecondaryBracing: rectSecondaryBracingInst,
         }
 
         return [mainModel, modelParts, modelProperties]
