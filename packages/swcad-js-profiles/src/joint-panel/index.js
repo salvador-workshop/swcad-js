@@ -1,13 +1,5 @@
 "use strict"
 
-/**
- * Connection Profiles
- * @author R. J. Salvador
- * @namespace jointPanel
- * @memberof profiles
- * @since 0.12.5
- */
-
 const jointPanelsInit = ({ jscad, swcadJs }) => {
     const {
         cube,
@@ -130,7 +122,6 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
      */
     const modelOpts = (opts) => {
         const defaults = modelDefaults()
-        console.log('modelOpts() -- opts', opts)
 
         // User options
         const {
@@ -157,7 +148,6 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             ...stdOpts,
         }
 
-        console.log('modelOpts() -- initOpts', initOpts)
 
         return initOpts
     }
@@ -175,7 +165,6 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
      */
     const modelProps = (opts) => {
         const defaults = modelDefaults()
-        console.log('modelProps() -- opts', opts)
 
         const {
             size,
@@ -253,7 +242,6 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             components: modelComponents,
         }
 
-        console.log('modelProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }
@@ -265,24 +253,10 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
     * MODELLING FUNCTIONS
     * ------------------------------------- */
 
-    /**
-     * ...
-     * @param {*} opts 
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof profiles.jointPanel
-     * @since 0.13.4
-     */
     const oneJointRectPanel = (opts) => {
         return null
     }
 
-    /**
-     * ...
-     * @param {*} opts 
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof profiles.jointPanel
-     * @since 0.13.4
-     */
     const twoJointRectPanel = (opts) => {
         return null
     }
