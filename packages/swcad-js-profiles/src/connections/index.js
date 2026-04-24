@@ -85,6 +85,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             opts: {
                 segments: 6,
                 unitSegments: 24,
+                numConnectors: 3,
             },
             dims: {
                 size: [
@@ -123,6 +124,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             unitRadius: defaultValues.dims.unitRadius,
             segments: defaultValues.opts.segments,
             unitSegments: defaultValues.opts.unitSegments,
+            numConnectors: defaultValues.opts.numConnectors,
             interfaceMargin: defaultValues.dims.interfaceMargin,
         }
 
@@ -153,6 +155,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             unitSpacing = defaults.opts.unitSpacing,
             unitRadius = defaults.opts.unitRadius,
             unitSegments = defaults.opts.unitSegments,
+            numConnectors = defaults.opts.numConnectors,
             segments = defaults.opts.segments,
             interfaceMargin = defaults.opts.interfaceMargin,
             type = defaults.opts.type,
@@ -176,6 +179,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             unitRadius,
             segments,
             unitSegments,
+            numConnectors,
             interfaceMargin,
         }
 
@@ -204,6 +208,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             unitRadius,
             segments,
             unitSegments,
+            numConnectors,
             interfaceMargin,
             type,
             scale,
@@ -217,10 +222,14 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
         const width = size[0]
         const depth = size[1]
-        const height = size[2]
 
         const diametre = radius * 2
         const unitDiametre = unitRadius * 2
+
+        const midPoint = [
+            width / 2,
+            depth / 2,
+        ]
 
         /* ----------------------------------------
         * Preparing Model Properties, Dimensions
@@ -237,6 +246,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             scale,
             segments,
             unitSegments,
+            numConnectors,
         }
 
         /** Various dimensions for model */
@@ -246,7 +256,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             fitGap,
             width,
             depth,
-            height,
             radius,
             unitSpacing,
             unitRadius,
@@ -257,7 +266,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
         /** Various key points for model */
         const modelPoints = {
-            centre: defaults.vals.points.centre,
+            centrePt: midPoint,
         }
 
         /** Components used by model */
@@ -323,6 +332,9 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
     //------------------------------------------------------------------------------
 
+    /* ----------------------------------------
+    * MODELLING FUNCTIONS
+    * ------------------------------------- */
 
     /**
      * Generate dovetail connectors
@@ -342,6 +354,10 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             fitGap,
             interfaceMargin,
         } = modelProperties.dims
+
+        const {
+            centrePt
+        } = modelProperties.points
 
         const {
             sampleThickness
@@ -364,14 +380,9 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             interfaceMargin + dovetailLength,
         ]
 
-        const dovetailPanelMidpoint = [
-            width / 2,
-            depth / 2,
-        ]
-
         const baseProfilePanel = cuboid({
             size: [width, depth, sampleThickness],
-            center: [dovetailPanelMidpoint[0], dovetailPanelMidpoint[1], 0]
+            center: [centrePt[0], centrePt[1], 0]
         })
 
         const lowerPts = [
@@ -402,7 +413,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             })
         })
 
-        let dovetailCut = hullChain(dovetailCutPoints)
+        const dovetailCut = hullChain(dovetailCutPoints)
 
         const cutPanel = subtract(
             baseProfilePanel,
@@ -428,6 +439,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         const modelParts = {
             male: dovetailProfiles[1],
             female: dovetailProfiles[0],
+            cut: dovetailCut,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -456,6 +468,10 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             sampleThickness
         } = modelProperties.constants
 
+        const {
+            centrePt
+        } = modelProperties.points
+
         const tabWidth = width - (interfaceMargin * 2)
         const tabLength = depth - (interfaceMargin * 2)
 
@@ -473,14 +489,9 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             interfaceMargin + tabLength,
         ]
 
-        const tabPanelMidpoint = [
-            width / 2,
-            depth / 2,
-        ]
-
         const baseProfilePanel = cuboid({
             size: [width, depth, sampleThickness],
-            center: [tabPanelMidpoint[0], tabPanelMidpoint[1], 0]
+            center: [centrePt[0], centrePt[1], 0]
         })
 
         const lowerPts = [
@@ -511,7 +522,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             })
         })
 
-        let tabCut = hullChain(tabCutPoints)
+        const tabCut = hullChain(tabCutPoints)
 
         const cutPanel = subtract(
             baseProfilePanel,
@@ -537,6 +548,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         const modelParts = {
             male: tabProfiles[1],
             female: tabProfiles[0],
+            cut: tabCut,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -880,6 +892,192 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         return [mainModel, modelParts, modelProperties]
     }
 
+    /**
+     * Generate dovetail row connectors
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof profiles.connections
+     * @since 0.13.4
+     */
+    const dovetailRow = (opts) => {
+        const defaults = modelDefaults()
+        const initOpts = modelOpts(opts)
+        const modelProperties = modelProps(initOpts)
+
+        const {
+            numConnectors
+        } = modelProperties.opts
+
+        const {
+            width,
+            depth,
+            fitGap,
+            interfaceMargin,
+        } = modelProperties.dims
+
+        const {
+            centrePt
+        } = modelProperties.points
+
+        const {
+            sampleThickness
+        } = modelProperties.constants
+
+        ////////
+
+        const numMargins = numConnectors + 1
+
+        const totalConnectionWidths = width - (interfaceMargin * numMargins)
+        const connectionWidth = totalConnectionWidths / numConnectors
+        const connectionUnitWidth = 2 * interfaceMargin + connectionWidth
+
+        const dovetailCutOpts = modelOpts({
+            ...opts,
+            size: [connectionUnitWidth, depth]
+        })
+
+        // For some very strange reason, tab and dovetail cuts get reversed?
+        const dovetailCutData = tab(dovetailCutOpts)
+        const dovetailCutBase = dovetailCutData[1].cut
+
+        const baseProfilePanel = cuboid({
+            size: [width, depth, sampleThickness],
+            center: [centrePt[0], centrePt[1], 0]
+        })
+        let dovetailRowCut = dovetailCutBase
+
+        const translateDistBase = interfaceMargin + connectionWidth
+        for (let idx = 1; idx < numConnectors; idx++) {
+            const translateDist = translateDistBase * idx
+            dovetailRowCut = union(
+                dovetailRowCut,
+                translate([translateDist, 0, 0], dovetailCutBase)
+            )
+        }
+
+        const cutPanel = subtract(
+            baseProfilePanel,
+            dovetailRowCut
+        )
+        const cutParts = scission(cutPanel)
+        const dTailProfiles = [
+            align({ modes: ['center', 'center', 'center'] }, cutParts[1]),
+            align({ modes: ['center', 'center', 'center'] }, cutParts[0]),
+        ]
+        const dovetailProfiles = [
+            project({}, dTailProfiles[0]),
+            project({}, dTailProfiles[1]),
+        ]
+
+        ////////
+
+        const mainModel = [
+            dovetailProfiles[0],
+            dovetailProfiles[1],
+        ]
+
+        const modelParts = {
+            male: dovetailProfiles[0],
+            female: dovetailProfiles[1],
+            cut: dovetailRowCut,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
+     * Generate tab row connectors
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof profiles.connections
+     * @since 0.13.4
+     */
+    const tabRow = (opts) => {
+        const defaults = modelDefaults()
+        const initOpts = modelOpts(opts)
+        const modelProperties = modelProps(initOpts)
+
+        const {
+            numConnectors
+        } = modelProperties.opts
+
+        const {
+            width,
+            depth,
+            fitGap,
+            interfaceMargin,
+        } = modelProperties.dims
+
+        const {
+            centrePt
+        } = modelProperties.points
+
+        const {
+            sampleThickness
+        } = modelProperties.constants
+
+        ////////
+
+        const numMargins = numConnectors + 1
+
+        const totalConnectionWidths = width - (interfaceMargin * numMargins)
+        const connectionWidth = totalConnectionWidths / numConnectors
+        const connectionUnitWidth = 2 * interfaceMargin + connectionWidth
+
+        const tabCutOpts = modelOpts({
+            ...opts,
+            size: [connectionUnitWidth, depth]
+        })
+
+        // For some very strange reason, tab and dovetail cuts get reversed?
+        const tabCutData = dovetail(tabCutOpts)
+        const tabCutBase = tabCutData[1].cut
+
+        const baseProfilePanel = cuboid({
+            size: [width, depth, sampleThickness],
+            center: [centrePt[0], centrePt[1], 0]
+        })
+        let tabRowCut = tabCutBase
+
+        const translateDistBase = interfaceMargin + connectionWidth
+        for (let idx = 1; idx < numConnectors; idx++) {
+            const translateDist = translateDistBase * idx
+            tabRowCut = union(
+                tabRowCut,
+                translate([translateDist, 0, 0], tabCutBase)
+            )
+        }
+
+        const cutPanel = subtract(
+            baseProfilePanel,
+            tabRowCut
+        )
+        const cutParts = scission(cutPanel)
+        const tProfiles = [
+            align({ modes: ['center', 'center', 'center'] }, cutParts[1]),
+            align({ modes: ['center', 'center', 'center'] }, cutParts[0]),
+        ]
+        const tabProfiles = [
+            project({}, tProfiles[0]),
+            project({}, tProfiles[1]),
+        ]
+
+        ////////
+
+        const mainModel = [
+            tabProfiles[0],
+            tabProfiles[1],
+        ]
+
+        const modelParts = {
+            male: tabProfiles[0],
+            female: tabProfiles[1],
+            cut: tabRowCut,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
     return {
         defaults: modelDefaults,
         props: modelProps,
@@ -889,6 +1087,8 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         ellipse,
         pegboard,
         boltCircle,
+        dovetailRow,
+        tabRow,
     }
 }
 
