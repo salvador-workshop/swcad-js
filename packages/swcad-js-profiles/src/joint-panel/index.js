@@ -103,14 +103,14 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
                 centre: [0, 0, 0]
             },
             types: {
-                default: { id: 'default', desc: 'Default' },
-                alt: { id: 'alt', desc: 'Alternate' },
+                tab: { id: 'tab', desc: 'Tab' },
+                dovetail: { id: 'dovetail', desc: 'Dovetail' },
             },
         }
 
         /** Options used by SW models */
         const standardOpts = {
-            type: defaultValues.types.default.id,
+            type: defaultValues.types.tab.id,
             scale: 1,
             interfaceThickness: 1.333333,
             fitGap: math.inchesToMm(1 / 128),
@@ -398,6 +398,7 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
         } = modelProperties.constants
 
         const {
+            type,
             axis,
             jointNumConnectors,
         } = modelProperties.opts
@@ -416,23 +417,36 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             centrePt
         } = modelProperties.points
 
-        // along X axis
-        const jointSizeX = [width, totalJointWidth]
-        // along Y axis
-        const jointSizeY = [depth, totalJointWidth]
+        let jNumConnectors = jointNumConnectors
+        if (typeof jointNumConnectors == 'number') {
+            jNumConnectors = [
+                jointNumConnectors,
+                jointNumConnectors
+            ]
+        }
 
-        const jointDataX = connections.dovetailRow({
+        const jointSizeX = [width, totalJointWidth]
+        const jointOptsX = {
             size: jointSizeX,
             interfaceMargin: jointInterfaceMargin,
-            numConnectors: jointNumConnectors,
-        })
+            numConnectors: jNumConnectors[0],
+        }
+        let jointDataX = connections.tabRow(jointOptsX)
+        if (type == 'dovetail') {
+            jointDataX = connections.dovetailRow(jointOptsX)
+        }
         const jointCutX = position.ctr(jointDataX[1].cut)
 
-        const jointDataY = connections.dovetailRow({
+        const jointSizeY = [depth, totalJointWidth]
+        const jointOptsY = {
             size: jointSizeY,
             interfaceMargin: jointInterfaceMargin,
-            numConnectors: jointNumConnectors,
-        })
+            numConnectors: jNumConnectors[1],
+        }
+        let jointDataY = connections.tabRow(jointOptsY)
+        if (type == 'dovetail') {
+            jointDataY = connections.dovetailRow(jointOptsY)
+        }
         const jointCutY = rotate([0, 0, TAU / 4], position.ctr(jointDataY[1].cut))
 
         const comboCut = union(jointCutX, jointCutY)
