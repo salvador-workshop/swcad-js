@@ -13,10 +13,10 @@ const rectangleInit = ({ jscad, swcadJs }) => {
     //  RECTANGLES
     //--------------
 
-    const createRect = ({ length, width, ratio }) => {
+    const createRect = ({ width, depth, ratio }) => {
         const validSize = [
-            length || width * ratio,
-            width || length / ratio
+            width || depth / ratio,
+            depth || width * ratio,
         ]
         return rectangle({ size: validSize });
     }
@@ -33,8 +33,8 @@ const rectangleInit = ({ jscad, swcadJs }) => {
          * @param {object} opts
          * @returns ...
          */
-        golden: ({ length, width }) => {
-            return createRect({ length, width, ratio: constants.PHI });
+        golden: ({ width, depth }) => {
+            return createRect({ width, depth, ratio: constants.PHI });
         },
         /**
          * ...
@@ -42,8 +42,8 @@ const rectangleInit = ({ jscad, swcadJs }) => {
          * @param {object} opts
          * @returns ...
          */
-        sixtyThirty: ({ length, width }) => {
-            return createRect({ length, width, ratio: 2 });
+        sixtyThirty: ({ width, depth }) => {
+            return createRect({ width, depth, ratio: 2 });
         },
         /**
          * ...
@@ -51,8 +51,8 @@ const rectangleInit = ({ jscad, swcadJs }) => {
          * @param {object} opts
          * @returns ...
          */
-        silver: ({ length, width }) => {
-            return createRect({ length, width, ratio: constants.SILVER_RATIO });
+        silver: ({ width, depth }) => {
+            return createRect({ width, depth, ratio: constants.SILVER_RATIO });
         },
         /**
          * ...
@@ -60,8 +60,8 @@ const rectangleInit = ({ jscad, swcadJs }) => {
          * @param {object} opts
          * @returns ...
          */
-        bronze: ({ length, width }) => {
-            return createRect({ length, width, ratio: constants.BRONZE_RATIO });
+        bronze: ({ width, depth }) => {
+            return createRect({ width, depth, ratio: constants.BRONZE_RATIO });
         },
         /**
          * ...
@@ -69,8 +69,8 @@ const rectangleInit = ({ jscad, swcadJs }) => {
          * @param {object} opts
          * @returns ...
          */
-        copper: ({ length, width }) => {
-            return createRect({ length, width, ratio: constants.COPPER_RATIO });
+        copper: ({ width, depth }) => {
+            return createRect({ width, depth, ratio: constants.COPPER_RATIO });
         },
         /**
          * ...
@@ -78,8 +78,8 @@ const rectangleInit = ({ jscad, swcadJs }) => {
          * @param {object} opts
          * @returns ...
          */
-        superGolden: ({ length, width }) => {
-            return createRect({ length, width, ratio: constants.SUPERGOLDEN_RATIO });
+        superGolden: ({ width, depth }) => {
+            return createRect({ width, depth, ratio: constants.SUPERGOLDEN_RATIO });
         },
         /**
          * ...
@@ -87,8 +87,8 @@ const rectangleInit = ({ jscad, swcadJs }) => {
          * @param {object} opts
          * @returns ...
          */
-        plastic: ({ length, width }) => {
-            return createRect({ length, width, ratio: constants.PLASTIC_RATIO });
+        plastic: ({ width, depth }) => {
+            return createRect({ width, depth, ratio: constants.PLASTIC_RATIO });
         },
     }
 
