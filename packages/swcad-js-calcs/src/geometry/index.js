@@ -1,7 +1,7 @@
 "use strict"
 
 const geoRegPolyModule = require('./geo-reg-poly');
-const reinforcementModule = require('./geo-reg-poly');
+const reinforcementModule = require('./reinforcement');
 
 /**
  * Finds the central point (avg.) between the given points

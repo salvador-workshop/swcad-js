@@ -23,10 +23,10 @@ const curveBuilder = ({ jscad, swcadJs }) => {
         return points;
     }
 
-    const createRtCornerCurve = ({ length, width, ratio }) => {
+    const createRtCornerCurve = ({ width, depth, ratio }) => {
         const validSize = [
-            length || width * ratio,
-            width || length / ratio
+            width || depth / ratio,
+            depth || width * ratio,
         ]
         const container = rectangle({ size: validSize })
         const bez = bezier.create([
@@ -54,8 +54,8 @@ const curveBuilder = ({ jscad, swcadJs }) => {
              * @param {object} opts
              * @returns ...
              */
-            golden: ({ length, width }) => {
-                return createRtCornerCurve({ length, width, ratio: constants.PHI })
+            golden: ({ width, depth }) => {
+                return createRtCornerCurve({ width, depth, ratio: constants.PHI })
             },
             /**
              * ...
@@ -63,8 +63,8 @@ const curveBuilder = ({ jscad, swcadJs }) => {
              * @param {object} opts
              * @returns ...
              */
-            sixtyThirty: ({ length, width }) => {
-                return createRtCornerCurve({ length, width, ratio: 2 })
+            sixtyThirty: ({ width, depth }) => {
+                return createRtCornerCurve({ width, depth, ratio: 2 })
             },
             /**
              * ...
@@ -72,8 +72,8 @@ const curveBuilder = ({ jscad, swcadJs }) => {
              * @param {object} opts
              * @returns ...
              */
-            silver: ({ length, width }) => {
-                return createRtCornerCurve({ length, width, ratio: constants.SILVER_RATIO })
+            silver: ({ width, depth }) => {
+                return createRtCornerCurve({ width, depth, ratio: constants.SILVER_RATIO })
             },
             /**
              * ...
@@ -81,8 +81,8 @@ const curveBuilder = ({ jscad, swcadJs }) => {
              * @param {object} opts
              * @returns ...
              */
-            bronze: ({ length, width }) => {
-                return createRtCornerCurve({ length, width, ratio: constants.BRONZE_RATIO })
+            bronze: ({ width, depth }) => {
+                return createRtCornerCurve({ width, depth, ratio: constants.BRONZE_RATIO })
             },
             /**
              * ...
@@ -90,8 +90,8 @@ const curveBuilder = ({ jscad, swcadJs }) => {
              * @param {object} opts
              * @returns ...
              */
-            copper: ({ length, width }) => {
-                return createRtCornerCurve({ length, width, ratio: constants.COPPER_RATIO })
+            copper: ({ width, depth }) => {
+                return createRtCornerCurve({ width, depth, ratio: constants.COPPER_RATIO })
             },
             /**
              * ...
@@ -99,8 +99,8 @@ const curveBuilder = ({ jscad, swcadJs }) => {
              * @param {object} opts
              * @returns ...
              */
-            superGolden: ({ length, width }) => {
-                return createRtCornerCurve({ length, width, ratio: constants.SUPERGOLDEN_RATIO })
+            superGolden: ({ width, depth }) => {
+                return createRtCornerCurve({ width, depth, ratio: constants.SUPERGOLDEN_RATIO })
             },
             /**
              * ...
@@ -108,8 +108,8 @@ const curveBuilder = ({ jscad, swcadJs }) => {
              * @param {object} opts
              * @returns ...
              */
-            plastic: ({ length, width }) => {
-                return createRtCornerCurve({ length, width, ratio: constants.PLASTIC_RATIO })
+            plastic: ({ width, depth }) => {
+                return createRtCornerCurve({ width, depth, ratio: constants.PLASTIC_RATIO })
             },
         },
     }

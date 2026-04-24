@@ -936,8 +936,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             size: [connectionUnitWidth, depth]
         })
 
-        // For some very strange reason, tab and dovetail cuts get reversed?
-        const dovetailCutData = tab(dovetailCutOpts)
+        const dovetailCutData = dovetail(dovetailCutOpts)
         const dovetailCutBase = dovetailCutData[1].cut
 
         const baseProfilePanel = cuboid({
@@ -1029,8 +1028,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             size: [connectionUnitWidth, depth]
         })
 
-        // For some very strange reason, tab and dovetail cuts get reversed?
-        const tabCutData = dovetail(tabCutOpts)
+        const tabCutData = tab(tabCutOpts)
         const tabCutBase = tabCutData[1].cut
 
         const baseProfilePanel = cuboid({

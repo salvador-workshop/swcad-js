@@ -96,21 +96,20 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
                     math.inchesToMm(1),
                 ],
                 jointWidth: math.inchesToMm(3 / 8),
-                jointMargin: math.inchesToMm(1 / 8),
-                jointInterfaceMargin: math.inchesToMm(3 / 8),
+                jointMargin: math.inchesToMm(1 / 4),
             },
             points: {
                 centre: [0, 0, 0]
             },
             types: {
-                default: { id: 'default', desc: 'Default' },
-                alt: { id: 'alt', desc: 'Alternate' },
+                tab: { id: 'tab', desc: 'Tab' },
+                dovetail: { id: 'dovetail', desc: 'Dovetail' },
             },
         }
 
         /** Options used by SW models */
         const standardOpts = {
-            type: defaultValues.types.default.id,
+            type: defaultValues.types.tab.id,
             scale: 1,
             interfaceThickness: 1.333333,
             fitGap: math.inchesToMm(1 / 128),
@@ -122,7 +121,6 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             size: defaultValues.dims.size,
             jointWidth: defaultValues.dims.jointWidth,
             jointMargin: defaultValues.dims.jointMargin,
-            jointInterfaceMargin: defaultValues.dims.jointInterfaceMargin,
             jointNumConnectors: defaultValues.opts.jointNumConnectors,
             axis: defaultValues.opts.axis,
         }
@@ -152,7 +150,6 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             size = defaults.opts.size,
             jointWidth = defaults.opts.jointWidth,
             jointMargin = defaults.opts.jointMargin,
-            jointInterfaceMargin = defaults.opts.jointInterfaceMargin,
             jointNumConnectors = defaults.opts.jointNumConnectors,
             axis = defaults.opts.axis,
             type = defaults.opts.type,
@@ -172,7 +169,6 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             size,
             jointWidth,
             jointMargin,
-            jointInterfaceMargin,
             jointNumConnectors,
             axis,
             ...stdOpts,
@@ -200,7 +196,6 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             size,
             jointWidth,
             jointMargin,
-            jointInterfaceMargin,
             jointNumConnectors,
             axis,
             type,
@@ -247,7 +242,6 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             depth,
             jointWidth,
             jointMargin,
-            jointInterfaceMargin,
             totalJointWidth,
             interfaceThickness,
             fitGap,
@@ -313,6 +307,7 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
         } = modelProperties.constants
 
         const {
+            type,
             axis,
             jointNumConnectors,
         } = modelProperties.opts
@@ -323,7 +318,6 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             depth,
             jointWidth,
             jointMargin,
-            jointInterfaceMargin,
             totalJointWidth,
         } = modelProperties.dims
 
@@ -339,11 +333,17 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             jointSize = [depth, totalJointWidth]
         }
 
-        const jointData = connections.dovetailRow({
+        const jointOpts = {
             size: jointSize,
-            interfaceMargin: jointInterfaceMargin,
+            interfaceMargin: jointMargin,
             numConnectors: jointNumConnectors,
-        })
+        }
+
+        let jointData = connections.tabRow(jointOpts)
+        if (type == 'dovetail') {
+            jointData = connections.dovetailRow(jointOpts)
+        }
+
         let jointCut = position.ctr(jointData[1].cut)
         if (axis == 'y') {
             jointCut = rotate([0, 0, TAU / 4], jointCut)
@@ -398,6 +398,7 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
         } = modelProperties.constants
 
         const {
+            type,
             axis,
             jointNumConnectors,
         } = modelProperties.opts
@@ -408,7 +409,6 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             depth,
             jointWidth,
             jointMargin,
-            jointInterfaceMargin,
             totalJointWidth,
         } = modelProperties.dims
 
@@ -416,23 +416,36 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             centrePt
         } = modelProperties.points
 
-        // along X axis
-        const jointSizeX = [width, totalJointWidth]
-        // along Y axis
-        const jointSizeY = [depth, totalJointWidth]
+        let jNumConnectors = jointNumConnectors
+        if (typeof jointNumConnectors == 'number') {
+            jNumConnectors = [
+                jointNumConnectors,
+                jointNumConnectors
+            ]
+        }
 
-        const jointDataX = connections.dovetailRow({
+        const jointSizeX = [width, totalJointWidth]
+        const jointOptsX = {
             size: jointSizeX,
-            interfaceMargin: jointInterfaceMargin,
-            numConnectors: jointNumConnectors,
-        })
+            interfaceMargin: jointMargin,
+            numConnectors: jNumConnectors[0],
+        }
+        let jointDataX = connections.tabRow(jointOptsX)
+        if (type == 'dovetail') {
+            jointDataX = connections.dovetailRow(jointOptsX)
+        }
         const jointCutX = position.ctr(jointDataX[1].cut)
 
-        const jointDataY = connections.dovetailRow({
+        const jointSizeY = [depth, totalJointWidth]
+        const jointOptsY = {
             size: jointSizeY,
-            interfaceMargin: jointInterfaceMargin,
-            numConnectors: jointNumConnectors,
-        })
+            interfaceMargin: jointMargin,
+            numConnectors: jNumConnectors[1],
+        }
+        let jointDataY = connections.tabRow(jointOptsY)
+        if (type == 'dovetail') {
+            jointDataY = connections.dovetailRow(jointOptsY)
+        }
         const jointCutY = rotate([0, 0, TAU / 4], position.ctr(jointDataY[1].cut))
 
         const comboCut = union(jointCutX, jointCutY)
