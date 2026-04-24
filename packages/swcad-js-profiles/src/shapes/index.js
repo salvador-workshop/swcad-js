@@ -1,6 +1,6 @@
 "use strict"
 
-const ellipseModule = require('./ellipsee')
+const ellipseModule = require('./ellipse')
 const rectangleModule = require('./rectangle')
 const squareModule = require('./square')
 const triangleModule = require('./triangle')
@@ -38,6 +38,25 @@ const profileBuilder = ({ jscad, swcadJs }) => {
     rectangle: rectangles,
     square: squares,
     triangle: triangles,
+    octagon: {
+      /**
+       * octFromDiam
+       * @memberof profiles.shapes
+       * @alias octagon
+       * @instance
+       * @param {Object} opts 
+       * @param {number} opts.sqLength - side length for bounding square 
+       */
+      octFromDiam: (opts) => {
+        const sqLen = opts.sqLength;
+        // const octagonSideLen = Math.tan(Math.PI / 8) * (sqLen / 2) * 2;
+
+        const baseSquare = square({ size: sqLen });
+        const angledSquare = rotate([0, 0, Math.PI / 4], baseSquare);
+
+        return intersect(baseSquare, angledSquare);
+      }
+    },
   }
 
   return shapes

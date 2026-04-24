@@ -9,9 +9,6 @@ const ellipseInit = ({ jscad, swcadJs }) => {
   const { constants } = swcadJs.data
   const { position } = swcadJs.calcs
 
-  const rectangles = rectangleModule.init({ jscad, swcadJs })
-
-
   //-----------
   //  ELLIPSE
   //-----------
