@@ -53,6 +53,7 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
 
     const {
         math,
+        position
     } = swcadJs.calcs
 
     const {
@@ -77,7 +78,8 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
                 sampleThickness: 1, // scission only works with 3D objects. Need a filler thickness for now
             },
             opts: {
-                axis: 'x'
+                axis: 'x',
+                jointNumConnectors: 3,
             },
             dims: {
                 size: [
@@ -87,6 +89,7 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
                 ],
                 jointWidth: math.inchesToMm(3 / 8),
                 jointMargin: math.inchesToMm(1 / 8),
+                jointInterfaceMargin: math.inchesToMm(3 / 8),
             },
             points: {
                 centre: [0, 0, 0]
@@ -111,6 +114,8 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             size: defaultValues.dims.size,
             jointWidth: defaultValues.dims.jointWidth,
             jointMargin: defaultValues.dims.jointMargin,
+            jointInterfaceMargin: defaultValues.dims.jointInterfaceMargin,
+            jointNumConnectors: defaultValues.opts.jointNumConnectors,
             axis: defaultValues.opts.axis,
         }
 
@@ -139,6 +144,8 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             size = defaults.opts.size,
             jointWidth = defaults.opts.jointWidth,
             jointMargin = defaults.opts.jointMargin,
+            jointInterfaceMargin = defaults.opts.jointInterfaceMargin,
+            jointNumConnectors = defaults.opts.jointNumConnectors,
             axis = defaults.opts.axis,
             type = defaults.opts.type,
             scale = defaults.opts.scale,
@@ -157,6 +164,8 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             size,
             jointWidth,
             jointMargin,
+            jointInterfaceMargin,
+            jointNumConnectors,
             axis,
             ...stdOpts,
         }
@@ -183,6 +192,8 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             size,
             jointWidth,
             jointMargin,
+            jointInterfaceMargin,
+            jointNumConnectors,
             axis,
             type,
             scale,
@@ -218,6 +229,7 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             type,
             scale,
             axis,
+            jointNumConnectors,
         }
 
         /** Various dimensions for model */
@@ -227,6 +239,7 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             depth,
             jointWidth,
             jointMargin,
+            jointInterfaceMargin,
             totalJointWidth,
             interfaceThickness,
             fitGap,
@@ -285,6 +298,7 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
 
         const {
             axis,
+            jointNumConnectors,
         } = modelProperties.opts
 
         const {
@@ -293,6 +307,7 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             depth,
             jointWidth,
             jointMargin,
+            jointInterfaceMargin,
             totalJointWidth,
         } = modelProperties.dims
 
@@ -310,11 +325,15 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
 
         const jointData = connections.dovetailRow({
             size: jointSize,
+            interfaceMargin: jointInterfaceMargin,
+            numConnectors: jointNumConnectors,
         })
-        const jointCut = jointData[1].cut
+        let jointCut = position.ctr(jointData[1].cut)
+        if (axis == 'y') {
+            jointCut = rotate([0, 0, TAU / 4], jointCut)
+        }
         const oneJointRectBasePanel = cuboid({
             size: [width, depth, sampleThickness],
-            center: [centrePt[0], centrePt[1], 0]
         })
 
         const cutPanel = subtract(
@@ -356,6 +375,7 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
 
         const {
             axis,
+            jointNumConnectors,
         } = modelProperties.opts
 
         const {
@@ -364,6 +384,7 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             depth,
             jointWidth,
             jointMargin,
+            jointInterfaceMargin,
             totalJointWidth,
         } = modelProperties.dims
 
@@ -378,19 +399,22 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
 
         const jointDataX = connections.dovetailRow({
             size: jointSizeX,
+            interfaceMargin: jointInterfaceMargin,
+            numConnectors: jointNumConnectors,
         })
-        const jointCutX = jointDataX[1].cut
+        const jointCutX = position.ctr(jointDataX[1].cut)
 
         const jointDataY = connections.dovetailRow({
             size: jointSizeY,
+            interfaceMargin: jointInterfaceMargin,
+            numConnectors: jointNumConnectors,
         })
-        const jointCutY = rotate([0, 0, TAU / 4], jointDataY[1].cut)
+        const jointCutY = rotate([0, 0, TAU / 4], position.ctr(jointDataY[1].cut))
 
         const comboCut = union(jointCutX, jointCutY)
 
         const twoJointRectBasePanel = cuboid({
             size: [width, depth, sampleThickness],
-            center: [centrePt[0], centrePt[1], 0]
         })
 
         const cutPanel = subtract(
@@ -399,22 +423,22 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
         )
         const cutParts = scission(cutPanel)
         const oProfiles = [
-            align({ modes: ['center', 'center', 'center'] }, cutParts[1]),
             align({ modes: ['center', 'center', 'center'] }, cutParts[0]),
+            align({ modes: ['center', 'center', 'center'] }, cutParts[1]),
+            align({ modes: ['center', 'center', 'center'] }, cutParts[2]),
+            align({ modes: ['center', 'center', 'center'] }, cutParts[3]),
         ]
         const outProfiles = [
             project({}, oProfiles[0]),
             project({}, oProfiles[1]),
+            project({}, oProfiles[2]),
+            project({}, oProfiles[3]),
         ]
 
-        const mainModel = [
-            outProfiles[0],
-            outProfiles[1],
-        ]
+        const mainModel = outProfiles
 
         const modelParts = {
-            male: outProfiles[0],
-            female: outProfiles[1],
+            model: outProfiles,
             cut: comboCut,
         }
 
