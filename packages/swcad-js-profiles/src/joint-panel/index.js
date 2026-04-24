@@ -1,5 +1,13 @@
 "use strict"
 
+/**
+ * Jointed panels
+ * @author R. J. Salvador
+ * @namespace jointPanel
+ * @memberof profiles
+ * @since 0.13.5
+ */
+
 const jointPanelsInit = ({ jscad, swcadJs }) => {
     const {
         cube,
@@ -287,6 +295,14 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
     * MODELLING FUNCTIONS
     * ------------------------------------- */
 
+    /**
+     * Generate one-joint rectangular panel
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof profiles.jointPanel
+     * @since 0.13.5
+     */
+
     const oneJointRectPanel = (opts) => {
         const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
@@ -363,6 +379,14 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
 
         return [mainModel, modelParts, modelProperties]
     }
+
+    /**
+     * Generate two-joint rectangular panel
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof profiles.jointPanel
+     * @since 0.13.5
+     */
 
     const twoJointRectPanel = (opts) => {
         const defaults = modelDefaults()
