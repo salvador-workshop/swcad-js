@@ -1,5 +1,7 @@
 "use strict"
 
+const reinforcedRectModule = require('./reinforced-rect');
+
 const rectangleInit = ({ jscad, swcadJs }) => {
     const { square, circle, rectangle, triangle, ellipse } = jscad.primitives
     const { intersect, union, subtract } = jscad.booleans
@@ -94,6 +96,7 @@ const rectangleInit = ({ jscad, swcadJs }) => {
 
     return {
         ...rectangles,
+        reinforcedRect: reinforcedRectModule.init({ jscad, swcadJs })
     }
 }
 
