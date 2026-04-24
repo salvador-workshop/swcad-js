@@ -888,6 +888,164 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         return [mainModel, modelParts, modelProperties]
     }
 
+    /**
+ * Generate dovetail row connectors
+ * @param {*} opts 
+ * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+ * @memberof profiles.jointPanel
+ * @since 0.13.4
+ */
+    const dovetailRow = (opts) => {
+        const defaults = modelDefaults()
+        const initOpts = modelOpts(opts)
+        const modelProperties = modelProps(initOpts)
+
+        const {
+            numConnectors
+        } = modelProperties.opts
+
+        const {
+            width,
+            depth,
+            fitGap,
+            interfaceMargin,
+        } = modelProperties.dims
+
+        const {
+            sampleThickness
+        } = modelProperties.constants
+
+        ////////
+
+        const numMargins = numConnectors + 1
+
+        const totalConnectionWidths = width - (interfaceMargin * numMargins)
+        const connectionWidth = totalConnectionWidths / numConnectors
+        const connectionUnitWidth = 2 * interfaceMargin + connectionWidth
+
+        const dovetailCutOpts = modelOpts({
+            ...opts,
+            size: [connectionUnitWidth, depth]
+        })
+
+        console.log('dovetailRow() width, depth', width, depth)
+        console.log('dovetailRow() numConnectors, numMargins', numConnectors, numMargins)
+        console.log('dovetailRow() connectionWidth, connectionUnitWidth', connectionWidth, connectionUnitWidth)
+        console.log('dovetailRow() dovetailCutOpts', dovetailCutOpts)
+
+        // For some very strange reason, tab and dovetail cuts get reversed?
+        const dovetailCutData = connections.tab(dovetailCutOpts)
+        const dovetailCutBase = dovetailCutData[1].cut
+
+        console.log('dovetailRow() dovetailCutData', dovetailCutData)
+        console.log('dovetailRow() dovetailCutBase', dovetailCutBase)
+
+        let dovetailRowCut = dovetailCutBase
+
+        const translateDistBase = interfaceMargin + connectionWidth
+        for (let idx = 1; idx < numConnectors; idx++) {
+            const translateDist = translateDistBase * idx
+            dovetailRowCut = union(
+                dovetailRowCut,
+                translate([translateDist, 0, 0], dovetailCutBase)
+            )
+        }
+
+        ////////
+
+        const mainModel = [
+            dovetailCutBase,
+            dovetailRowCut,
+        ]
+
+        const modelParts = {
+            male: dovetailRowCut,
+            female: dovetailRowCut,
+            cut: dovetailRowCut,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
+     * Generate tab row connectors
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof profiles.jointPanel
+     * @since 0.13.4
+     */
+    const tabRow = (opts) => {
+        const defaults = modelDefaults()
+        const initOpts = modelOpts(opts)
+        const modelProperties = modelProps(initOpts)
+
+        const {
+            numConnectors
+        } = modelProperties.opts
+
+        const {
+            width,
+            depth,
+            fitGap,
+            interfaceMargin,
+        } = modelProperties.dims
+
+        const {
+            sampleThickness
+        } = modelProperties.constants
+
+        ////////
+
+        const numMargins = numConnectors + 1
+
+        const totalConnectionWidths = width - (interfaceMargin * numMargins)
+        const connectionWidth = totalConnectionWidths / numConnectors
+        const connectionUnitWidth = 2 * interfaceMargin + connectionWidth
+
+        const tabCutOpts = modelOpts({
+            ...opts,
+            size: [connectionUnitWidth, depth]
+        })
+
+        console.log('tabRow() width, depth', width, depth)
+        console.log('tabRow() numConnectors, numMargins', numConnectors, numMargins)
+        console.log('tabRow() connectionWidth, connectionUnitWidth', connectionWidth, connectionUnitWidth)
+        console.log('tabRow() tabCutOpts', tabCutOpts)
+        // console.log('tabRow() tabCutProps', tabCutProps)
+
+        // For some very strange reason, tab and dovetail cuts get reversed?
+        const tabCutData = connections.dovetail(tabCutOpts)
+        const tabCutBase = tabCutData[1].cut
+        console.log('tabRow() tabCutData', tabCutData)
+        console.log('tabRow() tabCutBase', tabCutBase)
+
+        let tabRowCut = tabCutBase
+
+        const translateDistBase = interfaceMargin + connectionWidth
+        for (let idx = 1; idx < numConnectors; idx++) {
+            const translateDist = translateDistBase * idx
+            tabRowCut = union(
+                tabRowCut,
+                translate([translateDist, 0, 0], tabCutBase)
+            )
+        }
+
+        ////////
+
+        const mainModel = [
+            tabCutBase,
+            tabRowCut,
+        ]
+
+        const modelParts = {
+            male: tabRowCut,
+            female: tabRowCut,
+            cut: tabRowCut,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
     return {
         defaults: modelDefaults,
         props: modelProps,
@@ -897,6 +1055,8 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         ellipse,
         pegboard,
         boltCircle,
+        dovetailRow,
+        tabRow,
     }
 }
 

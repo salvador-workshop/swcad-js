@@ -15,7 +15,6 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
         sphere,
         cylinderElliptic,
         circle,
-        ellipse: ellipseShape,
         cuboid,
         roundedCuboid,
         roundedCylinder,
@@ -62,12 +61,7 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
 
     const {
         math,
-        position,
     } = swcadJs.calcs
-
-    const {
-        connections,
-    } = swcadJs.profiles
 
 
     //==============================================================================
@@ -77,30 +71,20 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
      * Builds default values and opts for the model
      * @param {*} opts 
      * @returns default values and opts
+     * @memberof newModelName
      * @access private
-     * @memberof profiles.jointPanel
      */
     const modelDefaults = () => {
         /** Specific value declarations */
         const defaultValues = {
-            constants: {
-                sampleThickness: 1, // scission only works with 3D objects. Need a filler thickness for now
-            },
-            opts: {
-                segments: 6,
-                unitSegments: 24,
-                numConnectors: 3,
-            },
             dims: {
                 size: [
-                    math.inchesToMm(2.5),
-                    math.inchesToMm(1.625),
+                    math.inchesToMm(2),
+                    math.inchesToMm(4),
                     math.inchesToMm(1),
                 ],
-                unitSpacing: math.inchesToMm(1),
-                unitRadius: 6.35,
-                radius: 12.7,
-                interfaceMargin: math.inchesToMm(3 / 8),
+                jointWidth: math.inchesToMm(3 / 8),
+                jointMargin: math.inchesToMm(1 / 8),
             },
             points: {
                 centre: [0, 0, 0]
@@ -123,13 +107,8 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
         const defaultOpts = {
             ...standardOpts,
             size: defaultValues.dims.size,
-            radius: defaultValues.dims.radius,
-            unitSpacing: defaultValues.dims.unitSpacing,
-            unitRadius: defaultValues.dims.unitRadius,
-            segments: defaultValues.opts.segments,
-            unitSegments: defaultValues.opts.unitSegments,
-            numConnectors: defaultValues.opts.numConnectors,
-            interfaceMargin: defaultValues.dims.interfaceMargin,
+            jointWidth: defaultValues.dims.jointWidth,
+            jointMargin: defaultValues.dims.jointMargin,
         }
 
         return {
@@ -146,22 +125,18 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
      * Initializes options with user input
      * @param {*} opts 
      * @returns model properties
+     * @memberof newModelName
      * @access private
-     * @memberof profiles.jointPanel
      */
     const modelOpts = (opts) => {
         const defaults = modelDefaults()
+        console.log('modelOpts() -- opts', opts)
 
         // User options
         const {
             size = defaults.opts.size,
-            radius = defaults.opts.radius,
-            unitSpacing = defaults.opts.unitSpacing,
-            unitRadius = defaults.opts.unitRadius,
-            unitSegments = defaults.opts.unitSegments,
-            numConnectors = defaults.opts.numConnectors,
-            segments = defaults.opts.segments,
-            interfaceMargin = defaults.opts.interfaceMargin,
+            jointWidth = defaults.opts.jointWidth,
+            jointMargin = defaults.opts.jointMargin,
             type = defaults.opts.type,
             scale = defaults.opts.scale,
             interfaceThickness = defaults.opts.interfaceThickness,
@@ -176,17 +151,13 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
         }
 
         const initOpts = {
-            ...stdOpts,
             size,
-            radius,
-            unitSpacing,
-            unitRadius,
-            segments,
-            unitSegments,
-            numConnectors,
-            interfaceMargin,
+            jointWidth,
+            jointMargin,
+            ...stdOpts,
         }
 
+        console.log('modelOpts() -- initOpts', initOpts)
 
         return initOpts
     }
@@ -199,21 +170,15 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
      * Builds model properties from the given opts
      * @param {*} opts 
      * @returns model properties
+     * @memberof newModelName
      * @access private
-     * @memberof profiles.jointPanel
      */
     const modelProps = (opts) => {
         const defaults = modelDefaults()
+        console.log('modelProps() -- opts', opts)
 
         const {
             size,
-            radius,
-            unitSpacing,
-            unitRadius,
-            segments,
-            unitSegments,
-            numConnectors,
-            interfaceMargin,
             type,
             scale,
             interfaceThickness,
@@ -228,25 +193,18 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
         const depth = size[1]
         const height = size[2]
 
-        const diametre = radius * 2
-        const unitDiametre = unitRadius * 2
-
         /* ----------------------------------------
         * Preparing Model Properties, Dimensions
         * ------------------------------------- */
 
         /** Constant values for model */
         const modelConstants = {
-            sampleThickness: defaults.vals.constants.sampleThickness,
         }
 
         /** Derived user options for the model */
         const modelOpts = {
             type,
             scale,
-            segments,
-            unitSegments,
-            numConnectors,
         }
 
         /** Various dimensions for model */
@@ -257,12 +215,6 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             width,
             depth,
             height,
-            radius,
-            unitSpacing,
-            unitRadius,
-            diametre,
-            unitDiametre,
-            interfaceMargin,
         }
 
         /** Various key points for model */
@@ -296,173 +248,41 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             components: modelComponents,
         }
 
+        console.log('modelProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }
 
+
+    //------------------------------------------------------------------------------
+
     /**
-     * Generate dovetail row connectors
+     * ...
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.jointPanel
      * @since 0.13.4
      */
-    const dovetailRow = (opts) => {
-        const defaults = modelDefaults()
-        const initOpts = modelOpts(opts)
-        const modelProperties = modelProps(initOpts)
-
-        const {
-            numConnectors
-        } = modelProperties.opts
-
-        const {
-            width,
-            depth,
-            fitGap,
-            interfaceMargin,
-        } = modelProperties.dims
-
-        const {
-            sampleThickness
-        } = modelProperties.constants
-
-        ////////
-
-        const numMargins = numConnectors + 1
-
-        const totalConnectionWidths = width - (interfaceMargin * numMargins)
-        const connectionWidth = totalConnectionWidths / numConnectors
-        const connectionUnitWidth = 2 * interfaceMargin + connectionWidth
-
-        const dovetailCutOpts = modelOpts({
-            ...opts,
-            size: [connectionUnitWidth, depth]
-        })
-
-        console.log('dovetailRow() width, depth', width, depth)
-        console.log('dovetailRow() numConnectors, numMargins', numConnectors, numMargins)
-        console.log('dovetailRow() connectionWidth, connectionUnitWidth', connectionWidth, connectionUnitWidth)
-        console.log('dovetailRow() dovetailCutOpts', dovetailCutOpts)
-
-        // For some very strange reason, tab and dovetail cuts get reversed?
-        const dovetailCutData = connections.tab(dovetailCutOpts)
-        const dovetailCutBase = dovetailCutData[1].cut
-
-        console.log('dovetailRow() dovetailCutData', dovetailCutData)
-        console.log('dovetailRow() dovetailCutBase', dovetailCutBase)
-
-        let dovetailRowCut = dovetailCutBase
-
-        const translateDistBase = interfaceMargin + connectionWidth
-        for (let idx = 1; idx < numConnectors; idx++) {
-            const translateDist = translateDistBase * idx
-            dovetailRowCut = union(
-                dovetailRowCut,
-                translate([translateDist, 0, 0], dovetailCutBase)
-            )
-        }
-
-        ////////
-
-        const mainModel = [
-            dovetailCutBase,
-            dovetailRowCut,
-        ]
-
-        const modelParts = {
-            male: dovetailRowCut,
-            female: dovetailRowCut,
-            cut: dovetailRowCut,
-        }
-
-        return [mainModel, modelParts, modelProperties]
+    const oneJointRectPanel = (opts) => {
+        return null
     }
 
     /**
-     * Generate tab row connectors
+     * ...
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.jointPanel
      * @since 0.13.4
      */
-    const tabRow = (opts) => {
-        const defaults = modelDefaults()
-        const initOpts = modelOpts(opts)
-        const modelProperties = modelProps(initOpts)
-
-        const {
-            numConnectors
-        } = modelProperties.opts
-
-        const {
-            width,
-            depth,
-            fitGap,
-            interfaceMargin,
-        } = modelProperties.dims
-
-        const {
-            sampleThickness
-        } = modelProperties.constants
-
-        ////////
-
-        const numMargins = numConnectors + 1
-
-        const totalConnectionWidths = width - (interfaceMargin * numMargins)
-        const connectionWidth = totalConnectionWidths / numConnectors
-        const connectionUnitWidth = 2 * interfaceMargin + connectionWidth
-
-        const tabCutOpts = modelOpts({
-            ...opts,
-            size: [connectionUnitWidth, depth]
-        })
-
-        console.log('tabRow() width, depth', width, depth)
-        console.log('tabRow() numConnectors, numMargins', numConnectors, numMargins)
-        console.log('tabRow() connectionWidth, connectionUnitWidth', connectionWidth, connectionUnitWidth)
-        console.log('tabRow() tabCutOpts', tabCutOpts)
-        // console.log('tabRow() tabCutProps', tabCutProps)
-
-        // For some very strange reason, tab and dovetail cuts get reversed?
-        const tabCutData = connections.dovetail(tabCutOpts)
-        const tabCutBase = tabCutData[1].cut
-        console.log('tabRow() tabCutData', tabCutData)
-        console.log('tabRow() tabCutBase', tabCutBase)
-
-        let tabRowCut = tabCutBase
-
-        const translateDistBase = interfaceMargin + connectionWidth
-        for (let idx = 1; idx < numConnectors; idx++) {
-            const translateDist = translateDistBase * idx
-            tabRowCut = union(
-                tabRowCut,
-                translate([translateDist, 0, 0], tabCutBase)
-            )
-        }
-
-        ////////
-
-        const mainModel = [
-            tabCutBase,
-            tabRowCut,
-        ]
-
-        const modelParts = {
-            male: tabRowCut,
-            female: tabRowCut,
-            cut: tabRowCut,
-        }
-
-        return [mainModel, modelParts, modelProperties]
+    const twoJointRectPanel = (opts) => {
+        return null
     }
 
     return {
         defaults: modelDefaults,
         props: modelProps,
-        dovetailRow,
-        tabRow,
+        oneJointRectPanel,
+        twoJointRectPanel,
     }
 }
 
