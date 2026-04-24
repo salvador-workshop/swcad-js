@@ -179,6 +179,8 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
 
         const {
             size,
+            jointWidth,
+            jointMargin,
             type,
             scale,
             interfaceThickness,
@@ -191,7 +193,8 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
 
         const width = size[0]
         const depth = size[1]
-        const height = size[2]
+
+        const totalJointWidth = jointMargin * 2 + jointWidth
 
         /* ----------------------------------------
         * Preparing Model Properties, Dimensions
@@ -210,11 +213,13 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
         /** Various dimensions for model */
         const modelDims = {
             size,
-            interfaceThickness,
-            fitGap,
             width,
             depth,
-            height,
+            jointWidth,
+            jointMargin,
+            totalJointWidth,
+            interfaceThickness,
+            fitGap,
         }
 
         /** Various key points for model */
@@ -255,6 +260,10 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
 
 
     //------------------------------------------------------------------------------
+
+    /* ----------------------------------------
+    * MODELLING FUNCTIONS
+    * ------------------------------------- */
 
     /**
      * ...
