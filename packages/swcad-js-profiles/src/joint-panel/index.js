@@ -218,6 +218,11 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
 
         const totalJointWidth = jointMargin * 2 + jointWidth
 
+        let jMargin = jointMargin
+        if (typeof jointMargin == 'number') {
+            jMargin = [jointMargin, jointMargin]
+        }
+
         /* ----------------------------------------
         * Preparing Model Properties, Dimensions
         * ------------------------------------- */
@@ -241,7 +246,7 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             width,
             depth,
             jointWidth,
-            jointMargin,
+            jointMargin: jMargin,
             totalJointWidth,
             interfaceThickness,
             fitGap,
