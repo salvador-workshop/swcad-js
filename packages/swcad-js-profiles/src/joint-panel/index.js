@@ -8,7 +8,7 @@
  * @since 0.13.5
  */
 
-const jointPanelsInit = ({ jscad, swcadJs }) => {
+const jointPanelInit = ({ jscad, swcadJs }) => {
     const {
         cube,
         cylinder,
@@ -79,7 +79,7 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
      * @memberof newModelName
      * @access private
      */
-    const modelDefaults = () => {
+    const jointPanelDefaults = () => {
         /** Specific value declarations */
         const defaultValues = {
             constants: {
@@ -142,8 +142,8 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
      * @memberof newModelName
      * @access private
      */
-    const modelOpts = (opts) => {
-        const defaults = modelDefaults()
+    const jointPanelOpts = (opts) => {
+        const defaults = jointPanelDefaults()
 
         // User options
         const {
@@ -190,7 +190,7 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
      * @access private
      */
     const modelProps = (opts) => {
-        const defaults = modelDefaults()
+        const defaults = jointPanelDefaults()
 
         const {
             size,
@@ -216,7 +216,11 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             depth / 2,
         ]
 
-        const totalJointWidth = jointMargin * 2 + jointWidth
+        let jMargin = jointMargin
+        if (typeof jointMargin == 'number') {
+            jMargin = [jointMargin, jointMargin]
+        }
+        const totalJointWidth = jMargin[1] * 2 + jointWidth
 
         /* ----------------------------------------
         * Preparing Model Properties, Dimensions
@@ -241,7 +245,7 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
             width,
             depth,
             jointWidth,
-            jointMargin,
+            jointMargin: jMargin,
             totalJointWidth,
             interfaceThickness,
             fitGap,
@@ -298,8 +302,8 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
      */
 
     const oneJointRectPanel = (opts) => {
-        const defaults = modelDefaults()
-        const initOpts = modelOpts(opts)
+        const defaults = jointPanelDefaults()
+        const initOpts = jointPanelOpts(opts)
         const modelProperties = modelProps(initOpts)
 
         const {
@@ -389,8 +393,8 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
      */
 
     const twoJointRectPanel = (opts) => {
-        const defaults = modelDefaults()
-        const initOpts = modelOpts(opts)
+        const defaults = jointPanelDefaults()
+        const initOpts = jointPanelOpts(opts)
         const modelProperties = modelProps(initOpts)
 
         const {
@@ -483,7 +487,7 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
     }
 
     return {
-        defaults: modelDefaults,
+        defaults: jointPanelDefaults,
         props: modelProps,
         oneJointRectPanel,
         twoJointRectPanel,
@@ -491,5 +495,5 @@ const jointPanelsInit = ({ jscad, swcadJs }) => {
 }
 
 module.exports = {
-    init: jointPanelsInit
+    init: jointPanelInit
 }

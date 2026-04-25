@@ -225,6 +225,10 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
         const diametre = radius * 2
         const unitDiametre = unitRadius * 2
+        let interMargin = interfaceMargin
+        if (typeof interfaceMargin == 'number') {
+            interMargin = [interfaceMargin, interfaceMargin]
+        }
 
         const midPoint = [
             width / 2,
@@ -261,7 +265,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             unitRadius,
             diametre,
             unitDiametre,
-            interfaceMargin,
+            interfaceMargin: interMargin,
         }
 
         /** Various key points for model */
@@ -363,8 +367,8 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             sampleThickness
         } = modelProperties.constants
 
-        const dovetailWidth = width - (interfaceMargin * 2)
-        const dovetailLength = depth - (interfaceMargin * 2)
+        const dovetailWidth = width - (interfaceMargin[0] * 2)
+        const dovetailLength = depth - (interfaceMargin[1] * 2)
 
         const dovetailEndSize = [
             dovetailLength / 6,
@@ -372,12 +376,12 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         ]
 
         const widthCoords = [
-            interfaceMargin,
-            interfaceMargin + dovetailWidth,
+            interfaceMargin[0],
+            interfaceMargin[0] + dovetailWidth,
         ]
         const lengthCoords = [
-            interfaceMargin,
-            interfaceMargin + dovetailLength,
+            interfaceMargin[1],
+            interfaceMargin[1] + dovetailLength,
         ]
 
         const baseProfilePanel = cuboid({
@@ -472,8 +476,8 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             centrePt
         } = modelProperties.points
 
-        const tabWidth = width - (interfaceMargin * 2)
-        const tabLength = depth - (interfaceMargin * 2)
+        const tabWidth = width - (interfaceMargin[0] * 2)
+        const tabLength = depth - (interfaceMargin[1] * 2)
 
         const tabEndSize = [
             tabLength / 6,
@@ -481,12 +485,12 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         ]
 
         const widthCoords = [
-            interfaceMargin,
-            interfaceMargin + tabWidth,
+            interfaceMargin[0],
+            interfaceMargin[0] + tabWidth,
         ]
         const lengthCoords = [
-            interfaceMargin,
-            interfaceMargin + tabLength,
+            interfaceMargin[1],
+            interfaceMargin[1] + tabLength,
         ]
 
         const baseProfilePanel = cuboid({
@@ -591,7 +595,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             holeRadius: halfGap + radius,
         }
 
-        specs.totalWidth = interfaceMargin * 2 + diametre
+        specs.totalWidth = interfaceMargin[0] * 2 + diametre
         const halfWidth = specs.totalWidth / 2
         specs.cornerPoints = [
             [halfWidth - cornerRadius, halfWidth - cornerRadius, 0],
@@ -660,8 +664,8 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         const cornerRadius = math.inchesToMm(1 / 4)
 
         const diam = [
-            width - (interfaceMargin * 2),
-            (depth - (interfaceMargin * 2)) * 2,
+            width - (interfaceMargin[0] * 2),
+            (depth - (interfaceMargin[1] * 2)) * 2,
         ]
         const radius = [
             diam[0] / 2,
@@ -672,14 +676,14 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             radius[1] + (fitGap / 2),
         ]
 
-        const dowelCtr = [0, depth / -2 + interfaceMargin, 0]
+        const dowelCtr = [0, depth / -2 + interfaceMargin[1], 0]
         const dowel = ellipseShape({ radius, segments, center: dowelCtr })
         const dowelDie = ellipseShape({ radius: holeRadius, segments, center: dowelCtr })
 
         const mPlate = rectangle({
             size: [
                 width,
-                interfaceMargin,
+                interfaceMargin[1],
                 0,
             ]
         })
@@ -704,7 +708,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         const fPlate = rectangle({
             size: [
                 width,
-                depth - interfaceMargin - fitGap,
+                depth - interfaceMargin[1] - fitGap,
                 0,
             ]
         })
@@ -773,7 +777,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             holeRadius: halfGap + unitRadius,
         }
 
-        specs.totalWidth = interfaceMargin * 2 + (unitRadius * 2 + unitSpacing)
+        specs.totalWidth = interfaceMargin[0] * 2 + (unitRadius * 2 + unitSpacing)
         const halfWidth = specs.totalWidth / 2
         specs.cornerPoints = [
             [halfWidth - cornerRadius, halfWidth - cornerRadius, 0],
@@ -867,7 +871,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             return translate(dPt, circle({ radius: holeRadius, segments: unitSegments }))
         })
 
-        const basePlateRadius = radius + unitRadius + interfaceMargin
+        const basePlateRadius = radius + unitRadius + interfaceMargin[0]
         const basePlate = circle({ radius: basePlateRadius })
         const dowelAssembly = union(dowels)
 
@@ -927,9 +931,9 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
         const numMargins = numConnectors + 1
 
-        const totalConnectionWidths = width - (interfaceMargin * numMargins)
+        const totalConnectionWidths = width - (interfaceMargin[0] * numMargins)
         const connectionWidth = totalConnectionWidths / numConnectors
-        const connectionUnitWidth = 2 * interfaceMargin + connectionWidth
+        const connectionUnitWidth = 2 * interfaceMargin[0] + connectionWidth
 
         const dovetailCutOpts = modelOpts({
             ...opts,
@@ -945,7 +949,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         })
         let dovetailRowCut = dovetailCutBase
 
-        const translateDistBase = interfaceMargin + connectionWidth
+        const translateDistBase = interfaceMargin[0] + connectionWidth
         for (let idx = 1; idx < numConnectors; idx++) {
             const translateDist = translateDistBase * idx
             dovetailRowCut = union(
@@ -1019,9 +1023,9 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
         const numMargins = numConnectors + 1
 
-        const totalConnectionWidths = width - (interfaceMargin * numMargins)
+        const totalConnectionWidths = width - (interfaceMargin[0] * numMargins)
         const connectionWidth = totalConnectionWidths / numConnectors
-        const connectionUnitWidth = 2 * interfaceMargin + connectionWidth
+        const connectionUnitWidth = 2 * interfaceMargin[0] + connectionWidth
 
         const tabCutOpts = modelOpts({
             ...opts,
@@ -1037,7 +1041,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         })
         let tabRowCut = tabCutBase
 
-        const translateDistBase = interfaceMargin + connectionWidth
+        const translateDistBase = interfaceMargin[0] + connectionWidth
         for (let idx = 1; idx < numConnectors; idx++) {
             const translateDist = translateDistBase * idx
             tabRowCut = union(

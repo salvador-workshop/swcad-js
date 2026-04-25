@@ -1,11 +1,10 @@
 "use strict"
 
-const reinforcedRectInit = ({ jscad, swcadJs }) => {
+const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
     const {
         cube,
         cylinder,
         sphere,
-        square,
         cylinderElliptic,
         circle,
         cuboid,
@@ -57,8 +56,8 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
     } = swcadJs.calcs
 
     const {
-        reinforcement,
-    } = swcadJs.calcs.geometry
+        shapes,
+    } = swcadJs.profiles
 
 
     //==============================================================================
@@ -68,10 +67,10 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
      * Builds default values and opts for the model
      * @param {*} opts 
      * @returns default values and opts
-     * @memberof reinforcedRect
+     * @memberof components.reinforcedRectPanel
      * @access private
      */
-    const reinforcedRectDefaults = () => {
+    const reinforcedRectPanelDefaults = () => {
         /** Specific value declarations */
         const defaultValues = {
             constants: {
@@ -81,6 +80,7 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
                 size: [
                     math.inchesToMm(3),
                     math.inchesToMm(4),
+                    math.inchesToMm(1 / 8),
                 ],
                 reinforcementThickness: [5, 4, 3],
             },
@@ -123,11 +123,11 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
      * Initializes options with user input
      * @param {*} opts 
      * @returns model properties
-     * @memberof reinforcedRect
+     * @memberof components.reinforcedRectPanel
      * @access private
      */
-    const reinforcedRectOpts = (opts) => {
-        const defaults = reinforcedRectDefaults()
+    const reinforcedRectPanelOpts = (opts) => {
+        const defaults = reinforcedRectPanelDefaults()
         console.log('modelOpts() -- opts', opts)
 
         // User options
@@ -167,11 +167,11 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
      * Builds model properties from the given opts
      * @param {*} opts 
      * @returns model properties
-     * @memberof reinforcedRect
+     * @memberof components.reinforcedRectPanel
      * @access private
      */
-    const reinforcedRectProps = (opts) => {
-        const defaults = reinforcedRectDefaults()
+    const reinforcedRectPanelProps = (opts) => {
+        const defaults = reinforcedRectPanelDefaults()
         console.log('modelProps() -- opts', opts)
 
         const {
@@ -190,52 +190,7 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
 
         const width = size[0]
         const depth = size[1]
-
-        let rThickness = [
-            defaults.vals.dims.reinforcementThickness,
-            defaults.vals.dims.reinforcementThickness,
-            defaults.vals.dims.reinforcementThickness,
-        ]
-
-        if (typeof reinforcementThickness == 'number') {
-            rThickness = [
-                reinforcementThickness,
-                reinforcementThickness,
-                reinforcementThickness,
-            ]
-        } else if (Array.isArray(reinforcementThickness)) {
-            if (reinforcementThickness.length == 3 && typeof reinforcementThickness[0] == 'number') {
-                rThickness = [
-                    reinforcementThickness[0],
-                    reinforcementThickness[1],
-                    reinforcementThickness[2],
-                ]
-            }
-            if (reinforcementThickness.length == 2 && typeof reinforcementThickness[0] == 'number') {
-                rThickness = [
-                    reinforcementThickness[0],
-                    reinforcementThickness[1],
-                    reinforcementThickness[1],
-                ]
-            }
-        }
-
-        const reinforcementDataSize = [
-            size[0] - reinforcementThickness[0],
-            size[1] - reinforcementThickness[0],
-        ]
-        const reinforcementData = reinforcement.reinforcedRectangle({
-            reinforcementDataSize,
-            reinforcementPattern,
-        })
-
-        const reinforcementNodes = [
-            circle({ radius: rThickness[0] / 2 }),
-            circle({ radius: rThickness[1] / 2 }),
-            circle({ radius: rThickness[2] / 2 }),
-        ]
-
-        const cornerNode = square({ size: rThickness[0] })
+        const height = size[2]
 
         /* ----------------------------------------
         * Preparing Model Properties, Dimensions
@@ -257,7 +212,8 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
             size,
             width,
             depth,
-            reinforcementThickness: rThickness,
+            height,
+            reinforcementThickness,
             interfaceThickness,
             fitGap,
         }
@@ -265,13 +221,10 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
         /** Various key points for model */
         const modelPoints = {
             centrePt: defaults.vals.points.centrePt,
-            ...reinforcementData.points,
         }
 
         /** Components used by model */
         const modelComponents = {
-            reinforcementNodes,
-            cornerNode,
         }
 
         /* ---------------------------------------------
@@ -306,139 +259,45 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
 
 
     /**
-     * Reinforced rectangle
+     * ...
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof profiles.shapes.rectangle
+     * @memberof components
+     * @since 0.13.7
      */
-    const reinforcedRect = (opts) => {
-        const defaults = reinforcedRectDefaults()
-        const initOpts = reinforcedRectOpts(opts)
-        const modelProperties = reinforcedRectProps(initOpts)
+    const reinforcedRectPanel = (opts) => {
+        const defaults = reinforcedRectPanelDefaults()
+        const initOpts = reinforcedRectPanelOpts(opts)
+        const modelProperties = reinforcedRectPanelProps(initOpts)
 
-        /* ----------------------------------------
-         * Modelling, Component/Assembly Modules
-         * ------------------------------------- */
+        const {
+            reinforcementPattern,
+        } = modelProperties.opts
 
-        const rectOutline = (modelProps) => {
-            const {
-                corners,
-            } = modelProps.points
-            const {
-                cornerNode,
-            } = modelProps.components
+        const {
+            size,
+            reinforcementThickness,
+        } = modelProperties.dims
 
-            const hullPts = corners
-            hullPts.push(hullPts[0])
-
-            const hullNodes = hullPts.map(hullPt => {
-                return translate([hullPt[0], hullPt[1], 0], cornerNode)
-            })
-
-            return hullChain(hullNodes)
+        const reinforcedRectOpts = {
+            size: [size[0], size[1]],
+            reinforcementPattern,
+            reinforcementThickness,
         }
+        const reinforcedRect = shapes.rectangle.reinforcedRect(reinforcedRectOpts)[0]
+        const extrudedReinforcedRect = extrudeLinear({ height: size[2] }, reinforcedRect)
 
-        const rectPrimaryBracing = (modelProps) => {
-            const {
-                primaryLines,
-            } = modelProps.points
-
-            const {
-                reinforcementNodes,
-            } = modelProps.components
-
-            let returnBracing = null
-
-            const braceLines = primaryLines.map(pLine => {
-                const lineStartPt = pLine[0]
-                const lineEndPt = pLine[1]
-
-                const nodeStart = translate(lineStartPt, reinforcementNodes[1])
-                const nodeEnd = translate(lineEndPt, reinforcementNodes[1])
-
-                return hull(nodeStart, nodeEnd)
-            })
-
-            if (braceLines.length > 0) {
-                returnBracing = union(...braceLines)
-            }
-
-            return braceLines
-        }
-
-        const rectSecondaryBracing = (modelProps) => {
-            const {
-                secondaryLines,
-            } = modelProps.points
-
-            const {
-                reinforcementNodes,
-            } = modelProps.components
-
-            let returnBracing = null
-
-            const braceLines = secondaryLines.map(pLine => {
-                const lineStartPt = pLine[0]
-                const lineEndPt = pLine[1]
-
-                const nodeStart = translate(lineStartPt, reinforcementNodes[2])
-                const nodeEnd = translate(lineEndPt, reinforcementNodes[2])
-
-                return hull(nodeStart, nodeEnd)
-            })
-
-            if (braceLines.length > 0) {
-                returnBracing = union(...braceLines)
-            }
-
-            return braceLines
-        }
-
-        /* ----------------------------------------
-         * Complete Assembly
-         * ------------------------------------- */
-
-        /** Final Assembly */
-        const finalAssembly = (modelProps) => {
-            const rectOutlineInst = rectOutline(modelProps)
-            const rectPrimaryBracingInst = rectPrimaryBracing(modelProperties)
-            const rectSecondaryBracingInst = rectSecondaryBracing(modelProperties)
-
-            let finalShape = rectOutlineInst
-
-            if (rectPrimaryBracingInst) {
-                finalShape = union(finalShape, rectPrimaryBracingInst)
-            }
-
-            if (rectSecondaryBracingInst) {
-                finalShape = union(finalShape, rectSecondaryBracingInst)
-            }
-
-            return finalShape
-        }
-
-        /* ----------------------------------------
-         * Outputs
-         * ------------------------------------- */
-
-        const rectOutlineInst = rectOutline(modelProperties)
-        const rectPrimaryBracingInst = rectPrimaryBracing(modelProperties)
-        const rectSecondaryBracingInst = rectSecondaryBracing(modelProperties)
-
-        let mainModel = finalAssembly(modelProperties)
-
-        let modelParts = {
-            rectOutline: rectOutlineInst,
-            rectPrimaryBracing: rectPrimaryBracingInst,
-            rectSecondaryBracing: rectSecondaryBracingInst,
+        const mainModel = extrudedReinforcedRect
+        const modelParts = {
+            mainModel,
         }
 
         return [mainModel, modelParts, modelProperties]
     }
 
-    return reinforcedRect
+    return reinforcedRectPanel
 }
 
 module.exports = {
-    init: reinforcedRectInit
+    init: reinforcedRectPanelInit
 }
