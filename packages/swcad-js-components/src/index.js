@@ -5,6 +5,7 @@ const componentLineModule = require('./component-line')
 const meshModule = require('./mesh')
 const mouldingModule = require('./moulding')
 const openWebJoistModule = require('./open-web-joist')
+const reinforcedRectPanelModule = require('./reinforced-rect-panel')
 const routedShapesModule = require('./routed-shapes')
 const sheetMouldModule = require('./sheet-mould')
 const textModule = require('./text')
@@ -41,6 +42,7 @@ const componentsInit = ({ jscad, swcadJs }) => {
         componentLine,
         moulding: mouldingModule.init({ jscad, swcadJs: preLib }),
         openWebJoist: openWebJoistModule.init({ jscad, swcadJs: preLib }),
+        reinforcedRectPanel: reinforcedRectPanelModule.init({ jscad, swcadJs: preLib }),
         sheetMould: sheetMouldModule.init({ jscad, swcadJs: preLib }),
         text: textModule.init({ jscad, swcadJs: preLib }),
         trimFamilyFrame: trimFamilyFrameModule.init({ jscad, swcadJs: preLib }),
