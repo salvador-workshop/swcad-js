@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: swcad-js-profiles/src/structure/mesh-2d.js</title>
+    <title>JSDoc: Source: swcad-js-components/src/reinforced-rect-panel/index.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: swcad-js-profiles/src/structure/mesh-2d.js</h1>
+    <h1 class="page-title">Source: swcad-js-components/src/reinforced-rect-panel/index.js</h1>
 
     
 
@@ -26,13 +26,9 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * Builds 2D mesh models.
- * @memberof profiles.structure
- * @namespace mesh
- */
+            <pre class="prettyprint source linenums"><code>"use strict"
 
-const mesh2dInit = ({ jscad, swcadJs }) => {
+const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
     const {
         cube,
         cylinder,
@@ -85,52 +81,60 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
 
     const {
         math,
-        position,
-        geometry,
     } = swcadJs.calcs
 
     const {
-        constants,
-    } = swcadJs.data
+        shapes,
+    } = swcadJs.profiles
+
+
+    //==============================================================================
+
 
     /**
      * Builds default values and opts for the model
      * @param {*} opts 
      * @returns default values and opts
-     * @memberof profiles.structure.mesh
+     * @memberof components.reinforcedRectPanel
      * @access private
      */
-    const meshPanelDefaults = () => {
-
+    const reinforcedRectPanelDefaults = () => {
         /** Specific value declarations */
         const defaultValues = {
+            constants: {
+                reinforcementPatterns: ['x', 'cross', 'diamond', 'full'],
+            },
             dims: {
                 size: [
-                    math.inchesToMm(6),
                     math.inchesToMm(3),
+                    math.inchesToMm(4),
+                    math.inchesToMm(1 / 8),
                 ],
+                reinforcementThickness: [5, 4, 3],
             },
             points: {
-                centre: [0, 0, 0]
+                centrePt: [0, 0, 0]
             },
-            typeDetails: {
+            types: {
                 default: { id: 'default', desc: 'Default' },
                 alt: { id: 'alt', desc: 'Alternate' },
-            }
+            },
+        }
+
+        /** Options used by SW models */
+        const standardOpts = {
+            type: defaultValues.types.default.id,
+            scale: 1,
+            interfaceThickness: 1.333333,
+            fitGap: math.inchesToMm(1 / 128),
         }
 
         /** Computed values for option defaults */
         const defaultOpts = {
+            ...standardOpts,
             size: defaultValues.dims.size,
-            type: 'default',
-            scale: 1,
-            interfaceThickness: 1.333333,
-            fitGap: math.inchesToMm(1 / 128),
-            logMode: 'normal',
-            edgeMargin: math.inchesToMm(3 / 16),
-            holeRadius: math.inchesToMm(0.125),
-            holeDistance: math.inchesToMm(1),
-            holePattern: 'tri',
+            reinforcementPattern: defaultValues.constants.reinforcementPatterns[0],
+            reinforcementThickness: defaultValues.dims.reinforcementThickness,
         }
 
         return {
@@ -144,26 +148,68 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
 
 
     /**
-     * Builds model properties from the given opts
+     * Initializes options with user input
      * @param {*} opts 
      * @returns model properties
-     * @memberof profiles.structure.mesh
+     * @memberof components.reinforcedRectPanel
      * @access private
      */
-    const meshPanelProps = (opts) => {
-        const defaults = meshPanelDefaults()
+    const reinforcedRectPanelOpts = (opts) => {
+        const defaults = reinforcedRectPanelDefaults()
+        console.log('modelOpts() -- opts', opts)
 
+        // User options
         const {
+            size = defaults.opts.size,
+            reinforcementPattern = defaults.opts.reinforcementPattern,
+            reinforcementThickness = defaults.opts.reinforcementThickness,
+            type = defaults.opts.type,
+            scale = defaults.opts.scale,
+            interfaceThickness = defaults.opts.interfaceThickness,
+            fitGap = defaults.opts.fitGap,
+        } = opts
+
+        const stdOpts = {
             type,
             scale,
             interfaceThickness,
             fitGap,
-            logMode,
+        }
+
+        const initOpts = {
             size,
-            edgeMargin,
-            holeRadius,
-            holeDistance,
-            holePattern,
+            reinforcementPattern,
+            reinforcementThickness,
+            ...stdOpts,
+        }
+
+        console.log('modelOpts() -- initOpts', initOpts)
+
+        return initOpts
+    }
+
+    //------------------------------------------------------------------------------
+
+
+    /**
+     * Builds model properties from the given opts
+     * @param {*} opts 
+     * @returns model properties
+     * @memberof components.reinforcedRectPanel
+     * @access private
+     */
+    const reinforcedRectPanelProps = (opts) => {
+        const defaults = reinforcedRectPanelDefaults()
+        console.log('modelProps() -- opts', opts)
+
+        const {
+            size,
+            reinforcementPattern,
+            reinforcementThickness,
+            type,
+            scale,
+            interfaceThickness,
+            fitGap,
         } = opts
 
         /* ----------------------------------------
@@ -172,13 +218,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
 
         const width = size[0]
         const depth = size[1]
-
-        const holeDiam = holeRadius * 2
-
-        const meshAreaSize = [
-            size[0] - holeDiam - (edgeMargin * 2),
-            size[1] - holeDiam - (edgeMargin * 2),
-        ]
+        const height = size[2]
 
         /* ----------------------------------------
         * Preparing Model Properties, Dimensions
@@ -186,34 +226,29 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
 
         /** Constant values for model */
         const modelConstants = {
-            type,
-            scale,
         }
 
         /** Derived user options for the model */
         const modelOpts = {
             type,
             scale,
-            holePattern,
+            reinforcementPattern,
         }
 
         /** Various dimensions for model */
         const modelDims = {
             size,
-            meshAreaSize,
-            interfaceThickness,
-            fitGap,
             width,
             depth,
-            edgeMargin,
-            holeRadius,
-            holeDiam,
-            holeDistance,
+            height,
+            reinforcementThickness,
+            interfaceThickness,
+            fitGap,
         }
 
         /** Various key points for model */
         const modelPoints = {
-            centre: defaults.vals.points.centre,
+            centrePt: defaults.vals.points.centrePt,
         }
 
         /** Components used by model */
@@ -242,6 +277,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             components: modelComponents,
         }
 
+        console.log('modelProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }
@@ -251,165 +287,49 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
 
 
     /**
-     * New Model
+     * ...
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
-     * @memberof profiles.structure.mesh
+     * @memberof components
+     * @since 0.13.7
      */
-    const meshPanel = (opts) => {
-        const defaults = meshPanelDefaults()
+    const reinforcedRectPanel = (opts) => {
+        const defaults = reinforcedRectPanelDefaults()
+        const initOpts = reinforcedRectPanelOpts(opts)
+        const modelProperties = reinforcedRectPanelProps(initOpts)
 
-        // User options
         const {
-            // size = defaults.opts.size,
-            type = defaults.opts.type,
-            scale = defaults.opts.scale,
-            interfaceThickness = defaults.opts.interfaceThickness,
-            fitGap = defaults.opts.fitGap,
-            logMode = defaults.opts.logMode,
-            size = defaults.opts.size,
-            edgeMargin = defaults.opts.edgeMargin,
-            holeRadius = defaults.opts.holeRadius,
-            holeDistance = defaults.opts.holeDistance,
-            holePattern = defaults.opts.holePattern,
-        } = opts
+            reinforcementPattern,
+        } = modelProperties.opts
 
-        const inOpts = {
-            type,
-            scale,
-            interfaceThickness,
-            fitGap,
-            logMode,
+        const {
             size,
-            edgeMargin,
-            holeRadius,
-            holeDistance,
-            holePattern,
+            reinforcementThickness,
+        } = modelProperties.dims
+
+        const reinforcedRectOpts = {
+            size: [size[0], size[1]],
+            reinforcementPattern,
+            reinforcementThickness,
         }
+        const reinforcedRect = shapes.rectangle.reinforcedRect(reinforcedRectOpts)[0]
+        const extrudedReinforcedRect = extrudeLinear({ height: size[2] }, reinforcedRect)
 
-        const modelProperties = meshPanelProps(inOpts)
-
-        /* ----------------------------------------
-         * Modelling, Component/Assembly Modules
-         * ------------------------------------- */
-
-        /**
-         * Calculates points in mesh area
-         * @memberof profiles.structure.mesh
-         * @returns ...
-         * @access private
-         */
-        const meshPanelPoints = (modelProps) => {
-            const {
-                size,
-                meshAreaSize,
-                edgeMargin,
-                holeRadius,
-                holeDistance,
-            } = modelProps.dims
-
-            const {
-                holePattern,
-            } = modelProps.opts
-
-            let pts = []
-
-            if (holePattern == 'tri') {
-                pts = geometry.getTriangularPtsInArea(meshAreaSize[0], meshAreaSize[1], holeDistance)
-            } else {
-                pts = geometry.getSquarePtsInArea(meshAreaSize[0], meshAreaSize[1], holeDistance)
-            }
-
-            return pts
-        }
-
-        /**
-         * Builds 2D mesh panel perforations (hole punch)
-         * @memberof profiles.structure.mesh
-         * @returns ...
-         * @access private
-         */
-        const meshPanelCutProfile = (modelProps) => {
-            const {
-                size,
-                edgeMargin,
-                holeRadius,
-                holeDistance,
-            } = modelProps.dims
-
-            const {
-                holePattern,
-            } = modelProps.opts
-
-            const cutPts = meshPanelPoints(modelProps)
-
-            const cutCircles = cutPts.map(cutPt => {
-                return circle({ radius: holeRadius, center: [cutPt.x, cutPt.y] })
-            })
-
-            return cutCircles
-        }
-
-        /**
-         * Builds a 2D mesh panel
-         * @memberof profiles.structure.mesh
-         * @returns ...
-         * @access private
-         */
-        const meshPanelProfile = (modelProps) => {
-            const {
-                size,
-                edgeMargin,
-                holeRadius,
-                holeDistance,
-            } = modelProps.dims
-
-            const {
-                holePattern,
-            } = modelProps.opts
-
-            const baseRect = rectangle({ size })
-            return baseRect
-        }
-
-        /* ----------------------------------------
-         * Complete Assembly
-         * ------------------------------------- */
-
-        /** Final Assembly */
-        const finalAssembly = (modelProps) => {
-            let subComp1 = meshPanelProfile(modelProps)
-            let subComp2 = meshPanelCutProfile(modelProps)
-
-            return subtract(
-                subComp1,
-                subComp2,
-            )
-        }
-
-        /* ----------------------------------------
-         * Outputs
-         * ------------------------------------- */
-
-        let subComp1 = meshPanelCutProfile(modelProperties)
-        let subComp2 = meshPanelProfile(modelProperties)
-
-        let mainModel = finalAssembly(modelProperties)
-
-        let modelParts = {
-            meshPanelCutProfile: subComp1,
-            meshPanelProfile: subComp2,
+        const mainModel = extrudedReinforcedRect
+        const modelParts = {
+            mainModel,
         }
 
         return [mainModel, modelParts, modelProperties]
     }
 
-    return {
-        meshPanel
-    }
+    return reinforcedRectPanel
 }
 
-module.exports = { init: mesh2dInit }</code></pre>
+module.exports = {
+    init: reinforcedRectPanelInit
+}
+</code></pre>
         </article>
     </section>
 
