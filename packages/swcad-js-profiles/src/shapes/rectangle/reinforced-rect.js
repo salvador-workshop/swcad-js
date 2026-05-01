@@ -128,7 +128,6 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
      */
     const reinforcedRectOpts = (opts) => {
         const defaults = reinforcedRectDefaults()
-        console.log('modelOpts() -- opts', opts)
 
         // User options
         const {
@@ -155,7 +154,6 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
             ...stdOpts,
         }
 
-        console.log('modelOpts() -- initOpts', initOpts)
 
         return initOpts
     }
@@ -172,7 +170,6 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
      */
     const reinforcedRectProps = (opts) => {
         const defaults = reinforcedRectDefaults()
-        console.log('modelProps() -- opts', opts)
 
         const {
             size,
@@ -296,7 +293,6 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
             components: modelComponents,
         }
 
-        console.log('modelProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }

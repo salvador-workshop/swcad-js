@@ -7,7 +7,6 @@
  */
 
 const geoTriangle = ({ jscad, swcadJs }) => {
-    const { measureDimensions, measureBoundingBox, measureCenter } = jscad.measurements;
     const { TAU } = jscad.maths.constants
 
     const getTriangleCtrlPoints = (points) => {

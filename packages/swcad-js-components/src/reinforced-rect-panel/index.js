@@ -128,7 +128,6 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
      */
     const reinforcedRectPanelOpts = (opts) => {
         const defaults = reinforcedRectPanelDefaults()
-        console.log('modelOpts() -- opts', opts)
 
         // User options
         const {
@@ -155,7 +154,6 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
             ...stdOpts,
         }
 
-        console.log('modelOpts() -- initOpts', initOpts)
 
         return initOpts
     }
@@ -172,7 +170,6 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
      */
     const reinforcedRectPanelProps = (opts) => {
         const defaults = reinforcedRectPanelDefaults()
-        console.log('modelProps() -- opts', opts)
 
         const {
             size,
@@ -249,7 +246,6 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
             components: modelComponents,
         }
 
-        console.log('modelProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }

@@ -7,9 +7,9 @@
  */
 
 const init = ({ jscad, swcadJs }) => {
-    const { rectangle, cuboid, triangle, circle, cylinder, roundedRectangle } = jscad.primitives;
-    const { union, subtract } = jscad.booleans;
-    const { translate, align, mirror, rotate } = jscad.transforms;
+    const { rectangle, triangle, roundedRectangle } = jscad.primitives;
+    const { union } = jscad.booleans;
+    const { align, rotate } = jscad.transforms;
     const { hull } = jscad.hulls
     const { extrudeLinear, extrudeRotate } = jscad.extrusions
     const { TAU } = jscad.maths.constants
