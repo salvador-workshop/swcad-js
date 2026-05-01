@@ -38,41 +38,76 @@ const textUtils = ({ jscad, swcadJs }) => {
         return align({ modes: ['center', 'center', 'center'] }, message3D)
     }
 
-    return {
-        flatText,
-        /**
-         * Creates a rectangular panel with engraved text
-         * @memberof components.text
-         * @instance
-         * @param {*} opts 
-         * @returns ...
-         */
-        textPanel: (opts) => {
-            const extrudeHt = opts.extrudeHeight || DEFAULT_EXTRUDE_HEIGHT;
+    /**
+     * Creates a 3D line of text, with engraved profile
+     * @memberof components.text
+     * @instance
+     * @param {*} opts 
+     * @returns ...
+     */
+    const engravedText = (opts) => {
+        const inverted = opts.inverted || false
+        const interThickness = opts.interfaceThickness || 1.333333
+        const engrDepth = opts.engravingDepth || interThickness * 0.37
 
-            const textModel = flatText({
-                ...opts,
-                extrudeHeight: extrudeHt,
-            });
-            const textModelDims = measureDimensions(textModel);
-            const panelOffset = opts.panelOffset || 2;
+        const lineRadius = engrDepth / 2
 
-            const textPanel = cuboid({
-                size: [
-                    textModelDims[0] + panelOffset,
-                    textModelDims[1] + panelOffset,
-                    opts.panelThickness || extrudeHt * 2
-                ]
-            })
-
-            const embossedPanel = subtract(
-                align({ modes: ['center', 'center', 'max'] }, textPanel),
-                align({ modes: ['center', 'center', 'max'] }, textModel)
-            )
-
-            return align({ modes: ['center', 'center', 'center'] }, embossedPanel);
-        }
+        const lineCorner = cylinderElliptic({
+            height: 0.4,
+            startRadius: inverted ? [lineRadius, lineRadius] : [0, 0],
+            endRadius: inverted ? [0, 0] : [lineRadius, lineRadius],
+        })
+        // line segments for each character
+        const lineSegmentPointArrays = vectorText({ x: 0, y: 0, input: opts.message, height: opts.fontSize })
+        const lineSegments = []
+        // process the line segment
+        lineSegmentPointArrays.forEach((segmentPoints) => {
+            const corners = segmentPoints.map((point) => translate(point, lineCorner))
+            lineSegments.push(hullChain(corners))
+        })
+        return union(lineSegments)
     }
+
+    /**
+     * Creates a rectangular panel with engraved text
+     * @memberof components.text
+     * @instance
+     * @param {*} opts 
+     * @returns ...
+     */
+    const textPanel = (opts) => {
+        const extrudeHt = opts.extrudeHeight || DEFAULT_EXTRUDE_HEIGHT;
+
+        const textModel = flatText({
+            ...opts,
+            extrudeHeight: extrudeHt,
+        });
+        const textModelDims = measureDimensions(textModel);
+        const panelOffset = opts.panelOffset || 2;
+
+        const textPanel = cuboid({
+            size: [
+                textModelDims[0] + panelOffset,
+                textModelDims[1] + panelOffset,
+                opts.panelThickness || extrudeHt * 2
+            ]
+        })
+
+        const embossedPanel = subtract(
+            align({ modes: ['center', 'center', 'max'] }, textPanel),
+            align({ modes: ['center', 'center', 'max'] }, textModel)
+        )
+
+        return align({ modes: ['center', 'center', 'center'] }, embossedPanel);
+    }
+
+    const text = {
+        flatText,
+        engravedText,
+        textPanel,
+    }
+
+    return text
 }
 
 module.exports = { init: textUtils };

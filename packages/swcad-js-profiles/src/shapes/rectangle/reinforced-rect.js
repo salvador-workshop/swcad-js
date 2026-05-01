@@ -225,8 +225,8 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
             size[1] - reinforcementThickness[0],
         ]
         const reinforcementData = reinforcement.reinforcedRectangle({
-            reinforcementDataSize,
-            reinforcementPattern,
+            size: reinforcementDataSize,
+            reinforcementPattern: reinforcementPattern,
         })
 
         const reinforcementNodes = [

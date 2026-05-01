@@ -363,14 +363,14 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
          * Outputs
          * ------------------------------------- */
 
-        let subComp1 = meshPanelCutProfile(modelProperties)
-        let subComp2 = meshPanelProfile(modelProperties)
+        let meshPanelCutProfileInst = meshPanelCutProfile(modelProperties)
+        let meshPanelProfileInst = meshPanelProfile(modelProperties)
 
         let mainModel = finalAssembly(modelProperties)
 
         let modelParts = {
-            meshPanelCutProfile: subComp1,
-            meshPanelProfile: subComp2,
+            meshPanelCutProfile: meshPanelCutProfileInst,
+            meshPanelProfile: meshPanelProfileInst,
         }
 
         return [mainModel, modelParts, modelProperties]
