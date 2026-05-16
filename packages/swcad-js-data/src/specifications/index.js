@@ -11,23 +11,32 @@
  */
 
 /**
- * ...
- * @memberof data
- * @namespace specifications
+ * planes
+ * @memberof data.specifications
+ * @namespace planes
  */
-
 const planes = {
     xy: { id: 0, desc: 'XY plane' },
     xz: { id: 1, desc: 'XZ plane' },
     yz: { id: 2, desc: 'YZ plane' },
 }
 
+/**
+ * axes
+ * @memberof data.specifications
+ * @namespace axes
+ */
 const axes = {
     x: { id: 0, desc: 'X axis' },
     y: { id: 1, desc: 'Y axis' },
     z: { id: 2, desc: 'Z axis' },
 }
 
+/**
+ * axialDirections
+ * @memberof data.specifications
+ * @namespace axialDirections
+ */
 const axialDirections = {
     posX: { id: 0, desc: 'towards +X' },
     negX: { id: 1, desc: 'towards -X' },
@@ -37,8 +46,11 @@ const axialDirections = {
     negZ: { id: 5, desc: 'towards -Z' },
 }
 
-
-// quadrants are numbered counter-clockwise, starting from positive X & Y
+/**
+ * quadrants are numbered counter-clockwise, starting from positive X & Y
+ * @memberof data.specifications
+ * @namespace quadrants
+ */
 const quadrants = {
     i: { id: 0, desc: '+X, +Y' },
     ii: { id: 1, desc: '-X, +Y' },
@@ -46,7 +58,11 @@ const quadrants = {
     iv: { id: 3, desc: '+X, -Y' },
 }
 
-// octants are numbered in "Gray code" order
+/**
+ * octants are numbered in "Gray code" order
+ * @memberof data.specifications
+ * @namespace octants
+ */
 const octants = {
     i: { id: 0, desc: '+X, +Y, +Z' },
     ii: { id: 1, desc: '-X, +Y, +Z' },
@@ -58,7 +74,11 @@ const octants = {
     viii: { id: 7, desc: '-X, -Y, -Z' },
 }
 
-// boxKeypoints: box corners, midpoints of edges, midpoints of box faces
+/**
+ * boxKeypoints: box corners, midpoints of edges, midpoints of box faces
+ * @memberof data.specifications
+ * @namespace boxKeypoints
+ */
 const boxKeypoints = {
     internal0: { id: 26, desc: 'centre' },
     corner1: { id: 0, desc: 'corner (+X, +Y, +Z)' },
@@ -88,6 +108,12 @@ const boxKeypoints = {
     face5: { id: 24, desc: `centre of face (${axialDirections.posZ.desc})` },
     face6: { id: 25, desc: `centre of face (${axialDirections.negZ.desc})` },
 }
+
+/**
+ * Technical specifications
+ * @memberof data
+ * @namespace specifications
+ */
 
 const specifications = {
     planes,

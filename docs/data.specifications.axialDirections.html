@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: swcad-js-profile-spec/src/lumber/index.js</title>
+    <title>JSDoc: Namespace: axialDirections</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,52 +17,100 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: swcad-js-profile-spec/src/lumber/index.js</h1>
+    <h1 class="page-title">Namespace: axialDirections</h1>
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>"use strict"
+        <h2>
+            <span class="ancestors"><a href="data.html">data</a><a href="data.specifications.html">.specifications</a>.</span>axialDirections</h2>
+        
+    
+</header>
 
-/**
- * ...
- * @memberof profileSpec
- * @namespace lumber
- */
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">axialDirections</div>
+        
 
-const lumberInit = ({ jscad, swcadJs }) => {
+        
 
-    const { rectangle } = jscad.primitives;
-    const { lumber } = swcadJs.data.standards;
 
-    const dimLumberModels = []
-    for (const [stdKey, stdVal] of Object.entries(lumber.dimensional)) {
-        const hasDepth = typeof stdVal === 'object' &amp;&amp; 'depth' in stdVal;
-        const hasWidth = typeof stdVal === 'object' &amp;&amp; 'depth' in stdVal;
-        if (hasDepth &amp;&amp; hasWidth) {
-            dimLumberModels.push({
-                id: stdKey,
-                ...stdVal,
-                geom: rectangle({ size: [stdVal.width, stdVal.depth] })
-            });
-        }
-    }
+<dl class="details">
 
-    const output = {
-        dimensional: dimLumberModels,
-    }
+    
 
-    return output;
-}
+    
 
-module.exports = { init: lumberInit }
-</code></pre>
-        </article>
-    </section>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="swcad-js-data_src_specifications_index.js.html">swcad-js-data/src/specifications/index.js</a>, <a href="swcad-js-data_src_specifications_index.js.html#line35">line 35</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

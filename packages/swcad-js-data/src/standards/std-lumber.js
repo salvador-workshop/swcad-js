@@ -7,6 +7,7 @@ const arrayCartesianProduct = (a, b) => a.reduce((acc, x) => [...acc, ...b.map(y
  * Lumber standards
  * @namespace lumber
  * @memberof data.standards
+ * @todo Add data on: pegs, biscuits, other connectors
  */
 
 const lumberStd = ({ jscad }) => {
@@ -114,11 +115,6 @@ const lumberStd = ({ jscad }) => {
         SHEET_LENGTH_SM: inchesToMm(48),
         SHEET_WIDTH_SM: inchesToMm(24),
     }
-
-    // TODO: Add data on
-    // -- pegs
-    // -- biscuits
-    // -- other connectors
 
     return {
         dimensional,
