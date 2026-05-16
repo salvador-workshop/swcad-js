@@ -176,17 +176,17 @@ const standards = ({ jscad }) => {
          * @memberof data.standards.params
          */
         OBJ_2D_SIZE: [
-            math.inchesToMm(2),
-            math.inchesToMm(4),
+            inchesToMm(2),
+            inchesToMm(4),
         ],
         /**
          * Obj_3d_Size
          * @memberof data.standards.params
          */
         OBJ_3D_SIZE: [
-            math.inchesToMm(2),
-            math.inchesToMm(4),
-            math.inchesToMm(1),
+            inchesToMm(2),
+            inchesToMm(4),
+            inchesToMm(1),
         ],
     }
 
