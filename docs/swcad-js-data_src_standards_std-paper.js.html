@@ -40,133 +40,435 @@ const paperStd = ({ jscad }) => {
     // STANDARD: [width, height]
     /**
      * Metric standards
+     * @namespace metric
      * @memberof data.standards.paper
      */
     const metric = {
+        /**
+         * A0 sheet
+         * @memberof data.standards.paper.metric
+         */
         A0: [841, 1189],
+        /**
+         * A1 sheet
+         * @memberof data.standards.paper.metric
+         */
         A1: [594, 841],
+        /**
+         * A2 sheet
+         * @memberof data.standards.paper.metric
+         */
         A2: [420, 594],
+        /**
+         * A3 sheet
+         * @memberof data.standards.paper.metric
+         */
         A3: [297, 420],
+        /**
+         * A4 sheet
+         * @memberof data.standards.paper.metric
+         */
         A4: [210, 297],
+        /**
+         * A5 sheet
+         * @memberof data.standards.paper.metric
+         */
         A5: [148, 210],
+        /**
+         * A6 sheet
+         * @memberof data.standards.paper.metric
+         */
         A6: [105, 148],
+        /**
+         * A7 sheet
+         * @memberof data.standards.paper.metric
+         */
         A7: [74, 105],
+        /**
+         * A8 sheet
+         * @memberof data.standards.paper.metric
+         */
         A8: [52, 74],
+        /**
+         * A9 sheet
+         * @memberof data.standards.paper.metric
+         */
         A9: [37, 52],
+        /**
+         * A10 sheet
+         * @memberof data.standards.paper.metric
+         */
         A10: [26, 37],
+        /**
+         * B0 sheet
+         * @memberof data.standards.paper.metric
+         */
         B0: [1000, 1414],
+        /**
+         * B1 sheet
+         * @memberof data.standards.paper.metric
+         */
         B1: [707, 1000],
+        /**
+         * B2 sheet
+         * @memberof data.standards.paper.metric
+         */
         B2: [500, 707],
+        /**
+         * B3 sheet
+         * @memberof data.standards.paper.metric
+         */
         B3: [353, 500],
+        /**
+         * B4 sheet
+         * @memberof data.standards.paper.metric
+         */
         B4: [250, 353],
+        /**
+         * B5 sheet
+         * @memberof data.standards.paper.metric
+         */
         B5: [167, 250],
+        /**
+         * B6 sheet
+         * @memberof data.standards.paper.metric
+         */
         B6: [125, 176],
+        /**
+         * B7 sheet
+         * @memberof data.standards.paper.metric
+         */
         B7: [88, 125],
+        /**
+         * B8 sheet
+         * @memberof data.standards.paper.metric
+         */
         B8: [62, 88],
+        /**
+         * B9 sheet
+         * @memberof data.standards.paper.metric
+         */
         B9: [44, 62],
+        /**
+         * B10 sheet
+         * @memberof data.standards.paper.metric
+         */
         B10: [31, 44],
+        /**
+         * C0 sheet
+         * @memberof data.standards.paper.metric
+         */
         C0: [917, 1297],
+        /**
+         * C1 sheet
+         * @memberof data.standards.paper.metric
+         */
         C1: [648, 917],
+        /**
+         * C2 sheet
+         * @memberof data.standards.paper.metric
+         */
         C2: [458, 648],
+        /**
+         * C3 sheet
+         * @memberof data.standards.paper.metric
+         */
         C3: [324, 458],
+        /**
+         * C4 sheet
+         * @memberof data.standards.paper.metric
+         */
         C4: [229, 324],
+        /**
+         * C5 sheet
+         * @memberof data.standards.paper.metric
+         */
         C5: [162, 229],
+        /**
+         * C6 sheet
+         * @memberof data.standards.paper.metric
+         */
         C6: [114, 162],
+        /**
+         * C7 sheet
+         * @memberof data.standards.paper.metric
+         */
         C7: [81, 114],
+        /**
+         * C8 sheet
+         * @memberof data.standards.paper.metric
+         */
         C8: [57, 81],
+        /**
+         * C9 sheet
+         * @memberof data.standards.paper.metric
+         */
         C9: [40, 57],
+        /**
+         * C10 sheet
+         * @memberof data.standards.paper.metric
+         */
         C10: [28, 40],
     }
 
     /**
      * ANSI standards
+     * @namespace imperialAnsi
      * @memberof data.standards.paper
      */
-    const naAnsi = {
+    const imperialAnsi = {
+        /**
+         * Ansi_A sheet
+         * @memberof data.standards.paper.imperialAnsi
+         */
         ANSI_A: [inchesToMm(8.5), inchesToMm(11)],
+        /**
+         * Ansi_B sheet
+         * @memberof data.standards.paper.imperialAnsi
+         */
         ANSI_B: [inchesToMm(11), inchesToMm(17)],
+        /**
+         * Ansi_C sheet
+         * @memberof data.standards.paper.imperialAnsi
+         */
         ANSI_C: [inchesToMm(17), inchesToMm(22)],
+        /**
+         * Ansi_D sheet
+         * @memberof data.standards.paper.imperialAnsi
+         */
         ANSI_D: [inchesToMm(22), inchesToMm(34)],
+        /**
+         * Ansi_E sheet
+         * @memberof data.standards.paper.imperialAnsi
+         */
         ANSI_E: [inchesToMm(34), inchesToMm(44)],
     }
 
     /**
      * North American architecture standards
+     * @namespace imperialArch
      * @memberof data.standards.paper
      */
-    const naArch = {
+    const imperialArch = {
+        /**
+         * Arch_A sheet
+         * @memberof data.standards.paper.imperialArch
+         */
         ARCH_A: [inchesToMm(9), inchesToMm(12)],
+        /**
+         * Arch_B sheet
+         * @memberof data.standards.paper.imperialArch
+         */
         ARCH_B: [inchesToMm(12), inchesToMm(18)],
+        /**
+         * Arch_C sheet
+         * @memberof data.standards.paper.imperialArch
+         */
         ARCH_C: [inchesToMm(18), inchesToMm(24)],
+        /**
+         * Arch_D sheet
+         * @memberof data.standards.paper.imperialArch
+         */
         ARCH_D: [inchesToMm(24), inchesToMm(36)],
+        /**
+         * Arch_E1 sheet
+         * @memberof data.standards.paper.imperialArch
+         */
         ARCH_E1: [inchesToMm(30), inchesToMm(42)],
+        /**
+         * Arch_E sheet
+         * @memberof data.standards.paper.imperialArch
+         */
         ARCH_E: [inchesToMm(36), inchesToMm(48)],
     }
 
     /**
      * Imperial standards
+     * @namespace imperial
      * @memberof data.standards.paper
      */
     const imperial = {
-        ansi: naAnsi,
-        arch: naArch,
-        LETTER: naAnsi.ANSI_A,
+        /**
+         * Letter sheet
+         * @memberof data.standards.paper.imperial
+         */
+        LETTER: imperialAnsi.ANSI_A,
+        /**
+         * Legal sheet
+         * @memberof data.standards.paper.imperial
+         */
         LEGAL: [inchesToMm(8.5), inchesToMm(14)],
-        TABLOID: naAnsi.ANSI_B,
+        /**
+         * Tabloid sheet
+         * @memberof data.standards.paper.imperial
+         */
+        TABLOID: imperialAnsi.ANSI_B,
+        /**
+         * Ledger sheet
+         * @memberof data.standards.paper.imperial
+         */
         LEDGER: [inchesToMm(17), inchesToMm(11)],
     }
 
     /**
      * Card standards
+     * @namespace cards
      * @memberof data.standards.paper
      */
     const cards = {
+        /**
+         * Business_Card sheet
+         * @memberof data.standards.paper.cards
+         */
         BUSINESS_CARD: [inchesToMm(3.5), inchesToMm(2)],
+        /**
+         * Business_Card_Sq sheet
+         * @memberof data.standards.paper.cards
+         */
         BUSINESS_CARD_SQ: [inchesToMm(2.5), inchesToMm(2.5)],
+        /**
+         * Credit_Card sheet
+         * @memberof data.standards.paper.cards
+         */
         CREDIT_CARD: [85.6, 53.98],
+        /**
+         * Devotional sheet
+         * @memberof data.standards.paper.cards
+         */
         DEVOTIONAL: [inchesToMm(2.5), inchesToMm(4.5)],
+        /**
+         * Index_Sm sheet
+         * @memberof data.standards.paper.cards
+         */
         INDEX_SM: [inchesToMm(5), inchesToMm(3)],
+        /**
+         * Index_Md sheet
+         * @memberof data.standards.paper.cards
+         */
         INDEX_MD: [inchesToMm(6), inchesToMm(4)],
+        /**
+         * Index_Lg sheet
+         * @memberof data.standards.paper.cards
+         */
         INDEX_LG: [inchesToMm(8), inchesToMm(5)],
+        /**
+         * Index_Xl sheet
+         * @memberof data.standards.paper.cards
+         */
         INDEX_XL: [inchesToMm(9), inchesToMm(6)],
+        /**
+         * Postcard sheet
+         * @memberof data.standards.paper.cards
+         */
         POSTCARD: [inchesToMm(6), inchesToMm(4)],
     }
 
     /**
      * Bookmark standards
+     * @namespace bookmarks
      * @memberof data.standards.paper
      */
     const bookmarks = {
+        /**
+         * Bookmark_Sm sheet
+         * @memberof data.standards.paper.bookmarks
+         */
         BOOKMARK_SM: [inchesToMm(1.5), inchesToMm(4.5)],
+        /**
+         * Bookmark_Md sheet
+         * @memberof data.standards.paper.bookmarks
+         */
         BOOKMARK_MD: [inchesToMm(2), inchesToMm(6.5)],
+        /**
+         * Bookmark_Lg sheet
+         * @memberof data.standards.paper.bookmarks
+         */
         BOOKMARK_LG: [inchesToMm(2.25), inchesToMm(8.5)],
     }
 
     /**
      * Poster standards
+     * @namespace poster
      * @memberof data.standards.paper
      */
     const poster = {
+        /**
+         * Posterjam sheet
+         * @memberof data.standards.paper.poster
+         */
         POSTERJAM: metric.B2,
+        /**
+         * Album_Cover sheet
+         * @memberof data.standards.paper.poster
+         */
         ALBUM_COVER: [inchesToMm(12 + (3 / 8)), inchesToMm(12 + (3 / 8))],
     }
 
     /**
      * Photos standards
+     * @namespace photos
      * @memberof data.standards.paper
      */
     const photos = {
+        /**
+         * Passport_Can photo
+         * @memberof data.standards.paper.photos
+         */
         PASSPORT_CAN: [50, 70],
+        /**
+         * Passport_Us photo
+         * @memberof data.standards.paper.photos
+         */
         PASSPORT_US: [inchesToMm(2), inchesToMm(2)],
+        /**
+         * Wallet photo
+         * @memberof data.standards.paper.photos
+         */
         WALLET: [inchesToMm(2), inchesToMm(3)],
+        /**
+         * R2 photo
+         * @memberof data.standards.paper.photos
+         */
         R2: [inchesToMm(2.5), inchesToMm(3.5)],
+        /**
+         * R3 photo
+         * @memberof data.standards.paper.photos
+         */
         R3: [inchesToMm(3.5), inchesToMm(5)],
+        /**
+         * R4 photo
+         * @memberof data.standards.paper.photos
+         */
         R4: [inchesToMm(5.04), inchesToMm(6)],
+        /**
+         * R5 photo
+         * @memberof data.standards.paper.photos
+         */
         R5: [inchesToMm(5), inchesToMm(7)],
+        /**
+         * R6 photo
+         * @memberof data.standards.paper.photos
+         */
         R6: [inchesToMm(6), inchesToMm(8)],
+        /**
+         * R8 photo
+         * @memberof data.standards.paper.photos
+         */
         R8: [inchesToMm(8), inchesToMm(10)],
+        /**
+         * R10 photo
+         * @memberof data.standards.paper.photos
+         */
         R10: [inchesToMm(10), inchesToMm(12)],
+        /**
+         * R11 photo
+         * @memberof data.standards.paper.photos
+         */
         R11: [inchesToMm(11), inchesToMm(14)],
+        /**
+         * R12 photo
+         * @memberof data.standards.paper.photos
+         */
         R12: [inchesToMm(12), inchesToMm(15)],
     }
 
@@ -174,6 +476,8 @@ const paperStd = ({ jscad }) => {
         cards,
         metric,
         imperial,
+        imperialAnsi,
+        imperialArch,
         bookmarks,
         poster,
         photos
@@ -191,13 +495,13 @@ module.exports = { init: paperStd };
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.position.cuboid.html">calcs.position.cuboid</a></li><li><a href="calcs.position.rectangle.html">calcs.position.rectangle</a></li><li><a href="calcs.position.triangle.html">calcs.position.triangle</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="componentSpec.html">componentSpec</a></li><li><a href="componentSpec.brick.html">componentSpec.brick</a></li><li><a href="componentSpec.crafts.html">componentSpec.crafts</a></li><li><a href="componentSpec.tile.html">componentSpec.tile</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.moulding.html">components.moulding</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.functions.html">data.functions</a></li><li><a href="data.specifications.html">data.specifications</a></li><li><a href="data.specifications.axes.html">data.specifications.axes</a></li><li><a href="data.specifications.axialDirections.html">data.specifications.axialDirections</a></li><li><a href="data.specifications.boxKeypoints.html">data.specifications.boxKeypoints</a></li><li><a href="data.specifications.octants.html">data.specifications.octants</a></li><li><a href="data.specifications.planes.html">data.specifications.planes</a></li><li><a href="data.specifications.quadrants.html">data.specifications.quadrants</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="data.standards.crafts.html">data.standards.crafts</a></li><li><a href="data.standards.gridfinity.html">data.standards.gridfinity</a></li><li><a href="data.standards.lumber.html">data.standards.lumber</a></li><li><a href="data.standards.masonry.html">data.standards.masonry</a></li><li><a href="data.standards.paper.html">data.standards.paper</a></li><li><a href="data.standards.params.html">data.standards.params</a></li><li><a href="data.standards.pegboard.html">data.standards.pegboard</a></li><li><a href="data.standards.tiles.html">data.standards.tiles</a></li><li><a href="data.standards.types.html">data.standards.types</a></li><li><a href="models.html">models</a></li><li><a href="models.arch.html">models.arch</a></li><li><a href="models.foil.html">models.foil</a></li><li><a href="models.structure.html">models.structure</a></li><li><a href="models.structure.wall.html">models.structure.wall</a></li><li><a href="models.structure.wallEntryway.html">models.structure.wallEntryway</a></li><li><a href="profileSpec.html">profileSpec</a></li><li><a href="profileSpec.lumber.html">profileSpec.lumber</a></li><li><a href="profileSpec.paper.html">profileSpec.paper</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.curve.html">profiles.curve</a></li><li><a href="profiles.jointPanel.html">profiles.jointPanel</a></li><li><a href="profiles.shapes.html">profiles.shapes</a></li><li><a href="profiles.shapes.ellipse.html">profiles.shapes.ellipse</a></li><li><a href="profiles.shapes.rectangle.html">profiles.shapes.rectangle</a></li><li><a href="profiles.shapes.triangle.html">profiles.shapes.triangle</a></li><li><a href="profiles.structure.arch.html">profiles.structure.arch</a></li><li><a href="profiles.structure.foil.html">profiles.structure.foil</a></li><li><a href="profiles.structure.mesh.html">profiles.structure.mesh</a></li><li><a href="profiles.text.html">profiles.text</a></li><li><a href="profiles.trim.html">profiles.trim</a></li><li><a href="utils.html">utils</a></li><li><a href="utils.colors.html">utils.colors</a></li><li><a href="utils.layout.html">utils.layout</a></li><li><a href="utils.palette.html">utils.palette</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.position.cuboid.html">calcs.position.cuboid</a></li><li><a href="calcs.position.rectangle.html">calcs.position.rectangle</a></li><li><a href="calcs.position.triangle.html">calcs.position.triangle</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="componentSpec.html">componentSpec</a></li><li><a href="componentSpec.brick.html">componentSpec.brick</a></li><li><a href="componentSpec.crafts.html">componentSpec.crafts</a></li><li><a href="componentSpec.tile.html">componentSpec.tile</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.moulding.html">components.moulding</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.functions.html">data.functions</a></li><li><a href="data.specifications.html">data.specifications</a></li><li><a href="data.specifications.axes.html">data.specifications.axes</a></li><li><a href="data.specifications.axialDirections.html">data.specifications.axialDirections</a></li><li><a href="data.specifications.boxKeypoints.html">data.specifications.boxKeypoints</a></li><li><a href="data.specifications.octants.html">data.specifications.octants</a></li><li><a href="data.specifications.planes.html">data.specifications.planes</a></li><li><a href="data.specifications.quadrants.html">data.specifications.quadrants</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="data.standards.crafts.html">data.standards.crafts</a></li><li><a href="data.standards.gridfinity.html">data.standards.gridfinity</a></li><li><a href="data.standards.lumber.html">data.standards.lumber</a></li><li><a href="data.standards.masonry.html">data.standards.masonry</a></li><li><a href="data.standards.masonry.brick.html">data.standards.masonry.brick</a></li><li><a href="data.standards.masonry.concrete.html">data.standards.masonry.concrete</a></li><li><a href="data.standards.paper.html">data.standards.paper</a></li><li><a href="data.standards.paper.bookmarks.html">data.standards.paper.bookmarks</a></li><li><a href="data.standards.paper.cards.html">data.standards.paper.cards</a></li><li><a href="data.standards.paper.imperial.html">data.standards.paper.imperial</a></li><li><a href="data.standards.paper.imperialAnsi.html">data.standards.paper.imperialAnsi</a></li><li><a href="data.standards.paper.imperialArch.html">data.standards.paper.imperialArch</a></li><li><a href="data.standards.paper.metric.html">data.standards.paper.metric</a></li><li><a href="data.standards.paper.photos.html">data.standards.paper.photos</a></li><li><a href="data.standards.paper.poster.html">data.standards.paper.poster</a></li><li><a href="data.standards.params.html">data.standards.params</a></li><li><a href="data.standards.pegboard.html">data.standards.pegboard</a></li><li><a href="data.standards.tiles.html">data.standards.tiles</a></li><li><a href="data.standards.types.html">data.standards.types</a></li><li><a href="models.html">models</a></li><li><a href="models.arch.html">models.arch</a></li><li><a href="models.foil.html">models.foil</a></li><li><a href="models.structure.html">models.structure</a></li><li><a href="models.structure.wall.html">models.structure.wall</a></li><li><a href="models.structure.wallEntryway.html">models.structure.wallEntryway</a></li><li><a href="profileSpec.html">profileSpec</a></li><li><a href="profileSpec.lumber.html">profileSpec.lumber</a></li><li><a href="profileSpec.paper.html">profileSpec.paper</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.curve.html">profiles.curve</a></li><li><a href="profiles.jointPanel.html">profiles.jointPanel</a></li><li><a href="profiles.shapes.html">profiles.shapes</a></li><li><a href="profiles.shapes.ellipse.html">profiles.shapes.ellipse</a></li><li><a href="profiles.shapes.rectangle.html">profiles.shapes.rectangle</a></li><li><a href="profiles.shapes.triangle.html">profiles.shapes.triangle</a></li><li><a href="profiles.structure.arch.html">profiles.structure.arch</a></li><li><a href="profiles.structure.foil.html">profiles.structure.foil</a></li><li><a href="profiles.structure.mesh.html">profiles.structure.mesh</a></li><li><a href="profiles.text.html">profiles.text</a></li><li><a href="profiles.trim.html">profiles.trim</a></li><li><a href="utils.html">utils</a></li><li><a href="utils.colors.html">utils.colors</a></li><li><a href="utils.layout.html">utils.layout</a></li><li><a href="utils.palette.html">utils.palette</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sat May 16 2026 17:43:35 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sat May 16 2026 19:08:27 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
