@@ -37,21 +37,102 @@ const standards = ({ jscad }) => {
     }
 
     /**
-     * SW Panel Thicknesses
+     * Type standards
      * @memberof data.standards
      */
+    const types = {
+        TYPE_DEFAULT: { id: 'default', desc: 'Default' },
+        TYPE_ALT: { id: 'alt', desc: 'Alternate' },
+    }
+
+    const interfaceThickness = 1.333333
+    const fitGap = inchesToMm(1 / 128)
+
+    const panelThicknessXs = interfaceThickness * 0.5
+    const panelThicknessSm = interfaceThickness * 0.75
+    const panelThicknessMd = interfaceThickness
+    const panelThicknessLg = interfaceThickness * 1.25
+    const panelThicknessXl = interfaceThickness * 1.5
+
+    const smProfileBeadWidth = interfaceThickness * 1.125
+    const mdProfileBeadWidth = interfaceThickness * 1.5
+    const lgProfileBeadWidth = interfaceThickness * 1.75
+
     const swDefaults = {
-        PANEL_THICKNESS_XS: inchesToMm(2 / 64),  // 1/32"
-        PANEL_THICKNESS_SM: inchesToMm(3 / 64),
-        PANEL_THICKNESS_MD: inchesToMm(4 / 64),   // 1/16"
-        PANEL_THICKNESS_LG: inchesToMm(5 / 64),
-        PANEL_THICKNESS_XL: inchesToMm(6 / 64),   // 3/32"
+        /**
+         * Interface thickness
+         * @memberof data.standards
+         */
+        INTERFACE_THICKNESS: interfaceThickness,
+        /**
+         * Fit_Gap
+         * @memberof data.standards
+         */
+        FIT_GAP: fitGap,
+        /**
+         * Panel_Thickness_Xs
+         * @memberof data.standards
+         */
+        PANEL_THICKNESS_XS: panelThicknessXs,
+        /**
+         * Panel_Thickness_Sm
+         * @memberof data.standards
+         */
+        PANEL_THICKNESS_SM: panelThicknessSm,
+        /**
+         * Panel_Thickness_Md
+         * @memberof data.standards
+         */
+        PANEL_THICKNESS_MD: panelThicknessMd,
+        /**
+         * Panel_Thickness_Lg
+         * @memberof data.standards
+         */
+        PANEL_THICKNESS_LG: panelThicknessLg,
+        /**
+         * Panel_Thickness_Xl
+         * @memberof data.standards
+         */
+        PANEL_THICKNESS_XL: panelThicknessXl,
+        /**
+         * Sm_Profile_Bead_Width
+         * @memberof data.standards
+         */
+        SM_PROFILE_BEAD_WIDTH: smProfileBeadWidth,
+        /**
+         * Md_Profile_Bead_Width
+         * @memberof data.standards
+         */
+        MD_PROFILE_BEAD_WIDTH: mdProfileBeadWidth,
+        /**
+         * Lg_Profile_Bead_Width
+         * @memberof data.standards
+         */
+        LG_PROFILE_BEAD_WIDTH: lgProfileBeadWidth,
+    }
+
+    /**
+     * Param standards
+     * @memberof data.standards
+     */
+    const params = {
+        OBJ_2D_SIZE: [
+            math.inchesToMm(2),
+            math.inchesToMm(4),
+        ],
+        OBJ_3D_SIZE: [
+            math.inchesToMm(2),
+            math.inchesToMm(4),
+            math.inchesToMm(1),
+        ],
     }
 
     return {
+        ...swDefaults,
         pegboard,
         gridfinity,
-        swDefaults,
+        types,
+        params,
         crafts: craftStd.init({ jscad }),
         lumber: lumberStd.init({ jscad }),
         masonry: masonryStd.init({ jscad }),
