@@ -18,30 +18,65 @@ const standards = ({ jscad }) => {
 
     /**
      * Pegboard standards
+     * @namespace pegboard
      * @memberof data.standards
      */
     const pegboard = {
+        /**
+         * Pegboard_Spacing
+         * @memberof data.standards.pegboard
+         */
         PEGBOARD_SPACING: inchesToMm(1),
+        /**
+         * Pegboard_Hole_Diam
+         * @memberof data.standards.pegboard
+         */
         PEGBOARD_HOLE_DIAM: inchesToMm(7 / 32),
+        /**
+         * Micro_Pegboard_Spacing
+         * @memberof data.standards.pegboard
+         */
         MICRO_PEGBOARD_SPACING: inchesToMm(1 / 2),
+        /**
+         * Micro_Pegboard_Hole_Diam
+         * @memberof data.standards.pegboard
+         */
         MICRO_PEGBOARD_HOLE_DIAM: inchesToMm(1 / 8),
     }
 
     /**
      * Gridfinity standards
+     * @namespace gridfinity
      * @memberof data.standards
      */
     const gridfinity = {
+        /**
+         * Gridfinity_Spacing
+         * @memberof data.standards.gridfinity
+         */
         GRIDFINITY_SPACING: 42,
+        /**
+         * Gridfinity_Rail_Width
+         * @memberof data.standards.gridfinity
+         */
         GRIDFINITY_RAIL_WIDTH: 7,
     }
 
     /**
      * Type standards
+     * @namespace types
      * @memberof data.standards
      */
     const types = {
+        /**
+         * Type_Default
+         * @memberof data.standards.types
+         */
         TYPE_DEFAULT: { id: 'default', desc: 'Default' },
+        /**
+         * Type_Alt
+         * @memberof data.standards.types
+         */
         TYPE_ALT: { id: 'alt', desc: 'Alternate' },
     }
 
@@ -57,6 +92,10 @@ const standards = ({ jscad }) => {
     const smProfileBeadWidth = interfaceThickness * 1.125
     const mdProfileBeadWidth = interfaceThickness * 1.5
     const lgProfileBeadWidth = interfaceThickness * 1.75
+
+    const smReinforcementWidth = 3
+    const mdReinforcementWidth = 4
+    const lgReinforcementWidth = 5
 
     const swDefaults = {
         /**
@@ -109,17 +148,41 @@ const standards = ({ jscad }) => {
          * @memberof data.standards
          */
         LG_PROFILE_BEAD_WIDTH: lgProfileBeadWidth,
+        /**
+         * Sm_Reinforcement_Width
+         * @memberof data.standards
+         */
+        SM_REINFORCEMENT_WIDTH: smReinforcementWidth,
+        /**
+         * Md_Reinforcement_Width
+         * @memberof data.standards
+         */
+        MD_REINFORCEMENT_WIDTH: mdReinforcementWidth,
+        /**
+         * Lg_Reinforcement_Width
+         * @memberof data.standards
+         */
+        LG_REINFORCEMENT_WIDTH: lgReinforcementWidth,
     }
 
     /**
      * Param standards
+     * @namespace params
      * @memberof data.standards
      */
     const params = {
+        /**
+         * Obj_2d_Size
+         * @memberof data.standards.params
+         */
         OBJ_2D_SIZE: [
             math.inchesToMm(2),
             math.inchesToMm(4),
         ],
+        /**
+         * Obj_3d_Size
+         * @memberof data.standards.params
+         */
         OBJ_3D_SIZE: [
             math.inchesToMm(2),
             math.inchesToMm(4),
