@@ -5,10 +5,10 @@
  */
 
 /**
- * ...
+ * Camel Case
  * @memberof data.functions
- * @param {string} str 
- * @returns ...
+ * @param {string} str string with whitespace
+ * @returns camel-case string
  */
 const camelCase = (str) => {
     // Using replace method with regEx
@@ -18,10 +18,10 @@ const camelCase = (str) => {
 }
 
 /**
- * ...
+ * Constant To Camel Case
  * @memberof data.functions
- * @param {string} str 
- * @returns ...
+ * @param {string} str constant-style string (capitals w/ underscores)
+ * @returns camel-case string
  */
 const constantToCamelCase = (str) => {
     return camelCase(str.replaceAll('_', ' ').toLowerCase())
