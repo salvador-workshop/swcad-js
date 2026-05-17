@@ -2,59 +2,30 @@
 
 const reinforcedRectInit = ({ jscad, swcadJs }) => {
     const {
-        cube,
-        cylinder,
-        sphere,
         square,
-        cylinderElliptic,
         circle,
-        cuboid,
-        roundedCuboid,
-        roundedCylinder,
-        roundedRectangle,
-        rectangle,
-        triangle,
     } = jscad.primitives
 
     const {
-        align,
         translate,
-        rotate,
-        mirror
     } = jscad.transforms
 
     const {
-        intersect,
-        subtract,
         union,
-        scission
     } = jscad.booleans
-
-    const {
-        extrudeLinear,
-        extrudeRotate,
-        project
-    } = jscad.extrusions
-
-    const {
-        measureDimensions,
-        measureBoundingBox,
-        measureVolume
-    } = jscad.measurements
 
     const {
         hull,
         hullChain
     } = jscad.hulls
 
-    const { vectorText } = jscad.text
-    const { toOutlines } = jscad.geometries.geom2
-    const { TAU } = jscad.maths.constants
-    const { colorize } = jscad.colors
-
     const {
         math,
     } = swcadJs.calcs
+
+    const {
+        standards,
+    } = swcadJs.data
 
     const {
         reinforcement,
@@ -82,14 +53,18 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
                     math.inchesToMm(3),
                     math.inchesToMm(4),
                 ],
-                reinforcementThickness: [5, 4, 3],
+                reinforcementThickness: [
+                    standards.LG_REINFORCEMENT_WIDTH,
+                    standards.MD_REINFORCEMENT_WIDTH,
+                    standards.SM_REINFORCEMENT_WIDTH,
+                ],
             },
             points: {
                 centrePt: [0, 0, 0]
             },
             types: {
-                default: { id: 'default', desc: 'Default' },
-                alt: { id: 'alt', desc: 'Alternate' },
+                default: standards.types.TYPE_DEFAULT,
+                alt: standards.types.TYPE_ALT,
             },
         }
 
@@ -97,8 +72,8 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
         const standardOpts = {
             type: defaultValues.types.default.id,
             scale: 1,
-            interfaceThickness: 1.333333,
-            fitGap: math.inchesToMm(1 / 128),
+            interfaceThickness: standards.INTERFACE_THICKNESS,
+            fitGap: standards.FIT_GAP,
         }
 
         /** Computed values for option defaults */

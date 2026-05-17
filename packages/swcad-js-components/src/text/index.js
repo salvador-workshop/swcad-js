@@ -18,6 +18,10 @@ const textUtils = ({ jscad, swcadJs }) => {
 
     const { text: text2d } = swcadJs.profiles
 
+    const {
+        standards,
+    } = swcadJs.data
+
     /**
      * Creates a simple 3D line of text
      * @memberof components.text
@@ -47,7 +51,7 @@ const textUtils = ({ jscad, swcadJs }) => {
      */
     const engravedText = (opts) => {
         const inverted = opts.inverted || false
-        const interThickness = opts.interfaceThickness || 1.333333
+        const interThickness = opts.interfaceThickness || standards.INTERFACE_THICKNESS
         const engrDepth = opts.engravingDepth || interThickness * 0.37
 
         const lineRadius = engrDepth / 2

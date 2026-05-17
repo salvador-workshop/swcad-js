@@ -6,63 +6,21 @@
 
 const mesh2dInit = ({ jscad, swcadJs }) => {
     const {
-        cube,
-        cylinder,
-        sphere,
-        cylinderElliptic,
         circle,
-        cuboid,
-        roundedCuboid,
-        roundedCylinder,
-        roundedRectangle,
         rectangle,
-        triangle,
     } = jscad.primitives
 
     const {
-        align,
-        translate,
-        rotate,
-        mirror
-    } = jscad.transforms
-
-    const {
-        intersect,
         subtract,
-        union,
-        scission
     } = jscad.booleans
 
     const {
-        extrudeLinear,
-        extrudeRotate,
-        project
-    } = jscad.extrusions
-
-    const {
-        measureDimensions,
-        measureBoundingBox,
-        measureVolume
-    } = jscad.measurements
-
-    const {
-        hull,
-        hullChain
-    } = jscad.hulls
-
-    const { vectorText } = jscad.text
-    const { toOutlines } = jscad.geometries.geom2
-    const { TAU } = jscad.maths.constants
-    const { colorize } = jscad.colors
-
-    const {
         math,
-        position,
         geometry,
     } = swcadJs.calcs
 
     const {
-        constants,
+        standards,
     } = swcadJs.data
 
     /**
@@ -86,8 +44,8 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
                 centre: [0, 0, 0]
             },
             typeDetails: {
-                default: { id: 'default', desc: 'Default' },
-                alt: { id: 'alt', desc: 'Alternate' },
+                default: standards.types.TYPE_DEFAULT,
+                alt: standards.types.TYPE_ALT,
             }
         }
 
@@ -96,8 +54,8 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             size: defaultValues.dims.size,
             type: 'default',
             scale: 1,
-            interfaceThickness: 1.333333,
-            fitGap: math.inchesToMm(1 / 128),
+            interfaceThickness: standards.INTERFACE_THICKNESS,
+            fitGap: standards.FIT_GAP,
             logMode: 'normal',
             edgeMargin: math.inchesToMm(3 / 16),
             holeRadius: math.inchesToMm(0.125),

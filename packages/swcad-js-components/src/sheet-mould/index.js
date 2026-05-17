@@ -2,59 +2,31 @@
 
 const moduleInit = ({ jscad, swcadJs }) => {
     const {
-        cube,
         cylinder,
-        sphere,
         cylinderElliptic,
-        circle,
         cuboid,
-        roundedCuboid,
-        roundedCylinder,
-        roundedRectangle,
-        rectangle,
-        triangle,
     } = jscad.primitives
 
     const {
         align,
-        translate,
-        rotate,
-        mirror
     } = jscad.transforms
 
     const {
-        intersect,
-        subtract,
         union,
-        scission
     } = jscad.booleans
 
     const {
-        extrudeLinear,
-        extrudeRotate,
-        project
-    } = jscad.extrusions
-
-    const {
-        measureDimensions,
-        measureBoundingBox,
-        measureVolume
-    } = jscad.measurements
-
-    const {
-        hull,
         hullChain
     } = jscad.hulls
-
-    const { vectorText } = jscad.text
-    const { toOutlines } = jscad.geometries.geom2
-    const { TAU } = jscad.maths.constants
-    const { colorize } = jscad.colors
 
     const {
         math,
         position,
     } = swcadJs.calcs
+
+    const {
+        standards,
+    } = swcadJs.data
 
     const {
         beadsBits,
@@ -74,11 +46,11 @@ const moduleInit = ({ jscad, swcadJs }) => {
      */
     const modelDefaults = () => {
         /** Specific value declarations */
-        const interfaceThickness = 1.333333
+        const interfaceThickness = standards.INTERFACE_THICKNESS
         const edgeMargin = math.inchesToMm(1 / 4)
         const modelTypes = {
-            default: { id: 'default', desc: 'Default' },
-            alt: { id: 'alt', desc: 'Alternate' },
+            default: standards.types.TYPE_DEFAULT,
+            alt: standards.types.TYPE_ALT,
         }
 
         const defaultValues = {
@@ -94,7 +66,7 @@ const moduleInit = ({ jscad, swcadJs }) => {
             },
             dims: {
                 interfaceThickness,
-                fitGap: math.inchesToMm(1 / 128),
+                fitGap: standards.FIT_GAP,
                 edgeMargin,
                 bead: {
                     radius: math.inchesToMm(1 / 16),
@@ -155,8 +127,8 @@ const moduleInit = ({ jscad, swcadJs }) => {
         const standardOpts = {
             type: defaultValues.opts.type,
             scale: 1,
-            interfaceThickness: 1.333333,
-            fitGap: math.inchesToMm(1 / 128),
+            interfaceThickness: standards.INTERFACE_THICKNESS,
+            fitGap: standards.FIT_GAP,
         }
 
         /** Computed values for option defaults */
@@ -263,9 +235,9 @@ const moduleInit = ({ jscad, swcadJs }) => {
         * Prop calculations
         * ------------------------------------- */
 
-        const lgProfileBeadWidth = interfaceThickness * 1.75
-        const mdProfileBeadWidth = interfaceThickness * 1.5
-        const smProfileBeadWidth = interfaceThickness * 1.125
+        const lgProfileBeadWidth = standards.LG_PROFILE_BEAD_WIDTH
+        const mdProfileBeadWidth = standards.MD_PROFILE_BEAD_WIDTH
+        const smProfileBeadWidth = standards.SM_PROFILE_BEAD_WIDTH
 
         let width = null
         let depth = null
