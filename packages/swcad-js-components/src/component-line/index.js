@@ -204,9 +204,9 @@ const moduleInit = ({ jscad, swcadJs }) => {
         const componentUnitLength = componentLineLength / numSubLengths
         const compLineAngle = geometry.angleOfTwoPtLine(startPt, endPt)
 
-        const lgProfileBeadWidth = interfaceThickness * 1.75
-        const mdProfileBeadWidth = interfaceThickness * 1.5
-        const smProfileBeadWidth = interfaceThickness * 1.125
+        const lgProfileBeadWidth = standards.LG_PROFILE_BEAD_WIDTH
+        const mdProfileBeadWidth = standards.MD_PROFILE_BEAD_WIDTH
+        const smProfileBeadWidth = standards.SM_PROFILE_BEAD_WIDTH
 
         /* ----------------------------------------
         * Preparing Model Properties, Dimensions

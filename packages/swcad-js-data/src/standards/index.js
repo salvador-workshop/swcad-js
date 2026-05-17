@@ -93,6 +93,7 @@ const standards = ({ jscad }) => {
     const mdProfileBeadWidth = interfaceThickness * 1.5
     const lgProfileBeadWidth = interfaceThickness * 1.75
 
+    const xsReinforcementWidth = 2
     const smReinforcementWidth = 3
     const mdReinforcementWidth = 4
     const lgReinforcementWidth = 5
@@ -148,6 +149,11 @@ const standards = ({ jscad }) => {
          * @memberof data.standards
          */
         LG_PROFILE_BEAD_WIDTH: lgProfileBeadWidth,
+        /**
+         * Xs_Reinforcement_Width
+         * @memberof data.standards
+         */
+        XS_REINFORCEMENT_WIDTH: xsReinforcementWidth,
         /**
          * Sm_Reinforcement_Width
          * @memberof data.standards

@@ -243,9 +243,7 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
         * Prop calculations
         * ------------------------------------- */
 
-        const lgProfileBeadWidth = interfaceThickness * 1.75
-        const mdProfileBeadWidth = interfaceThickness * 1.5
-        const smProfileBeadWidth = interfaceThickness * 1.125
+        // ...
 
         /* ----------------------------------------
         * Preparing Model Properties, Dimensions

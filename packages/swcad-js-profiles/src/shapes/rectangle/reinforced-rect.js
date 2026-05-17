@@ -53,7 +53,11 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
                     math.inchesToMm(3),
                     math.inchesToMm(4),
                 ],
-                reinforcementThickness: [5, 4, 3],
+                reinforcementThickness: [
+                    standards.LG_REINFORCEMENT_WIDTH,
+                    standards.MD_REINFORCEMENT_WIDTH,
+                    standards.SM_REINFORCEMENT_WIDTH,
+                ],
             },
             points: {
                 centrePt: [0, 0, 0]
