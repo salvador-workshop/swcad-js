@@ -49,8 +49,8 @@ const moduleInit = ({ jscad, swcadJs }) => {
         const interfaceThickness = standards.INTERFACE_THICKNESS
         const edgeMargin = math.inchesToMm(1 / 4)
         const modelTypes = {
-            default: { id: 'default', desc: 'Default' },
-            alt: { id: 'alt', desc: 'Alternate' },
+            default: standards.types.TYPE_DEFAULT,
+            alt: standards.types.TYPE_ALT,
         }
 
         const defaultValues = {

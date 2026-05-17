@@ -68,8 +68,8 @@ const moduleInit = ({ jscad, swcadJs }) => {
                 endPt: [math.inchesToMm(3), math.inchesToMm(4)],
             },
             types: {
-                default: { id: 'default', desc: 'Default' },
-                alt: { id: 'alt', desc: 'Alternate' },
+                default: standards.types.TYPE_DEFAULT,
+                alt: standards.types.TYPE_ALT,
             },
             component: cuboid({
                 size: [

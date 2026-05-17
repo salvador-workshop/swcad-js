@@ -69,8 +69,8 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
                 centre: [0, 0, 0]
             },
             types: {
-                default: { id: 'default', desc: 'Default' },
-                alt: { id: 'alt', desc: 'Alternate' },
+                default: standards.types.TYPE_DEFAULT,
+                alt: standards.types.TYPE_ALT,
             },
             topBit: {
                 type: 'chamfer',

@@ -44,8 +44,8 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
                 centre: [0, 0, 0]
             },
             typeDetails: {
-                default: { id: 'default', desc: 'Default' },
-                alt: { id: 'alt', desc: 'Alternate' },
+                default: standards.types.TYPE_DEFAULT,
+                alt: standards.types.TYPE_ALT,
             }
         }
 
