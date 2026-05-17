@@ -14,6 +14,10 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
         math,
     } = swcadJs.calcs
 
+    const {
+        standards,
+    } = swcadJs.data
+
 
     //==============================================================================
 
@@ -48,8 +52,8 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
         const standardOpts = {
             type: defaultValues.types.default.id,
             scale: 1,
-            interfaceThickness: 1.333333,
-            fitGap: math.inchesToMm(1 / 128),
+            interfaceThickness: standards.INTERFACE_THICKNESS,
+            fitGap: standards.FIT_GAP,
         }
 
         /** Computed values for option defaults */
@@ -98,8 +102,8 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
         const defaultOpts = {
             size: defaultValues.dims.size,
             reinforcementPattern: defaultValues.opts.reinforcementPatterns[0],
-            interfaceThickness: 1.333333,
-            fitGap: math.inchesToMm(1 / 128),
+            interfaceThickness: standards.INTERFACE_THICKNESS,
+            fitGap: standards.FIT_GAP,
             type: 'default',
             scale: 1,
         }

@@ -1,11 +1,11 @@
 "use strict"
 
 const trimAranea = ({ jscad, swcadJs }) => {
-    const { polygon, square } = jscad.primitives
+    const { polygon } = jscad.primitives
     const { subtract, union } = jscad.booleans
-    const { rotate, translate, mirror, center } = jscad.transforms
+    const { translate, mirror, center } = jscad.transforms
 
-    const { constants } = swcadJs.data
+    const { constants, standards } = swcadJs.data
     const { math } = swcadJs.calcs
     const {
         beadsBits: beadsBitsProfiles,
@@ -49,8 +49,8 @@ const trimAranea = ({ jscad, swcadJs }) => {
         const standardOpts = {
             type: defaultValues.types.dado.id,
             scale: 1,
-            interfaceThickness: 1.333333,
-            fitGap: math.inchesToMm(1 / 128),
+            interfaceThickness: standards.INTERFACE_THICKNESS,
+            fitGap: standards.FIT_GAP,
         }
 
         /** Computed values for option defaults */

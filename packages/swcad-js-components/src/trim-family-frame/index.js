@@ -2,16 +2,9 @@
 
 const trimFamilyFrameInit = ({ jscad, swcadJs }) => {
     const {
-        cube,
         cylinder,
-        sphere,
-        cylinderElliptic,
-        circle,
         cuboid,
         roundedCuboid,
-        roundedCylinder,
-        roundedRectangle,
-        rectangle,
         triangle,
     } = jscad.primitives
 
@@ -19,42 +12,31 @@ const trimFamilyFrameInit = ({ jscad, swcadJs }) => {
         align,
         translate,
         rotate,
-        mirror
     } = jscad.transforms
 
     const {
         intersect,
         subtract,
         union,
-        scission
     } = jscad.booleans
 
     const {
         extrudeLinear,
-        extrudeRotate,
         project
     } = jscad.extrusions
 
     const {
-        measureDimensions,
         measureBoundingBox,
-        measureVolume
     } = jscad.measurements
-
-    const {
-        hull,
-        hullChain
-    } = jscad.hulls
-
-    const { vectorText } = jscad.text
-    const { toOutlines } = jscad.geometries.geom2
-    const { TAU } = jscad.maths.constants
-    const { colorize } = jscad.colors
 
     const {
         math,
         position,
     } = swcadJs.calcs
+
+    const {
+        standards,
+    } = swcadJs.data
 
     const {
         trim,
@@ -88,9 +70,9 @@ const trimFamilyFrameInit = ({ jscad, swcadJs }) => {
             },
             dims: {
                 size: [math.inchesToMm(2.5), math.inchesToMm(3)],
-                interfaceThickness: 1.333,
-                fitGap: math.inchesToMm(1 / 128),
-                backingThickness: 1.333,
+                interfaceThickness: standards.INTERFACE_THICKNESS,
+                fitGap: standards.FIT_GAP,
+                backingThickness: standards.INTERFACE_THICKNESS,
                 trimWidth: math.inchesToMm(3 / 8),
                 trimThickness: math.inchesToMm(3 / 16),
                 trimJointWidth: math.inchesToMm(1 / 2),
@@ -115,8 +97,8 @@ const trimFamilyFrameInit = ({ jscad, swcadJs }) => {
         const standardOpts = {
             type: defaultValues.types.default.id,
             scale: 1,
-            interfaceThickness: 1.333333,
-            fitGap: math.inchesToMm(1 / 128),
+            interfaceThickness: standards.INTERFACE_THICKNESS,
+            fitGap: standards.FIT_GAP,
         }
 
         /** Computed values for option defaults */

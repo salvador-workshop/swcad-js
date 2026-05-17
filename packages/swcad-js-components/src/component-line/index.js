@@ -2,57 +2,34 @@
 
 const moduleInit = ({ jscad, swcadJs }) => {
     const {
-        cube,
-        cylinder,
-        sphere,
         cylinderElliptic,
-        circle,
         cuboid,
-        roundedCuboid,
-        roundedCylinder,
-        roundedRectangle,
-        rectangle,
-        triangle,
     } = jscad.primitives
 
     const {
-        align,
         translate,
         rotate,
-        mirror
     } = jscad.transforms
 
     const {
         intersect,
-        subtract,
         union,
-        scission
     } = jscad.booleans
-
-    const {
-        extrudeLinear,
-        extrudeRotate,
-        project
-    } = jscad.extrusions
 
     const {
         measureDimensions,
         measureBoundingBox,
-        measureVolume
     } = jscad.measurements
 
     const {
         hull,
-        hullChain
     } = jscad.hulls
 
-    const { vectorText } = jscad.text
-    const { toOutlines } = jscad.geometries.geom2
     const { TAU } = jscad.maths.constants
-    const { colorize } = jscad.colors
 
     const {
         constants,
+        standards,
     } = swcadJs.data
 
     const {
@@ -107,8 +84,8 @@ const moduleInit = ({ jscad, swcadJs }) => {
         const standardOpts = {
             type: defaultValues.types.default.id,
             scale: 1,
-            interfaceThickness: 1.333333,
-            fitGap: math.inchesToMm(1 / 128),
+            interfaceThickness: standards.INTERFACE_THICKNESS,
+            fitGap: standards.FIT_GAP,
         }
 
         /** Computed values for option defaults */

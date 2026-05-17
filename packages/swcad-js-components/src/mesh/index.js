@@ -14,16 +14,19 @@
 
 const mesh3dInit = ({ jscad, swcadJs }) => {
 
-    const { cuboid, cylinder, triangle, rectangle } = jscad.primitives
+    const { cylinder, triangle, rectangle } = jscad.primitives
     const { translate, rotate, align, mirror } = jscad.transforms
     const { subtract, union } = jscad.booleans
-    const { measureBoundingBox } = jscad.measurements
     const { extrudeRotate, extrudeLinear } = jscad.extrusions
     const { TAU } = jscad.maths.constants
 
     const {
         math,
     } = swcadJs.calcs
+
+    const {
+        standards,
+    } = swcadJs.data
 
     const {
         mesh: mesh2d
@@ -98,7 +101,7 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
      */
     const meshPanel = ({
         size,
-        thickness = 1.333333,
+        thickness = standards.INTERFACE_THICKNESS,
         edgeMargin = math.inchesToMm(1/8),
         holeRadius,
         holeDistance,

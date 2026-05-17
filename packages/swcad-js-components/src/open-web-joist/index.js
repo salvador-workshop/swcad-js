@@ -2,65 +2,31 @@
 
 const openWebJoistInit = ({ jscad, swcadJs }) => {
     const {
-        cube,
-        cylinder,
-        sphere,
-        cylinderElliptic,
-        circle,
         cuboid,
-        roundedCuboid,
-        roundedCylinder,
-        roundedRectangle,
-        rectangle,
-        triangle,
     } = jscad.primitives
 
     const {
         align,
         translate,
-        rotate,
-        mirror
     } = jscad.transforms
 
     const {
         intersect,
-        subtract,
         union,
-        scission
     } = jscad.booleans
 
     const {
-        extrudeLinear,
-        extrudeRotate,
-        project
-    } = jscad.extrusions
-
-    const {
-        measureDimensions,
-        measureBoundingBox,
-        measureVolume
-    } = jscad.measurements
-
-    const {
         hull,
-        hullChain
     } = jscad.hulls
-
-    const { vectorText } = jscad.text
-    const { toOutlines } = jscad.geometries.geom2
-    const { TAU } = jscad.maths.constants
-    const { colorize } = jscad.colors
 
     const {
         math,
         position,
     } = swcadJs.calcs
 
-    // const beadsBits = require('../beads-bits').init({ jscad, swcadJs });
-
-    // const {
-    //     interfaceProfileBeads
-    // } = beadsBits
+    const {
+        standards,
+    } = swcadJs.data
 
     const {
         beadsBits
@@ -95,8 +61,8 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
             reinforcementLevel: 1,
             unitLength: math.inchesToMm(1),
             dowelHolderLength: math.inchesToMm(5 / 16),
-            interfaceThickness: 1.333,
-            fitGap: math.inchesToMm(1 / 128),
+            interfaceThickness: standards.INTERFACE_THICKNESS,
+            fitGap: standards.FIT_GAP,
             ratioDiamToHolderHeight: 1.666667,
             ratioDiamToChannelDepth: 0.866667,
             ratioDiamToSideChannelWidth: 1,
@@ -107,8 +73,8 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
         const defaultOpts = {
             type: 'default',
             scale: 1,
-            interfaceThickness: 1.333333,
-            fitGap: math.inchesToMm(1 / 128),
+            interfaceThickness: standards.INTERFACE_THICKNESS,
+            fitGap: standards.FIT_GAP,
             logMode: 'normal',
             width: defaultValues.width,
             length: defaultValues.length,
