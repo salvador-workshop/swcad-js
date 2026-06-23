@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: swcad-js-components/src/routed-shapes/index.js</title>
+    <title>JSDoc: Source: swcad-js-components/src/box-support/index.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: swcad-js-components/src/routed-shapes/index.js</h1>
+    <h1 class="page-title">Source: swcad-js-components/src/box-support/index.js</h1>
 
     
 
@@ -28,47 +28,33 @@
         <article>
             <pre class="prettyprint source linenums"><code>"use strict"
 
-const routedShapesInit = ({ jscad, swcadJs }) => {
+const boxSupportInit = ({ jscad, swcadJs }) => {
     const {
-        cylinderElliptic,
-        cuboid,
+        ellipse,
+        rectangle,
     } = jscad.primitives
 
     const {
-        translate,
-        rotate,
+        align,
     } = jscad.transforms
 
     const {
         subtract,
-        union,
     } = jscad.booleans
 
-    const {
-        extrudeLinear,
-        project
-    } = jscad.extrusions
-
-    const { toOutlines } = jscad.geometries.geom2
-    const { TAU } = jscad.maths.constants
-
-    const {
-        math,
-        geometry,
-        position,
-    } = swcadJs.calcs
+    const { extrudeLinear } = jscad.extrusions
 
     const {
         standards,
     } = swcadJs.data
 
     const {
-        beadsBits: beadsBits2d,
-    } = swcadJs.profiles
+        math,
+    } = swcadJs.calcs
 
     const {
-        beadsBits,
-    } = swcadJs.components
+        boxCurve,
+    } = swcadJs.profiles
 
 
     //==============================================================================
@@ -78,46 +64,31 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
      * Builds default values and opts for the model
      * @param {*} opts 
      * @returns default values and opts
-     * @memberof components.routedShapes
+     * @memberof boxSupport
      * @access private
      */
-    const modelDefaults = () => {
+    const boxSupportDefaults = () => {
         /** Specific value declarations */
         const defaultValues = {
             dims: {
                 size: [
-                    math.inchesToMm(3),
-                    math.inchesToMm(6),
                     math.inchesToMm(2),
+                    math.inchesToMm(4),
+                    math.inchesToMm(1),
                 ],
-                height: math.inchesToMm(2),
-                radius: [math.inchesToMm(1.5), math.inchesToMm(3)],
+                margin: [
+                    standards.INTERFACE_THICKNESS,
+                    standards.INTERFACE_THICKNESS,
+                    standards.INTERFACE_THICKNESS,
+                ],
             },
             points: {
-                centre: [0, 0, 0]
+                centrePt: [0, 0, 0]
             },
             types: {
                 default: standards.types.TYPE_DEFAULT,
                 alt: standards.types.TYPE_ALT,
             },
-            topBit: {
-                type: 'chamfer',
-                radius1: math.inchesToMm(1 / 2),
-                radius2: math.inchesToMm(3 / 4),
-                offset1: 0,
-                offset2: 0,
-                offset3: 0,
-                offset4: 0,
-            },
-            bottomBit: {
-                type: 'cove',
-                radius1: math.inchesToMm(1 / 2),
-                radius2: math.inchesToMm(3 / 4),
-                offset1: 0,
-                offset2: 0,
-                offset3: 0,
-                offset4: 0,
-            }
         }
 
         /** Options used by SW models */
@@ -132,12 +103,7 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
         const defaultOpts = {
             ...standardOpts,
             size: defaultValues.dims.size,
-            height: defaultValues.dims.height,
-            radius: defaultValues.dims.radius,
-            topBit: defaultValues.topBit.type,
-            topBitOpts: defaultValues.topBit,
-            bottomBit: defaultValues.bottomBit.type,
-            bottomBitOpts: defaultValues.bottomBit,
+            margin: defaultValues.dims.margin,
         }
 
         return {
@@ -151,22 +117,20 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
 
 
     /**
-     * Initializes cuboid options with user input
+     * Initializes options with user input
      * @param {*} opts 
      * @returns model properties
-     * @memberof components.routedShapes
+     * @memberof boxSupport
      * @access private
      */
-    const modelCuboidOpts = (opts) => {
-        const defaults = modelDefaults()
+    const boxSupportOpts = (opts) => {
+        const defaults = boxSupportDefaults()
+        console.log('boxSupportOpts() -- opts', opts)
 
         // User options
         const {
             size = defaults.opts.size,
-            topBit = defaults.opts.topBit,
-            topBitOpts = defaults.opts.topBitOpts,
-            bottomBit = defaults.opts.bottomBit,
-            bottomBitOpts = defaults.opts.bottomBitOpts,
+            margin = defaults.opts.margin,
             type = defaults.opts.type,
             scale = defaults.opts.scale,
             interfaceThickness = defaults.opts.interfaceThickness,
@@ -182,59 +146,11 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
 
         const initOpts = {
             size,
-            topBit,
-            topBitOpts,
-            bottomBit,
-            bottomBitOpts,
+            margin,
             ...stdOpts,
         }
 
-
-        return initOpts
-    }
-
-
-    /**
-     * Initializes cylinder elliptic options with user input
-     * @param {*} opts 
-     * @returns model properties
-     * @memberof components.routedShapes
-     * @access private
-     */
-    const modelCylinderEllipticOpts = (opts) => {
-        const defaults = modelDefaults()
-
-        // User options
-        const {
-            height = defaults.opts.height,
-            radius = defaults.opts.radius,
-            topBit = defaults.opts.topBit,
-            topBitOpts = defaults.opts.topBitOpts,
-            bottomBit = defaults.opts.bottomBit,
-            bottomBitOpts = defaults.opts.bottomBitOpts,
-            type = defaults.opts.type,
-            scale = defaults.opts.scale,
-            interfaceThickness = defaults.opts.interfaceThickness,
-            fitGap = defaults.opts.fitGap,
-        } = opts
-
-        const stdOpts = {
-            type,
-            scale,
-            interfaceThickness,
-            fitGap,
-        }
-
-        const initOpts = {
-            height,
-            radius,
-            topBit,
-            topBitOpts,
-            bottomBit,
-            bottomBitOpts,
-            ...stdOpts,
-        }
-
+        console.log('boxSupportOpts() -- initOpts', initOpts)
 
         return initOpts
     }
@@ -247,20 +163,16 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
      * Builds model properties from the given opts
      * @param {*} opts 
      * @returns model properties
-     * @memberof components.routedShapes
+     * @memberof boxSupport
      * @access private
      */
-    const modelProps = (opts) => {
-        const defaults = modelDefaults()
+    const boxSupportProps = (opts) => {
+        const defaults = boxSupportDefaults()
+        console.log('boxSupportProps() -- opts', opts)
 
         const {
             size,
-            height,
-            radius,
-            topBit,
-            topBitOpts,
-            bottomBit,
-            bottomBitOpts,
+            margin,
             type,
             scale,
             interfaceThickness,
@@ -271,7 +183,22 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
         * Prop calculations
         * ------------------------------------- */
 
-        // ...
+        const width = size[0]
+        const depth = size[1]
+        const height = size[2]
+
+        const marginWidth = margin[0]
+        const marginDepth = margin[1]
+        const marginHeight = margin[2]
+
+        const ellipseRadiusQtr = [
+            size[0] - marginWidth,
+            size[1] - marginDepth,
+        ]
+        const ellipseRadiusHalf = [
+            marginWidth * -2 + (size[0] / 2),
+            size[1] - marginDepth,
+        ]
 
         /* ----------------------------------------
         * Preparing Model Properties, Dimensions
@@ -279,32 +206,33 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
 
         /** Constant values for model */
         const modelConstants = {
-            type,
-            scale,
         }
 
         /** Derived user options for the model */
         const modelOpts = {
             type,
             scale,
-            topBit,
-            bottomBit,
         }
 
         /** Various dimensions for model */
         const modelDims = {
             size,
+            margin,
+            width,
+            depth,
             height,
-            radius,
-            topBit: topBitOpts,
-            bottomBit: bottomBitOpts,
+            marginWidth,
+            marginDepth,
+            marginHeight,
+            ellipseRadiusQtr,
+            ellipseRadiusHalf,
             interfaceThickness,
             fitGap,
         }
 
         /** Various key points for model */
         const modelPoints = {
-            centre: defaults.vals.points.centre,
+            centrePt: defaults.vals.points.centrePt,
         }
 
         /** Components used by model */
@@ -333,225 +261,42 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
             components: modelComponents,
         }
 
+        console.log('boxSupportProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }
 
 
-    /**
-     * Generates cut path for a given router bit
-     * @param {*} outlinePts 
-     * @param {*} bitProfile 
-     * @param {*} bitModel 
-     * @returns geom3
-     * @memberof components.routedShapes
-     * @access private
-     */
-    const generateRouterCutPath = (outlinePts, bitProfile, bitModel) => {
-        const closedOutlinePts = [
-            ...outlinePts,
-            outlinePts[0]
-        ]
-        const cutPoints = outlinePts.map(outlinePt => {
-            return translate(
-                [
-                    outlinePt[0],
-                    outlinePt[1],
-                    0,
-                ],
-                bitModel
-            )
-        })
-
-        const lineData = geometry.getLineDataFromOutlinePoints(closedOutlinePts)
-
-        const lineModels = lineData.map(lData => {
-            let lineModel = extrudeLinear({ height: lData.length }, bitProfile)
-            lineModel = rotate(
-                [TAU / 4, 0, TAU / -4],
-                lineModel
-            )
-            lineModel = position.ctr(lineModel)
-
-            let adjLineModel = rotate([0, 0, lData.angle], lineModel)
-            adjLineModel = translate([
-                lData.mid[0],
-                lData.mid[1],
-                0,
-            ], adjLineModel)
-
-            return adjLineModel
-        })
-
-        const cutLines = lineModels
-
-        const cutPath = union(
-            ...cutPoints,
-            ...cutLines,
-        )
-
-        return cutPath
-    }
-
-
-    /**
-     * Builds the router cut path from the given details
-     * @param {*} outlinePts 
-     * @param {*} bitType 
-     * @param {*} bitOpts 
-     * @returns geom3
-     * @memberof components.routedShapes
-     * @access private
-     */
-    const routerCut = (outlinePts, bitType, bitOpts) => {
-        let baseRouterBitProfile = null
-        let baseRouterBit = null
-        /**
-         * A 'naive' `cutPathGenMode` allows this function to use a simple `hullChain()`.
-         * The complex variant takes a bit more work to build.
-         * */
-        let cutPathGenMode = 'complex'
-
-        switch (bitType) {
-            case 'cove':
-                baseRouterBitProfile = beadsBits2d.corner.cove(bitOpts)[0]
-                baseRouterBit = beadsBits.corner.cove(bitOpts)[0]
-                break;
-            case 'roundOver':
-                baseRouterBitProfile = beadsBits2d.corner.roundOver(bitOpts)[0]
-                baseRouterBit = beadsBits.corner.roundOver(bitOpts)[0]
-                break;
-            case 'rabbet':
-                baseRouterBitProfile = beadsBits2d.corner.rabbet(bitOpts)[0]
-                baseRouterBit = beadsBits.corner.rabbet(bitOpts)[0]
-                break;
-            case 'chamfer':
-            default:
-                baseRouterBitProfile = beadsBits2d.corner.chamfer(bitOpts)[0]
-                baseRouterBit = beadsBits.corner.chamfer(bitOpts)[0]
-                cutPathGenMode = 'naive'
-                break;
-        }
-
-        const cutPath = generateRouterCutPath(outlinePts, baseRouterBitProfile, baseRouterBit)
-
-        return cutPath
-    }
-
-
     //------------------------------------------------------------------------------
 
+    /* ----------------------------------------
+    * MODELLING FUNCTIONS
+    * ------------------------------------- */
 
     /**
-     * Routed cuboid
+     * New Model 1
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
-     * @memberof components.routedShapes
+     * @memberof newModelParent
      */
-    const routedCuboid = (opts) => {
-        const defaults = modelDefaults()
-        const initOpts = modelCuboidOpts(opts)
-        const modelProperties = modelProps(initOpts)
-
-        const {
-            topBit: topBitType,
-            bottomBit: bottomBitType,
-        } = modelProperties.opts
-
+    const boxSupportQuarter = (opts) => {
+        const defaults = boxSupportDefaults()
+        const initOpts = boxSupportOpts(opts)
+        const modelProperties = boxSupportProps(initOpts)
         const {
             size,
-            topBit,
-            bottomBit,
+            margin,
+            marginHeight,
         } = modelProperties.dims
 
-        const baseShape = cuboid({
+        const boxCurvesQtrData = boxCurve.boxCurveQuarter({
             size,
+            margin,
         })
-        const baseShapeProfile = project({}, baseShape)
-        const baseShapeProfileOutlinePts = toOutlines(baseShapeProfile)[0]
+        const boxCurvesQtrModel = boxCurvesQtrData[0]
 
-        const cutPathTop = routerCut(baseShapeProfileOutlinePts, topBitType, topBit)
-        const cutPathBottom = routerCut(baseShapeProfileOutlinePts, bottomBitType, bottomBit)
+        const mainModel = extrudeLinear({ height: marginHeight }, boxCurvesQtrModel)
 
-        let cutShape = baseShape
-        const hasTop = !!topBitType &amp;&amp; topBitType != 'none'
-        const hasBottom = !!bottomBitType &amp;&amp; bottomBitType != 'none'
-
-        if (hasTop) {
-            cutShape = subtract(
-                cutShape,
-                translate([0, 0, size[2] / 2], cutPathTop),
-            )
-        }
-        if (hasBottom) {
-            cutShape = subtract(
-                cutShape,
-                translate([0, 0, size[2] / -2], cutPathBottom),
-            )
-        }
-
-        const mainModel = cutShape
-        const modelParts = {
-            mainModel,
-            cutPathTop,
-            cutPathBottom,
-        }
-
-        return [mainModel, modelParts, modelProperties]
-    }
-
-    /**
-     * Routed elliptical cylinder
-     * @param {*} opts 
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
-     * @memberof components.routedShapes
-     */
-    const routedCylinderElliptic = (opts) => {
-        const defaults = modelDefaults()
-        const initOpts = modelCylinderEllipticOpts(opts)
-        const modelProperties = modelProps(initOpts)
-
-        const {
-            topBit: topBitType,
-            bottomBit: bottomBitType,
-        } = modelProperties.opts
-
-        const {
-            height,
-            radius,
-            topBit,
-            bottomBit,
-        } = modelProperties.dims
-
-        const baseShape = cylinderElliptic({
-            height,
-            startRadius: radius,
-            endRadius: radius,
-        })
-        const baseShapeProfile = project({}, baseShape)
-        const baseShapeProfileOutlinePts = toOutlines(baseShapeProfile)[0]
-
-        const cutPathTop = routerCut(baseShapeProfileOutlinePts, topBitType, topBit)
-        const cutPathBottom = routerCut(baseShapeProfileOutlinePts, bottomBitType, bottomBit)
-
-        let cutShape = baseShape
-        const hasTop = !!topBitType &amp;&amp; topBitType != 'none'
-        const hasBottom = !!bottomBitType &amp;&amp; bottomBitType != 'none'
-
-        if (hasTop) {
-            cutShape = subtract(
-                cutShape,
-                translate([0, 0, height / 2], cutPathTop),
-            )
-        }
-        if (hasBottom) {
-            cutShape = subtract(
-                cutShape,
-                translate([0, 0, height / -2], cutPathBottom),
-            )
-        }
-
-        const mainModel = cutShape
         const modelParts = {
             mainModel,
         }
@@ -560,19 +305,46 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * @namespace routedShapes
-     * @memberof components
+     * New Model 2
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
+     * @memberof newModelParent
      */
-    const routedShapes = {
-        routedCuboid,
-        routedCylinderElliptic,
+    const boxSupportHalf = (opts) => {
+        const defaults = boxSupportDefaults()
+        const initOpts = boxSupportOpts(opts)
+        const modelProperties = boxSupportProps(initOpts)
+        const {
+            size,
+            margin,
+            marginHeight,
+        } = modelProperties.dims
+
+        const boxCurvesHalfData = boxCurve.boxCurveHalf({
+            size,
+            margin,
+        })
+        const boxCurvesHalfModel = boxCurvesHalfData[0]
+
+        const mainModel = extrudeLinear({ height: marginHeight }, boxCurvesHalfModel)
+
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
     }
 
-    return routedShapes
+    return {
+        defaults: boxSupportDefaults,
+        props: boxSupportProps,
+        boxSupportQuarter,
+        boxSupportHalf,
+    }
 }
 
 module.exports = {
-    init: routedShapesInit
+    init: boxSupportInit
 }
 </code></pre>
         </article>
