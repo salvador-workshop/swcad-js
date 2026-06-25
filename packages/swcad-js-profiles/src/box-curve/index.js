@@ -162,7 +162,7 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
             size[1] - marginDepth,
         ]
         const ellipseRadiusHalf = [
-            marginWidth * -2 + (size[0] / 2),
+            size[0] / 2 - marginWidth,
             size[1] - marginDepth,
         ]
 
