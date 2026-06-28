@@ -32,7 +32,7 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
         /** Specific value declarations */
         const defaultValues = {
             constants: {
-                reinforcementPatterns: ['x', 'cross', 'diamond', 'full'],
+                reinforcementPatterns: ['x', 'cross', 'diamond', 'full', 'full-double'],
             },
             dims: {
                 size: [
