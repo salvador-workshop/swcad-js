@@ -1,7 +1,5 @@
 "use strict"
 
-const geoReinforcementModule = require('../geo-reinforcement')
-
 const reinforcedRectInit = ({ jscad, swcadJs }) => {
     const {
         square,
