@@ -1,5 +1,7 @@
 "use strict"
 
+const geoReinforcementModule = require('../geo-reinforcement')
+
 const reinforcedRectInit = ({ jscad, swcadJs }) => {
     const {
         square,
@@ -46,7 +48,7 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
         /** Specific value declarations */
         const defaultValues = {
             constants: {
-                reinforcementPatterns: ['x', 'cross', 'diamond', 'full'],
+                reinforcementPatterns: ['x', 'cross', 'diamond', 'full', 'full-double'],
             },
             dims: {
                 size: [
@@ -198,7 +200,7 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
         ]
         const reinforcementData = reinforcement.reinforcedRectangle({
             size: reinforcementDataSize,
-            reinforcementPattern: reinforcementPattern,
+            reinforcementPattern,
         })
 
         const reinforcementNodes = [

@@ -79,7 +79,7 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
         /** Specific value declarations */
         const defaultValues = {
             opts: {
-                reinforcementPatterns: ['x', 'cross', 'diamond', 'full'],
+                reinforcementPatterns: ['x', 'cross', 'diamond', 'full', 'full-double'],
             },
             dims: {
                 size: [40, 50],
@@ -298,9 +298,15 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
         const width = size[0]
         const length = size[1]
 
+        const qtrX = width / 4
         const midX = width / 2
+        const threeQtrX = qtrX + midX
+
+        const qtrY = length / 4
         const midY = length / 2
-        const midpoint = [midX, midY]
+        const threeQtrY = qtrY + midY
+
+        const midPoint = [midX, midY]
 
         const corners = [
             [0, 0],
@@ -309,11 +315,22 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
             [0, length],
         ]
 
-        const midpoints = [
+        const midPoints = [
             [midX, 0],
             [width, midY],
             [midX, length],
             [0, midY],
+        ]
+
+        const qtrPoints = [
+            [qtrX, 0],
+            [threeQtrX, 0],
+            [0, qtrY],
+            [0, threeQtrY],
+            [qtrX, length],
+            [threeQtrX, length],
+            [width, qtrY],
+            [width, threeQtrY],
         ]
 
         const outline = [
@@ -341,42 +358,61 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
                 corners[2],
             ],
             [
-                midpoint,
+                midPoint,
                 corners[1],
             ],
             [
-                midpoint,
+                midPoint,
                 corners[3],
             ],
         ]
 
         const crossBraces = [
             [
-                midpoints[0],
-                midpoints[2],
+                midPoints[0],
+                midPoints[2],
             ],
             [
-                midpoints[1],
-                midpoints[3],
+                midPoints[1],
+                midPoints[3],
             ],
         ]
 
         const midBraces = [
             [
-                midpoints[0],
-                midpoints[1],
+                midPoints[0],
+                midPoints[1],
             ],
             [
-                midpoints[1],
-                midpoints[2],
+                midPoints[1],
+                midPoints[2],
             ],
             [
-                midpoints[2],
-                midpoints[3],
+                midPoints[2],
+                midPoints[3],
             ],
             [
-                midpoints[3],
-                midpoints[0],
+                midPoints[3],
+                midPoints[0],
+            ],
+        ]
+
+        const doubleFullBraces = [
+            [
+                qtrPoints[0],
+                qtrPoints[4],
+            ],
+            [
+                qtrPoints[1],
+                qtrPoints[5],
+            ],
+            [
+                qtrPoints[2],
+                qtrPoints[6],
+            ],
+            [
+                qtrPoints[3],
+                qtrPoints[7],
             ],
         ]
 
@@ -386,6 +422,20 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
         let secondaryLines = []
 
         switch (reinforcementPattern) {
+            case 'full-double':
+                primaryLines = [
+                    ...crossBraces,
+                ]
+                secondaryLines = [
+                    ...midBraces,
+                    ...diagBraces,
+                    ...doubleFullBraces,
+                ]
+                lines = [
+                    ...primaryLines,
+                    ...secondaryLines,
+                ]
+                break;
             case 'full':
                 primaryLines = [
                     ...crossBraces,
@@ -458,13 +508,14 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
             lines,
             primaryLines,
             secondaryLines,
-            centre: midpoint,
+            centre: midPoint,
             outline,
-            midpoints,
+            midpoints: midPoints,
             braces: {
                 cross: crossBraces,
                 diagonal: diagBraces,
                 mid: midBraces,
+                doubleFull: doubleFullBraces,
             },
         }
 
