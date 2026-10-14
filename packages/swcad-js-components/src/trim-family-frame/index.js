@@ -828,7 +828,7 @@ const trimFamilyFrameInit = ({ jscad, swcadJs }) => {
                 // add frame back to main thing
                 mainPart = union(
                     position.ctrMin(mainPart),
-                    align({ modes: ['center', 'center', 'max'] }, fBack),
+                    position.ctrMax(fBack),
                 )
             }
 

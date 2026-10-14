@@ -102,8 +102,8 @@ const textUtils = ({ jscad, swcadJs }) => {
         })
 
         const embossedPanel = subtract(
-            align({ modes: ['center', 'center', 'max'] }, textPanel),
-            align({ modes: ['center', 'center', 'max'] }, textModel)
+            position.ctrMax(textPanel),
+            position.ctrMax(textModel)
         )
 
         return position.ctr(embossedPanel)

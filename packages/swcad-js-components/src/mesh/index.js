@@ -203,7 +203,7 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
                 const flipOpts = []
                 if (isTop) {
                     sectionAlignOpts = { modes: ['min', 'min', 'max'], relativeTo: [0, 0, height], }
-                    ringAlignOpts = { modes: ['center', 'center', 'max'], relativeTo: [0, 0, height], }
+                    ringAlignOpts = { modes: position.alignModes.ctrMax, relativeTo: [0, 0, height], }
                     flipOpts.push('vertical')
                 } else {
                     sectionAlignOpts = { modes: ['min', 'min', 'min'], relativeTo: [0, 0, 0], }
@@ -233,7 +233,7 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
                 const flipOpts = []
                 if (isTop) {
                     sectionAlignOpts = { modes: ['min', 'min', 'max'], relativeTo: [0, 0, height], }
-                    ringAlignOpts = { modes: ['center', 'center', 'max'], relativeTo: [0, 0, height], }
+                    ringAlignOpts = { modes: position.alignModes.ctrMax, relativeTo: [0, 0, height], }
                     flipOpts.push('vertical')
                 } else {
                     sectionAlignOpts = { modes: ['min', 'min', 'min'], relativeTo: [0, 0, 0], };

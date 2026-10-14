@@ -149,11 +149,14 @@ const wallBuilder = ({ jscad, swcadJs }) => {
                     dadoProfile = tFamilyAranea.dado.large;
                 }
                 const dadoTrimSpecs = [dadoWallSpecs[0] + opts.trimUnitDepth, dadoWallSpecs[1] + opts.trimUnitDepth];
-                const dTrim = align({ modes: ['center', 'center', 'max'], relativeTo: [0, 0, dadoHt] }, dadoTrim({
-                    totalLength: dadoTrimSpecs[0],
-                    totalThickness: dadoTrimSpecs[1],
-                    trimProfile: dadoProfile,
-                }));
+                const dTrim = position.ctrMax(
+                    dadoTrim({
+                        totalLength: dadoTrimSpecs[0],
+                        totalThickness: dadoTrimSpecs[1],
+                        trimProfile: dadoProfile,
+                    }),
+                    [0, 0, dadoHt]
+                );
                 wallWithTrim = union(wallWithTrim, dTrim);
             }
 
@@ -167,18 +170,24 @@ const wallBuilder = ({ jscad, swcadJs }) => {
 
                 const crownAdj = (crownUnits + 1) * 2 * opts.trimUnitDepth;
                 const crownTrimSpecs = [crownAdj + opts.length, crownAdj + opts.thickness];
-                const cTrim = align({ modes: ['center', 'center', 'max'], relativeTo: [0, 0, opts.height] }, crownTrim({
-                    totalLength: crownTrimSpecs[0],
-                    totalThickness: crownTrimSpecs[1],
-                    trimProfile: crownProfile,
-                }));
+                const cTrim = position.ctrMax(
+                    crownTrim({
+                        totalLength: crownTrimSpecs[0],
+                        totalThickness: crownTrimSpecs[1],
+                        trimProfile: crownProfile,
+                    }),
+                    [0, 0, opts.height]
+                );
                 wallWithTrim = union(wallWithTrim, cTrim);
             }
 
             const wallDim = measureDimensions(baseWall);
             const cutBoxSpecs = [wallDim[0] * 2, wallDim[1] * 2, wallDim[2] * 1.25]
             if (opts.half === 'upper') {
-                const cutBox = align({ modes: ['center', 'center', 'max'], relativeTo: [0, 0, dadoHt] }, cuboid({ size: cutBoxSpecs }));
+                const cutBox = position.ctrMax(
+                    cuboid({ size: cutBoxSpecs }),
+                    [0, 0, dadoHt]
+                );
                 wallWithTrim = subtract(wallWithTrim, cutBox);
             } else if (opts.half === 'lower') {
                 const cutBox = position.ctrMin(

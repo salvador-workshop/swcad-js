@@ -127,7 +127,7 @@ const transformUtils = ({ jscad, swcadJs }) => {
                     break;
                 case "z":
                 default:
-                    alignedCutBox = align({ modes: ['center', 'center', 'max'] }, baseCutBox);
+                    alignedCutBox = position.ctrMax(baseCutBox);
             }
 
             return subtract(
