@@ -337,8 +337,8 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
         )
         const cutParts = scission(cutPanel)
         const oProfiles = [
-            align({ modes: ['center', 'center', 'center'] }, cutParts[1]),
-            align({ modes: ['center', 'center', 'center'] }, cutParts[0]),
+            position.ctr(cutParts[1]),
+            position.ctr(cutParts[0]),
         ]
         const outProfiles = [
             project({}, oProfiles[0]),
@@ -439,10 +439,10 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
         )
         const cutParts = scission(cutPanel)
         const oProfiles = [
-            align({ modes: ['center', 'center', 'center'] }, cutParts[0]),
-            align({ modes: ['center', 'center', 'center'] }, cutParts[1]),
-            align({ modes: ['center', 'center', 'center'] }, cutParts[2]),
-            align({ modes: ['center', 'center', 'center'] }, cutParts[3]),
+            position.ctr(cutParts[0]),
+            position.ctr(cutParts[1]),
+            position.ctr(cutParts[2]),
+            position.ctr(cutParts[3]),
         ]
         const outProfiles = [
             project({}, oProfiles[0]),

@@ -22,6 +22,7 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
 
     const {
         math,
+        position
     } = swcadJs.calcs
 
     const {
@@ -90,7 +91,7 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
             finalShape = mirror(mirrorOpts, finalShape)
         }
 
-        return align({ modes: ['center', 'center', 'center'] }, finalShape)
+        return position.ctr(finalShape)
     }
 
     /**

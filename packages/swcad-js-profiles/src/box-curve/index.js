@@ -20,6 +20,7 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
 
     const {
         math,
+        position,
     } = swcadJs.calcs
 
 
@@ -258,9 +259,7 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
             align({
                 modes: ['max', 'max', 'center'],
             }, blank),
-            align({
-                modes: ['center', 'center', 'center'],
-            }, cutaway),
+            position.ctr(cutaway)
         )
 
         const modelParts = {
@@ -293,9 +292,7 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
             align({
                 modes: ['center', 'max', 'center'],
             }, blank),
-            align({
-                modes: ['center', 'center', 'center'],
-            }, cutaway),
+            position.ctr(cutaway),
         )
 
         const modelParts = {

@@ -37,7 +37,7 @@ const curveBuilder = ({ jscad, swcadJs }) => {
         const segments = 12
         const bezPts = getBezierPts(bez, segments)
         const bezPath = path2.fromPoints({ closed: true }, [[0, validSize[1]], ...bezPts])
-        const bezGeom = align({ modes: ['center', 'center', 'center'] }, geom2.fromPoints(path2.toPoints(bezPath)))
+        const bezGeom = position.ctr(geom2.fromPoints(path2.toPoints(bezPath)))
         return subtract(container, bezGeom)
     }
 

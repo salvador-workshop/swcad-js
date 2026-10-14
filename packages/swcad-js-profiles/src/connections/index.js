@@ -411,8 +411,8 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
         const cutParts = scission(cutPanel)
         const dTailProfiles = [
-            align({ modes: ['center', 'center', 'center'] }, cutParts[1]),
-            align({ modes: ['center', 'center', 'center'] }, cutParts[0]),
+            position.ctr(cutParts[1]),
+            position.ctr(cutParts[0]),
         ]
 
         const dovetailProfiles = [
@@ -520,8 +520,8 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
         const cutParts = scission(cutPanel)
         const dTailProfiles = [
-            align({ modes: ['center', 'center', 'center'] }, cutParts[1]),
-            align({ modes: ['center', 'center', 'center'] }, cutParts[0]),
+            position.ctr(cutParts[1]),
+            position.ctr(cutParts[0]),
         ]
 
         const tabProfiles = [
@@ -678,9 +678,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         }, mPlate)
 
         let cutDowel = subtract(
-            align({
-                modes: ['center', 'center', 'center'],
-            }, dowel),
+            position.ctr(dowel),
             align({
                 modes: ['center', 'max', 'center'],
             }, rectangle({ size: [holeRadius[0] * 2, holeRadius[1] * 2] }))
@@ -949,8 +947,8 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         )
         const cutParts = scission(cutPanel)
         const dTailProfiles = [
-            align({ modes: ['center', 'center', 'center'] }, cutParts[1]),
-            align({ modes: ['center', 'center', 'center'] }, cutParts[0]),
+            position.ctr(cutParts[1]),
+            position.ctr(cutParts[0]),
         ]
         const dovetailProfiles = [
             project({}, dTailProfiles[0]),
@@ -1041,8 +1039,8 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         )
         const cutParts = scission(cutPanel)
         const tProfiles = [
-            align({ modes: ['center', 'center', 'center'] }, cutParts[1]),
-            align({ modes: ['center', 'center', 'center'] }, cutParts[0]),
+            position.ctr(cutParts[1]),
+            position.ctr(cutParts[0]),
         ]
         const tabProfiles = [
             project({}, tProfiles[0]),
