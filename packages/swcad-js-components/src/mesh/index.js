@@ -146,10 +146,7 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
 
         const baseCylinder = cylinder({ radius, height, segments });
         const cutCylinder = cylinder({ radius: radius - thickness, height: height + radius, segments });
-        const baseShape = align(
-            { modes: ['center', 'center', 'min'] },
-            subtract(baseCylinder, cutCylinder)
-        )
+        const baseShape = position.ctrMin(subtract(baseCylinder, cutCylinder))
         const circumference = TAU * radius;
 
         let numPunches = 1;
@@ -185,9 +182,9 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
             }
         }
 
-        const completePunch = align(
-            { modes: ['center', 'center', 'min'], relativeTo: [0, 0, (specs.edgeMargin + remainingHt) / 2 * 0.86603] },
-            union(...punches)
+        const completePunch = position.ctrMin(
+            union(...punches),
+            [0, 0, (specs.edgeMargin + remainingHt) / 2 * 0.86603]
         )
 
         let reinforcedTube = baseShape;
@@ -210,7 +207,7 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
                     flipOpts.push('vertical')
                 } else {
                     sectionAlignOpts = { modes: ['min', 'min', 'min'], relativeTo: [0, 0, 0], }
-                    ringAlignOpts = { modes: ['center', 'center', 'min'], relativeTo: [0, 0, 0], }
+                    ringAlignOpts = { modes: position.alignModes.ctrMin, relativeTo: [0, 0, 0], }
                 }
                 const insetSection = align(
                     sectionAlignOpts,
@@ -240,7 +237,7 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
                     flipOpts.push('vertical')
                 } else {
                     sectionAlignOpts = { modes: ['min', 'min', 'min'], relativeTo: [0, 0, 0], };
-                    ringAlignOpts = { modes: ['center', 'center', 'min'], relativeTo: [0, 0, 0], };
+                    ringAlignOpts = { modes: position.alignModes.ctrMin, relativeTo: [0, 0, 0], };
                 }
                 const offsetSection = align(
                     sectionAlignOpts,

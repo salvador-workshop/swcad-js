@@ -14,6 +14,8 @@ const archBuilder = ({ jscad, swcadJs }) => {
   const { union, subtract, intersect } = jscad.booleans
   const { measureDimensions } = jscad.measurements;
 
+  const { position } = swcadJs.calcs
+
   return {
     /**
      * Builds a one-centre (semicircular) arch.
@@ -28,7 +30,7 @@ const archBuilder = ({ jscad, swcadJs }) => {
       const profile = translate([arcRad, 0, 0], geomProfile);
       const baseArch = extrudeRotate({ segments: 48, angle: Math.PI }, profile);
 
-      return align({ modes: ['center', 'center', 'min'] }, rotate([Math.PI / 2, 0, 0], baseArch));
+      return position.ctrMin(rotate([Math.PI / 2, 0, 0], baseArch))
 
     },
     /**
@@ -59,7 +61,9 @@ const archBuilder = ({ jscad, swcadJs }) => {
       const cutArch = subtract(baseArch, archCutaway);
       const reflectedArch = mirror({ normal: [1, 0, 0], origin: [mirrorAxis, 0, 0] }, cutArch);
 
-      return align({ modes: ['center', 'center', 'min'] }, rotate([Math.PI / 2, 0, 0], union(cutArch, reflectedArch)));
+      return position.ctrMin(
+        rotate([Math.PI / 2, 0, 0], union(cutArch, reflectedArch))
+      );
 
     },
     threePt: (opts, geomProfile) => {
