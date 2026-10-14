@@ -91,7 +91,6 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
      */
     const boxCurveOpts = (opts) => {
         const defaults = boxCurveDefaults()
-        console.log('boxCurveOpts() -- opts', opts)
 
         // User options
         const {
@@ -116,7 +115,6 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
             ...stdOpts,
         }
 
-        console.log('boxCurveOpts() -- initOpts', initOpts)
 
         return initOpts
     }
@@ -134,7 +132,6 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
      */
     const boxCurveProps = (opts) => {
         const defaults = boxCurveDefaults()
-        console.log('boxCurveProps() -- opts', opts)
 
         const {
             size,
@@ -227,7 +224,6 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
             components: modelComponents,
         }
 
-        console.log('boxCurveProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }
