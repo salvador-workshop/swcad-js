@@ -97,7 +97,6 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
      */
     const boxSupportOpts = (opts) => {
         const defaults = boxSupportDefaults()
-        console.log('boxSupportOpts() -- opts', opts)
 
         // User options
         const {
@@ -122,7 +121,6 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
             ...stdOpts,
         }
 
-        console.log('boxSupportOpts() -- initOpts', initOpts)
 
         return initOpts
     }
@@ -140,7 +138,6 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
      */
     const boxSupportProps = (opts) => {
         const defaults = boxSupportDefaults()
-        console.log('boxSupportProps() -- opts', opts)
 
         const {
             size,
@@ -233,7 +230,6 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
             components: modelComponents,
         }
 
-        console.log('boxSupportProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }

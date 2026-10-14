@@ -253,7 +253,7 @@ const rectangularFrameInit = ({ jscad, swcadJs }) => {
 
             Object.entries(outRectCorners).forEach(([cName, cPt]) => {
                 let inPieceRotation = null
-                let inPieceAlign = ['center', 'center', 'center']
+                let inPieceAlign = position.alignModes.ctr
                 let inPieceMirror = null
 
                 if (cornerOpts.longAxis == 'y') {

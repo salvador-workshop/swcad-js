@@ -61,8 +61,6 @@ const coreInit = ({ jscad }) => {
         models: swcadJsAssembly.models,
     }
 
-    console.log('swcadJs initialized', swcadJs);
-
     return swcadJs
 }
 

@@ -28,7 +28,7 @@ const transformUtils = ({ jscad, swcadJs }) => {
         let stackHeight = 0
         const geomList = reverse ? geoms.reverse() : geoms
         return geomList.map(geom => {
-            const alignedGeom = align({ modes: ['center', 'center', 'min'], relativeTo: [0, 0, stackHeight] }, geom)
+            const alignedGeom = position.ctrMin(geom, [0, 0, stackHeight])
             stackHeight = stackHeight + measureDimensions(geom)[2]
             return alignedGeom
         })
@@ -123,11 +123,11 @@ const transformUtils = ({ jscad, swcadJs }) => {
                     alignedCutBox = align({ modes: ['center', 'max', 'center'] }, baseCutBox);
                     break;
                 case "-z":
-                    alignedCutBox = align({ modes: ['center', 'center', 'min'] }, baseCutBox);
+                    alignedCutBox = position.ctrMin(baseCutBox)
                     break;
                 case "z":
                 default:
-                    alignedCutBox = align({ modes: ['center', 'center', 'max'] }, baseCutBox);
+                    alignedCutBox = position.ctrMax(baseCutBox);
             }
 
             return subtract(

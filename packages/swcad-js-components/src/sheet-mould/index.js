@@ -517,12 +517,9 @@ const moduleInit = ({ jscad, swcadJs }) => {
             let holeMoulds = []
             points.dots.forEach((pt) => {
                 holeMoulds.push(
-                    align(
-                        {
-                            modes: ['center', 'center', 'min'],
-                            relativeTo: [pt[0], pt[1], 0],
-                        },
-                        mouldPtFlangedAssembly(modelProps)
+                    position.ctrMin(
+                        mouldPtFlangedAssembly(modelProps),
+                        [pt[0], pt[1], 0]
                     )
                 )
             })
@@ -549,13 +546,9 @@ const moduleInit = ({ jscad, swcadJs }) => {
             points.lines.forEach((linePoints) => {
 
                 const lineSet = linePoints.map((linePt) => {
-
-                    return align(
-                        {
-                            modes: ['center', 'center', 'min'],
-                            relativeTo: [linePt[0], linePt[1], 0],
-                        },
-                        mouldPtAssembly(modelProps)
+                    return position.ctrMin(
+                        mouldPtAssembly(modelProps),
+                        [linePt[0], linePt[1], 0]
                     )
                 })
                 lineMouldPoints.push(hullChain(...lineSet))

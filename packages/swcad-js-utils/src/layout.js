@@ -14,7 +14,7 @@ const layoutUtils = ({ jscad, swcadJs }) => {
     const isGeom2 = jscad.geometries.geom2.isA
     const isPath2 = jscad.geometries.path2.isA
 
-    const { math } = swcadJs.calcs
+    const { math, position } = swcadJs.calcs
     const { text: text2d } = swcadJs.profiles
     const { text: text3d } = swcadJs.components
 
@@ -133,7 +133,7 @@ const layoutUtils = ({ jscad, swcadJs }) => {
             );
 
             return union(
-                align({ modes: ['center', 'center', 'min'] }, basicFrame),
+                position.ctrMin(basicFrame),
                 align(alignmentSlots.topLeft, data1Text),
                 align(alignmentSlots.topRight, data2Text),
                 align(alignmentSlots.bottomLeft, titleText),
@@ -181,7 +181,7 @@ const layoutUtils = ({ jscad, swcadJs }) => {
         );
 
         return union(
-            align({ modes: ['center', 'center', 'min'] }, basicFrame),
+            position.ctrMin(basicFrame),
             align(alignmentSlots.topLeft, data1Text),
             align(alignmentSlots.topRight, data2Text),
             align(alignmentSlots.bottomLeft, titleText),
@@ -329,7 +329,7 @@ const layoutUtils = ({ jscad, swcadJs }) => {
                 name,
                 desc,
                 tags: [...tags, ...extraTags],
-                geom: align({ modes: ['center', 'center', 'min'] }, geom),
+                geom: position.ctrMin(geom),
                 objectDims,
                 layoutDims,
             }

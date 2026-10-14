@@ -22,6 +22,10 @@ const textUtils = ({ jscad, swcadJs }) => {
         standards,
     } = swcadJs.data
 
+    const {
+        position,
+    } = swcadJs.calcs
+
     /**
      * Creates a simple 3D line of text
      * @memberof components.text
@@ -39,7 +43,7 @@ const textUtils = ({ jscad, swcadJs }) => {
         })
         const message3D = extrudeLinear({ height: opts.extrudeHeight || DEFAULT_EXTRUDE_HEIGHT }, message2D)
 
-        return align({ modes: ['center', 'center', 'center'] }, message3D)
+        return position.ctr(message3D)
     }
 
     /**
@@ -98,11 +102,11 @@ const textUtils = ({ jscad, swcadJs }) => {
         })
 
         const embossedPanel = subtract(
-            align({ modes: ['center', 'center', 'max'] }, textPanel),
-            align({ modes: ['center', 'center', 'max'] }, textModel)
+            position.ctrMax(textPanel),
+            position.ctrMax(textModel)
         )
 
-        return align({ modes: ['center', 'center', 'center'] }, embossedPanel);
+        return position.ctr(embossedPanel)
     }
 
     const text = {

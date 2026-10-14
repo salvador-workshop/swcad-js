@@ -354,7 +354,7 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
                 lightSupports,
             )
             let braceUnits = braceUnitCentrePoints.map(bucPt => {
-                return align({ modes: ['center', 'center', 'center'], relativeTo: bucPt }, braceUnit)
+                return position.ctr(braceUnit, bucPt)
             })
             braceUnits = union(...braceUnits)
 
@@ -365,10 +365,7 @@ const openWebJoistInit = ({ jscad, swcadJs }) => {
                 [braceUnitSize[0], length, 0],
             ]
             const edgeProfilePts = edgePts.map(edgePt => {
-                return align({
-                    modes: ['center', 'center', 'center'],
-                    relativeTo: edgePt
-                }, interfaceProfileBeads.lg)
+                return position.ctr(interfaceProfileBeads.lg, edgePt)
             })
 
             const edge1 = hull(edgeProfilePts[0], edgeProfilePts[1])

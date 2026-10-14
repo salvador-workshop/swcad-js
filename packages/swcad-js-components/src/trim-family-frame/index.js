@@ -765,7 +765,7 @@ const trimFamilyFrameInit = ({ jscad, swcadJs }) => {
             }
 
             let backing = null
-            aFrame = align({ modes: ['center', 'center', 'min'] }, aFrame)
+            aFrame = position.ctrMin(aFrame)
 
             if (opts.backingType && opts.backingType != 'none') {
                 backing = cuboid({
@@ -775,7 +775,7 @@ const trimFamilyFrameInit = ({ jscad, swcadJs }) => {
                         dims.backingThickness
                     ]
                 })
-                backing = align({ modes: ['center', 'center', 'min'], }, backing)
+                backing = position.ctrMin(backing)
 
                 aFrame = union(aFrame, backing)
             }
@@ -822,13 +822,13 @@ const trimFamilyFrameInit = ({ jscad, swcadJs }) => {
             if (modelProps.opts.frameForm == 'full') {
                 const aFrameBackOutline = project(
                     {},
-                    align({ modes: ['center', 'center', 'min'] }, aFrame)
+                    position.ctrMin(aFrame)
                 )
                 const fBack = fullFrameBack(modelProps, aFrameBackOutline)
                 // add frame back to main thing
                 mainPart = union(
-                    align({ modes: ['center', 'center', 'min'] }, mainPart),
-                    align({ modes: ['center', 'center', 'max'] }, fBack),
+                    position.ctrMin(mainPart),
+                    position.ctrMax(fBack),
                 )
             }
 
