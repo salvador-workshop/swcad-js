@@ -13,6 +13,7 @@ const textUtils = ({ jscad, swcadJs }) => {
     const { subtract } = jscad.booleans
     const { cuboid, cylinderElliptic } = jscad.primitives
     const { align } = jscad.transforms
+    const { vectorText } = jscad.text
     const { extrudeLinear } = jscad.extrusions
     const { measureDimensions } = jscad.measurements;
 
