@@ -10,7 +10,7 @@ const DEFAULT_EXTRUDE_HEIGHT = 1;
 const DEFAULT_PANEL_HEIGHT = 2;
 
 const textUtils = ({ jscad, swcadJs }) => {
-    const { subtract } = jscad.booleans
+    const { union, subtract } = jscad.booleans
     const { cuboid, cylinderElliptic } = jscad.primitives
     const { align, translate } = jscad.transforms
     const { vectorText } = jscad.text
