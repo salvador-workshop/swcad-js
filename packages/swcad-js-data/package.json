@@ -1,6 +1,6 @@
 {
   "name": "swcad-js-data",
-  "version": "0.14.7-alpha.1",
+  "version": "0.14.7",
   "description": "swcad-js-data",
   "homepage": "",
   "main": "src/index.js",

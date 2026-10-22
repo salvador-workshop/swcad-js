@@ -1,6 +1,6 @@
 {
   "name": "swcad-js-models",
-  "version": "00.14.7-alpha.1",
+  "version": "00.14.7",
   "description": "swcad-js-models",
   "homepage": "",
   "main": "src/index.js",
