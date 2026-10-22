@@ -1,16 +1,17 @@
 "use strict"
 
 /**
- * ...
+ * Various math functions
  * @memberof calcs
  * @namespace math
  */
 
 /**
+ * Collection of all possible ordered pairs (a, b) such that the first element a belongs to set A and the second element b belongs to set B.
  * @memberof calcs.math
- * @param {*} a 
- * @param {*} b 
- * @returns ...
+ * @param {number[]} a - first set
+ * @param {number[]} b - second set
+ * @returns Set of coordinates, pairing all members of the first set and the second set
  */
 const arrayCartesianProduct = (a, b) => a.reduce((acc, x) => [...acc, ...b.map(y => [x, y])], []);
 
@@ -21,36 +22,36 @@ const mathUtils = ({ jscad, swcadJs }) => {
 
     return {
         /**
-         * ...
-         * @param {*} n 
-         * @returns ...
+         * Checks if a given integer is even
+         * @param {number} n - an integer
+         * @returns true if even, false if not
          * @memberof calcs.math
          */
         isEven: (n) => {
             return n % 2 == 0;
         },
         /**
-         * ...
+         * Checks if a given integer is odd
          * @memberof calcs.math
-         * @param {*} n 
-         * @returns ...
+         * @param {number} n - an integer
+         * @returns true if odd, false if not
          */
         isOdd: (n) => {
             return Math.abs(n % 2) == 1;
         },
         arrayCartesianProduct,
         /**
-         * ...
+         * Converts distance in inches to mm
          * @memberof calcs.math
          * @param {*} numInches 
-         * @returns ...
+         * @returns distance in mm
          */
         inchesToMm: (numInches) => numInches * INCHES_MM_FACTOR,
         /**
-         * ...
+         * Converts distance in mm to inches
          * @memberof calcs.math
-         * @param {*} numInches 
-         * @returns ...
+         * @param {number} numInches 
+         * @returns distance in inches
          */
         mmToInches: (numMils) => numMils / INCHES_MM_FACTOR,
         /**

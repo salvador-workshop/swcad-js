@@ -569,10 +569,12 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * New Model 1
-     * @param {*} opts 
-     * @returns Modelling data
+     * Calculates points for a rectangular frame with internal reinforcements
      * @memberof calcs.geometry.reinforcement
+     * @param {Object} opts 
+     * @param {number[]} opts.size - x and y coords
+     * @param {string} opts.reinforcementPattern - one of ['x', 'cross', 'diamond', 'full', 'full-double']
+     * @returns Modelling data
      */
     const reinforcedRectangle = (opts) => {
         const defaults = rectangleDefaults()

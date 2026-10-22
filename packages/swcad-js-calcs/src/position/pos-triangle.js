@@ -9,47 +9,15 @@
 const geoTriangle = ({ jscad, swcadJs }) => {
     const { TAU } = jscad.maths.constants
 
-    const getTriangleCtrlPoints = (points) => {
-        return null;
-    }
-
-    const centroid = (points) => {
-        return null;
-    }
-
-    const orthocentre = (points) => {
-        return null;
-    }
-
-    const circumcentre = (points) => {
-        return null;
-    }
-
-    const circumradius = (points) => {
-        return null;
-    }
-
-    const incentre = (points) => {
-        return null;
-    }
-
-    const incircleRadius = (points) => {
-        return null;
-    }
-
-    const eulerLine = (points) => {
-        return null;
-    }
-
     /**
-     * ...
+     * Sets up triangle creation from the given parameters. If valid, returns triangle creation strategy (AAS, ASA, SAS, etc) and values for `jscad.primitives.triangle()`. If invalid, returns `null`
      * @param {object} opts 
-     * @param {number} opts.hypot 
-     * @param {number} opts.long 
-     * @param {number} opts.short 
-     * @param {number} opts.longAngle 
-     * @param {number} opts.shortAngle 
-     * @returns If valid, returns triangle creation strategy (AAS, ASA, SAS, etc) and values for `jscad.primitives.triangle()`. If invalid, returns `null`
+     * @param {number} opts.hypot - hypotenuse
+     * @param {number} opts.long - long side
+     * @param {number} opts.short - short side
+     * @param {number} opts.longAngle - long angle
+     * @param {number} opts.shortAngle - short angle
+     * @returns {{type: string, values: number[]}|null} - data for triangle creation
      */
     const rightTriangleOpts = ({
         hypot,
@@ -114,14 +82,6 @@ const geoTriangle = ({ jscad, swcadJs }) => {
     }
 
     return {
-        getTriangleCtrlPoints,
-        centroid,
-        orthocentre,
-        circumcentre,
-        circumradius,
-        incentre,
-        incircleRadius,
-        eulerLine,
         rightTriangleOpts,
     }
 }
