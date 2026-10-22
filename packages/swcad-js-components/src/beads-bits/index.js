@@ -376,7 +376,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * @returns {Object<string, geom3>} - Small, Medium, and Large bead profiles
      * @memberof components.beadsBits
      */
-    const profileBeads = (baseThickness, smWidth, mdWidth, lgWidth) => {
+    const interface30DegProfileBeads = (baseThickness, smWidth, mdWidth, lgWidth) => {
         return {
             lg: basic30DegBead(baseThickness, lgWidth),
             md: basic30DegBead(baseThickness, mdWidth),
@@ -385,7 +385,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     }
 
     return {
-        profileBeads,
+        interface30DegProfileBeads,
         corner,
     }
 }

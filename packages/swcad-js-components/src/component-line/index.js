@@ -257,7 +257,7 @@ const moduleInit = ({ jscad, swcadJs }) => {
         const modelComponents = {
             component,
             interface: {
-                profileBeads: beadsBits.profileBeads(
+                profileBeads: beadsBits.interface30DegProfileBeads(
                     interfaceThickness,
                     smProfileBeadWidth,
                     mdProfileBeadWidth,
@@ -306,50 +306,9 @@ const moduleInit = ({ jscad, swcadJs }) => {
         const modelProperties = modelProps(initOpts)
 
 
-
         /* ----------------------------------------
          * Modelling, Component/Assembly Modules
          * ------------------------------------- */
-
-        const interfaceProfileBeads = (modelProps) => {
-            const {
-                interfaceThickness,
-                lgProfileBeadWidth,
-                mdProfileBeadWidth,
-                smProfileBeadWidth,
-            } = modelProps.dims
-
-            const edgeOffset = interfaceThickness / constants.TRI_30_FACTOR / 2
-
-            const lgTopWidth = lgProfileBeadWidth - (edgeOffset * 2)
-            const mdTopWidth = mdProfileBeadWidth - (edgeOffset * 2)
-            const smTopWidth = smProfileBeadWidth - (edgeOffset * 2)
-
-            const lgProfile = cylinderElliptic({
-                height: interfaceThickness,
-                startRadius: [lgProfileBeadWidth / 2, lgProfileBeadWidth / 2],
-                endRadius: [lgTopWidth / 2, lgTopWidth / 2]
-            })
-
-            const mdProfile = cylinderElliptic({
-                height: interfaceThickness,
-                startRadius: [mdProfileBeadWidth / 2, mdProfileBeadWidth / 2],
-                endRadius: [mdTopWidth / 2, mdTopWidth / 2]
-            })
-
-            const smProfile = cylinderElliptic({
-                height: interfaceThickness,
-                startRadius: [smProfileBeadWidth / 2, smProfileBeadWidth / 2],
-                endRadius: [smTopWidth / 2, smTopWidth / 2]
-            })
-
-            return {
-                lg: lgProfile,
-                md: mdProfile,
-                sm: smProfile,
-            }
-        }
-
 
         /** Straight line from start point to end point. */
         const baseLine = (modelProps) => {
@@ -358,7 +317,8 @@ const moduleInit = ({ jscad, swcadJs }) => {
                 endPt
             } = modelProps.points
 
-            const beadProfile = interfaceProfileBeads(modelProps).md
+            const interfProfileBeads = modelProperties.components.interface.profileBeads
+            const beadProfile = interfProfileBeads.md
 
             return hull(
                 translate([startPt[0], startPt[1], 0], beadProfile),
