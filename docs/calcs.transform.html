@@ -285,7 +285,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-calcs_src_transform_index.js.html">swcad-js-calcs/src/transform/index.js</a>, <a href="swcad-js-calcs_src_transform_index.js.html#line101">line 101</a>
+        <a href="swcad-js-calcs_src_transform_index.js.html">swcad-js-calcs/src/transform/index.js</a>, <a href="swcad-js-calcs_src_transform_index.js.html#line102">line 102</a>
     </li></ul></dd>
     
 
@@ -504,7 +504,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-calcs_src_transform_index.js.html">swcad-js-calcs/src/transform/index.js</a>, <a href="swcad-js-calcs_src_transform_index.js.html#line147">line 147</a>
+        <a href="swcad-js-calcs_src_transform_index.js.html">swcad-js-calcs/src/transform/index.js</a>, <a href="swcad-js-calcs_src_transform_index.js.html#line148">line 148</a>
     </li></ul></dd>
     
 
@@ -558,7 +558,7 @@
 
 
 <div class="description">
-    ...
+    Clones one quadrant of the given 2D shape into all quadrants.
 </div>
 
 
@@ -600,7 +600,7 @@
             <td class="type">
             
                 
-<span class="param-type">*</span>
+<span class="param-type">object</span>
 
 
             
@@ -610,7 +610,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">geom2 object</td>
         </tr>
 
     
@@ -651,7 +651,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-calcs_src_transform_index.js.html">swcad-js-calcs/src/transform/index.js</a>, <a href="swcad-js-calcs_src_transform_index.js.html#line77">line 77</a>
+        <a href="swcad-js-calcs_src_transform_index.js.html">swcad-js-calcs/src/transform/index.js</a>, <a href="swcad-js-calcs_src_transform_index.js.html#line78">line 78</a>
     </li></ul></dd>
     
 
@@ -680,7 +680,7 @@
 
         
 <div class="param-desc">
-    ...
+    2D geometry with cloned quadrants
 </div>
 
 
@@ -705,7 +705,7 @@
 
 
 <div class="description">
-    ...
+    Cuts one quadrant of the given 2D shape
 </div>
 
 
@@ -747,7 +747,7 @@
             <td class="type">
             
                 
-<span class="param-type">*</span>
+<span class="param-type">object</span>
 
 
             
@@ -757,7 +757,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">geom2 object</td>
         </tr>
 
     
@@ -798,7 +798,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-calcs_src_transform_index.js.html">swcad-js-calcs/src/transform/index.js</a>, <a href="swcad-js-calcs_src_transform_index.js.html#line43">line 43</a>
+        <a href="swcad-js-calcs_src_transform_index.js.html">swcad-js-calcs/src/transform/index.js</a>, <a href="swcad-js-calcs_src_transform_index.js.html#line44">line 44</a>
     </li></ul></dd>
     
 
@@ -827,7 +827,7 @@
 
         
 <div class="param-desc">
-    ...
+    2D geometry of one quadrant from the given shape
 </div>
 
 
@@ -844,7 +844,7 @@
     
 
     
-    <h4 class="name" id=".stack"><span class="type-signature">(static) </span>stack<span class="signature">(opts, geoms)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".stack"><span class="type-signature">(static) </span>stack<span class="signature">(opts, geoms)</span><span class="type-signature"> &rarr; {Array.&lt;object>}</span></h4>
     
 
     
@@ -852,7 +852,7 @@
 
 
 <div class="description">
-    ...
+    Stacks geometries on top of each other, starting from the bottom
 </div>
 
 
@@ -918,6 +918,8 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
         
 
@@ -943,10 +945,20 @@
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last"></td>
+            <td class="description last">if true, first element will be at the top, not bottom (defaults to 'false')</td>
         </tr>
 
     
@@ -976,7 +988,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">array of geom3 objects</td>
         </tr>
 
     
@@ -1017,7 +1029,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-calcs_src_transform_index.js.html">swcad-js-calcs/src/transform/index.js</a>, <a href="swcad-js-calcs_src_transform_index.js.html#line27">line 27</a>
+        <a href="swcad-js-calcs_src_transform_index.js.html">swcad-js-calcs/src/transform/index.js</a>, <a href="swcad-js-calcs_src_transform_index.js.html#line28">line 28</a>
     </li></ul></dd>
     
 
@@ -1042,6 +1054,28 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    array of stacked geom3 objects
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;object></span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -1063,13 +1097,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.position.cuboid.html">calcs.position.cuboid</a></li><li><a href="calcs.position.rectangle.html">calcs.position.rectangle</a></li><li><a href="calcs.position.triangle.html">calcs.position.triangle</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="componentSpec.html">componentSpec</a></li><li><a href="componentSpec.brick.html">componentSpec.brick</a></li><li><a href="componentSpec.crafts.html">componentSpec.crafts</a></li><li><a href="componentSpec.tile.html">componentSpec.tile</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.moulding.html">components.moulding</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.functions.html">data.functions</a></li><li><a href="data.specifications.html">data.specifications</a></li><li><a href="data.specifications.axes.html">data.specifications.axes</a></li><li><a href="data.specifications.axialDirections.html">data.specifications.axialDirections</a></li><li><a href="data.specifications.boxKeypoints.html">data.specifications.boxKeypoints</a></li><li><a href="data.specifications.octants.html">data.specifications.octants</a></li><li><a href="data.specifications.planes.html">data.specifications.planes</a></li><li><a href="data.specifications.quadrants.html">data.specifications.quadrants</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="data.standards.crafts.html">data.standards.crafts</a></li><li><a href="data.standards.gridfinity.html">data.standards.gridfinity</a></li><li><a href="data.standards.lumber.html">data.standards.lumber</a></li><li><a href="data.standards.masonry.html">data.standards.masonry</a></li><li><a href="data.standards.masonry.brick.html">data.standards.masonry.brick</a></li><li><a href="data.standards.masonry.concrete.html">data.standards.masonry.concrete</a></li><li><a href="data.standards.paper.html">data.standards.paper</a></li><li><a href="data.standards.paper.bookmarks.html">data.standards.paper.bookmarks</a></li><li><a href="data.standards.paper.cards.html">data.standards.paper.cards</a></li><li><a href="data.standards.paper.imperial.html">data.standards.paper.imperial</a></li><li><a href="data.standards.paper.imperialAnsi.html">data.standards.paper.imperialAnsi</a></li><li><a href="data.standards.paper.imperialArch.html">data.standards.paper.imperialArch</a></li><li><a href="data.standards.paper.metric.html">data.standards.paper.metric</a></li><li><a href="data.standards.paper.photos.html">data.standards.paper.photos</a></li><li><a href="data.standards.paper.poster.html">data.standards.paper.poster</a></li><li><a href="data.standards.params.html">data.standards.params</a></li><li><a href="data.standards.pegboard.html">data.standards.pegboard</a></li><li><a href="data.standards.tiles.html">data.standards.tiles</a></li><li><a href="data.standards.types.html">data.standards.types</a></li><li><a href="models.html">models</a></li><li><a href="models.arch.html">models.arch</a></li><li><a href="models.foil.html">models.foil</a></li><li><a href="models.structure.html">models.structure</a></li><li><a href="models.structure.wall.html">models.structure.wall</a></li><li><a href="models.structure.wallEntryway.html">models.structure.wallEntryway</a></li><li><a href="profileSpec.html">profileSpec</a></li><li><a href="profileSpec.lumber.html">profileSpec.lumber</a></li><li><a href="profileSpec.paper.html">profileSpec.paper</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.curve.html">profiles.curve</a></li><li><a href="profiles.jointPanel.html">profiles.jointPanel</a></li><li><a href="profiles.shapes.html">profiles.shapes</a></li><li><a href="profiles.shapes.ellipse.html">profiles.shapes.ellipse</a></li><li><a href="profiles.shapes.rectangle.html">profiles.shapes.rectangle</a></li><li><a href="profiles.shapes.triangle.html">profiles.shapes.triangle</a></li><li><a href="profiles.structure.arch.html">profiles.structure.arch</a></li><li><a href="profiles.structure.foil.html">profiles.structure.foil</a></li><li><a href="profiles.structure.mesh.html">profiles.structure.mesh</a></li><li><a href="profiles.text.html">profiles.text</a></li><li><a href="profiles.trim.html">profiles.trim</a></li><li><a href="utils.html">utils</a></li><li><a href="utils.colors.html">utils.colors</a></li><li><a href="utils.layout.html">utils.layout</a></li><li><a href="utils.palette.html">utils.palette</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.position.rectangle.html">calcs.position.rectangle</a></li><li><a href="calcs.position.triangle.html">calcs.position.triangle</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="componentSpec.html">componentSpec</a></li><li><a href="componentSpec.brick.html">componentSpec.brick</a></li><li><a href="componentSpec.crafts.html">componentSpec.crafts</a></li><li><a href="componentSpec.tile.html">componentSpec.tile</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.boxSupports.html">components.boxSupports</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.moulding.html">components.moulding</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.functions.html">data.functions</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="data.standards.crafts.html">data.standards.crafts</a></li><li><a href="data.standards.gridfinity.html">data.standards.gridfinity</a></li><li><a href="data.standards.lumber.html">data.standards.lumber</a></li><li><a href="data.standards.masonry.html">data.standards.masonry</a></li><li><a href="data.standards.masonry.brick.html">data.standards.masonry.brick</a></li><li><a href="data.standards.masonry.concrete.html">data.standards.masonry.concrete</a></li><li><a href="data.standards.paper.html">data.standards.paper</a></li><li><a href="data.standards.paper.bookmarks.html">data.standards.paper.bookmarks</a></li><li><a href="data.standards.paper.cards.html">data.standards.paper.cards</a></li><li><a href="data.standards.paper.imperial.html">data.standards.paper.imperial</a></li><li><a href="data.standards.paper.imperialAnsi.html">data.standards.paper.imperialAnsi</a></li><li><a href="data.standards.paper.imperialArch.html">data.standards.paper.imperialArch</a></li><li><a href="data.standards.paper.metric.html">data.standards.paper.metric</a></li><li><a href="data.standards.paper.photos.html">data.standards.paper.photos</a></li><li><a href="data.standards.paper.poster.html">data.standards.paper.poster</a></li><li><a href="data.standards.params.html">data.standards.params</a></li><li><a href="data.standards.pegboard.html">data.standards.pegboard</a></li><li><a href="data.standards.tiles.html">data.standards.tiles</a></li><li><a href="data.standards.types.html">data.standards.types</a></li><li><a href="models.html">models</a></li><li><a href="models.arch.html">models.arch</a></li><li><a href="models.foil.html">models.foil</a></li><li><a href="profileSpec.html">profileSpec</a></li><li><a href="profileSpec.lumber.html">profileSpec.lumber</a></li><li><a href="profileSpec.paper.html">profileSpec.paper</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.html">profiles.beadsBits</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.curve.html">profiles.curve</a></li><li><a href="profiles.jointPanel.html">profiles.jointPanel</a></li><li><a href="profiles.shapes.html">profiles.shapes</a></li><li><a href="profiles.shapes.ellipse.html">profiles.shapes.ellipse</a></li><li><a href="profiles.shapes.rectangle.html">profiles.shapes.rectangle</a></li><li><a href="profiles.shapes.triangle.html">profiles.shapes.triangle</a></li><li><a href="profiles.structure.arch.html">profiles.structure.arch</a></li><li><a href="profiles.structure.foil.html">profiles.structure.foil</a></li><li><a href="profiles.structure.mesh.html">profiles.structure.mesh</a></li><li><a href="profiles.text.html">profiles.text</a></li><li><a href="profiles.trim.html">profiles.trim</a></li><li><a href="utils.html">utils</a></li><li><a href="utils.colors.html">utils.colors</a></li><li><a href="utils.layout.html">utils.layout</a></li><li><a href="utils.palette.html">utils.palette</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Wed Oct 14 2026 12:57:12 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu Oct 22 2026 18:23:37 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -112,7 +112,7 @@
     
 
     
-    <h4 class="name" id=".apothemFromCircumradius"><span class="type-signature">(static) </span>apothemFromCircumradius<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".apothemFromCircumradius"><span class="type-signature">(static) </span>apothemFromCircumradius<span class="signature">(circumradius, numSides)</span><span class="type-signature"></span></h4>
     
 
     
@@ -120,7 +120,7 @@
 
 
 <div class="description">
-    ...
+    Calculates apothem from circumradius and # of sides
 </div>
 
 
@@ -129,6 +129,78 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>circumradius</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">distance from center to vertex</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>numSides</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">number of polygon sides</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -164,7 +236,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-calcs_src_geometry_geo-reg-poly.js.html">swcad-js-calcs/src/geometry/geo-reg-poly.js</a>, <a href="swcad-js-calcs_src_geometry_geo-reg-poly.js.html#line32">line 32</a>
+        <a href="swcad-js-calcs_src_geometry_geo-reg-poly.js.html">swcad-js-calcs/src/geometry/geo-reg-poly.js</a>, <a href="swcad-js-calcs_src_geometry_geo-reg-poly.js.html#line38">line 38</a>
     </li></ul></dd>
     
 
@@ -193,7 +265,7 @@
 
         
 <div class="param-desc">
-    ...
+    apothem
 </div>
 
 
@@ -210,7 +282,7 @@
     
 
     
-    <h4 class="name" id=".apothemFromSideLength"><span class="type-signature">(static) </span>apothemFromSideLength<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".apothemFromSideLength"><span class="type-signature">(static) </span>apothemFromSideLength<span class="signature">(sideLength, numSides)</span><span class="type-signature"></span></h4>
     
 
     
@@ -218,7 +290,7 @@
 
 
 <div class="description">
-    ...
+    Calculates apothem from side length and # of sides
 </div>
 
 
@@ -229,102 +301,76 @@
 
 
 
-
-
-
-
-<dl class="details">
-
+    <h5>Parameters:</h5>
     
 
-    
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-calcs_src_geometry_geo-reg-poly.js.html">swcad-js-calcs/src/geometry/geo-reg-poly.js</a>, <a href="swcad-js-calcs_src_geometry_geo-reg-poly.js.html#line40">line 40</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
+        <th>Type</th>
 
         
-<div class="param-desc">
-    ...
-</div>
-
-
-
-    
-
-
-
-
 
         
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>sideLength</code></td>
             
 
-    
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">side length</td>
+        </tr>
 
     
-    <h4 class="name" id=".circumradiusFromApothem"><span class="type-signature">(static) </span>circumradiusFromApothem<span class="signature">()</span><span class="type-signature"></span></h4>
-    
+
+        <tr>
+            
+                <td class="name"><code>numSides</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">number of polygon sides</td>
+        </tr>
 
     
-
-
-
-<div class="description">
-    ...
-</div>
-
-
-
-
-
-
-
+    </tbody>
+</table>
 
 
 
@@ -389,7 +435,7 @@
 
         
 <div class="param-desc">
-    ...
+    apothem
 </div>
 
 
@@ -406,7 +452,7 @@
     
 
     
-    <h4 class="name" id=".circumradiusFromSideLength"><span class="type-signature">(static) </span>circumradiusFromSideLength<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".circumradiusFromApothem"><span class="type-signature">(static) </span>circumradiusFromApothem<span class="signature">(apothem, numSides)</span><span class="type-signature"></span></h4>
     
 
     
@@ -414,7 +460,7 @@
 
 
 <div class="description">
-    ...
+    Calculates circumradius from apothem and # of sides
 </div>
 
 
@@ -423,6 +469,78 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>apothem</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">distance from center to the midpoint of one side</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>numSides</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">number of polygon sides</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -458,7 +576,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-calcs_src_geometry_geo-reg-poly.js.html">swcad-js-calcs/src/geometry/geo-reg-poly.js</a>, <a href="swcad-js-calcs_src_geometry_geo-reg-poly.js.html#line56">line 56</a>
+        <a href="swcad-js-calcs_src_geometry_geo-reg-poly.js.html">swcad-js-calcs/src/geometry/geo-reg-poly.js</a>, <a href="swcad-js-calcs_src_geometry_geo-reg-poly.js.html#line58">line 58</a>
     </li></ul></dd>
     
 
@@ -487,7 +605,7 @@
 
         
 <div class="param-desc">
-    ...
+    circumradius
 </div>
 
 
@@ -504,7 +622,7 @@
     
 
     
-    <h4 class="name" id=".interiorAngle"><span class="type-signature">(static) </span>interiorAngle<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".circumradiusFromSideLength"><span class="type-signature">(static) </span>circumradiusFromSideLength<span class="signature">(sideLength, numSides)</span><span class="type-signature"></span></h4>
     
 
     
@@ -512,7 +630,7 @@
 
 
 <div class="description">
-    ...
+    Calculates circumradius from side length and # of sides
 </div>
 
 
@@ -521,6 +639,78 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>sideLength</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">side length</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>numSides</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">number of polygon sides</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -556,7 +746,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-calcs_src_geometry_geo-reg-poly.js.html">swcad-js-calcs/src/geometry/geo-reg-poly.js</a>, <a href="swcad-js-calcs_src_geometry_geo-reg-poly.js.html#line64">line 64</a>
+        <a href="swcad-js-calcs_src_geometry_geo-reg-poly.js.html">swcad-js-calcs/src/geometry/geo-reg-poly.js</a>, <a href="swcad-js-calcs_src_geometry_geo-reg-poly.js.html#line68">line 68</a>
     </li></ul></dd>
     
 
@@ -585,7 +775,7 @@
 
         
 <div class="param-desc">
-    ...
+    circumradius
 </div>
 
 
@@ -602,7 +792,7 @@
     
 
     
-    <h4 class="name" id=".sideLengthFromApothem"><span class="type-signature">(static) </span>sideLengthFromApothem<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".interiorAngle"><span class="type-signature">(static) </span>interiorAngle<span class="signature">(numSides)</span><span class="type-signature"></span></h4>
     
 
     
@@ -610,7 +800,7 @@
 
 
 <div class="description">
-    ...
+    Calculates interior angle from # of sides
 </div>
 
 
@@ -619,6 +809,55 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>numSides</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">number of polygon sides</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -654,7 +893,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-calcs_src_geometry_geo-reg-poly.js.html">swcad-js-calcs/src/geometry/geo-reg-poly.js</a>, <a href="swcad-js-calcs_src_geometry_geo-reg-poly.js.html#line16">line 16</a>
+        <a href="swcad-js-calcs_src_geometry_geo-reg-poly.js.html">swcad-js-calcs/src/geometry/geo-reg-poly.js</a>, <a href="swcad-js-calcs_src_geometry_geo-reg-poly.js.html#line77">line 77</a>
     </li></ul></dd>
     
 
@@ -683,7 +922,7 @@
 
         
 <div class="param-desc">
-    ...
+    interior angle
 </div>
 
 
@@ -700,7 +939,7 @@
     
 
     
-    <h4 class="name" id=".sideLengthFromCircumRadius"><span class="type-signature">(static) </span>sideLengthFromCircumRadius<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".sideLengthFromApothem"><span class="type-signature">(static) </span>sideLengthFromApothem<span class="signature">(apothem, numSides)</span><span class="type-signature"></span></h4>
     
 
     
@@ -708,7 +947,7 @@
 
 
 <div class="description">
-    ...
+    Calculates side length from apothem and # of sides
 </div>
 
 
@@ -717,6 +956,78 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>apothem</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">distance from center to the midpoint of one side</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>numSides</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">number of polygon sides</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -752,7 +1063,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-calcs_src_geometry_geo-reg-poly.js.html">swcad-js-calcs/src/geometry/geo-reg-poly.js</a>, <a href="swcad-js-calcs_src_geometry_geo-reg-poly.js.html#line24">line 24</a>
+        <a href="swcad-js-calcs_src_geometry_geo-reg-poly.js.html">swcad-js-calcs/src/geometry/geo-reg-poly.js</a>, <a href="swcad-js-calcs_src_geometry_geo-reg-poly.js.html#line18">line 18</a>
     </li></ul></dd>
     
 
@@ -781,7 +1092,177 @@
 
         
 <div class="param-desc">
-    ...
+    side length
+</div>
+
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".sideLengthFromCircumRadius"><span class="type-signature">(static) </span>sideLengthFromCircumRadius<span class="signature">(circumradius, numSides)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Calculates side length from circumradius and # of sides
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>circumradius</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">distance from center to vertex</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>numSides</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">number of polygon sides</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="swcad-js-calcs_src_geometry_geo-reg-poly.js.html">swcad-js-calcs/src/geometry/geo-reg-poly.js</a>, <a href="swcad-js-calcs_src_geometry_geo-reg-poly.js.html#line28">line 28</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    side length
 </div>
 
 
@@ -808,13 +1289,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.position.cuboid.html">calcs.position.cuboid</a></li><li><a href="calcs.position.rectangle.html">calcs.position.rectangle</a></li><li><a href="calcs.position.triangle.html">calcs.position.triangle</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="componentSpec.html">componentSpec</a></li><li><a href="componentSpec.brick.html">componentSpec.brick</a></li><li><a href="componentSpec.crafts.html">componentSpec.crafts</a></li><li><a href="componentSpec.tile.html">componentSpec.tile</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.moulding.html">components.moulding</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.functions.html">data.functions</a></li><li><a href="data.specifications.html">data.specifications</a></li><li><a href="data.specifications.axes.html">data.specifications.axes</a></li><li><a href="data.specifications.axialDirections.html">data.specifications.axialDirections</a></li><li><a href="data.specifications.boxKeypoints.html">data.specifications.boxKeypoints</a></li><li><a href="data.specifications.octants.html">data.specifications.octants</a></li><li><a href="data.specifications.planes.html">data.specifications.planes</a></li><li><a href="data.specifications.quadrants.html">data.specifications.quadrants</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="data.standards.crafts.html">data.standards.crafts</a></li><li><a href="data.standards.gridfinity.html">data.standards.gridfinity</a></li><li><a href="data.standards.lumber.html">data.standards.lumber</a></li><li><a href="data.standards.masonry.html">data.standards.masonry</a></li><li><a href="data.standards.masonry.brick.html">data.standards.masonry.brick</a></li><li><a href="data.standards.masonry.concrete.html">data.standards.masonry.concrete</a></li><li><a href="data.standards.paper.html">data.standards.paper</a></li><li><a href="data.standards.paper.bookmarks.html">data.standards.paper.bookmarks</a></li><li><a href="data.standards.paper.cards.html">data.standards.paper.cards</a></li><li><a href="data.standards.paper.imperial.html">data.standards.paper.imperial</a></li><li><a href="data.standards.paper.imperialAnsi.html">data.standards.paper.imperialAnsi</a></li><li><a href="data.standards.paper.imperialArch.html">data.standards.paper.imperialArch</a></li><li><a href="data.standards.paper.metric.html">data.standards.paper.metric</a></li><li><a href="data.standards.paper.photos.html">data.standards.paper.photos</a></li><li><a href="data.standards.paper.poster.html">data.standards.paper.poster</a></li><li><a href="data.standards.params.html">data.standards.params</a></li><li><a href="data.standards.pegboard.html">data.standards.pegboard</a></li><li><a href="data.standards.tiles.html">data.standards.tiles</a></li><li><a href="data.standards.types.html">data.standards.types</a></li><li><a href="models.html">models</a></li><li><a href="models.arch.html">models.arch</a></li><li><a href="models.foil.html">models.foil</a></li><li><a href="models.structure.html">models.structure</a></li><li><a href="models.structure.wall.html">models.structure.wall</a></li><li><a href="models.structure.wallEntryway.html">models.structure.wallEntryway</a></li><li><a href="profileSpec.html">profileSpec</a></li><li><a href="profileSpec.lumber.html">profileSpec.lumber</a></li><li><a href="profileSpec.paper.html">profileSpec.paper</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.curve.html">profiles.curve</a></li><li><a href="profiles.jointPanel.html">profiles.jointPanel</a></li><li><a href="profiles.shapes.html">profiles.shapes</a></li><li><a href="profiles.shapes.ellipse.html">profiles.shapes.ellipse</a></li><li><a href="profiles.shapes.rectangle.html">profiles.shapes.rectangle</a></li><li><a href="profiles.shapes.triangle.html">profiles.shapes.triangle</a></li><li><a href="profiles.structure.arch.html">profiles.structure.arch</a></li><li><a href="profiles.structure.foil.html">profiles.structure.foil</a></li><li><a href="profiles.structure.mesh.html">profiles.structure.mesh</a></li><li><a href="profiles.text.html">profiles.text</a></li><li><a href="profiles.trim.html">profiles.trim</a></li><li><a href="utils.html">utils</a></li><li><a href="utils.colors.html">utils.colors</a></li><li><a href="utils.layout.html">utils.layout</a></li><li><a href="utils.palette.html">utils.palette</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.position.rectangle.html">calcs.position.rectangle</a></li><li><a href="calcs.position.triangle.html">calcs.position.triangle</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="componentSpec.html">componentSpec</a></li><li><a href="componentSpec.brick.html">componentSpec.brick</a></li><li><a href="componentSpec.crafts.html">componentSpec.crafts</a></li><li><a href="componentSpec.tile.html">componentSpec.tile</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.boxSupports.html">components.boxSupports</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.moulding.html">components.moulding</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.functions.html">data.functions</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="data.standards.crafts.html">data.standards.crafts</a></li><li><a href="data.standards.gridfinity.html">data.standards.gridfinity</a></li><li><a href="data.standards.lumber.html">data.standards.lumber</a></li><li><a href="data.standards.masonry.html">data.standards.masonry</a></li><li><a href="data.standards.masonry.brick.html">data.standards.masonry.brick</a></li><li><a href="data.standards.masonry.concrete.html">data.standards.masonry.concrete</a></li><li><a href="data.standards.paper.html">data.standards.paper</a></li><li><a href="data.standards.paper.bookmarks.html">data.standards.paper.bookmarks</a></li><li><a href="data.standards.paper.cards.html">data.standards.paper.cards</a></li><li><a href="data.standards.paper.imperial.html">data.standards.paper.imperial</a></li><li><a href="data.standards.paper.imperialAnsi.html">data.standards.paper.imperialAnsi</a></li><li><a href="data.standards.paper.imperialArch.html">data.standards.paper.imperialArch</a></li><li><a href="data.standards.paper.metric.html">data.standards.paper.metric</a></li><li><a href="data.standards.paper.photos.html">data.standards.paper.photos</a></li><li><a href="data.standards.paper.poster.html">data.standards.paper.poster</a></li><li><a href="data.standards.params.html">data.standards.params</a></li><li><a href="data.standards.pegboard.html">data.standards.pegboard</a></li><li><a href="data.standards.tiles.html">data.standards.tiles</a></li><li><a href="data.standards.types.html">data.standards.types</a></li><li><a href="models.html">models</a></li><li><a href="models.arch.html">models.arch</a></li><li><a href="models.foil.html">models.foil</a></li><li><a href="profileSpec.html">profileSpec</a></li><li><a href="profileSpec.lumber.html">profileSpec.lumber</a></li><li><a href="profileSpec.paper.html">profileSpec.paper</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.html">profiles.beadsBits</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.curve.html">profiles.curve</a></li><li><a href="profiles.jointPanel.html">profiles.jointPanel</a></li><li><a href="profiles.shapes.html">profiles.shapes</a></li><li><a href="profiles.shapes.ellipse.html">profiles.shapes.ellipse</a></li><li><a href="profiles.shapes.rectangle.html">profiles.shapes.rectangle</a></li><li><a href="profiles.shapes.triangle.html">profiles.shapes.triangle</a></li><li><a href="profiles.structure.arch.html">profiles.structure.arch</a></li><li><a href="profiles.structure.foil.html">profiles.structure.foil</a></li><li><a href="profiles.structure.mesh.html">profiles.structure.mesh</a></li><li><a href="profiles.text.html">profiles.text</a></li><li><a href="profiles.trim.html">profiles.trim</a></li><li><a href="utils.html">utils</a></li><li><a href="utils.colors.html">utils.colors</a></li><li><a href="utils.layout.html">utils.layout</a></li><li><a href="utils.palette.html">utils.palette</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Wed Oct 14 2026 12:57:12 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu Oct 22 2026 18:23:37 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
