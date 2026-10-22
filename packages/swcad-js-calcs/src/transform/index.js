@@ -18,11 +18,12 @@ const transformUtils = ({ jscad, swcadJs }) => {
     } = swcadJs.calcs
 
     /**
-     * ...
+     * Stacks geometries on top of each other, starting from the bottom
      * @memberof calcs.transform
      * @param {object} opts 
-     * @param {boolean} opts.reverse 
-     * @param {object[]} geoms 
+     * @param {boolean?} opts.reverse - if true, first element will be at the top, not bottom (defaults to 'false')
+     * @param {object[]} geoms - array of geom3 objects
+     * @returns {object[]} array of stacked geom3 objects
      */
     const stack = ({ reverse = false }, geoms) => {
         let stackHeight = 0
@@ -35,10 +36,10 @@ const transformUtils = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * ...
-     * @param {*} inShape 
-     * @returns ...
+     * Cuts one quadrant of the given 2D shape
      * @memberof calcs.transform
+     * @param {object} inShape - geom2 object
+     * @returns 2D geometry of one quadrant from the given shape
      */
     const cutQuadrant = (inShape) => {
         const inShapeDims = measureDimensions(inShape)
@@ -69,10 +70,10 @@ const transformUtils = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * ...
-     * @param {*} inShape 
-     * @returns ...
+     * Clones one quadrant of the given 2D shape into all quadrants.
      * @memberof calcs.transform
+     * @param {object} inShape - geom2 object
+     * @returns 2D geometry with cloned quadrants
      */
     const cloneQuadrant = (inShape) => {
         const firstMirror = mirror({ normal: [0, 1, 0] }, inShape)

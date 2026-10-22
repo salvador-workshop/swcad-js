@@ -288,37 +288,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         return modelProperties
     }
 
-    /**
-     * old function for dovetail/tab connections
-     * @param {*} param0
-     * @access private
-     * @returns ...
-     * @deprecated
-     */
-    const connectionTrapezoid = ({ depth, width, angle, reverse = false }) => {
-        const baseRect = rectangle({ size: [depth, width] })
-        const baseRectCoords = position.getGeomCoords(baseRect)
-        const triOpts = position.triangle.rightTriangleOpts({ long: depth, longAngle: angle })
-        const triangleEnds = [
-            align(
-                { modes: ['center', 'max', 'center'], relativeTo: [0, baseRectCoords.back, 0] },
-                mirror({ normal: [0, 1, 0] }, triangle(triOpts))
-            ),
-            align(
-                { modes: ['center', 'min', 'center'], relativeTo: [0, baseRectCoords.front, 0] },
-                triangle(triOpts)
-            ),
-        ]
-
-        const outShape = subtract(baseRect, triangleEnds)
-
-        if (reverse) {
-            return mirror({ normal: [1, 0, 0] }, outShape)
-        }
-        return outShape
-    }
-
-
     //------------------------------------------------------------------------------
 
     /* ----------------------------------------

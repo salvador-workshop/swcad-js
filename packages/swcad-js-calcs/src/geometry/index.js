@@ -5,7 +5,8 @@ const reinforcementModule = require('./reinforcement');
 
 /**
  * Finds the central point (avg.) between the given points
- * @param {number[]} points
+ * @param {number[]} points - x and y coordinates
+ * @param {string} mode - '3d' (default) or '2d'
  * @memberof calcs.geometry.points
  * @returns central point (avg.) between the given points
  */
@@ -37,7 +38,7 @@ const ptCentroid = (points, mode = '3d') => {
 }
 
 /**
- * Geometry
+ * Geometric functions
  * @memberof calcs
  * @namespace geometry
  */
@@ -47,12 +48,12 @@ const geometryInit = ({ jscad, swcadJs }) => {
     const { constants } = swcadJs.data;
 
     /**
-     * ...
+     * Returns angle of a two-point line.
      * @memberof calcs.geometry
-     * @param {*} startPt 
-     * @param {*} endPt 
-     * @param {*} mode 
-     * @returns ...
+     * @param {number[]} startPt - x and y coordinate 
+     * @param {number[]} endPt - x and y coordinate 
+     * @param {string} mode - 'rad' (default) or 'deg'F
+     * @returns angle of a two-point line.
      */
     const angleOfTwoPtLine = (startPt, endPt, mode = 'rad') => {
         const diffY = endPt[1] - startPt[1]
@@ -64,11 +65,11 @@ const geometryInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * ...
+     * Gets a point from a given angle and distance, starting from [0, 0]
      * @memberof calcs.geometry
-     * @param {*} angleRad 
-     * @param {*} dist 
-     * @returns ...
+     * @param {number} angleRad - angle (radians)
+     * @param {number} dist - distance
+     * @returns x and y coord of calculated point
      */
     const pointFromAngleAndDist = (angleRad, dist) => {
         const x = dist * Math.cos(angleRad)
@@ -117,11 +118,11 @@ const geometryInit = ({ jscad, swcadJs }) => {
     /**
      * Gets triangular points in area
      * @memberof calcs.geometry
-     * @param {*} x 
-     * @param {*} y 
-     * @param {*} distance 
-     * @param {*} centrePoints 
-     * @returns ...
+     * @param {number} x - maximum X bound
+     * @param {number} y - maximum Y bound
+     * @param {number} distance - distance between points
+     * @param {boolean} centrePoints - if true, points will be centred on origin. If false, origin will be at a corner.
+     * @returns set of x and y coordinates for points
      */
 
     const getTriangularPtsInArea = (x, y, distance, centrePoints = true) => {
@@ -171,11 +172,11 @@ const geometryInit = ({ jscad, swcadJs }) => {
     /**
      * Gets square points in area
      * @memberof calcs.geometry
-     * @param {*} x 
-     * @param {*} y 
-     * @param {*} distance 
-     * @param {*} centrePoints 
-     * @returns ...
+     * @param {number} x - maximum X bound
+     * @param {number} y - maximum Y bound
+     * @param {number} distance - distance between points
+     * @param {boolean} centrePoints - if true, points will be centred on origin. If false, origin will be at a corner.
+     * @returns set of x and y coordinates for points
      */
     const getSquarePtsInArea = (x, y, distance, centrePoints = true) => {
         const halfDist = distance / 2;

@@ -328,47 +328,64 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     }
 
     /**
- * Standard bead profiles for interface connections
- * @param {number} baseThickness - Thickness of the bead profile
- * @param {number} smWidth - Width of the small bead profile
- * @param {number} mdWidth - Width of the medium bead profile
- * @param {number} lgWidth - Width of the large bead profile
- * @returns {Object<string, geom3>} - Small, Medium, and Large bead profiles
- * @memberof components.beadsBits
- */
-    const profileBeads = (baseThickness, smWidth, mdWidth, lgWidth) => {
+     * Standard 30-degree bead profile
+     * @param {number} baseThickness - Thickness of the bead profile
+     * @param {number} width - Width of the bead profile
+     * @returns {geom3} - bead profile
+     * @memberof components.beadsBits
+     */
+    const basic30DegBead = (baseThickness, width) => {
         const edgeOffset = baseThickness / constants.TRI_30_FACTOR / 2
-        const lgTopWidth = lgWidth - (edgeOffset * 2)
-        const mdTopWidth = mdWidth - (edgeOffset * 2)
-        const smTopWidth = smWidth - (edgeOffset * 2)
+        const topWidth = width - (edgeOffset * 2)
 
-        const lgProfile = cylinderElliptic({
+        const basic30DegBeadProfile = cylinderElliptic({
             height: baseThickness,
-            startRadius: [lgWidth / 2, lgWidth / 2],
-            endRadius: [lgTopWidth / 2, lgTopWidth / 2]
+            startRadius: [width / 2, width / 2],
+            endRadius: [topWidth / 2, topWidth / 2]
         })
 
-        const mdProfile = cylinderElliptic({
+        return basic30DegBeadProfile
+    }
+
+    /**
+     * Standard 45-degree bead profile
+     * @param {number} baseThickness - Thickness of the bead profile
+     * @param {number} width - Width of the bead profile
+     * @returns {geom3} - bead profile
+     * @memberof components.beadsBits
+     */
+    const basic45DegBead = (baseThickness, width) => {
+        const edgeOffset = baseThickness / constants.TRI_45_FACTOR / 2
+        const topWidth = width - (edgeOffset * 2)
+
+        const basic45DegBeadProfile = cylinderElliptic({
             height: baseThickness,
-            startRadius: [mdWidth / 2, mdWidth / 2],
-            endRadius: [mdTopWidth / 2, mdTopWidth / 2]
+            startRadius: [width / 2, width / 2],
+            endRadius: [topWidth / 2, topWidth / 2]
         })
 
-        const smProfile = cylinderElliptic({
-            height: baseThickness,
-            startRadius: [smWidth / 2, smWidth / 2],
-            endRadius: [smTopWidth / 2, smTopWidth / 2]
-        })
+        return basic45DegBeadProfile
+    }
 
+    /**
+     * Standard bead profiles for interface connections
+     * @param {number} baseThickness - Thickness of the bead profile
+     * @param {number} smWidth - Width of the small bead profile
+     * @param {number} mdWidth - Width of the medium bead profile
+     * @param {number} lgWidth - Width of the large bead profile
+     * @returns {Object<string, geom3>} - Small, Medium, and Large bead profiles
+     * @memberof components.beadsBits
+     */
+    const interface30DegProfileBeads = (baseThickness, smWidth, mdWidth, lgWidth) => {
         return {
-            lg: lgProfile,
-            md: mdProfile,
-            sm: smProfile,
+            lg: basic30DegBead(baseThickness, lgWidth),
+            md: basic30DegBead(baseThickness, mdWidth),
+            sm: basic30DegBead(baseThickness, smWidth),
         }
     }
 
     return {
-        profileBeads,
+        interface30DegProfileBeads,
         corner,
     }
 }

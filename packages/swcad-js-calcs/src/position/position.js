@@ -1,6 +1,5 @@
 "use strict"
 
-const posCuboid = require('./pos-cuboid');
 const posRectangle = require('./pos-rectangle');
 const posTriangle = require('./pos-triangle');
 
@@ -144,7 +143,6 @@ const positionUtils = ({ jscad, swcadJs }) => {
 
     return {
         ...positionCore,
-        cuboid: posCuboid.init({ jscad, swcadJs: preLib }),
         rectangle: posRectangle.init({ jscad, swcadJs: preLib }),
         triangle: posTriangle.init({ jscad, swcadJs: preLib }),
     }
