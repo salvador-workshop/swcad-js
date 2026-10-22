@@ -1,5 +1,12 @@
 "use strict"
 
+/**
+ * Box Supports
+ * @namespace boxSupports
+ * @memberof components 
+ * @author R. J. Salvador (Salvador Workshop)
+ */
+
 const boxSupportInit = ({ jscad, swcadJs }) => {
     const {
         ellipse,
@@ -243,9 +250,9 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
 
     /**
      * New Model 1
+     * @memberof components.boxSupports
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof newModelParent
      */
     const boxSupportQuarter = (opts) => {
         const defaults = boxSupportDefaults()
@@ -274,9 +281,9 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
 
     /**
      * New Model 2
+     * @memberof components.boxSupports
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof newModelParent
      */
     const boxSupportHalf = (opts) => {
         const defaults = boxSupportDefaults()
