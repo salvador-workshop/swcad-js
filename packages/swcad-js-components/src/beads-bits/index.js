@@ -330,7 +330,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     /**
      * Standard 30-degree bead profile
      * @param {number} baseThickness - Thickness of the bead profile
-     * @param {number} width - Width of the small bead profile
+     * @param {number} width - Width of the bead profile
      * @returns {geom3} - bead profile
      * @memberof components.beadsBits
      */
@@ -350,7 +350,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     /**
      * Standard 45-degree bead profile
      * @param {number} baseThickness - Thickness of the bead profile
-     * @param {number} width - Width of the small bead profile
+     * @param {number} width - Width of the bead profile
      * @returns {geom3} - bead profile
      * @memberof components.beadsBits
      */

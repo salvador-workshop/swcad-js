@@ -1,5 +1,12 @@
 "use strict"
 
+/**
+ * Beads and Bits
+ * @namespace beadsBits
+ * @memberof profiles 
+ * @author R. J. Salvador (Salvador Workshop)
+ */
+
 const beadsBitsInit = ({ jscad, swcadJs }) => {
     const {
         rectangle,
