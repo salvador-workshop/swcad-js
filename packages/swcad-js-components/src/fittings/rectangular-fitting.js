@@ -57,6 +57,7 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
 
     const {
         math,
+        position,
     } = swcadJs.calcs
 
 
@@ -74,11 +75,11 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
         /** Specific value declarations */
         const defaultValues = {
             dims: {
-                size: [
-                    math.inchesToMm(2),
-                    math.inchesToMm(4),
-                    math.inchesToMm(1),
+                subjectSize: [
+                    standards.crafts.POPSICLE_STICK_WIDTH,
+                    standards.crafts.POPSICLE_STICK_THICKNESS,
                 ],
+                length: math.inchesToMm(1 / 4),
             },
             points: {
                 centrePt: [0, 0, 0]
@@ -100,7 +101,8 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
         /** Computed values for option defaults */
         const defaultOpts = {
             ...standardOpts,
-            size: defaultValues.dims.size,
+            subjectSize: defaultValues.dims.subjectSize,
+            length: defaultValues.dims.length,
         }
 
         return {
@@ -126,7 +128,8 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
 
         // User options
         const {
-            size = defaults.opts.size,
+            subjectSize = defaults.opts.subjectSize,
+            length = defaults.opts.length,
             type = defaults.opts.type,
             scale = defaults.opts.scale,
             interfaceThickness = defaults.opts.interfaceThickness,
@@ -141,7 +144,8 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
         }
 
         const initOpts = {
-            size,
+            subjectSize,
+            length,
             ...stdOpts,
         }
 
@@ -166,7 +170,8 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
         console.log('rectangularFittingProps() -- opts', opts)
 
         const {
-            size,
+            subjectSize,
+            length,
             type,
             scale,
             interfaceThickness,
@@ -177,9 +182,11 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
         * Prop calculations
         * ------------------------------------- */
 
-        const width = size[0]
-        const depth = size[1]
-        const height = size[2]
+        const subjectWidth = subjectSize[0]
+        const subjectHeight = subjectSize[1]
+
+        const width = subjectWidth + (interfaceThickness * 2)
+        const height = subjectHeight / 3 + interfaceThickness
 
         /* ----------------------------------------
         * Preparing Model Properties, Dimensions
@@ -197,9 +204,11 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
 
         /** Various dimensions for model */
         const modelDims = {
-            size,
+            subjectSize,
+            subjectWidth,
+            subjectHeight,
+            length,
             width,
-            depth,
             height,
             interfaceThickness,
             fitGap,
@@ -259,7 +268,40 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
         const initOpts = rectangularFittingOpts(opts)
         const modelProperties = rectangularFittingProps(initOpts)
 
-        const mainModel = cuboid()
+        const {
+            subjectSize,
+            subjectWidth,
+            subjectHeight,
+            length,
+            width,
+            height,
+            interfaceThickness,
+            fitGap,
+        } = modelProperties.dims
+
+        const baseRect = rectangle({
+            size: [width, height]
+        })
+
+        const topCutaway = rectangle({
+            size: [
+                subjectWidth + fitGap,
+                subjectHeight + fitGap
+            ]
+        })
+
+        const dHolderSection = subtract(
+            align({
+                modes: ['center', 'min', 'center'],
+                relativeTo: [0, -interfaceThickness, 0]
+            }, baseRect),
+            align({ modes: ['center', 'min', 'center'] }, topCutaway),
+        )
+
+        let dHolder = extrudeLinear({ height: length }, dHolderSection)
+        dHolder = rotate([Math.PI / 2, 0, 0], dHolder)
+
+        const mainModel = position.ctr(dHolder)
         const modelParts = {
             mainModel,
         }

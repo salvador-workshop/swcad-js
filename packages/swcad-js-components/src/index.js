@@ -3,6 +3,7 @@
 const beadsBitsModule = require('./beads-bits')
 const boxSupportModule = require('./box-support')
 const componentLineModule = require('./component-line')
+const fittingsModule = require('./fittings')
 const meshModule = require('./mesh')
 const mouldingModule = require('./moulding')
 const reinforcedRectPanelModule = require('./reinforced-rect-panel')
@@ -39,6 +40,7 @@ const componentsInit = ({ jscad, swcadJs }) => {
         routedShapes,
         mesh,
         componentLine,
+        fittings: fittingsModule.init({ jscad, swcadJs: preLib }),
         moulding: mouldingModule.init({ jscad, swcadJs: preLib }),
         reinforcedRectPanel: reinforcedRectPanelModule.init({ jscad, swcadJs: preLib }),
         text: textModule.init({ jscad, swcadJs: preLib }),

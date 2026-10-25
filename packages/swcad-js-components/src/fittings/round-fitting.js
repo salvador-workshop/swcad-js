@@ -24,6 +24,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
 
     const {
         math,
+        position,
     } = swcadJs.calcs
 
 
@@ -143,7 +144,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
 
         const dowelDiam = dowelRadius * 2
         const width = interfaceThickness * 2 + dowelDiam
-        const simpleHeight = interfaceThickness + dowelRadius
+        const simpleHeight = dowelDiam / 3 + interfaceThickness
         const types = ['default', 'alt']
 
 
@@ -228,6 +229,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
             dowelDiam,
             interfaceThickness,
             fitGap,
+            length,
             width,
             simpleHeight,
         } = modelProperties.dims
@@ -239,14 +241,17 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         const topCutaway = circle({ radius: fitGap / 2 + dowelRadius })
 
         const dHolderSection = subtract(
-            align({ modes: ['center', 'max', 'center'] }, baseRect),
-            translate([0, dowelRadius / 3, 0], topCutaway),
+            align({
+                modes: ['center', 'min', 'center'],
+                relativeTo: [0, -interfaceThickness, 0]
+            }, baseRect),
+            align({ modes: ['center', 'min', 'center'] }, topCutaway),
         )
 
         let dHolder = extrudeLinear({ height: length }, dHolderSection)
         dHolder = rotate([Math.PI / 2, 0, 0], dHolder)
 
-        const mainModel = align({ modes: ['center', 'center', 'center'] }, dHolder)
+        const mainModel = position.ctr(dHolder)
         const modelParts = {
             mainModel,
         }
@@ -284,7 +289,6 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
                 fitGap,
                 width,
             } = modelProps.dims
-
 
             const baseRect = rectangle({
                 size: [
@@ -331,7 +335,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
                 align({ modes: ['max', 'center', 'center'] }, sideCutaway2),
             )
 
-            return align({ modes: ['center', 'center', 'center'] }, dHolderSection)
+            return position.ctr(dHolderSection)
         }
 
         /* ----------------------------------------
@@ -350,7 +354,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
             let dHolder = extrudeLinear({ height: length }, dHolderSection)
             dHolder = rotate([Math.PI / 2, 0, 0], dHolder)
 
-            return align({ modes: ['center', 'center', 'center'] }, dHolder)
+            return position.ctr(dHolder)
         }
 
         /* ----------------------------------------
