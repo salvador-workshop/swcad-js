@@ -210,6 +210,24 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
 
     //------------------------------------------------------------------------------
 
+    /**
+     * ...
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof newModelParent
+     */
+    const simpleRoundFitting = (opts) => {
+        const defaults = newModelNameDefaults()
+        const initOpts = newModelNameOpts(opts)
+        const modelProperties = newModelNameProps(initOpts)
+
+        const mainModel = cuboid()
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
 
     /**
      * New Model
@@ -325,7 +343,12 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         return [mainModel, modelParts, modelProperties]
     }
 
-    return roundFitting
+    return {
+        defaults: roundFittingDefaults,
+        props: roundFittingProps,
+        simpleRoundFitting,
+        roundFitting,
+    }
 }
 
 module.exports = {

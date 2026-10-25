@@ -150,6 +150,7 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
         return initOpts
     }
 
+
     //------------------------------------------------------------------------------
 
 
@@ -243,9 +244,12 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
 
     //------------------------------------------------------------------------------
 
+    /* ----------------------------------------
+    * MODELLING FUNCTIONS
+    * ------------------------------------- */
 
     /**
-     * New Model
+     * New Model 1
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof newModelParent
@@ -255,67 +259,19 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
         const initOpts = rectangularFittingOpts(opts)
         const modelProperties = rectangularFittingProps(initOpts)
 
-        /* ----------------------------------------
-         * Modelling, Component/Assembly Modules
-         * ------------------------------------- */
-
-        /** Sub-component 01 */
-        const subcomponent1 = (modelProps) => {
-            const {
-                metadata,
-                opts,
-                dims,
-                points,
-            } = modelProps
-
-            return sphere()
-        }
-
-        /** Sub-component 02 */
-        const subcomponent2 = (modelProps) => {
-            const {
-                metadata,
-                opts,
-                dims,
-                points,
-            } = modelProps
-
-            return cube()
-        }
-
-        /* ----------------------------------------
-         * Complete Assembly
-         * ------------------------------------- */
-
-        /** Final Assembly */
-        const finalAssembly = (modelProps) => {
-            let subComp1 = subcomponent1(modelProps)
-            let subComp2 = subcomponent2(modelProps)
-
-            return union(
-                subComp1,
-                subComp2,
-            )
-        }
-
-        /* ----------------------------------------
-         * Outputs
-         * ------------------------------------- */
-
-        let subComp1 = subcomponent1(modelProperties)
-        let subComp2 = subcomponent2(modelProperties)
-
-        let mainModel = finalAssembly(modelProperties)
-
-        let modelParts = {
-            subcomponent1: subComp1,
-            subcomponent2: subComp2,
+        const mainModel = cuboid()
+        const modelParts = {
+            mainModel,
         }
 
         return [mainModel, modelParts, modelProperties]
     }
 
-    return rectangularFitting
+    return {
+        defaults: rectangularFittingDefaults,
+        props: rectangularFittingProps,
+        rectangularFitting,
+    }
 }
 
 module.exports = {
