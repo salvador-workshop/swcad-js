@@ -14,7 +14,7 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
     } = swcadJs.data
 
     const {
-        shapes,
+        reinforcements,
     } = swcadJs.profiles
 
 
@@ -238,7 +238,7 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
             reinforcementPattern,
             reinforcementThickness,
         }
-        const reinforcedRect = shapes.rectangle.reinforcedRect(reinforcedRectOpts)[0]
+        const reinforcedRect = reinforcements.reinforcedRect(reinforcedRectOpts)[0]
         const extrudedReinforcedRect = extrudeLinear({ height: size[2] }, reinforcedRect)
 
         const mainModel = extrudedReinforcedRect

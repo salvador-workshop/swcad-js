@@ -6,8 +6,9 @@ const fittingsInit = ({ jscad, swcadJs }) => {
     const rectangularFitting = rectangularFittingModule.init({ jscad, swcadJs })
 
     return {
-        simpleRoundFitting: roundFitting.simpleRoundFitting,
         roundFitting: roundFitting.roundFitting,
+        inverseRoundFitting: roundFitting.inverseRoundFitting,
+        doubleRoundFitting: roundFitting.doubleRoundFitting,
         rectangularFitting: rectangularFitting.rectangularFitting,
     }
 }
