@@ -6,7 +6,6 @@ const connectionsModule = require('./connections')
 const curveModule = require('./curve')
 const jointPanelModule = require('./joint-panel')
 const shapesModule = require('./shapes')
-const rectFrameModule = require('./shapes/rectangle/frame-rect')
 const structureModule = require('./structure')
 const textModule = require('./text')
 const trimModule = require('./trim')
@@ -29,7 +28,6 @@ const profilesInit = ({ jscad, swcadJs }) => {
         ...shapesCore,
         rectangle: {
             ...shapesCore.rectangle,
-            frame: rectFrameModule.init({ jscad, swcadJs: preLib }),
         }
     }
 

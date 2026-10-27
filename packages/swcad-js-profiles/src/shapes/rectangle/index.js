@@ -1,6 +1,6 @@
 "use strict"
 
-const reinforcedRectModule = require('./reinforced-rect');
+const rectFrameModule = require('./frame-rect')
 
 const rectangleInit = ({ jscad, swcadJs }) => {
     const { square, circle, rectangle, triangle, ellipse } = jscad.primitives
@@ -96,7 +96,7 @@ const rectangleInit = ({ jscad, swcadJs }) => {
 
     return {
         ...rectangles,
-        reinforcedRect: reinforcedRectModule.init({ jscad, swcadJs })
+        frame: rectFrameModule.init({ jscad, swcadJs: preLib }),
     }
 }
 

@@ -214,12 +214,12 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
     //------------------------------------------------------------------------------
 
     /**
-     * ...
+     * Simple dowel fitting (round groove)
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof newModelParent
      */
-    const simpleRoundFitting = (opts) => {
+    const roundFitting = (opts) => {
         const defaults = roundFittingDefaults()
         const initOpts = roundFittingOpts(opts)
         const modelProperties = roundFittingProps(initOpts)
@@ -260,12 +260,58 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * New Model
+     * Simple dowel fitting, inverted for 3D-printing from the bottom (triangular groove)
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof newModelParent
+     */
+    const inverseRoundFitting = (opts) => {
+        const defaults = roundFittingDefaults()
+        const initOpts = roundFittingOpts(opts)
+        const modelProperties = roundFittingProps(initOpts)
+
+        const {
+            dowelRadius,
+            dowelDiam,
+            interfaceThickness,
+            fitGap,
+            length,
+            width,
+            simpleHeight,
+        } = modelProperties.dims
+
+        const baseRect = rectangle({
+            size: [width, simpleHeight]
+        })
+
+        const topCutaway = circle({ radius: fitGap / 2 + dowelRadius })
+
+        const dHolderSection = subtract(
+            align({
+                modes: ['center', 'min', 'center'],
+                relativeTo: [0, -interfaceThickness, 0]
+            }, baseRect),
+            align({ modes: ['center', 'min', 'center'] }, topCutaway),
+        )
+
+        let dHolder = extrudeLinear({ height: length }, dHolderSection)
+        dHolder = rotate([Math.PI / 2, 0, 0], dHolder)
+
+        const mainModel = position.ctr(dHolder)
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
+     * Fitting that accomodates 2 primary dowels, plus space for 2 side dowels 
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof extModels
      */
-    const roundFitting = (opts) => {
+    const doubleRoundFitting = (opts) => {
         const defaults = roundFittingDefaults()
         const initOpts = roundFittingOpts(opts)
         const modelProperties = roundFittingProps(initOpts)
@@ -375,8 +421,9 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
     return {
         defaults: roundFittingDefaults,
         props: roundFittingProps,
-        simpleRoundFitting,
         roundFitting,
+        inverseRoundFitting,
+        doubleRoundFitting,
     }
 }
 
