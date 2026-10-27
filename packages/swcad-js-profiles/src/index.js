@@ -5,6 +5,8 @@ const boxCurveModule = require('./box-curve')
 const connectionsModule = require('./connections')
 const curveModule = require('./curve')
 const jointPanelModule = require('./joint-panel')
+const rectFrameModule = require('./shapes/rectangle/frame-rect')
+const reinforcementsModule = require('./reinforcements')
 const shapesModule = require('./shapes')
 const structureModule = require('./structure')
 const textModule = require('./text')
@@ -28,6 +30,7 @@ const profilesInit = ({ jscad, swcadJs }) => {
         ...shapesCore,
         rectangle: {
             ...shapesCore.rectangle,
+            frame: rectFrameModule.init({ jscad, swcadJs: preLib }),
         }
     }
 
@@ -50,6 +53,7 @@ const profilesInit = ({ jscad, swcadJs }) => {
         curve,
         structure: structureModule.init({ jscad, swcadJs: preLib }),
         jointPanel: jointPanelModule.init({ jscad, swcadJs: preLib }),
+        reinforcements: reinforcementsModule.init({ jscad, swcadJs: preLib }),
         text: textModule.init({ jscad, swcadJs: preLib }),
         trim: trimModule.init({ jscad, swcadJs: preLib }),
     }

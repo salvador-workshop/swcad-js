@@ -23,6 +23,10 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
     } = jscad.extrusions
 
     const {
+        constants,
+    } = swcadJs.data
+
+    const {
         math,
         position,
     } = swcadJs.calcs
@@ -144,7 +148,11 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
 
         const dowelDiam = dowelRadius * 2
         const width = interfaceThickness * 2 + dowelDiam
-        const simpleHeight = dowelDiam / 3 + interfaceThickness
+
+        const simpleHeight = dowelDiam / 3 + interfaceThickness + fitGap
+        const invCutawayHeight = dowelDiam * constants.EQUI_TRIANGLE_HEIGHT_FACTOR
+        const invSimpleHeight = invCutawayHeight + interfaceThickness + fitGap
+
         const types = ['default', 'alt']
 
 
@@ -164,6 +172,8 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
             dowelDiam,
             width,
             simpleHeight,
+            invCutawayHeight,
+            invSimpleHeight,
             length,
             interfaceThickness,
             fitGap,
@@ -278,20 +288,25 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
             length,
             width,
             simpleHeight,
+            invCutawayHeight,
+            invSimpleHeight,
         } = modelProperties.dims
 
         const baseRect = rectangle({
-            size: [width, simpleHeight]
+            size: [width, invSimpleHeight]
         })
 
-        const topCutaway = circle({ radius: fitGap / 2 + dowelRadius })
+        const channelCutaway = triangle({
+            type: 'SSS', values: [
+                dowelDiam + fitGap,
+                dowelDiam + fitGap,
+                dowelDiam + fitGap
+            ]
+        })
 
         const dHolderSection = subtract(
-            align({
-                modes: ['center', 'min', 'center'],
-                relativeTo: [0, -interfaceThickness, 0]
-            }, baseRect),
-            align({ modes: ['center', 'min', 'center'] }, topCutaway),
+            align({ modes: ['center', 'min', 'center'] }, baseRect),
+            align({ modes: ['center', 'min', 'center'] }, channelCutaway),
         )
 
         let dHolder = extrudeLinear({ height: length }, dHolderSection)
