@@ -44,6 +44,10 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
     const roundFittingDefaults = () => {
         /** Specific value declarations */
         const defaultValues = {
+            constants: {
+                ratioDiamToDoubleFittingMaxHt: 2.76,
+                ratioDiamToDoubleFittingDowelCtrsDist: 1.76,
+            },
             dims: {
                 dowelRadius: 3.25 / 2,
                 length: math.inchesToMm(1 / 4),
@@ -149,9 +153,12 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         const dowelDiam = dowelRadius * 2
         const width = interfaceThickness * 2 + dowelDiam
 
+        const roundCutProfileRadius = fitGap / 2 + dowelRadius
+        const invCutProfileSideLength = dowelDiam + fitGap
+        const invCutProfileHeight = dowelDiam * constants.EQUI_TRIANGLE_HEIGHT_FACTOR
+
         const simpleHeight = dowelDiam / 3 + interfaceThickness + fitGap
-        const invCutawayHeight = dowelDiam * constants.EQUI_TRIANGLE_HEIGHT_FACTOR
-        const invSimpleHeight = invCutawayHeight + interfaceThickness + fitGap
+        const invSimpleHeight = invCutProfileHeight + interfaceThickness + fitGap
 
         const types = ['default', 'alt']
 
@@ -171,8 +178,10 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
             dowelRadius,
             dowelDiam,
             width,
+            invCutProfileHeight,
+            invCutProfileSideLength,
+            roundCutProfileRadius,
             simpleHeight,
-            invCutawayHeight,
             invSimpleHeight,
             length,
             interfaceThickness,
@@ -224,6 +233,58 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
     //------------------------------------------------------------------------------
 
     /**
+     * ...
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof newModelParent
+     */
+    const roundFittingCutProfile = (opts) => {
+        const defaults = roundFittingDefaults()
+        const initOpts = roundFittingOpts(opts)
+        const modelProperties = roundFittingProps(initOpts)
+
+        const {
+            roundCutProfileRadius,
+        } = modelProperties.dims
+
+        const mainModel = circle({ radius: roundCutProfileRadius })
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
+     * ...
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof newModelParent
+     */
+    const invRoundFittingCutProfile = (opts) => {
+        const defaults = roundFittingDefaults()
+        const initOpts = roundFittingOpts(opts)
+        const modelProperties = roundFittingProps(initOpts)
+
+        const {
+            invCutProfileSideLength,
+        } = modelProperties.dims
+
+        const mainModel = triangle({
+            type: 'SSS', values: [
+                invCutProfileSideLength,
+                invCutProfileSideLength,
+                invCutProfileSideLength
+            ]
+        })
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
      * Simple dowel fitting (round groove)
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
@@ -248,7 +309,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
             size: [width, simpleHeight]
         })
 
-        const topCutaway = circle({ radius: fitGap / 2 + dowelRadius })
+        const topCutaway = roundFittingCutProfile(opts)[0]
 
         const dHolderSection = subtract(
             align({
@@ -288,7 +349,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
             length,
             width,
             simpleHeight,
-            invCutawayHeight,
+            invCutProfileHeight,
             invSimpleHeight,
         } = modelProperties.dims
 
@@ -296,13 +357,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
             size: [width, invSimpleHeight]
         })
 
-        const channelCutaway = triangle({
-            type: 'SSS', values: [
-                dowelDiam + fitGap,
-                dowelDiam + fitGap,
-                dowelDiam + fitGap
-            ]
-        })
+        const channelCutaway = invRoundFittingCutProfile(opts)[0]
 
         const dHolderSection = subtract(
             align({ modes: ['center', 'min', 'center'] }, baseRect),
@@ -358,14 +413,8 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
                 ]
             })
 
-            const topCutaway = circle({ radius: fitGap / 2 + dowelRadius })
-            const channelCutaway = triangle({
-                type: 'SSS', values: [
-                    dowelDiam + fitGap,
-                    dowelDiam + fitGap,
-                    dowelDiam + fitGap
-                ]
-            })
+            const topCutaway = roundFittingCutProfile(opts)[0]
+            const channelCutaway = invRoundFittingCutProfile(opts)[0]
             let sideCutaway1 = triangle({
                 type: 'ASA', values: [
                     Math.PI / 6,
@@ -436,6 +485,8 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
     return {
         defaults: roundFittingDefaults,
         props: roundFittingProps,
+        roundFittingCutProfile,
+        invRoundFittingCutProfile,
         roundFitting,
         inverseRoundFitting,
         doubleRoundFitting,

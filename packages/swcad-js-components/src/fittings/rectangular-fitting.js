@@ -188,6 +188,9 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
         const width = subjectWidth + (interfaceThickness * 2)
         const height = subjectHeight / 3 + interfaceThickness
 
+        const cutProfileWidth = subjectWidth + fitGap
+        const cutProfileHeight = subjectHeight + fitGap
+
         /* ----------------------------------------
         * Preparing Model Properties, Dimensions
         * ------------------------------------- */
@@ -210,6 +213,8 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
             length,
             width,
             height,
+            cutProfileWidth,
+            cutProfileHeight,
             interfaceThickness,
             fitGap,
         }
@@ -258,6 +263,35 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
     * ------------------------------------- */
 
     /**
+     * ...
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof newModelParent
+     */
+    const rectFittingCutProfile = (opts) => {
+        const defaults = roundFittingDefaults()
+        const initOpts = roundFittingOpts(opts)
+        const modelProperties = roundFittingProps(initOpts)
+
+        const {
+            cutProfileWidth,
+            cutProfileHeight,
+        } = modelProperties.dims
+
+        const mainModel = rectangle({
+            size: [
+                cutProfileWidth,
+                cutProfileHeight,
+            ]
+        })
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
      * New Model 1
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
@@ -283,12 +317,7 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
             size: [width, height]
         })
 
-        const topCutaway = rectangle({
-            size: [
-                subjectWidth + fitGap,
-                subjectHeight + fitGap
-            ]
-        })
+        const topCutaway = rectFittingCutProfile(opts)[0]
 
         const dHolderSection = subtract(
             align({
@@ -312,6 +341,7 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
     return {
         defaults: rectangularFittingDefaults,
         props: rectangularFittingProps,
+        rectFittingCutProfile,
         rectangularFitting,
     }
 }
