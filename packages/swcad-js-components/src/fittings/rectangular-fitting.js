@@ -269,9 +269,9 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
      * @memberof newModelParent
      */
     const rectFittingCutProfile = (opts) => {
-        const defaults = roundFittingDefaults()
-        const initOpts = roundFittingOpts(opts)
-        const modelProperties = roundFittingProps(initOpts)
+        const defaults = rectangularFittingDefaults()
+        const initOpts = rectangularFittingOpts(opts)
+        const modelProperties = rectangularFittingProps(initOpts)
 
         const {
             cutProfileWidth,

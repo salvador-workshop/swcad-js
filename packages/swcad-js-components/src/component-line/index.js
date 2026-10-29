@@ -182,7 +182,7 @@ const moduleInit = ({ jscad, swcadJs }) => {
         * Prop calculations
         * ------------------------------------- */
 
-        const midPt = midpointBetweenPoints(startPt, endPt)
+        const midPt = geometry.midpointBetweenPoints(startPt, endPt)
 
         const lineLength = geometry.distanceBetweenPoints(startPt, endPt)
         const offsetLineLength = lineLength - (endOffset * 2)
