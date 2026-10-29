@@ -39,7 +39,6 @@ const mathUtils = ({ jscad, swcadJs }) => {
         isOdd: (n) => {
             return Math.abs(n % 2) == 1;
         },
-        arrayCartesianProduct,
         /**
          * Converts distance in inches to mm
          * @memberof calcs.math
@@ -75,6 +74,7 @@ const mathUtils = ({ jscad, swcadJs }) => {
             // The maximum is exclusive and the minimum is inclusive
             return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
         },
+        arrayCartesianProduct,
     }
 }
 

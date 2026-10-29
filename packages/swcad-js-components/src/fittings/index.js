@@ -9,7 +9,10 @@ const fittingsInit = ({ jscad, swcadJs }) => {
         roundFitting: roundFitting.roundFitting,
         inverseRoundFitting: roundFitting.inverseRoundFitting,
         doubleRoundFitting: roundFitting.doubleRoundFitting,
+        roundFittingCutProfile: roundFitting.roundFittingCutProfile,
+        invRoundFittingCutProfile: roundFitting.invRoundFittingCutProfile,
         rectangularFitting: rectangularFitting.rectangularFitting,
+        rectFittingCutProfile: rectangularFitting.rectFittingCutProfile,
     }
 }
 

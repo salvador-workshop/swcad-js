@@ -182,16 +182,9 @@ const moduleInit = ({ jscad, swcadJs }) => {
         * Prop calculations
         * ------------------------------------- */
 
-        const coordDiffs = [
-            endPt[0] - startPt[0],
-            endPt[1] - startPt[1],
-        ]
-        const midPt = [
-            startPt[0] + (coordDiffs[0] / 2),
-            startPt[1] + (coordDiffs[1] / 2),
-        ]
+        const midPt = geometry.midpointBetweenPoints(startPt, endPt)
 
-        const lineLength = Math.hypot(coordDiffs[0], coordDiffs[1])
+        const lineLength = geometry.distanceBetweenPoints(startPt, endPt)
         const offsetLineLength = lineLength - (endOffset * 2)
 
         const numSubLengths = Math.floor(offsetLineLength / unitLength)
