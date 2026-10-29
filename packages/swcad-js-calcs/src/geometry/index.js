@@ -38,6 +38,46 @@ const ptCentroid = (points, mode = '3d') => {
 }
 
 /**
+ * Calculates co-ordinate difference between two points
+ * @param {[number]} startPt - starting 2D coordinates
+ * @param {[number]} endPt - ending 2D coordinates
+ * @returns {[number]} 2D coordinates of diff
+ */
+const coordDiffBetweenPoints = (startPt, endPt) => {
+    return [
+        endPt[0] - startPt[0],
+        endPt[1] - startPt[1],
+    ]
+}
+
+/**
+ * Calculates distance between two co-ordinate points
+ * @param {[number]} startPt - starting 2D coordinates
+ * @param {[number]} endPt - ending 2D coordinates
+ * @returns {number} distance between points
+ */
+const distanceBetweenPoints = (startPt, endPt) => {
+    const coordDiffs = coordDiffBetweenPoints(startPt, endPt)
+    const lineLength = Math.hypot(coordDiffs[0], coordDiffs[1])
+    return lineLength
+}
+
+/**
+ * Calculates midpoint between two co-ordinate points
+ * @param {[number]} startPt - starting 2D coordinates
+ * @param {[number]} endPt - ending 2D coordinates
+ * @returns {[number]} midpoint coordinates
+ */
+const midpointBetweenPoints = (startPt, endPt) => {
+    const coordDiffs = coordDiffBetweenPoints(startPt, endPt)
+    const midPt = [
+        startPt[0] + (coordDiffs[0] / 2),
+        startPt[1] + (coordDiffs[1] / 2),
+    ]
+    return midPt
+}
+
+/**
  * Geometric functions
  * @memberof calcs
  * @namespace geometry
@@ -56,9 +96,8 @@ const geometryInit = ({ jscad, swcadJs }) => {
      * @returns angle of a two-point line.
      */
     const angleOfTwoPtLine = (startPt, endPt, mode = 'rad') => {
-        const diffY = endPt[1] - startPt[1]
-        const diffX = endPt[0] - startPt[0]
-        const angleRad = Math.atan2(diffY, diffX)
+        const coordDiffs = coordDiffBetweenPoints(startPt, endPt)
+        const angleRad = Math.atan2(coordDiffs[1], coordDiffs[0])
         const angleDeg = angleRad * (180 / Math.PI)
 
         return mode == 'deg' ? angleDeg : angleRad
@@ -92,15 +131,8 @@ const geometryInit = ({ jscad, swcadJs }) => {
             const startPt = outlinePts[ptIdx];
             const endPt = outlinePts[ptIdx + 1];
 
-            const coordDiffs = [
-                endPt[0] - startPt[0],
-                endPt[1] - startPt[1],
-            ]
-            const midPt = [
-                startPt[0] + (coordDiffs[0] / 2),
-                startPt[1] + (coordDiffs[1] / 2),
-            ]
-            const lineLength = Math.hypot(coordDiffs[0], coordDiffs[1])
+            const midPt = midpointBetweenPoints(startPt, endPt)
+            const lineLength = distanceBetweenPoints(startPt, endPt)
             const lineAngle = angleOfTwoPtLine(startPt, endPt)
 
             lineData.push({
@@ -225,11 +257,14 @@ const geometryInit = ({ jscad, swcadJs }) => {
     const reinforcement = reinforcementModule.init({ jscad, swcadJs })
 
     return {
+        coordDiffBetweenPoints,
         angleOfTwoPtLine,
+        midpointBetweenPoints,
         pointFromAngleAndDist,
         getLineDataFromOutlinePoints,
         getTriangularPtsInArea,
         getSquarePtsInArea,
+        distanceBetweenPoints,
         points,
         regPoly,
         reinforcement,
