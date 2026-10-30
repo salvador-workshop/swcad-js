@@ -243,6 +243,48 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
 
     //------------------------------------------------------------------------------
 
+    /* ----------------------------------------
+    * Modelling, Component/Assembly Modules
+    * ------------------------------------- */
+
+    /** Sub-component 01 */
+    const subcomponent1 = (modelProps) => {
+        const {
+            metadata,
+            opts,
+            dims,
+            points,
+        } = modelProps
+
+        return sphere()
+    }
+
+    /** Sub-component 02 */
+    const subcomponent2 = (modelProps) => {
+        const {
+            metadata,
+            opts,
+            dims,
+            points,
+        } = modelProps
+
+        return cube()
+    }
+
+    /* ----------------------------------------
+     * Complete Assembly
+     * ------------------------------------- */
+
+    /** Final Assembly */
+    const finalAssembly = (modelProps) => {
+        let subComp1 = subcomponent1(modelProps)
+        let subComp2 = subcomponent2(modelProps)
+
+        return union(
+            subComp1,
+            subComp2,
+        )
+    }
 
     /**
      * New Model
@@ -254,49 +296,6 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
         const defaults = newModelNameDefaults()
         const initOpts = newModelNameOpts(opts)
         const modelProperties = newModelNameProps(initOpts)
-
-        /* ----------------------------------------
-         * Modelling, Component/Assembly Modules
-         * ------------------------------------- */
-
-        /** Sub-component 01 */
-        const subcomponent1 = (modelProps) => {
-            const {
-                metadata,
-                opts,
-                dims,
-                points,
-            } = modelProps
-
-            return sphere()
-        }
-
-        /** Sub-component 02 */
-        const subcomponent2 = (modelProps) => {
-            const {
-                metadata,
-                opts,
-                dims,
-                points,
-            } = modelProps
-
-            return cube()
-        }
-
-        /* ----------------------------------------
-         * Complete Assembly
-         * ------------------------------------- */
-
-        /** Final Assembly */
-        const finalAssembly = (modelProps) => {
-            let subComp1 = subcomponent1(modelProps)
-            let subComp2 = subcomponent2(modelProps)
-
-            return union(
-                subComp1,
-                subComp2,
-            )
-        }
 
         /* ----------------------------------------
          * Outputs
