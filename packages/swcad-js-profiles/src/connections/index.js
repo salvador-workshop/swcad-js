@@ -513,6 +513,115 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
+     * Generate right-angle tab connectors
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof profiles.connections
+     * @since 0.14.11
+     */
+    const rightAngleTab = (opts) => {
+        const defaults = modelDefaults()
+        const initOpts = modelOpts(opts)
+        const modelProperties = modelProps(initOpts)
+
+        const {
+            width,
+            depth,
+            fitGap,
+            interfaceMargin,
+        } = modelProperties.dims
+
+        const {
+            sampleThickness
+        } = modelProperties.constants
+
+        const {
+            centrePt
+        } = modelProperties.points
+
+        const rAngTabWidth = width - (interfaceMargin[0] * 2)
+        const rAngTabLength = depth - (interfaceMargin[1] * 2)
+
+        // const tabEndSize = [
+        //     rAngTabLength,
+        //     rAngTabLength,
+        // ]
+
+        const widthCoords = [
+            interfaceMargin[0],
+            interfaceMargin[0] + rAngTabWidth,
+        ]
+        const lengthCoords = [
+            interfaceMargin[1],
+            interfaceMargin[1] + rAngTabLength,
+        ]
+
+        const baseProfilePanel = cuboid({
+            size: [width, depth, sampleThickness],
+            center: [centrePt[0], centrePt[1], 0]
+        })
+
+        const lowerPts = [
+            [0, lengthCoords[0]],
+            [widthCoords[0], lengthCoords[0]],
+            [widthCoords[1], lengthCoords[0]],
+            [width, lengthCoords[0]],
+        ]
+
+        const upperPts = [
+            [widthCoords[0], lengthCoords[1]],
+            [widthCoords[1], lengthCoords[1]],
+        ]
+
+        const allPts = [
+            lowerPts[0],
+            lowerPts[1],
+            ...upperPts,
+            lowerPts[2],
+            lowerPts[3],
+        ]
+
+        let rAngTabCutPoints = allPts.map(dtPt => {
+            return cylinder({
+                radius: fitGap / 2,
+                height: sampleThickness * 10,
+                center: [dtPt[0], dtPt[1], 0],
+            })
+        })
+
+        const rAngTabCut = hullChain(rAngTabCutPoints)
+
+        const cutPanel = subtract(
+            baseProfilePanel,
+            rAngTabCut
+        )
+
+        const cutParts = scission(cutPanel)
+        const dTailProfiles = [
+            position.ctr(cutParts[1]),
+            position.ctr(cutParts[0]),
+        ]
+
+        const rAngTabProfiles = [
+            project({}, dTailProfiles[0]),
+            project({}, dTailProfiles[1]),
+        ]
+
+        const mainModel = [
+            rAngTabProfiles[1],
+            rAngTabProfiles[0],
+        ]
+
+        const modelParts = {
+            male: rAngTabProfiles[1],
+            female: rAngTabProfiles[0],
+            cut: rAngTabCut,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
      * Generate polygon connectors
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
@@ -1032,17 +1141,111 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         return [mainModel, modelParts, modelProperties]
     }
 
+    /**
+     * Generate right-angle tab row connectors
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof profiles.connections
+     * @since 0.14.11
+     */
+    const rightAngleTabRow = (opts) => {
+        const defaults = modelDefaults()
+        const initOpts = modelOpts(opts)
+        const modelProperties = modelProps(initOpts)
+
+        const {
+            numConnectors
+        } = modelProperties.opts
+
+        const {
+            width,
+            depth,
+            fitGap,
+            interfaceMargin,
+        } = modelProperties.dims
+
+        const {
+            centrePt
+        } = modelProperties.points
+
+        const {
+            sampleThickness
+        } = modelProperties.constants
+
+        ////////
+
+        const numMargins = numConnectors + 1
+
+        const totalConnectionWidths = width - (interfaceMargin[0] * numMargins)
+        const connectionWidth = totalConnectionWidths / numConnectors
+        const connectionUnitWidth = 2 * interfaceMargin[0] + connectionWidth
+
+        const rAngTabCutOpts = modelOpts({
+            ...opts,
+            size: [connectionUnitWidth, depth]
+        })
+
+        const rAngTabCutData = rightAngleTab(rAngTabCutOpts)
+        const rAngTabCutBase = rAngTabCutData[1].cut
+
+        const baseProfilePanel = cuboid({
+            size: [width, depth, sampleThickness],
+            center: [centrePt[0], centrePt[1], 0]
+        })
+        let rAngTabRowCut = rAngTabCutBase
+
+        const translateDistBase = interfaceMargin[0] + connectionWidth
+        for (let idx = 1; idx < numConnectors; idx++) {
+            const translateDist = translateDistBase * idx
+            rAngTabRowCut = union(
+                rAngTabRowCut,
+                translate([translateDist, 0, 0], rAngTabCutBase)
+            )
+        }
+
+        const cutPanel = subtract(
+            baseProfilePanel,
+            rAngTabRowCut
+        )
+        const cutParts = scission(cutPanel)
+        const rtProfiles = [
+            position.ctr(cutParts[1]),
+            position.ctr(cutParts[0]),
+        ]
+        const rAngTabProfiles = [
+            project({}, rtProfiles[0]),
+            project({}, rtProfiles[1]),
+        ]
+
+        ////////
+
+        const mainModel = [
+            rAngTabProfiles[0],
+            rAngTabProfiles[1],
+        ]
+
+        const modelParts = {
+            male: rAngTabProfiles[0],
+            female: rAngTabProfiles[1],
+            cut: rAngTabRowCut,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
     return {
         defaults: modelDefaults,
         props: modelProps,
         dovetail,
         tab,
+        rightAngleTab,
         polygon,
         ellipse,
         pegboard,
         boltCircle,
         dovetailRow,
         tabRow,
+        rightAngleTabRow,
     }
 }
 
