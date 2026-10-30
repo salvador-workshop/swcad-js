@@ -1,0 +1,26 @@
+{
+  "name": "swcad-js-templates",
+  "version": "0.14.11",
+  "description": "swcad-js-templates",
+  "homepage": "",
+  "main": "src/index.js",
+  "scripts": {
+    "docs": "jsdoc src -r -d docs -c jsdoc.json --readme readme.md",
+    "test": "npx gulp"
+  },
+  "contributors": [
+    {
+      "name": "R. J. Salvador",
+      "url": "http://salvador-workshop.ca"
+    }
+  ],
+  "keywords": [
+    "openjscad",
+    "jscad"
+  ],
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "jsdoc": "^4.0.4"
+  }
+}

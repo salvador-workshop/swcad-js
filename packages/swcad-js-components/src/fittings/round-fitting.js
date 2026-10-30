@@ -45,8 +45,13 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         /** Specific value declarations */
         const defaultValues = {
             constants: {
-                ratioDiamToDoubleFittingMaxHt: 2.76,
-                ratioDiamToDoubleFittingDowelCtrsDist: 1.76,
+                ratioDiamToHolderHeight: 1.666667,
+                ratioDiamToChannelDepth: 0.866667,
+                ratioDiamToSideChannelWidth: 1,
+                ratioDiamToDowelDepth: 0.333333,
+                ratioDiamToDoubleFittingMaxHt: 2.973,
+                ratioDiamToDblFittingVertDowelCtrsDist: 1.973,
+                ratioDiamToDblFittingSideDowelCtrsDist: 1.798,
             },
             dims: {
                 dowelRadius: 3.25 / 2,
@@ -193,12 +198,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
             centre: defaults.vals.points.centre,
         }
 
-        const modelConstants = {
-            ratioDiamToHolderHeight: 1.666667,
-            ratioDiamToChannelDepth: 0.866667,
-            ratioDiamToSideChannelWidth: 1,
-            ratioDiamToDowelDepth: 0.333333,
-        }
+        const modelConstants = defaults.vals.constants
 
         const modelComponents = {}
 
