@@ -39,7 +39,7 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
      * Builds default values and opts for the model
      * @param {*} opts 
      * @returns default values and opts
-     * @memberof reinforcedRect
+     * @memberof profiles.reinforcements
      * @access private
      */
     const reinforcedRectDefaults = () => {
@@ -98,7 +98,7 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
      * Initializes options with user input
      * @param {*} opts 
      * @returns model properties
-     * @memberof reinforcedRect
+     * @memberof profiles.reinforcements
      * @access private
      */
     const reinforcedRectOpts = (opts) => {
@@ -140,7 +140,7 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
      * Builds model properties from the given opts
      * @param {*} opts 
      * @returns model properties
-     * @memberof reinforcedRect
+     * @memberof profiles.reinforcements
      * @access private
      */
     const reinforcedRectProps = (opts) => {
@@ -280,7 +280,7 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
      * Reinforced rectangle
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof profiles.shapes.rectangle
+     * @memberof profiles.reinforcements
      */
     const reinforcedRect = (opts) => {
         const defaults = reinforcedRectDefaults()

@@ -1,6 +1,12 @@
 const roundFittingModule = require('./round-fitting')
 const rectangularFittingModule = require('./rectangular-fitting')
 
+/**
+ * ...
+ * @memberof components
+ * @namespace fittings
+ */
+
 const fittingsInit = ({ jscad, swcadJs }) => {
     const roundFitting = roundFittingModule.init({ jscad, swcadJs })
     const rectangularFitting = rectangularFittingModule.init({ jscad, swcadJs })

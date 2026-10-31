@@ -1,5 +1,11 @@
 "use strict"
 
+/**
+ * ...
+ * @memberof profiles
+ * @namespace boxCurve
+ */
+
 const boxCurveInit = ({ jscad, swcadJs }) => {
     const {
         ellipse,
@@ -31,7 +37,7 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
      * Builds default values and opts for the model
      * @param {*} opts 
      * @returns default values and opts
-     * @memberof boxCurve
+     * @memberof profiles.boxCurve
      * @access private
      */
     const boxCurveDefaults = () => {
@@ -87,7 +93,7 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
      * Initializes options with user input
      * @param {*} opts 
      * @returns model properties
-     * @memberof boxCurve
+     * @memberof profiles.boxCurve
      * @access private
      */
     const boxCurveOpts = (opts) => {
@@ -128,7 +134,7 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
      * Builds model properties from the given opts
      * @param {*} opts 
      * @returns model properties
-     * @memberof boxCurve
+     * @memberof profiles.boxCurve
      * @access private
      */
     const boxCurveProps = (opts) => {
@@ -240,7 +246,7 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
      * New Model 1
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof newModelParent
+     * @memberof profiles.boxCurve
      */
     const boxCurveQuarter = (opts) => {
         const defaults = boxCurveDefaults()
@@ -273,7 +279,7 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
      * New Model 2
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof newModelParent
+     * @memberof profiles.boxCurve
      */
     const boxCurveHalf = (opts) => {
         const defaults = boxCurveDefaults()
