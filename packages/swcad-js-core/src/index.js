@@ -4,7 +4,6 @@ const coreInit = ({ jscad }) => {
 
     /**
      * First step to building the library
-     * @since 0.11.1
      * */
     const swcadJsCore = {
         data: require('swcad-js-data').init({ jscad }),
@@ -20,7 +19,6 @@ const coreInit = ({ jscad }) => {
 
     /**
      * Intermediate step to building the library
-     * @since 0.11.1
      * */
     let swcadJsAssembly = swcadJsCore
 
@@ -48,7 +46,6 @@ const coreInit = ({ jscad }) => {
 
     /**
      * User-facing library
-     * @since 0.11.1
      * */
     const swcadJs = {
         data: swcadJsAssembly.data,

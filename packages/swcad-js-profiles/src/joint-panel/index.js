@@ -5,7 +5,6 @@
  * @author R. J. Salvador
  * @namespace jointPanel
  * @memberof profiles
- * @since 0.13.5
  */
 
 const jointPanelInit = ({ jscad, swcadJs }) => {
@@ -274,7 +273,6 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.jointPanel
-     * @since 0.13.5
      */
 
     const oneJointRectPanel = (opts) => {
@@ -367,7 +365,6 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.jointPanel
-     * @since 0.13.5
      */
 
     const twoJointRectPanel = (opts) => {

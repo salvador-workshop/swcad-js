@@ -217,7 +217,6 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components
-     * @since 0.13.7
      */
     const reinforcedRectPanel = (opts) => {
         const defaults = reinforcedRectPanelDefaults()

@@ -22,7 +22,6 @@ const mouldBuilder = ({ jscad, swLib }) => {
    * @param {string} opts.alignment - where to align when profile size differs from
    *     base cuboid ('top' | 'middle' | 'bottom'). Defaults to 'middle'
    * @param {geom2.Geom2} geomProfile - 2D positive cross-section profile
-   * @since 0.12.0
    */
   const cuboidMouldingOneEdge = (opts, geomProfile) => {
     const profileBbox = measureBoundingBox(geomProfile);
@@ -66,7 +65,6 @@ const mouldBuilder = ({ jscad, swLib }) => {
    * @param {number[]} opts.size - size (x, y, z)
    * @param {'x' | 'y'} opts.axis - string to specify which axis to place the profile on. Defaults to 'x'
    * @param {geom2.Geom2} geomProfile - 2D positive cross-section profile
-   * @since 0.13.3
    */
 
   const cuboidMouldingTwoEdges = (opts, geomProfile) => {
@@ -111,7 +109,6 @@ const mouldBuilder = ({ jscad, swLib }) => {
    * @param {Object} opts
    * @param {number[]} opts.size - size (x, y, z)
    * @param {geom2.Geom2} geomProfile - 2D positive cross-section profile
-   * @since 0.12.0
    */
   const cuboidMoulding = (opts, geomProfile) => {
     const xBlock = cuboidMouldingTwoEdges({
@@ -136,7 +133,6 @@ const mouldBuilder = ({ jscad, swLib }) => {
    * @param {number} opts.height - Cylinder height.
    * @param {number} opts.segments - Cylinder height.
    * @param {geom2.Geom2} geomProfile - 2D positive cross-section profile
-   * @since 0.12.0
    */
   const circularMoulding = (opts, geomProfile) => {
     const profileBbox = measureBoundingBox(geomProfile);
