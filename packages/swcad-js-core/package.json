@@ -1,6 +1,6 @@
 {
   "name": "swcad-js-core",
-  "version": "0.14.12-alpha.1",
+  "version": "0.14.12",
   "description": "swcad-js-core",
   "homepage": "",
   "repository": {
@@ -25,11 +25,9 @@
   "license": "MIT",
   "dependencies": {
     "swcad-js-calcs": "*",
-    "swcad-js-component-spec": "*",
     "swcad-js-components": "*",
     "swcad-js-data": "*",
     "swcad-js-models": "*",
-    "swcad-js-profile-spec": "*",
     "swcad-js-profiles": "*",
     "swcad-js-utils": "*"
   },

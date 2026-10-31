@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: swcad-js-templates/src/swcad-js/swcad-js-module-pack.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: swcad-js-templates/src/swcad-js/swcad-js-module-pack.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict"
+
+const newModelNameInit = ({ jscad, swcadJs }) => {
+    const {
+        cube,
+        cylinder,
+        sphere,
+        cylinderElliptic,
+        circle,
+        cuboid,
+        roundedCuboid,
+        roundedCylinder,
+        roundedRectangle,
+        rectangle,
+        triangle,
+    } = jscad.primitives
+
+    const {
+        align,
+        translate,
+        rotate,
+        mirror
+    } = jscad.transforms
+
+    const {
+        intersect,
+        subtract,
+        union,
+        scission
+    } = jscad.booleans
+
+    const {
+        extrudeLinear,
+        extrudeRotate,
+        project
+    } = jscad.extrusions
+
+    const {
+        measureDimensions,
+        measureBoundingBox,
+        measureVolume
+    } = jscad.measurements
+
+    const {
+        hull,
+        hullChain
+    } = jscad.hulls
+
+    const { vectorText } = jscad.text
+    const { toOutlines } = jscad.geometries.geom2
+    const { TAU } = jscad.maths.constants
+    const { colorize } = jscad.colors
+
+    const {
+        standards,
+    } = swcadJs.data
+
+    const {
+        math,
+    } = swcadJs.calcs
+
+
+    //==============================================================================
+
+
+    /**
+     * Builds default values and opts for the model
+     * @param {*} opts 
+     * @returns default values and opts
+     * @memberof newModelName
+     * @access private
+     */
+    const newModelNameDefaults = () => {
+        /** Specific value declarations */
+        const defaultValues = {
+            dims: {
+                size: [
+                    math.inchesToMm(2),
+                    math.inchesToMm(4),
+                    math.inchesToMm(1),
+                ],
+            },
+            points: {
+                centrePt: [0, 0, 0]
+            },
+            types: {
+                default: standards.types.TYPE_DEFAULT,
+                alt: standards.types.TYPE_ALT,
+            },
+        }
+
+        /** Options used by SW models */
+        const standardOpts = {
+            type: defaultValues.types.default.id,
+            scale: 1,
+            interfaceThickness: standards.INTERFACE_THICKNESS,
+            fitGap: standards.FIT_GAP,
+        }
+
+        /** Computed values for option defaults */
+        const defaultOpts = {
+            ...standardOpts,
+            size: defaultValues.dims.size,
+        }
+
+        return {
+            opts: defaultOpts,
+            vals: defaultValues,
+        }
+    }
+
+
+    //------------------------------------------------------------------------------
+
+
+    /**
+     * Initializes options with user input
+     * @param {*} opts 
+     * @returns model properties
+     * @memberof newModelName
+     * @access private
+     */
+    const newModelNameOpts = (opts) => {
+        const defaults = newModelNameDefaults()
+        console.log('newModelNameOpts() -- opts', opts)
+
+        // User options
+        const {
+            size = defaults.opts.size,
+            type = defaults.opts.type,
+            scale = defaults.opts.scale,
+            interfaceThickness = defaults.opts.interfaceThickness,
+            fitGap = defaults.opts.fitGap,
+        } = opts
+
+        const stdOpts = {
+            type,
+            scale,
+            interfaceThickness,
+            fitGap,
+        }
+
+        const initOpts = {
+            size,
+            ...stdOpts,
+        }
+
+        console.log('newModelNameOpts() -- initOpts', initOpts)
+
+        return initOpts
+    }
+
+
+    //------------------------------------------------------------------------------
+
+
+    /**
+     * Builds model properties from the given opts
+     * @param {*} opts 
+     * @returns model properties
+     * @memberof newModelName
+     * @access private
+     */
+    const newModelNameProps = (opts) => {
+        const defaults = newModelNameDefaults()
+        console.log('newModelNameProps() -- opts', opts)
+
+        const {
+            size,
+            type,
+            scale,
+            interfaceThickness,
+            fitGap,
+        } = opts
+
+        /* ----------------------------------------
+        * Prop calculations
+        * ------------------------------------- */
+
+        const width = size[0]
+        const depth = size[1]
+        const height = size[2]
+
+        /* ----------------------------------------
+        * Preparing Model Properties, Dimensions
+        * ------------------------------------- */
+
+        /** Constant values for model */
+        const modelConstants = {
+        }
+
+        /** Derived user options for the model */
+        const modelOpts = {
+            type,
+            scale,
+        }
+
+        /** Various dimensions for model */
+        const modelDims = {
+            size,
+            width,
+            depth,
+            height,
+            interfaceThickness,
+            fitGap,
+        }
+
+        /** Various key points for model */
+        const modelPoints = {
+            centrePt: defaults.vals.points.centrePt,
+        }
+
+        /** Components used by model */
+        const modelComponents = {
+        }
+
+        /* ---------------------------------------------
+        *  Model Properties
+        * ----------------------------------------------
+        * Properties accessible to all model functions.
+        * --------------------------------------------- */
+
+        const modelProperties = {
+            metadata: {
+                id: '9999',
+                name: 'New Model',
+                project: 'New Project',
+                author: 'Somebody Somewhere',
+                organization: 'Salvador Workshop',
+                client: null,
+            },
+            constants: modelConstants,
+            opts: modelOpts,
+            dims: modelDims,
+            points: modelPoints,
+            components: modelComponents,
+        }
+
+        console.log('newModelNameProps() -- modelProperties', modelProperties)
+
+        return modelProperties
+    }
+
+
+    //------------------------------------------------------------------------------
+
+    /* ----------------------------------------
+    * MODELLING FUNCTIONS
+    * ------------------------------------- */
+
+    /**
+     * New Model 1
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
+     * @memberof newModelParent
+     */
+    const model1 = (opts) => {
+        const defaults = newModelNameDefaults()
+        const initOpts = newModelNameOpts(opts)
+        const modelProperties = newModelNameProps(initOpts)
+
+        const mainModel = cuboid()
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
+     * New Model 2
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
+     * @memberof newModelParent
+     */
+    const model2 = (opts) => {
+        const defaults = newModelNameDefaults()
+        const initOpts = newModelNameOpts(opts)
+        const modelProperties = newModelNameProps(initOpts)
+
+        const mainModel = cuboid()
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
+     * ...
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
+     * @memberof newModelParent
+     */
+    const model3 = (opts) => {
+        const defaults = newModelNameDefaults()
+        const initOpts = newModelNameOpts(opts)
+        const modelProperties = newModelNameProps(initOpts)
+
+        const mainModel = cuboid()
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
+     * ...
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
+     * @memberof newModelParent
+     */
+    const model4 = (opts) => {
+        const defaults = newModelNameDefaults()
+        const initOpts = newModelNameOpts(opts)
+        const modelProperties = newModelNameProps(initOpts)
+
+        const mainModel = cuboid()
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
+     * ...
+     * @param {*} opts 
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
+     * @memberof newModelParent
+     */
+    const model5 = (opts) => {
+        const defaults = newModelNameDefaults()
+        const initOpts = newModelNameOpts(opts)
+        const modelProperties = newModelNameProps(initOpts)
+
+        const mainModel = cuboid()
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    return {
+        defaults: newModelNameDefaults,
+        props: newModelNameProps,
+        model1,
+        model2,
+        model3,
+        model4,
+        model5,
+    }
+}
+
+module.exports = {
+    init: newModelNameInit
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.position.rectangle.html">calcs.position.rectangle</a></li><li><a href="calcs.position.triangle.html">calcs.position.triangle</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.boxSupports.html">components.boxSupports</a></li><li><a href="components.fittings.html">components.fittings</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.moulding.html">components.moulding</a></li><li><a href="components.reinforcements.html">components.reinforcements</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.functions.html">data.functions</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="data.standards.gridfinity.html">data.standards.gridfinity</a></li><li><a href="data.standards.params.html">data.standards.params</a></li><li><a href="data.standards.pegboard.html">data.standards.pegboard</a></li><li><a href="data.standards.types.html">data.standards.types</a></li><li><a href="models.html">models</a></li><li><a href="models.arch.html">models.arch</a></li><li><a href="models.foil.html">models.foil</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.html">profiles.beadsBits</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.boxCurve.html">profiles.boxCurve</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.curve.html">profiles.curve</a></li><li><a href="profiles.jointPanel.html">profiles.jointPanel</a></li><li><a href="profiles.reinforcements.html">profiles.reinforcements</a></li><li><a href="profiles.shapes.html">profiles.shapes</a></li><li><a href="profiles.shapes.ellipse.html">profiles.shapes.ellipse</a></li><li><a href="profiles.shapes.rectangle.html">profiles.shapes.rectangle</a></li><li><a href="profiles.shapes.triangle.html">profiles.shapes.triangle</a></li><li><a href="profiles.structure.html">profiles.structure</a></li><li><a href="profiles.structure.arch.html">profiles.structure.arch</a></li><li><a href="profiles.structure.foil.html">profiles.structure.foil</a></li><li><a href="profiles.structure.mesh.html">profiles.structure.mesh</a></li><li><a href="profiles.text.html">profiles.text</a></li><li><a href="profiles.trim.html">profiles.trim</a></li><li><a href="utils.html">utils</a></li><li><a href="utils.colors.html">utils.colors</a></li><li><a href="utils.layout.html">utils.layout</a></li><li><a href="utils.palette.html">utils.palette</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sat Oct 31 2026 16:55:09 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

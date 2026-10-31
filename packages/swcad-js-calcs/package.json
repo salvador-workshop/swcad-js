@@ -1,6 +1,6 @@
 {
   "name": "swcad-js-calcs",
-  "version": "0.14.12-alpha.1",
+  "version": "0.14.12",
   "description": "swcad-js-calcs",
   "homepage": "",
   "main": "src/index.js",
