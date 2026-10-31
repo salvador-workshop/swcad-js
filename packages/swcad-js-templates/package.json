@@ -1,6 +1,6 @@
 {
   "name": "swcad-js-templates",
-  "version": "0.14.11",
+  "version": "0.14.12-alpha.1",
   "description": "swcad-js-templates",
   "homepage": "",
   "main": "src/index.js",
