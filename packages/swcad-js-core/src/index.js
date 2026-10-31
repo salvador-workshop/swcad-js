@@ -28,14 +28,8 @@ const coreInit = ({ jscad }) => {
     const assemblyProfiles = require('swcad-js-profiles').init({ jscad, swcadJs: swcadJsAssembly })
     swcadJsAssembly.profiles = assemblyProfiles
 
-    const assemblyProfileSpec = require('swcad-js-profile-spec').init({ jscad, swcadJs: swcadJsAssembly })
-    swcadJsAssembly.profileSpec = assemblyProfileSpec
-
     const assemblyComponents = require('swcad-js-components').init({ jscad, swcadJs: swcadJsAssembly })
     swcadJsAssembly.components = assemblyComponents
-
-    const assemblyComponentSpec = require('swcad-js-component-spec').init({ jscad, swcadJs: swcadJsAssembly })
-    swcadJsAssembly.componentSpec = assemblyComponentSpec
 
     const assemblyUtils = require('swcad-js-utils').init({ jscad, swcadJs: swcadJsAssembly })
     swcadJsAssembly.utils = assemblyUtils
@@ -51,9 +45,7 @@ const coreInit = ({ jscad }) => {
         data: swcadJsAssembly.data,
         calcs: swcadJsAssembly.calcs,
         profiles: swcadJsAssembly.profiles,
-        profileSpec: swcadJsAssembly.profileSpec,
         components: swcadJsAssembly.components,
-        componentSpec: swcadJsAssembly.componentSpec,
         utils: swcadJsAssembly.utils,
         models: swcadJsAssembly.models,
     }

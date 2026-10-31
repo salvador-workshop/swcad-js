@@ -1,11 +1,5 @@
 "use strict"
 
-const craftStd = require('./std-crafts')
-const lumberStd = require('./std-lumber')
-const masonryStd = require('./std-masonry')
-const paperStd = require('./std-paper')
-const tileStd = require('./std-tiles')
-
 const inchesToMm = (numIn) => numIn * 25.4
 
 /**
@@ -202,11 +196,6 @@ const standards = ({ jscad }) => {
         gridfinity,
         types,
         params,
-        crafts: craftStd.init({ jscad }),
-        lumber: lumberStd.init({ jscad }),
-        masonry: masonryStd.init({ jscad }),
-        paper: paperStd.init({ jscad }),
-        tiles: tileStd.init({ jscad }),
     }
 }
 
