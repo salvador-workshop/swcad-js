@@ -68,7 +68,7 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
      * Builds default values and opts for the model
      * @param {*} opts 
      * @returns default values and opts
-     * @memberof rectangularFitting
+     * @memberof components.fittings
      * @access private
      */
     const rectangularFittingDefaults = () => {
@@ -76,8 +76,8 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
         const defaultValues = {
             dims: {
                 subjectSize: [
-                    standards.crafts.POPSICLE_STICK_WIDTH,
-                    standards.crafts.POPSICLE_STICK_THICKNESS,
+                    10,
+                    2,
                 ],
                 length: math.inchesToMm(1 / 4),
             },
@@ -119,7 +119,7 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
      * Initializes options with user input
      * @param {*} opts 
      * @returns model properties
-     * @memberof rectangularFitting
+     * @memberof components.fittings
      * @access private
      */
     const rectangularFittingOpts = (opts) => {
@@ -162,7 +162,7 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
      * Builds model properties from the given opts
      * @param {*} opts 
      * @returns model properties
-     * @memberof rectangularFitting
+     * @memberof components.fittings
      * @access private
      */
     const rectangularFittingProps = (opts) => {
@@ -266,7 +266,7 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
      * ...
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof newModelParent
+     * @memberof components.fittings
      */
     const rectFittingCutProfile = (opts) => {
         const defaults = rectangularFittingDefaults()
@@ -295,7 +295,7 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
      * New Model 1
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof newModelParent
+     * @memberof components.fittings
      */
     const rectangularFitting = (opts) => {
         const defaults = rectangularFittingDefaults()

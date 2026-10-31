@@ -25,7 +25,7 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
      * Builds default values and opts for the model
      * @param {*} opts 
      * @returns default values and opts
-     * @memberof components.reinforcedRectPanel
+     * @memberof components.reinforcements
      * @access private
      */
     const reinforcedRectPanelDefaults = () => {
@@ -81,7 +81,7 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
      * Initializes options with user input
      * @param {*} opts 
      * @returns model properties
-     * @memberof components.reinforcedRectPanel
+     * @memberof components.reinforcements
      * @access private
      */
     const reinforcedRectPanelOpts = (opts) => {
@@ -123,7 +123,7 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
      * Builds model properties from the given opts
      * @param {*} opts 
      * @returns model properties
-     * @memberof components.reinforcedRectPanel
+     * @memberof components.reinforcements
      * @access private
      */
     const reinforcedRectPanelProps = (opts) => {
@@ -216,8 +216,7 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
      * ...
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof components
-     * @since 0.13.7
+     * @memberof components.reinforcements
      */
     const reinforcedRectPanel = (opts) => {
         const defaults = reinforcedRectPanelDefaults()

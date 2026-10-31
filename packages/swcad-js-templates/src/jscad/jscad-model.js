@@ -336,6 +336,7 @@ const inner = intersect(
 /**
  * Main function to be rendered by JSCAD
  * @returns `geom3` or `geom3[]`
+ * @ignore
  */
 function main() {
     const spaceUnit = inchesToMm(3.5)

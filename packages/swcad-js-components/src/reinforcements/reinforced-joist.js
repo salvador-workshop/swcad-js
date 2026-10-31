@@ -36,9 +36,9 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
      * Builds default values and opts for the model
      * @param {*} opts 
      * @returns default values and opts
-     * @memberof reinforcedJoist
+     * @memberof components.reinforcements
      */
-    const modelDefaults = () => {
+    const reinforcedJoistDefaults = () => {
         /** Specific value declarations */
         const defaultValues = {
             dims: {
@@ -97,10 +97,10 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
      * Builds model properties from the given opts
      * @param {*} opts 
      * @returns model properties
-     * @memberof reinforcedJoist
+     * @memberof components.reinforcements
      */
-    const modelProps = (opts) => {
-        const defaults = modelDefaults()
+    const reinforcedJoistProps = (opts) => {
+        const defaults = reinforcedJoistDefaults()
 
         const {
             type,
@@ -222,11 +222,11 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
       * @param {number} opts.reinforcementLevel - Level of reinforcement (1: basic, 2: moderate, 3: high)
       * @param {number} opts.unitLength - Length of each unit section for webbing
       * @param {number} opts.dowelHolderLength - Length of the dowel holder sections
-     * @memberof components
+     * @memberof components.reinforcements
      * @author R. J. Salvador (Salvador Workshop)
      */
     const reinforcedJoist = (opts) => {
-        const defaults = modelDefaults()
+        const defaults = reinforcedJoistDefaults()
 
         // User options
         const {
@@ -237,8 +237,6 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
             logMode = defaults.opts.logMode,
             width = defaults.opts.width,
             length = defaults.opts.length,
-            // // dowelRadius = defaults.opts.dowelRadius,
-            // // dovetailOpt = defaults.opts.dovetailOpt,
             reinforcementLevel = defaults.opts.reinforcementLevel,
             unitLength = defaults.opts.unitLength,
             dowelHolderLength = defaults.opts.dowelHolderLength,
@@ -252,14 +250,13 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
             logMode,
             width,
             length,
-            // dovetailOpt,
             reinforcementLevel,
             unitLength,
             dowelHolderLength,
         }
 
 
-        const modelProperties = modelProps(inOpts)
+        const modelProperties = reinforcedJoistProps(inOpts)
 
         /* ----------------------------------------
          * Modelling, Component/Assembly Modules

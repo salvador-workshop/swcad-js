@@ -8,7 +8,7 @@ const reinforcementModule = require('./reinforcement');
  * @param {number[]} points - x and y coordinates
  * @param {string} mode - '3d' (default) or '2d'
  * @memberof calcs.geometry.points
- * @returns central point (avg.) between the given points
+ * @returns {number[]} central point (avg.) between the given points
  */
 const ptCentroid = (points, mode = '3d') => {
     const min = [Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER]
@@ -39,9 +39,10 @@ const ptCentroid = (points, mode = '3d') => {
 
 /**
  * Calculates co-ordinate difference between two points
- * @param {[number]} startPt - starting 2D coordinates
- * @param {[number]} endPt - ending 2D coordinates
- * @returns {[number]} 2D coordinates of diff
+ * @param {number[]} startPt - starting 2D coordinates
+ * @param {number[]} endPt - ending 2D coordinates
+ * @returns {number[]} 2D coordinates of diff
+ * @memberof calcs.geometry
  */
 const coordDiffBetweenPoints = (startPt, endPt) => {
     return [
@@ -52,9 +53,10 @@ const coordDiffBetweenPoints = (startPt, endPt) => {
 
 /**
  * Calculates distance between two co-ordinate points
- * @param {[number]} startPt - starting 2D coordinates
- * @param {[number]} endPt - ending 2D coordinates
+ * @param {number[]} startPt - starting 2D coordinates
+ * @param {number[]} endPt - ending 2D coordinates
  * @returns {number} distance between points
+ * @memberof calcs.geometry
  */
 const distanceBetweenPoints = (startPt, endPt) => {
     const coordDiffs = coordDiffBetweenPoints(startPt, endPt)
@@ -64,9 +66,10 @@ const distanceBetweenPoints = (startPt, endPt) => {
 
 /**
  * Calculates midpoint between two co-ordinate points
- * @param {[number]} startPt - starting 2D coordinates
- * @param {[number]} endPt - ending 2D coordinates
- * @returns {[number]} midpoint coordinates
+ * @param {number[]} startPt - starting 2D coordinates
+ * @param {number[]} endPt - ending 2D coordinates
+ * @returns {number[]} midpoint coordinates
+ * @memberof calcs.geometry
  */
 const midpointBetweenPoints = (startPt, endPt) => {
     const coordDiffs = coordDiffBetweenPoints(startPt, endPt)
@@ -93,7 +96,7 @@ const geometryInit = ({ jscad, swcadJs }) => {
      * @param {number[]} startPt - x and y coordinate 
      * @param {number[]} endPt - x and y coordinate 
      * @param {string} mode - 'rad' (default) or 'deg'F
-     * @returns angle of a two-point line.
+     * @returns {number} angle of a two-point line.
      */
     const angleOfTwoPtLine = (startPt, endPt, mode = 'rad') => {
         const coordDiffs = coordDiffBetweenPoints(startPt, endPt)
@@ -108,7 +111,7 @@ const geometryInit = ({ jscad, swcadJs }) => {
      * @memberof calcs.geometry
      * @param {number} angleRad - angle (radians)
      * @param {number} dist - distance
-     * @returns x and y coord of calculated point
+     * @returns {number[]} x and y coord of calculated point
      */
     const pointFromAngleAndDist = (angleRad, dist) => {
         const x = dist * Math.cos(angleRad)
@@ -118,8 +121,8 @@ const geometryInit = ({ jscad, swcadJs }) => {
 
     /**
      * Gets line data from outline points
-     * @param {*} outlinePts 
-     * @returns array of line details
+     * @param {number[][]} outlinePts 
+     * @returns {Object[]} array of line details
      * @memberof calcs.geometry
      * @private
      */
@@ -154,7 +157,7 @@ const geometryInit = ({ jscad, swcadJs }) => {
      * @param {number} y - maximum Y bound
      * @param {number} distance - distance between points
      * @param {boolean} centrePoints - if true, points will be centred on origin. If false, origin will be at a corner.
-     * @returns set of x and y coordinates for points
+     * @returns {Object[]} set of x and y coordinates for points
      */
 
     const getTriangularPtsInArea = (x, y, distance, centrePoints = true) => {
@@ -208,7 +211,7 @@ const geometryInit = ({ jscad, swcadJs }) => {
      * @param {number} y - maximum Y bound
      * @param {number} distance - distance between points
      * @param {boolean} centrePoints - if true, points will be centred on origin. If false, origin will be at a corner.
-     * @returns set of x and y coordinates for points
+     * @returns {Object[]} set of x and y coordinates for points
      */
     const getSquarePtsInArea = (x, y, distance, centrePoints = true) => {
         const halfDist = distance / 2;

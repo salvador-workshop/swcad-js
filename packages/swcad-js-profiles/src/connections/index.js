@@ -5,7 +5,6 @@
  * @author R. J. Salvador
  * @namespace connections
  * @memberof profiles
- * @since 0.12.5
  */
 
 const connectionProfilesInit = ({ jscad, swcadJs }) => {
@@ -299,7 +298,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
-     * @since 0.12.5
      */
     const dovetail = (opts) => {
         const defaults = modelDefaults()
@@ -408,7 +406,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
-     * @since 0.12.5
      */
     const tab = (opts) => {
         const defaults = modelDefaults()
@@ -517,7 +514,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
-     * @since 0.14.11
      */
     const rightAngleTab = (opts) => {
         const defaults = modelDefaults()
@@ -626,7 +622,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
-     * @since 0.12.5
      */
     const polygon = (opts) => {
         const defaults = modelDefaults()
@@ -701,7 +696,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
-     * @since 0.12.6
      */
     const ellipse = (opts) => {
         const defaults = modelDefaults()
@@ -805,7 +799,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
-     * @since 0.12.5
      */
     const pegboard = (opts) => {
         const defaults = modelDefaults()
@@ -893,7 +886,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
-     * @since 0.12.6
      */
     const boltCircle = (opts) => {
         const defaults = modelDefaults()
@@ -962,7 +954,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
-     * @since 0.13.4
      */
     const dovetailRow = (opts) => {
         const defaults = modelDefaults()
@@ -1054,7 +1045,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
-     * @since 0.13.4
      */
     const tabRow = (opts) => {
         const defaults = modelDefaults()
@@ -1146,7 +1136,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
-     * @since 0.14.11
      */
     const rightAngleTabRow = (opts) => {
         const defaults = modelDefaults()

@@ -39,7 +39,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
      * Builds default values and opts for the model
      * @param {*} opts 
      * @returns default values and opts
-     * @memberof roundFitting
+     * @memberof components.fittings
      */
     const roundFittingDefaults = () => {
         /** Specific value declarations */
@@ -95,7 +95,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
      * Initializes options with user input
      * @param {*} opts 
      * @returns model properties
-     * @memberof roundFitting
+     * @memberof components.fittings
      */
     const roundFittingOpts = (opts) => {
         const defaults = roundFittingDefaults()
@@ -136,7 +136,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
      * Builds model properties from the given opts
      * @param {*} opts 
      * @returns model properties
-     * @memberof roundFitting
+     * @memberof components.fittings
      */
     const roundFittingProps = (opts) => {
         const defaults = roundFittingDefaults()
@@ -236,7 +236,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
      * ...
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof newModelParent
+     * @memberof components.fittings
      */
     const roundFittingCutProfile = (opts) => {
         const defaults = roundFittingDefaults()
@@ -259,7 +259,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
      * ...
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof newModelParent
+     * @memberof components.fittings
      */
     const invRoundFittingCutProfile = (opts) => {
         const defaults = roundFittingDefaults()
@@ -288,7 +288,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
      * Simple dowel fitting (round groove)
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof newModelParent
+     * @memberof components.fittings
      */
     const roundFitting = (opts) => {
         const defaults = roundFittingDefaults()
@@ -334,7 +334,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
      * Simple dowel fitting, inverted for 3D-printing from the bottom (triangular groove)
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof newModelParent
+     * @memberof components.fittings
      */
     const inverseRoundFitting = (opts) => {
         const defaults = roundFittingDefaults()
@@ -379,7 +379,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
      * Fitting that accomodates 2 primary dowels, plus space for 2 side dowels 
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof extModels
+     * @memberof components.fittings
      */
     const doubleRoundFitting = (opts) => {
         const defaults = roundFittingDefaults()
