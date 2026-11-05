@@ -4,7 +4,7 @@
  * Jointed panels
  * @author R. J. Salvador
  * @namespace jointPanel
- * @memberof profiles
+ * @memberof profiles.connections
  */
 
 const jointPanelInit = ({ jscad, swcadJs }) => {
@@ -272,7 +272,7 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
      * Generate one-joint rectangular panel
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof profiles.jointPanel
+     * @memberof profiles.connections.jointPanel
      */
 
     const oneJointRectPanel = (opts) => {
@@ -364,7 +364,7 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
      * Generate two-joint rectangular panel
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof profiles.jointPanel
+     * @memberof profiles.connections.jointPanel
      */
 
     const twoJointRectPanel = (opts) => {

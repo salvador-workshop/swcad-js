@@ -8,28 +8,23 @@ const reinforcementsModule = require('./reinforcements')
 const textModule = require('./text')
 
 const profilesInit = ({ jscad, swcadJs }) => {
-    const beadsBits = beadsBitsModule.init({ jscad, swcadJs })
+    const connections = connectionsModule.init({ jscad, swcadJs })
 
     let preLib = {
         ...swcadJs,
         profiles: {
-            beadsBits,
-        }
-    }
-
-    const connections = connectionsModule.init({ jscad, swcadJs: preLib })
-    preLib = {
-        ...swcadJs,
-        profiles: {
-            beadsBits,
             connections
         }
     }
 
+    const connectionsApi = {
+        ...connections,
+        jointPanel: jointPanelModule.init({ jscad, swcadJs: preLib })
+    }
+
     return {
-        beadsBits,
-        connections,
-        jointPanel: jointPanelModule.init({ jscad, swcadJs: preLib }),
+        beadsBits: beadsBitsModule.init({ jscad, preLib }),
+        connections: connectionsApi,
         mesh: meshModule.init({ jscad, swcadJs: preLib }),
         reinforcements: reinforcementsModule.init({ jscad, swcadJs: preLib }),
         text: textModule.init({ jscad, swcadJs: preLib }),

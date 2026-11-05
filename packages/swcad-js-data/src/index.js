@@ -1,10 +1,8 @@
 "use strict"
 
 const constants = require('./constants')
-const functions = require('./functions')
 const standards = require('./standards')
 const errors = require('./errors')
-const internals = require('./internals')
 
 const dataInit = ({ jscad }) => {
     /**
@@ -15,10 +13,8 @@ const dataInit = ({ jscad }) => {
 
     const data = {
         constants: constants,
-        functions: functions,
         standards: standards.init({ jscad }),
         errors: errors,
-        internals: internals.init({ jscad }),
     }
 
     return data
