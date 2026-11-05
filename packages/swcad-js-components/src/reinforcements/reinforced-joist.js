@@ -52,8 +52,8 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
                 centre: [0, 0, 0]
             },
             typeDetails: {
-                default: standards.types.TYPE_DEFAULT,
-                alt: standards.types.TYPE_ALT,
+                default: { id: 'default', desc: 'Default' },
+                alt: { id: 'alt', desc: 'Alternate' },
             },
             width: math.inchesToMm(1.125),
             length: math.inchesToMm(5.5),

@@ -1,12 +1,13 @@
 "use strict"
 
 /**
- * ...
- * @memberof profiles
- * @namespace boxCurve
+ * Box Supports
+ * @namespace boxSupport
+ * @memberof components.reinforcements
+ * @author R. J. Salvador (Salvador Workshop)
  */
 
-const boxCurveInit = ({ jscad, swcadJs }) => {
+const boxSupportInit = ({ jscad, swcadJs }) => {
     const {
         ellipse,
         rectangle,
@@ -20,14 +21,19 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
         subtract,
     } = jscad.booleans
 
+    const { extrudeLinear } = jscad.extrusions
+
     const {
         standards,
     } = swcadJs.data
 
     const {
         math,
-        position,
     } = swcadJs.calcs
+
+    const {
+        reinforcements,
+    } = swcadJs.profiles
 
 
     //==============================================================================
@@ -37,10 +43,10 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
      * Builds default values and opts for the model
      * @param {*} opts 
      * @returns default values and opts
-     * @memberof profiles.boxCurve
+     * @memberof components.reinforcements.boxSupport
      * @access private
      */
-    const boxCurveDefaults = () => {
+    const boxSupportDefaults = () => {
         /** Specific value declarations */
         const defaultValues = {
             dims: {
@@ -59,8 +65,8 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
                 centrePt: [0, 0, 0]
             },
             types: {
-                default: standards.types.TYPE_DEFAULT,
-                alt: standards.types.TYPE_ALT,
+                default: { id: 'default', desc: 'Default' },
+                alt: { id: 'alt', desc: 'Alternate' },
             },
         }
 
@@ -93,11 +99,11 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
      * Initializes options with user input
      * @param {*} opts 
      * @returns model properties
-     * @memberof profiles.boxCurve
+     * @memberof components.reinforcements.boxSupport
      * @access private
      */
-    const boxCurveOpts = (opts) => {
-        const defaults = boxCurveDefaults()
+    const boxSupportOpts = (opts) => {
+        const defaults = boxSupportDefaults()
 
         // User options
         const {
@@ -134,11 +140,11 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
      * Builds model properties from the given opts
      * @param {*} opts 
      * @returns model properties
-     * @memberof profiles.boxCurve
+     * @memberof components.reinforcements.boxSupport
      * @access private
      */
-    const boxCurveProps = (opts) => {
-        const defaults = boxCurveDefaults()
+    const boxSupportProps = (opts) => {
+        const defaults = boxSupportDefaults()
 
         const {
             size,
@@ -166,7 +172,7 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
             size[1] - marginDepth,
         ]
         const ellipseRadiusHalf = [
-            size[0] / 2 - marginWidth,
+            marginWidth * -2 + (size[0] / 2),
             size[1] - marginDepth,
         ]
 
@@ -244,29 +250,27 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
 
     /**
      * New Model 1
+     * @memberof components.reinforcements.boxSupport
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof profiles.boxCurve
      */
-    const boxCurveQuarter = (opts) => {
-        const defaults = boxCurveDefaults()
-        const initOpts = boxCurveOpts(opts)
-        const modelProperties = boxCurveProps(initOpts)
+    const boxSupportQuarter = (opts) => {
+        const defaults = boxSupportDefaults()
+        const initOpts = boxSupportOpts(opts)
+        const modelProperties = boxSupportProps(initOpts)
         const {
             size,
             margin,
-            ellipseRadiusQtr,
+            marginHeight,
         } = modelProperties.dims
 
-        const blank = rectangle({ size })
-        const cutaway = ellipse({ radius: ellipseRadiusQtr })
+        const boxCurvesQtrData = reinforcements.boxCurve.boxCurveQuarter({
+            size,
+            margin,
+        })
+        const boxCurvesQtrModel = boxCurvesQtrData[0]
 
-        const mainModel = subtract(
-            align({
-                modes: ['max', 'max', 'center'],
-            }, blank),
-            position.ctr(cutaway)
-        )
+        const mainModel = extrudeLinear({ height: marginHeight }, boxCurvesQtrModel)
 
         const modelParts = {
             mainModel,
@@ -277,29 +281,27 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
 
     /**
      * New Model 2
+     * @memberof components.reinforcements.boxSupport
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof profiles.boxCurve
      */
-    const boxCurveHalf = (opts) => {
-        const defaults = boxCurveDefaults()
-        const initOpts = boxCurveOpts(opts)
-        const modelProperties = boxCurveProps(initOpts)
+    const boxSupportHalf = (opts) => {
+        const defaults = boxSupportDefaults()
+        const initOpts = boxSupportOpts(opts)
+        const modelProperties = boxSupportProps(initOpts)
         const {
             size,
             margin,
-            ellipseRadiusHalf,
+            marginHeight,
         } = modelProperties.dims
 
-        const blank = rectangle({ size })
-        const cutaway = ellipse({ radius: ellipseRadiusHalf })
+        const boxCurvesHalfData = reinforcements.boxCurve.boxCurveHalf({
+            size,
+            margin,
+        })
+        const boxCurvesHalfModel = boxCurvesHalfData[0]
 
-        const mainModel = subtract(
-            align({
-                modes: ['center', 'max', 'center'],
-            }, blank),
-            position.ctr(cutaway),
-        )
+        const mainModel = extrudeLinear({ height: marginHeight }, boxCurvesHalfModel)
 
         const modelParts = {
             mainModel,
@@ -309,13 +311,13 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
     }
 
     return {
-        defaults: boxCurveDefaults,
-        props: boxCurveProps,
-        boxCurveQuarter,
-        boxCurveHalf,
+        defaults: boxSupportDefaults,
+        props: boxSupportProps,
+        boxSupportQuarter,
+        boxSupportHalf,
     }
 }
 
 module.exports = {
-    init: boxCurveInit
+    init: boxSupportInit
 }

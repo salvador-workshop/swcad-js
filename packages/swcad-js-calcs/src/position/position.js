@@ -1,8 +1,5 @@
 "use strict"
 
-const posRectangle = require('./pos-rectangle');
-const posTriangle = require('./pos-triangle');
-
 /**
  * ...
  * @memberof calcs
@@ -115,37 +112,16 @@ const positionUtils = ({ jscad, swcadJs }) => {
     }
 
     const positionCore = {
+        alignModes,
         measure,
         getGeomCoords,
         findLongAxis,
-        /**
-         * Gets the keypoints for a given object
-         * @memberof calcs.position
-         * @instance
-         * @returns ...
-         */
-        getKeypoints: (inputGeom) => {
-            // keypoints: box corners, midpoints of edges, midpoints of box faces
-            return null;
-        },
-        alignModes,
         ctr,
         ctrMin,
         ctrMax,
     }
 
-    const preLib = {
-        ...swcadJs,
-        calcs: {
-            position: positionCore
-        }
-    }
-
-    return {
-        ...positionCore,
-        rectangle: posRectangle.init({ jscad, swcadJs: preLib }),
-        triangle: posTriangle.init({ jscad, swcadJs: preLib }),
-    }
+    return positionCore
 }
 
 module.exports = { init: positionUtils };
