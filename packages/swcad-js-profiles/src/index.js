@@ -1,7 +1,6 @@
 "use strict"
 
 const beadsBitsModule = require('./beads-bits')
-const boxCurveModule = require('./box-curve')
 const connectionsModule = require('./connections')
 const jointPanelModule = require('./joint-panel')
 const meshModule = require('./mesh')
@@ -29,7 +28,6 @@ const profilesInit = ({ jscad, swcadJs }) => {
 
     return {
         beadsBits,
-        boxCurve: boxCurveModule.init({ jscad, swcadJs: preLib }),
         connections,
         jointPanel: jointPanelModule.init({ jscad, swcadJs: preLib }),
         mesh: meshModule.init({ jscad, swcadJs: preLib }),
