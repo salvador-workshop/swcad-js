@@ -10,7 +10,6 @@ const coreInit = ({ jscad }) => {
         calcs: null,
         profiles: null,
         components: null,
-        utils: null,
     }
 
     /**
@@ -27,9 +26,6 @@ const coreInit = ({ jscad }) => {
     const assemblyComponents = require('swcad-js-components').init({ jscad, swcadJs: swcadJsAssembly })
     swcadJsAssembly.components = assemblyComponents
 
-    const assemblyUtils = require('swcad-js-utils').init({ jscad, swcadJs: swcadJsAssembly })
-    swcadJsAssembly.utils = assemblyUtils
-
     /**
      * User-facing library
      * */
@@ -38,7 +34,6 @@ const coreInit = ({ jscad }) => {
         calcs: swcadJsAssembly.calcs,
         profiles: swcadJsAssembly.profiles,
         components: swcadJsAssembly.components,
-        utils: swcadJsAssembly.utils,
     }
 
     return swcadJs

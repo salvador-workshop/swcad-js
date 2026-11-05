@@ -37,6 +37,7 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns default values and opts
      * @memberof components.reinforcements
+     * @access private
      */
     const reinforcedJoistDefaults = () => {
         /** Specific value declarations */
@@ -98,6 +99,7 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns model properties
      * @memberof components.reinforcements
+     * @access private
      */
     const reinforcedJoistProps = (opts) => {
         const defaults = reinforcedJoistDefaults()
