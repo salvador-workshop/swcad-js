@@ -20,6 +20,7 @@ const trimBibliopoli = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns default values and opts
      * @memberof profiles.trim.bibliopoli
+     * @deprecated
      * @access private
      */
     const trimBibliopoliDefaults = () => {

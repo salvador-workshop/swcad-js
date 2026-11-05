@@ -4,6 +4,7 @@
  * Rectangle calculations
  * @memberof calcs.position
  * @namespace rectangle
+ * @deprecated
  */
 
 const geoRectangle = ({ jscad, swcadJs }) => {

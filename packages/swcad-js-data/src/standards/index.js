@@ -14,6 +14,7 @@ const standards = ({ jscad }) => {
      * Pegboard standards
      * @namespace pegboard
      * @memberof data.standards
+     * @deprecated
      */
     const pegboard = {
         /**
@@ -42,6 +43,7 @@ const standards = ({ jscad }) => {
      * Gridfinity standards
      * @namespace gridfinity
      * @memberof data.standards
+     * @deprecated
      */
     const gridfinity = {
         /**
@@ -60,6 +62,7 @@ const standards = ({ jscad }) => {
      * Type standards
      * @namespace types
      * @memberof data.standards
+     * @deprecated
      */
     const types = {
         /**
@@ -169,6 +172,7 @@ const standards = ({ jscad }) => {
      * Param standards
      * @namespace params
      * @memberof data.standards
+     * @deprecated
      */
     const params = {
         /**

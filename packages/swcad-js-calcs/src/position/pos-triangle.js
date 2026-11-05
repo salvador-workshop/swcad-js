@@ -4,6 +4,7 @@
  * Triangle calculations
  * @memberof calcs.position
  * @namespace triangle
+ * @deprecated
  */
 
 const geoTriangle = ({ jscad, swcadJs }) => {

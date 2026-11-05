@@ -8,6 +8,7 @@ const catonisModule = require('./trim-catonis')
  * Trim profiles and families
  * @memberof profiles
  * @namespace trim
+ * @deprecated
  */
 
 const init = ({ jscad, swcadJs }) => {

@@ -20,6 +20,7 @@ const trimAranea = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns default values and opts
      * @memberof profiles.trim.aranea
+     * @deprecated
      * @access private
      */
     const trimAraneaDefaults = () => {

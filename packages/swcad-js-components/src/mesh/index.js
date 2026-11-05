@@ -39,6 +39,7 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
        * @param {number} width 
        * @param {number} thickness 
        * @param {string[]} flipOpts - array of options for flipping ("vertical" or "horizontal")
+       * @deprecated
        */
     const edgeFlange = (type = 'inset', width, thickness, flipOpts = []) => {
         let triangleAlignOpts = {}

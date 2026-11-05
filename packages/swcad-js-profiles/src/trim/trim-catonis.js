@@ -20,6 +20,7 @@ const trimCatonis = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns default values and opts
      * @memberof profiles.trim.catonis
+     * @deprecated
      * @access private
      */
     const trimCatonisDefaults = () => {
