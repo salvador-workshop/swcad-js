@@ -7,7 +7,6 @@ const jointPanelModule = require('./joint-panel')
 const meshModule = require('./mesh')
 const reinforcementsModule = require('./reinforcements')
 const textModule = require('./text')
-const trimModule = require('./trim')
 
 const profilesInit = ({ jscad, swcadJs }) => {
     const beadsBits = beadsBitsModule.init({ jscad, swcadJs })
@@ -36,7 +35,6 @@ const profilesInit = ({ jscad, swcadJs }) => {
         mesh: meshModule.init({ jscad, swcadJs: preLib }),
         reinforcements: reinforcementsModule.init({ jscad, swcadJs: preLib }),
         text: textModule.init({ jscad, swcadJs: preLib }),
-        trim: trimModule.init({ jscad, swcadJs: preLib }),
     }
 }
 

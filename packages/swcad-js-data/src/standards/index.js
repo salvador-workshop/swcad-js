@@ -9,74 +9,6 @@ const inchesToMm = (numIn) => numIn * 25.4
  */
 
 const standards = ({ jscad }) => {
-
-    /**
-     * Pegboard standards
-     * @namespace pegboard
-     * @memberof data.standards
-     * @deprecated
-     */
-    const pegboard = {
-        /**
-         * Pegboard_Spacing
-         * @memberof data.standards.pegboard
-         */
-        PEGBOARD_SPACING: inchesToMm(1),
-        /**
-         * Pegboard_Hole_Diam
-         * @memberof data.standards.pegboard
-         */
-        PEGBOARD_HOLE_DIAM: inchesToMm(7 / 32),
-        /**
-         * Micro_Pegboard_Spacing
-         * @memberof data.standards.pegboard
-         */
-        MICRO_PEGBOARD_SPACING: inchesToMm(1 / 2),
-        /**
-         * Micro_Pegboard_Hole_Diam
-         * @memberof data.standards.pegboard
-         */
-        MICRO_PEGBOARD_HOLE_DIAM: inchesToMm(1 / 8),
-    }
-
-    /**
-     * Gridfinity standards
-     * @namespace gridfinity
-     * @memberof data.standards
-     * @deprecated
-     */
-    const gridfinity = {
-        /**
-         * Gridfinity_Spacing
-         * @memberof data.standards.gridfinity
-         */
-        GRIDFINITY_SPACING: 42,
-        /**
-         * Gridfinity_Rail_Width
-         * @memberof data.standards.gridfinity
-         */
-        GRIDFINITY_RAIL_WIDTH: 7,
-    }
-
-    /**
-     * Type standards
-     * @namespace types
-     * @memberof data.standards
-     * @deprecated
-     */
-    const types = {
-        /**
-         * Type_Default
-         * @memberof data.standards.types
-         */
-        TYPE_DEFAULT: { id: 'default', desc: 'Default' },
-        /**
-         * Type_Alt
-         * @memberof data.standards.types
-         */
-        TYPE_ALT: { id: 'alt', desc: 'Alternate' },
-    }
-
     const interfaceThickness = 1.333333
     const fitGap = inchesToMm(1 / 128)
 
@@ -168,39 +100,7 @@ const standards = ({ jscad }) => {
         LG_REINFORCEMENT_WIDTH: lgReinforcementWidth,
     }
 
-    /**
-     * Param standards
-     * @namespace params
-     * @memberof data.standards
-     * @deprecated
-     */
-    const params = {
-        /**
-         * Obj_2d_Size
-         * @memberof data.standards.params
-         */
-        OBJ_2D_SIZE: [
-            inchesToMm(2),
-            inchesToMm(4),
-        ],
-        /**
-         * Obj_3d_Size
-         * @memberof data.standards.params
-         */
-        OBJ_3D_SIZE: [
-            inchesToMm(2),
-            inchesToMm(4),
-            inchesToMm(1),
-        ],
-    }
-
-    return {
-        ...swDefaults,
-        pegboard,
-        gridfinity,
-        types,
-        params,
-    }
+    return swDefaults
 }
 
 module.exports = { init: standards };
