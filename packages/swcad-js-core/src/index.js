@@ -9,13 +9,9 @@ const coreInit = ({ jscad }) => {
         data: require('swcad-js-data').init({ jscad }),
         calcs: null,
         profiles: null,
-        profileSpec: null,
         components: null,
-        componentSpec: null,
         utils: null,
-        models: null,
     }
-
 
     /**
      * Intermediate step to building the library
@@ -34,10 +30,6 @@ const coreInit = ({ jscad }) => {
     const assemblyUtils = require('swcad-js-utils').init({ jscad, swcadJs: swcadJsAssembly })
     swcadJsAssembly.utils = assemblyUtils
 
-    const assemblyModels = require('swcad-js-models').init({ jscad, swcadJs: swcadJsAssembly })
-    swcadJsAssembly.models = assemblyModels
-
-
     /**
      * User-facing library
      * */
@@ -47,7 +39,6 @@ const coreInit = ({ jscad }) => {
         profiles: swcadJsAssembly.profiles,
         components: swcadJsAssembly.components,
         utils: swcadJsAssembly.utils,
-        models: swcadJsAssembly.models,
     }
 
     return swcadJs
