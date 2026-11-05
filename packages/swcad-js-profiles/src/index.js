@@ -2,7 +2,7 @@
 
 const beadsBitsModule = require('./beads-bits')
 const connectionsModule = require('./connections')
-const jointPanelModule = require('./joint-panel')
+const jointPanelModule = require('./connections/joint-panel')
 const meshModule = require('./mesh')
 const reinforcementsModule = require('./reinforcements')
 const textModule = require('./text')
