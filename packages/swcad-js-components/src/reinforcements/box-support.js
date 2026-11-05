@@ -2,7 +2,7 @@
 
 /**
  * Box Supports
- * @namespace boxSupports
+ * @namespace boxSupport
  * @memberof components.reinforcements
  * @author R. J. Salvador (Salvador Workshop)
  */
@@ -43,7 +43,7 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
      * Builds default values and opts for the model
      * @param {*} opts 
      * @returns default values and opts
-     * @memberof boxSupport
+     * @memberof components.reinforcements.boxSupport
      * @access private
      */
     const boxSupportDefaults = () => {
@@ -99,7 +99,7 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
      * Initializes options with user input
      * @param {*} opts 
      * @returns model properties
-     * @memberof boxSupport
+     * @memberof components.reinforcements.boxSupport
      * @access private
      */
     const boxSupportOpts = (opts) => {
@@ -140,7 +140,7 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
      * Builds model properties from the given opts
      * @param {*} opts 
      * @returns model properties
-     * @memberof boxSupport
+     * @memberof components.reinforcements.boxSupport
      * @access private
      */
     const boxSupportProps = (opts) => {
@@ -250,7 +250,7 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
 
     /**
      * New Model 1
-     * @memberof components.boxSupports
+     * @memberof components.reinforcements.boxSupport
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      */
@@ -281,7 +281,7 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
 
     /**
      * New Model 2
-     * @memberof components.boxSupports
+     * @memberof components.reinforcements.boxSupport
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      */
