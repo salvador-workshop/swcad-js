@@ -23,7 +23,7 @@ const profilesInit = ({ jscad, swcadJs }) => {
     }
 
     return {
-        beadsBits: beadsBitsModule.init({ jscad, preLib }),
+        beadsBits: beadsBitsModule.init({ jscad, swcadJs: preLib }),
         connections: connectionsApi,
         mesh: meshModule.init({ jscad, swcadJs: preLib }),
         reinforcements: reinforcementsModule.init({ jscad, swcadJs: preLib }),
