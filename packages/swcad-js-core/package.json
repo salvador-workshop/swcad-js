@@ -27,7 +27,6 @@
     "swcad-js-calcs": "*",
     "swcad-js-components": "*",
     "swcad-js-data": "*",
-    "swcad-js-models": "*",
     "swcad-js-profiles": "*",
     "swcad-js-utils": "*"
   },
