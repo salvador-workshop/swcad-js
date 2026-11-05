@@ -8,7 +8,7 @@ const reinforcedRectModule = require('./reinforced-rect')
  */
 
 const reinforcementsInit = ({ jscad, swcadJs }) => {
-    const boxCurve = boxCurveModule.init({ jscad, swcadJs: preLib })
+    const boxCurve = boxCurveModule.init({ jscad, swcadJs })
     const reinforcedRect = reinforcedRectModule.init({ jscad, swcadJs })
 
     return {

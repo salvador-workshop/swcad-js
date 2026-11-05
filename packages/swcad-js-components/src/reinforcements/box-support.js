@@ -32,7 +32,7 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
     } = swcadJs.calcs
 
     const {
-        boxCurve,
+        reinforcements,
     } = swcadJs.profiles
 
 
@@ -264,7 +264,7 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
             marginHeight,
         } = modelProperties.dims
 
-        const boxCurvesQtrData = boxCurve.boxCurveQuarter({
+        const boxCurvesQtrData = reinforcements.boxCurve.boxCurveQuarter({
             size,
             margin,
         })
@@ -295,7 +295,7 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
             marginHeight,
         } = modelProperties.dims
 
-        const boxCurvesHalfData = boxCurve.boxCurveHalf({
+        const boxCurvesHalfData = reinforcements.boxCurve.boxCurveHalf({
             size,
             margin,
         })
