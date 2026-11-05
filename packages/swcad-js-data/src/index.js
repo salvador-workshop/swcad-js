@@ -2,7 +2,6 @@
 
 const constants = require('./constants')
 const standards = require('./standards')
-const errors = require('./errors')
 
 const dataInit = ({ jscad }) => {
     /**
@@ -14,7 +13,6 @@ const dataInit = ({ jscad }) => {
     const data = {
         constants: constants,
         standards: standards.init({ jscad }),
-        errors: errors,
     }
 
     return data

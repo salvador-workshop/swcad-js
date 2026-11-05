@@ -40,6 +40,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns default values and opts
      * @memberof components.fittings
+     * @access private
      */
     const roundFittingDefaults = () => {
         /** Specific value declarations */
@@ -96,6 +97,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns model properties
      * @memberof components.fittings
+     * @access private
      */
     const roundFittingOpts = (opts) => {
         const defaults = roundFittingDefaults()
@@ -137,6 +139,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
      * @param {*} opts 
      * @returns model properties
      * @memberof components.fittings
+     * @access private
      */
     const roundFittingProps = (opts) => {
         const defaults = roundFittingDefaults()
