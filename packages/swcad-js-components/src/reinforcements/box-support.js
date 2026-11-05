@@ -3,7 +3,7 @@
 /**
  * Box Supports
  * @namespace boxSupports
- * @memberof components 
+ * @memberof components.reinforcements
  * @author R. J. Salvador (Salvador Workshop)
  */
 

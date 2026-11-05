@@ -1,7 +1,6 @@
 "use strict"
 
 const beadsBitsModule = require('./beads-bits')
-const boxSupportModule = require('./box-support')
 const componentLineModule = require('./component-line')
 const fittingsModule = require('./fittings')
 const meshModule = require('./mesh')
@@ -35,7 +34,6 @@ const componentsInit = ({ jscad, swcadJs }) => {
      */
     const components = {
         beadsBits,
-        boxSupport: boxSupportModule.init({ jscad, swcadJs: preLib }),
         routedShapes,
         mesh,
         componentLine,
