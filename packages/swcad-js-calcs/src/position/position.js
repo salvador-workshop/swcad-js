@@ -1,8 +1,5 @@
 "use strict"
 
-const posRectangle = require('./pos-rectangle');
-const posTriangle = require('./pos-triangle');
-
 /**
  * ...
  * @memberof calcs

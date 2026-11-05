@@ -43,9 +43,9 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
                 centre: [0, 0, 0]
             },
             types: {
-                default: standards.types.TYPE_DEFAULT,
-                alt: standards.types.TYPE_ALT,
-            },
+                default: { id: 'default', desc: 'Default' },
+                alt: { id: 'alt', desc: 'Alternate' },
+            }
         }
 
         /** Options used by SW models */
@@ -88,8 +88,8 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
                 centre: [0, 0]
             },
             typeDetails: {
-                default: standards.types.TYPE_DEFAULT,
-                alt: standards.types.TYPE_ALT,
+                default: { id: 'default', desc: 'Default' },
+                alt: { id: 'alt', desc: 'Alternate' },
             }
         }
 
