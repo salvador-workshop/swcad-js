@@ -22,6 +22,11 @@ const profilesInit = ({ jscad, swcadJs }) => {
         jointPanel: jointPanelModule.init({ jscad, swcadJs: preLib })
     }
 
+    /**
+     * Modelling functions that generate 2D geometries.
+     * @namespace profiles
+     * @author R. J. Salvador (Salvador Workshop)
+     */
     return {
         beadsBits: beadsBitsModule.init({ jscad, swcadJs: preLib }),
         connections: connectionsApi,

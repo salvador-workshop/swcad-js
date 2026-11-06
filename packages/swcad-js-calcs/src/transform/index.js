@@ -1,7 +1,7 @@
 "use strict"
 
 /**
- * ...
+ * Functions leveraging JSCAD to transform 2D/3D geometries.
  * @memberof calcs
  * @namespace transform
  */
@@ -18,7 +18,7 @@ const transformUtils = ({ jscad, swcadJs }) => {
     } = swcadJs.calcs
 
     /**
-     * Stacks geometries on top of each other, starting from the bottom
+     * Stacks geometries on top of each other, starting from the bottom.
      * @memberof calcs.transform
      * @param {object} opts 
      * @param {boolean?} opts.reverse - if true, first element will be at the top, not bottom (defaults to 'false')
@@ -36,7 +36,7 @@ const transformUtils = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Cuts one quadrant of the given 2D shape
+     * Cuts one quadrant of the given 2D shape.
      * @memberof calcs.transform
      * @param {object} inShape - geom2 object
      * @returns 2D geometry of one quadrant from the given shape
@@ -137,7 +137,7 @@ const transformUtils = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Cuts a slice of an object
+     * Cuts a slice of an object.
      * @memberof calcs.transform
      * @instance
      * @param {Object} opts

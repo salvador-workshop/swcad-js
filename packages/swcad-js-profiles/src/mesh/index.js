@@ -1,5 +1,5 @@
 /**
- * Builds 2D mesh models.
+ * Modelling functions that generate 2D perforated shapes.
  * @memberof profiles
  * @namespace mesh
  */
@@ -181,7 +181,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
 
 
     /**
-     * New Model
+     * Generates a 2D mesh panel with the given options.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.mesh

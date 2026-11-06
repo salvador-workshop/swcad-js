@@ -415,7 +415,7 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
 
 
     /**
-     * Routed cuboid
+     * Generates a routed cuboid with the given options for top and bottom edges.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.routedShapes
@@ -473,7 +473,7 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Routed elliptical cylinder
+     * Generates a routed elliptical cylinder with the given options for top and bottom edges.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.routedShapes
@@ -532,6 +532,7 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
+     * Modelling functions that generate 3D geometries which have been "routed" with bits from `components.beadsBits.corner`.
      * @namespace routedShapes
      * @memberof components
      */

@@ -4,7 +4,7 @@ const geoRegPolyModule = require('./geo-reg-poly');
 const reinforcementModule = require('./reinforcement');
 
 /**
- * Finds the central point (avg.) between the given points
+ * Finds the central point (avg.) between the given points.
  * @param {number[]} points - x and y coordinates
  * @param {string} mode - '3d' (default) or '2d'
  * @memberof calcs.geometry.points
@@ -38,7 +38,7 @@ const ptCentroid = (points, mode = '3d') => {
 }
 
 /**
- * Calculates co-ordinate difference between two points
+ * Calculates co-ordinate difference between two points.
  * @param {number[]} startPt - starting 2D coordinates
  * @param {number[]} endPt - ending 2D coordinates
  * @returns {number[]} 2D coordinates of diff
@@ -52,7 +52,7 @@ const coordDiffBetweenPoints = (startPt, endPt) => {
 }
 
 /**
- * Calculates distance between two co-ordinate points
+ * Calculates distance between two co-ordinate points.
  * @param {number[]} startPt - starting 2D coordinates
  * @param {number[]} endPt - ending 2D coordinates
  * @returns {number} distance between points
@@ -65,7 +65,7 @@ const distanceBetweenPoints = (startPt, endPt) => {
 }
 
 /**
- * Calculates midpoint between two co-ordinate points
+ * Calculates midpoint between two co-ordinate points.
  * @param {number[]} startPt - starting 2D coordinates
  * @param {number[]} endPt - ending 2D coordinates
  * @returns {number[]} midpoint coordinates
@@ -81,7 +81,7 @@ const midpointBetweenPoints = (startPt, endPt) => {
 }
 
 /**
- * Geometric functions
+ * Geometric calculations in 2D/3D space.
  * @memberof calcs
  * @namespace geometry
  */
@@ -107,7 +107,7 @@ const geometryInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Gets a point from a given angle and distance, starting from [0, 0]
+     * Gets a point from a given angle and distance, starting from [0, 0].
      * @memberof calcs.geometry
      * @param {number} angleRad - angle (radians)
      * @param {number} dist - distance
@@ -120,7 +120,7 @@ const geometryInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Gets line data from outline points
+     * Gets line data from outline points.
      * @param {number[][]} outlinePts 
      * @returns {Object[]} array of line details
      * @memberof calcs.geometry
@@ -151,7 +151,7 @@ const geometryInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Gets triangular points in area
+     * Gets triangular points in area.
      * @memberof calcs.geometry
      * @param {number} x - maximum X bound
      * @param {number} y - maximum Y bound
@@ -205,7 +205,7 @@ const geometryInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Gets square points in area
+     * Gets square points in area.
      * @memberof calcs.geometry
      * @param {number} x - maximum X bound
      * @param {number} y - maximum Y bound
@@ -248,7 +248,7 @@ const geometryInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Functions related to sets of Cartesian points
+     * Calculations around sets of co-ordinate points in 2D/3D space.
      * @memberof calcs.geometry
      * @namespace points
      */

@@ -1,7 +1,7 @@
 "use strict"
 
 /**
- * Connection Profiles
+ * Modelling functions that generate connecting and interlocking 2D parts.
  * @author R. J. Salvador
  * @namespace connections
  * @memberof profiles
@@ -14,13 +14,11 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         ellipse: ellipseShape,
         cuboid,
         rectangle,
-        triangle,
     } = jscad.primitives
 
     const {
         align,
         translate,
-        mirror
     } = jscad.transforms
 
     const {
@@ -294,7 +292,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     * ------------------------------------- */
 
     /**
-     * Generate dovetail connectors
+     * Generates dovetail connectors.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
@@ -402,7 +400,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Generate tab connectors
+     * Generates tab connectors.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
@@ -510,7 +508,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Generate right-angle tab connectors
+     * Generates right-angle tab connectors.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
@@ -618,7 +616,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Generate polygon connectors
+     * Generates polygon connectors.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
@@ -692,7 +690,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Generate ellipse connectors
+     * Generates ellipse connectors.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
@@ -795,7 +793,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Generate pegboard connectors
+     * Generates pegboard connectors.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
@@ -882,7 +880,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Generate bolt circle connectors
+     * Generates bolt circle connectors.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
@@ -950,7 +948,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Generate dovetail row connectors
+     * Generates pieces connected by a row of dovetails.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
@@ -1041,7 +1039,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Generate tab row connectors
+     * Generates pieces connected by a row of tabs.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
@@ -1132,7 +1130,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Generate right-angle tab row connectors
+     * Generates pieces connected by a row of right-angle tabs.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections

@@ -1,7 +1,7 @@
 "use strict"
 
 /**
- * Functions related to regular polygons
+ * Calculations around regular (equiangular + equilateral) polygons.
  * @namespace regPoly
  * @memberof calcs.geometry
  */
@@ -9,7 +9,7 @@
 const geoRegPoly = ({ jscad, swcadJs }) => {
     return {
         /**
-         * Calculates side length from apothem and # of sides
+         * Calculates side length from apothem and # of sides.
          * @memberof calcs.geometry.regPoly
          * @param {number} apothem - distance from center to the midpoint of one side
          * @param {number} numSides - number of polygon sides
@@ -19,7 +19,7 @@ const geoRegPoly = ({ jscad, swcadJs }) => {
             return apothem * 2 * Math.tan(Math.PI / numSides);
         },
         /**
-         * Calculates side length from circumradius and # of sides
+         * Calculates side length from circumradius and # of sides.
          * @memberof calcs.geometry.regPoly
          * @param {number} circumradius - distance from center to vertex
          * @param {number} numSides - number of polygon sides
@@ -29,7 +29,7 @@ const geoRegPoly = ({ jscad, swcadJs }) => {
             return circumradius * 2 * Math.sin(Math.PI / numSides);
         },
         /**
-         * Calculates apothem from circumradius and # of sides
+         * Calculates apothem from circumradius and # of sides.
          * @memberof calcs.geometry.regPoly
          * @param {number} circumradius - distance from center to vertex
          * @param {number} numSides - number of polygon sides
@@ -39,7 +39,7 @@ const geoRegPoly = ({ jscad, swcadJs }) => {
             return circumradius * Math.cos(Math.PI / numSides)
         },
         /**
-         * Calculates apothem from side length and # of sides
+         * Calculates apothem from side length and # of sides.
          * @memberof calcs.geometry.regPoly
          * @param {number} sideLength - side length
          * @param {number} numSides - number of polygon sides
@@ -49,7 +49,7 @@ const geoRegPoly = ({ jscad, swcadJs }) => {
             return sideLength / 2 * Math.tan(Math.PI / numSides)
         },
         /**
-         * Calculates circumradius from apothem and # of sides
+         * Calculates circumradius from apothem and # of sides.
          * @memberof calcs.geometry.regPoly
          * @param {number} apothem - distance from center to the midpoint of one side
          * @param {number} numSides - number of polygon sides
@@ -59,7 +59,7 @@ const geoRegPoly = ({ jscad, swcadJs }) => {
             return apothem / Math.cos(Math.PI / numSides);
         },
         /**
-         * Calculates circumradius from side length and # of sides
+         * Calculates circumradius from side length and # of sides.
          * @memberof calcs.geometry.regPoly
          * @param {number} sideLength - side length
          * @param {number} numSides - number of polygon sides
@@ -69,7 +69,7 @@ const geoRegPoly = ({ jscad, swcadJs }) => {
             return sideLength / 2 * Math.sin(Math.PI / numSides)
         },
         /**
-         * Calculates interior angle from # of sides
+         * Calculates interior angle from # of sides.
          * @memberof calcs.geometry.regPoly
          * @param {number} numSides - number of polygon sides
          * @returns interior angle

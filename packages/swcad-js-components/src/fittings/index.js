@@ -2,7 +2,7 @@ const roundFittingModule = require('./round-fitting')
 const rectangularFittingModule = require('./rectangular-fitting')
 
 /**
- * ...
+ * Modelling functions that generate 3D fittings that integrate with round/rectangular profiles (dowels, dimensional lumber, etc).
  * @memberof components
  * @namespace fittings
  */

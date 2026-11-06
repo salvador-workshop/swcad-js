@@ -277,7 +277,7 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
 
 
     /**
-     * Reinforced rectangle
+     * Generates a 2D reinforced rectangle with the given options for reinforcement styles.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.reinforcements

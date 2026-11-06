@@ -1,7 +1,7 @@
 "use strict"
 
 /**
- * Beads and Bits
+ * Modelling functions that generate 3D beads (basic shapes mainly for additive `hull` functions) and bits (basic shapes for subtractive `hull` functions).
  * @namespace beadsBits
  * @memberof components 
  * @author R. J. Salvador (Salvador Workshop)
@@ -228,7 +228,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
 
 
     /**
-     * Rabbet bit
+     * Generates a 3D rabbet bit.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.beadsBits.corner
@@ -250,7 +250,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Chamfer bit
+     * Generates a 3D chamfer bit.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.beadsBits.corner
@@ -272,7 +272,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Round-Over Bit
+     * Generates a 3D round-over bit.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.beadsBits.corner
@@ -294,7 +294,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Cove bit
+     * Generates a 3D cove bit.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.beadsBits.corner
@@ -316,7 +316,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Corner bits
+     * Modelling functions that generate 3D geometries which emulate woodworking router bits.
      * @namespace corner
      * @memberof components.beadsBits
      */
@@ -328,7 +328,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Standard 30-degree bead profile
+     * Generates an elliptical cylinder bead, with a 30-degree slope.
      * @param {number} baseThickness - Thickness of the bead profile
      * @param {number} width - Width of the bead profile
      * @returns {geom3} - bead profile
@@ -348,7 +348,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Standard 45-degree bead profile
+     * Generates an elliptical cylinder bead, with a 45-degree slope.
      * @param {number} baseThickness - Thickness of the bead profile
      * @param {number} width - Width of the bead profile
      * @returns {geom3} - bead profile
@@ -368,7 +368,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Standard bead profiles for interface connections
+     * Generates a set of elliptical cylinder beads for interface connections.
      * @param {number} baseThickness - Thickness of the bead profile
      * @param {number} smWidth - Width of the small bead profile
      * @param {number} mdWidth - Width of the medium bead profile

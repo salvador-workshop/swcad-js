@@ -2,7 +2,7 @@ const boxCurveModule = require('./box-curve')
 const reinforcedRectModule = require('./reinforced-rect')
 
 /**
- * ...
+ * Modelling functions that generate 2D shapes for reinforcements.
  * @memberof profiles
  * @namespace reinforcements
  */

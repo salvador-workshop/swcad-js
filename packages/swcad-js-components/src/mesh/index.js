@@ -1,7 +1,7 @@
 "use strict"
 
 /**
- * ...
+ * Modelling functions that generate perforated 3D shapes.
  * @memberof components
  * @namespace mesh
  */
@@ -13,16 +13,10 @@
 //---------------------
 
 const mesh3dInit = ({ jscad, swcadJs }) => {
-
-    const { cylinder, triangle, rectangle } = jscad.primitives
-    const { translate, rotate, align, mirror } = jscad.transforms
-    const { subtract, union } = jscad.booleans
-    const { extrudeRotate, extrudeLinear } = jscad.extrusions
-    const { TAU } = jscad.maths.constants
+    const { extrudeLinear } = jscad.extrusions
 
     const {
         math,
-        position
     } = swcadJs.calcs
 
     const {
@@ -34,7 +28,7 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
     } = swcadJs.profiles
 
     /**
-     * Builds a flat mesh panel model.
+     * Generates a flat 3D mesh panel with the given options.
      * @memberof components.mesh
      * @param {*} opts 
      * @returns ...

@@ -1,7 +1,7 @@
 "use strict"
 
 /**
- * ...
+ * Modelling functions that generate curved 2D reinforcements for right-angle corners.
  * @memberof profiles.reinforcements
  * @namespace boxCurve
  */
@@ -243,7 +243,7 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
     * ------------------------------------- */
 
     /**
-     * New Model 1
+     * Generates a curved 2D reinforcement covering two sides (one corner) of a rectangle.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.reinforcements.boxCurve
@@ -276,7 +276,7 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * New Model 2
+     * Generates a curved 2D reinforcement covering three sides (two corners) of a rectangle.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.reinforcements.boxCurve

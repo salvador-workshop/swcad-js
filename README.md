@@ -28,275 +28,506 @@ A heavily customized version of the JSCAD UI ([https://github.com/hrgdavor/jscad
 
 ![swcad-js demo - walls-entryway](./static/img/entryways-1.png "swcad-js demo - walls-entryway")
 
-## Usage
-
-Works with JSCAD, however you consume it.
-
-Try copying the example below into `sw-jscad-viewer` ([sw-jscad-viewer.netlify.app](https://sw-jscad-viewer.netlify.app)).  
-
-```javascript
-/* ----------------------------------------
- * Initialization
- * ------------------------------------- */
-
-const jscad = require('@jscad/modeling')
-
-const { cuboid } = jscad.primitives
-const { translate } = jscad.transforms
-
-const swcadJs = require('swcad-js').init({ jscad });
-console.log('swcadJs', swcadJs)
-
-const {
-  math,
-  transform,
-} = swcadJs.calcs
-
-const {
-  colors,
-} = swcadJs.utils
-
-const {
-  openWebJoist,
-} = swcadJs.components
-
-const {
-  routedCuboid,
-} = swcadJs.components.routedShapes
-
-
-//==============================================================================
-
+## SWCAD-JS API
 
-/* ----------------------------------------
- * Model / Scene Prep
- * ------------------------------------- */
+...
 
-// "INTRO" PLINTH
+---
 
-const introPlinthSize = [
-  math.inchesToMm(4),
-  math.inchesToMm(4),
-  math.inchesToMm(5),
-]
+<br/>
 
-const endBlockSize = [
-  introPlinthSize[0],
-  introPlinthSize[1],
-  introPlinthSize[2] / 4,
-]
+### DATA
 
-const midBlockOverhang = math.inchesToMm(5 / 8)
+Mostly math constants and common dimensions/options.
 
-const midBlockSize = [
-  introPlinthSize[0] - (midBlockOverhang * 2),
-  introPlinthSize[1] - (midBlockOverhang * 2),
-  introPlinthSize[2] / 2,
-]
+### data.constants
 
-// Midsection is built with jscad
-// Top and Bottom ends are built with swcad-js
+Numeric constants and ratios.
 
-const mid = cuboid({ size: midBlockSize })
+### data.standards
 
-const baseOpts = {
-  size: endBlockSize,
-  topBit: 'chamfer',
-  topBitOpts: {
-    radius1: 6,
-    radius2: 8,
-    offset1: 3,
-    offset2: 2,
-    offset3: 3,
-    offset4: 2,
-  },
-  bottomBit: 'none',
-  bottomBitOpts: {
-  },
-}
+Dimensions and options used throughout the SWCAD-JS system.
 
-const baseData = routedCuboid(baseOpts)
-const base = baseData[0]
+---
 
-const topOpts = {
-  size: endBlockSize,
-  topBit: 'roundOver',
-  topBitOpts: {
-    radius1: 3,
-    radius2: 4,
-    offset1: 1.5,
-    offset2: 1.5,
-  },
-  bottomBit: 'cove',
-  bottomBitOpts: {
-    radius1: 6,
-    radius2: 8,
-    offset1: 2.5,
-    offset2: 2.5,
-    offset3: 2.5,
-    offset4: 2.5,
-  },
-}
-
-const topData = routedCuboid(topOpts)
-const top = topData[0]
+<br/>
 
-// The library also has helper functions
+### CALCS
 
-const introPlinth = transform.stack({}, [base, mid, top])
+Math calculations and basic JSCAD operations.
 
-// OPEN WEB JOIST
+### calcs.geometry
 
-const openWebJoistOpts1 = {
-  length: math.inchesToMm(6),
-  width: math.inchesToMm(1.25),
-}
+Geometric calculations in 2D/3D space.
 
-const openWebJoistOpts2 = {
-  length: math.inchesToMm(6.5),
-  width: math.inchesToMm(1.5),
-  reinforcementLevel: 2
-}
+#### angleOfTwoPtLine(startPt, endPt, mode)
 
-const openWebJoistData1 = openWebJoist(openWebJoistOpts1)
-const openWebJoistData2 = openWebJoist(openWebJoistOpts2)
+Returns angle of a two-point line.
 
-const openWebJoistModel1 = openWebJoistData1[0]
-const openWebJoistModel2 = openWebJoistData2[0]
+#### coordDiffBetweenPoints(startPt, endPt)
 
+Calculates co-ordinate difference between two points.
 
-//==============================================================================
+#### distanceBetweenPoints(startPt, endPt)
 
+Calculates distance between two co-ordinate points.
 
-/* ----------------------------------------
- * Main function for JSCAD
- * ------------------------------------- */
+#### getSquarePtsInArea(x, y, distance, centrePoints)
 
+Gets square points in area.
 
-function main() {
-  const spaceUnit = math.inchesToMm(4)
+#### getTriangularPtsInArea(x, y, distance, centrePoints)
 
-  return [
-    translate([spaceUnit * 0, spaceUnit * 0, spaceUnit * 0], introPlinth),
-    translate([spaceUnit * 1, spaceUnit * 0, spaceUnit * 0], openWebJoistModel1),
-    translate([spaceUnit * 2, spaceUnit * 0, spaceUnit * 0], openWebJoistModel2),
-  ]
-}
+Gets triangular points in area.
 
-module.exports = { main }
-```
+#### midpointBetweenPoints(startPt, endPt)
 
-![swcad-js demo - plinth + joist](./static/img/plinth-joist-1.png "swcad-js demo - plinth + joist")
+Calculates midpoint between two co-ordinate points.
 
-## API
+#### pointFromAngleAndDist(angleRad, dist)
 
-_as of version 0.12.5_
+Gets a point from a given angle and distance, starting from [0, 0].
 
-The `swcad-js` library's main functional divisions:
+---
 
-### `Data` — Static info
+### calcs.geometry.points
 
-- constants
-- functions
-- specifications
-- standards
-- standards.crafts
-- standards.lumber
-- standards.masonry
-- standards.paper
-- standards.tiles
+Calculations around sets of co-ordinate points in 2D/3D space.
 
-### `Calcs` — Calculations of all sorts
+#### ptCentroid(points, mode)
 
-- geometry
-- geometry.points
-- geometry.regPoly
-- geometry.reinforcement
-- math
-- position
-- position.cuboid
-- position.rectangle
-- position.triangle
-- transform
+Finds the central point (avg.) between the given points.
 
-### `Profiles` — 2D profiles, surfaces, sections
+---
 
-- beadsBits.corner
-- connections
-- curve
-- shapes
-- shapes.ellipse
-- shapes.rectangle
-- shapes.square
-- shapes.triangle
-- structure.arch
-- structure.foil
-- structure.mesh
-- text
-- trim
-- trim.aranea
+### calcs.geometry.regPoly
 
-![swcad-js demo - router-bits](./static/img/router-bits-1.png "swcad-js demo - router-bits")
+Calculations around regular (equiangular + equilateral) polygons.
 
-### `ProfileSpec` — 2D profiles conforming to specs
+#### apothemFromCircumradius(circumradius, numSides)
 
-- lumber
-- paper
+Calculates apothem from circumradius and # of sides.
 
-### `Components` — Basic reusable 3D units
+#### apothemFromSideLength(sideLength, numSides)
 
-- beadsBits
-- beadsBits.corner
-- mesh
-- moulding
-- routedShapes
-- text
+Calculates apothem from side length and # of sides.
 
-![swcad-js demo - routed shapes 1](./static/img/routed-shapes-1.png "swcad-js demo - routed shapes 1")
+#### circumradiusFromApothem(apothem, numSides)
 
-![swcad-js demo - routed shapes 2](./static/img/routed-shapes-2.png "swcad-js demo - routed shapes 2")
+Calculates circumradius from apothem and # of sides.
 
-### `ComponentSpec` — 3D components conforming to specs
+#### circumradiusFromSideLength(sideLength, numSides)
 
-- brick
-- crafts
-- tile
+Calculates circumradius from side length and # of sides.
 
-### `Models` — Complex 3D models
+#### interiorAngle(numSides)
 
-- arch
-- foil
-- structure
-- structure.wall
-- structure.wallEntryway
+Calculates interior angle from # of sides.
 
-### `Utils` — Auxiliary utilities
+#### sideLengthFromApothem(apothem, numSides)
 
-- colors
-- layout
-- palette
+Calculates side length from apothem and # of sides.
 
-## Structure
+#### sideLengthFromCircumRadius(circumradius, numSides)
 
-![swcad-js demo - joist](./static/img/joist-1.png "swcad-js demo - joist")
+Calculates side length from circumradius and # of sides.
 
-Internally, the library is split into several packages that follow the main API divisions:
+---
 
-`swcad-js-calcs` — Calculations of all sorts
+### calcs.geometry.reinforcement
 
-`swcad-js-component-spec` — 3D components conforming to specs
+Calculations for reinforcement lines within a shape.
 
-`swcad-js-components` — Basic reusable 3D units
+#### reinforcedRectangle(opts)
 
-`swcad-js-core` — Integrates all these packages together into the final package
+Calculates points and lines for a rectangule with internal reinforcements.
 
-`swcad-js-data` — Static info
+---
 
-`swcad-js-models` — Complex 3D models
+### calcs.math
 
-`swcad-js-profile-spec` — 2D profiles conforming to specs
+Various math calculations.
 
-`swcad-js-profiles` — 2D profiles, surfaces, sections
+#### arrayCartesianProduct(a, b)
 
-`swcad-js-utils` — Auxiliary utilities
+Collection of all possible ordered pairs (a, b) such that the first element a belongs to set A and the second element b belongs to set B.
 
+#### factorize(num)
+
+Given an integer, calculates two integers that are factors for a containing rectangle around the input.
+
+#### getRandomInt(min, max)
+
+Gets a random integer between `min` and `max`. The maximum is exclusive and the minimum is inclusive.
+
+#### inchesToMm(numInches)
+
+Converts distance in inches to mm.
+
+#### isEven(n)
+
+Checks if a given integer is even.
+
+#### isOdd(n)
+
+Checks if a given integer is odd.
+
+#### mmToInches(numMils)
+
+Converts distance in mm to inches.
+
+---
+
+### calcs.position
+
+Functions leveraging JSCAD to get position data or move 2D/3D geometries.
+
+#### alignModes
+
+Common alignment modes (for JSCAD's `align()` function).
+
+#### measure()
+
+Measures key info, and presents it in a readable manner, like `{ size: { x: 99, y: 99, z: 99 }, min: { ... }, max: { ... } }`.
+
+#### ctr(inGeom, pt)
+
+Centers the given geometry, relative to the given point (defaults to [0,0,0]).
+
+#### ctrMax(inGeom, pt)
+
+Centers the given geometry (maximum Z), relative to the given point (defaults to [0,0,0]).
+
+#### ctrMin(inGeom, pt)
+
+Centers the given geometry (minimum Z), relative to the given point (defaults to [0,0,0]).
+
+#### findLongAxis(size)
+
+Finds long axis of a co-ord set.
+
+#### getGeomCoords(geom)
+
+Gets 3D bounding coordinates of a given geometry.
+
+---
+
+### calcs.transform
+
+Functions leveraging JSCAD to transform 2D/3D geometries.
+
+#### bisect3d(opts, geom)
+
+Cuts a given geometry in half.
+
+#### cutCircularSlice(opts, geom)
+
+Cuts a slice of an object.
+
+#### cloneQuadrant(inShape)
+
+Clones one quadrant of the given 2D shape into all quadrants.
+
+#### cutQuadrant(inShape)
+
+Cuts one quadrant of the given 2D shape.
+
+#### stack(opts, geoms)
+
+Stacks geometries on top of each other, starting from the bottom.
+
+---
+
+<br/>
+
+### PROFILES
+
+Modelling functions that generate 2D geometries.
+
+---
+
+### profiles.beadsBits
+
+Modelling functions that generate 2D beads (basic shapes mainly for additive `hull` functions) and bits (basic shapes for subtractive `hull` functions).
+
+---
+
+### profiles.beadsBits.corner
+
+Modelling functions that generate 2D shapes which emulate woodworking router bits.
+
+#### chamfer(opts)
+
+Generates a 2D chamfer bit.
+
+#### cove(opts)
+
+Generates a 2D cove bit.
+
+#### rabbet(opts)
+
+Generates a 2D rabbet bit.
+
+#### roundOver(opts)
+
+Generates a 2D round-Over bit.
+
+---
+
+### profiles.connections
+
+Modelling functions that generate connecting and interlocking 2D parts.
+
+#### boltCircle(opts)
+
+Generates bolt circle connectors.
+
+#### dovetail(opts)
+
+Generates dovetail connectors.
+
+#### dovetailRow(opts)
+
+Generates pieces connected by a row of dovetails.
+
+#### ellipse(opts)
+
+Generates ellipse connectors.
+
+#### pegboard(opts)
+
+Generates pegboard connectors.
+
+#### polygon(opts)
+
+Generates polygon connectors.
+
+#### rightAngleTab(opts)
+
+Generates right-angle tab connectors.
+
+#### rightAngleTabRow(opts)
+
+Generates pieces connected by a row of right-angle tabs.
+
+#### tab(opts)
+
+Generates tab connectors.
+
+#### tabRow(opts)
+
+Generates pieces connected by a row of tabs.
+
+---
+
+### profiles.connections.jointPanel
+
+Modelling functions that generate connecting and interlocking 2D panels.
+
+#### oneJointRectPanel(opts)
+
+Generates a set of two interlocking panels, made by dividing a rectangle in half with the given options.
+
+#### twoJointRectPanel(opts)
+
+Generates a set of four interlocking panels, made by dividing a rectangle into quarters with the given options.
+
+---
+
+### profiles.mesh
+
+Modelling functions that generate 2D perforated shapes.
+
+#### meshPanel(opts)
+
+Generates a 2D mesh panel with the given options.
+
+---
+
+### profiles.reinforcements
+
+Modelling functions that generate 2D shapes for reinforcements.
+
+#### reinforcedRect(opts)
+
+Generates a 2D reinforced rectangle with the given options for reinforcement styles.
+
+---
+
+### profiles.reinforcements.boxCurve
+
+Modelling functions that generate curved 2D reinforcements for right-angle corners.
+
+#### boxCurveHalf(opts)
+
+Generates a curved 2D reinforcement covering three sides (two corners) of a rectangle.
+
+#### boxCurveQuarter(opts)
+
+Generates a curved 2D reinforcement covering two sides (one corner) of a rectangle.
+
+---
+
+### profiles.text
+
+Modelling functions that generate 2D text.
+
+#### basicText(param0)
+
+Generates a simple 2D line of text.
+
+---
+
+<br/>
+
+### COMPONENTS
+
+Modelling functions that generate 3D geometries.
+
+#### componentLine(opts)
+
+Generates a line connecting several repetitions of the given component. Accepts various options for spacing and offsets.
+
+---
+
+### components.beadsBits
+
+Modelling functions that generate 3D beads (basic shapes mainly for additive `hull` functions) and bits (basic shapes for subtractive `hull` functions).
+
+#### basic30DegBead(baseThickness, width)
+
+Generates an elliptical cylinder bead, with a 30-degree slope.
+
+#### basic45DegBead(baseThickness, width)
+
+Generates an elliptical cylinder bead, with a 45-degree slope.
+
+#### interface30DegProfileBeads(baseThickness, smWidth, mdWidth, lgWidth)
+
+Generates a set of elliptical cylinder beads for interface connections.
+
+---
+
+### components.beadsBits.corner
+
+Modelling functions that generate 3D geometries which emulate woodworking router bits.
+
+#### chamfer(opts)
+
+Generates a 3D chamfer bit.
+
+#### cove(opts)
+
+Generates a 3D cove bit.
+
+#### rabbet(opts)
+
+Generates a 3D rabbet bit.
+
+#### roundOver(opts)
+
+Generates a 3D round-over bit.
+
+---
+
+### components.fittings
+
+Modelling functions that generate 3D fittings that integrate with round/rectangular profiles (dowels, dimensional lumber, etc).
+
+#### doubleRoundFitting(opts)
+
+Generates a fitting that accomodates 2 round dowels, plus space for 2 side dowels.
+
+#### invRoundFittingCutProfile(opts)
+
+Generates a 2D cutaway profile for inverted round fittings.
+
+#### inverseRoundFitting(opts)
+
+Generates a fitting for dowels, inverted for 3D-printing from the bottom (triangular groove).
+
+#### rectFittingCutProfile(opts)
+
+Generates a 2D cutaway profile for square/rectangular fittings.
+
+#### rectangularFitting(opts)
+
+Generates a fitting for square/rectangular dowels.
+
+#### roundFitting(opts)
+
+Generates a fitting for dowels (round groove).
+
+#### roundFittingCutProfile(opts)
+
+Generates a 2D cutaway profile for round fittings.
+
+---
+
+### components.mesh
+
+Modelling functions that generate perforated 3D shapes.
+
+#### meshPanel(opts)
+
+Generates a flat 3D mesh panel with the given options.
+
+---
+
+### components.reinforcements
+
+Modelling functions that generate 3D reinforcements.
+
+#### reinforcedJoist(opts)
+
+Generates an open web joist with the given options for reinforcement styles.
+
+#### reinforcedRectPanel(opts)
+
+Generates a reinforced 3D rectangular panel with the given options for reinforcement styles.
+
+---
+
+### components.reinforcements.boxSupport
+
+Modelling functions that generate curved 3D reinforcements for right-angle corners.
+
+#### boxSupportHalf(opts)
+
+Generates a curved 3D reinforcement covering three sides (two corners) of a rectangle.
+
+#### boxSupportQuarter(opts)
+
+Generates a curved 3D reinforcement covering two sides (one corner) of a rectangle.
+
+---
+
+### components.routedShapes
+
+Modelling functions that generate 3D geometries which have been "routed" with bits from `components.beadsBits.corner`.
+
+#### routedCuboid(opts)
+
+Generates a routed cuboid with the given options for top and bottom edges.
+
+#### routedCylinderElliptic(opts)
+
+Generates a routed elliptical cylinder with the given options for top and bottom edges.
+
+---
+
+### components.text
+
+Modelling functions that generate 3D text.
+
+#### engravedText(opts)
+
+Generates a 3D line of text, with engraved profile.
+
+#### flatText(param0)
+
+Generates a simple 3D line of text.
+
+#### textPanel(opts)
+
+Generates a rectangular panel with engraved text.

@@ -1,26 +1,13 @@
 "use strict"
 
 /**
- * Box Supports
+ * Modelling functions that generate curved 3D reinforcements for right-angle corners.
  * @namespace boxSupport
  * @memberof components.reinforcements
  * @author R. J. Salvador (Salvador Workshop)
  */
 
 const boxSupportInit = ({ jscad, swcadJs }) => {
-    const {
-        ellipse,
-        rectangle,
-    } = jscad.primitives
-
-    const {
-        align,
-    } = jscad.transforms
-
-    const {
-        subtract,
-    } = jscad.booleans
-
     const { extrudeLinear } = jscad.extrusions
 
     const {
@@ -249,7 +236,7 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
     * ------------------------------------- */
 
     /**
-     * New Model 1
+     * Generates a curved 3D reinforcement covering two sides (one corner) of a rectangle.
      * @memberof components.reinforcements.boxSupport
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
@@ -280,7 +267,7 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * New Model 2
+     * Generates a curved 3D reinforcement covering three sides (two corners) of a rectangle.
      * @memberof components.reinforcements.boxSupport
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]

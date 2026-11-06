@@ -1,7 +1,7 @@
 "use strict"
 
 /**
- * Various math functions
+ * Various math calculations.
  * @memberof calcs
  * @namespace math
  */
@@ -22,7 +22,7 @@ const mathUtils = ({ jscad, swcadJs }) => {
 
     return {
         /**
-         * Checks if a given integer is even
+         * Checks if a given integer is even.
          * @param {number} n - an integer
          * @returns {boolean} true if even, false if not
          * @memberof calcs.math
@@ -31,7 +31,7 @@ const mathUtils = ({ jscad, swcadJs }) => {
             return n % 2 == 0;
         },
         /**
-         * Checks if a given integer is odd
+         * Checks if a given integer is odd.
          * @memberof calcs.math
          * @param {number} n - an integer
          * @returns {boolean} true if odd, false if not
@@ -40,14 +40,14 @@ const mathUtils = ({ jscad, swcadJs }) => {
             return Math.abs(n % 2) == 1;
         },
         /**
-         * Converts distance in inches to mm
+         * Converts distance in inches to mm.
          * @memberof calcs.math
          * @param {number} numInches - distance in inches
          * @returns {number} distance in mm
          */
         inchesToMm: (numInches) => numInches * INCHES_MM_FACTOR,
         /**
-         * Converts distance in mm to inches
+         * Converts distance in mm to inches.
          * @memberof calcs.math
          * @param {number} numMils - distance in mm
          * @returns {number} distance in inches
@@ -69,7 +69,7 @@ const mathUtils = ({ jscad, swcadJs }) => {
             return [int1, int2 + 1]
         },
         /**
-         * Gets a random integer between `min` and `max`. The maximum is exclusive and the minimum is inclusive
+         * Gets a random integer between `min` and `max`. The maximum is exclusive and the minimum is inclusive.
          * @param {number} min
          * @param {number} max
          * @returns {number} random integer
