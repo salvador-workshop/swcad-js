@@ -58,254 +58,258 @@
 <h3>NPM package</h3>
 <p><a href="https://www.npmjs.com/package/swcad-js">npmjs.com/package/swcad-js</a></p>
 <p><img src="./static/img/entryways-1.png" alt="swcad-js demo - walls-entryway" title="swcad-js demo - walls-entryway"></p>
-<h2>Usage</h2>
-<p>Works with JSCAD, however you consume it.</p>
-<p>Try copying the example below into <code>sw-jscad-viewer</code> (<a href="https://sw-jscad-viewer.netlify.app">sw-jscad-viewer.netlify.app</a>).</p>
-<pre class="prettyprint source lang-javascript"><code>/* ----------------------------------------
- * Initialization
- * ------------------------------------- */
-
-const jscad = require('@jscad/modeling')
-
-const { cuboid } = jscad.primitives
-const { translate } = jscad.transforms
-
-const swcadJs = require('swcad-js').init({ jscad });
-console.log('swcadJs', swcadJs)
-
-const {
-  math,
-  transform,
-} = swcadJs.calcs
-
-const {
-  colors,
-} = swcadJs.utils
-
-const {
-  openWebJoist,
-} = swcadJs.components
-
-const {
-  routedCuboid,
-} = swcadJs.components.routedShapes
-
-
-//==============================================================================
-
-
-/* ----------------------------------------
- * Model / Scene Prep
- * ------------------------------------- */
-
-// &quot;INTRO&quot; PLINTH
-
-const introPlinthSize = [
-  math.inchesToMm(4),
-  math.inchesToMm(4),
-  math.inchesToMm(5),
-]
-
-const endBlockSize = [
-  introPlinthSize[0],
-  introPlinthSize[1],
-  introPlinthSize[2] / 4,
-]
-
-const midBlockOverhang = math.inchesToMm(5 / 8)
-
-const midBlockSize = [
-  introPlinthSize[0] - (midBlockOverhang * 2),
-  introPlinthSize[1] - (midBlockOverhang * 2),
-  introPlinthSize[2] / 2,
-]
-
-// Midsection is built with jscad
-// Top and Bottom ends are built with swcad-js
-
-const mid = cuboid({ size: midBlockSize })
-
-const baseOpts = {
-  size: endBlockSize,
-  topBit: 'chamfer',
-  topBitOpts: {
-    radius1: 6,
-    radius2: 8,
-    offset1: 3,
-    offset2: 2,
-    offset3: 3,
-    offset4: 2,
-  },
-  bottomBit: 'none',
-  bottomBitOpts: {
-  },
-}
-
-const baseData = routedCuboid(baseOpts)
-const base = baseData[0]
-
-const topOpts = {
-  size: endBlockSize,
-  topBit: 'roundOver',
-  topBitOpts: {
-    radius1: 3,
-    radius2: 4,
-    offset1: 1.5,
-    offset2: 1.5,
-  },
-  bottomBit: 'cove',
-  bottomBitOpts: {
-    radius1: 6,
-    radius2: 8,
-    offset1: 2.5,
-    offset2: 2.5,
-    offset3: 2.5,
-    offset4: 2.5,
-  },
-}
-
-const topData = routedCuboid(topOpts)
-const top = topData[0]
-
-// The library also has helper functions
-
-const introPlinth = transform.stack({}, [base, mid, top])
-
-// OPEN WEB JOIST
-
-const openWebJoistOpts1 = {
-  length: math.inchesToMm(6),
-  width: math.inchesToMm(1.25),
-}
-
-const openWebJoistOpts2 = {
-  length: math.inchesToMm(6.5),
-  width: math.inchesToMm(1.5),
-  reinforcementLevel: 2
-}
-
-const openWebJoistData1 = openWebJoist(openWebJoistOpts1)
-const openWebJoistData2 = openWebJoist(openWebJoistOpts2)
-
-const openWebJoistModel1 = openWebJoistData1[0]
-const openWebJoistModel2 = openWebJoistData2[0]
-
-
-//==============================================================================
-
-
-/* ----------------------------------------
- * Main function for JSCAD
- * ------------------------------------- */
-
-
-function main() {
-  const spaceUnit = math.inchesToMm(4)
-
-  return [
-    translate([spaceUnit * 0, spaceUnit * 0, spaceUnit * 0], introPlinth),
-    translate([spaceUnit * 1, spaceUnit * 0, spaceUnit * 0], openWebJoistModel1),
-    translate([spaceUnit * 2, spaceUnit * 0, spaceUnit * 0], openWebJoistModel2),
-  ]
-}
-
-module.exports = { main }
-</code></pre>
-<p><img src="./static/img/plinth-joist-1.png" alt="swcad-js demo - plinth + joist" title="swcad-js demo - plinth + joist"></p>
-<h2>API</h2>
-<p><em>as of version 0.12.5</em></p>
-<p>The <code>swcad-js</code> library's main functional divisions:</p>
-<h3><code>Data</code> — Static info</h3>
-<ul>
-<li>constants</li>
-<li>functions</li>
-<li>specifications</li>
-<li>standards</li>
-<li>standards.crafts</li>
-<li>standards.lumber</li>
-<li>standards.masonry</li>
-<li>standards.paper</li>
-<li>standards.tiles</li>
-</ul>
-<h3><code>Calcs</code> — Calculations of all sorts</h3>
-<ul>
-<li>geometry</li>
-<li>geometry.points</li>
-<li>geometry.regPoly</li>
-<li>geometry.reinforcement</li>
-<li>math</li>
-<li>position</li>
-<li>position.cuboid</li>
-<li>position.rectangle</li>
-<li>position.triangle</li>
-<li>transform</li>
-</ul>
-<h3><code>Profiles</code> — 2D profiles, surfaces, sections</h3>
-<ul>
-<li>beadsBits.corner</li>
-<li>connections</li>
-<li>curve</li>
-<li>shapes</li>
-<li>shapes.ellipse</li>
-<li>shapes.rectangle</li>
-<li>shapes.square</li>
-<li>shapes.triangle</li>
-<li>structure.arch</li>
-<li>structure.foil</li>
-<li>structure.mesh</li>
-<li>text</li>
-<li>trim</li>
-<li>trim.aranea</li>
-</ul>
-<p><img src="./static/img/router-bits-1.png" alt="swcad-js demo - router-bits" title="swcad-js demo - router-bits"></p>
-<h3><code>ProfileSpec</code> — 2D profiles conforming to specs</h3>
-<ul>
-<li>lumber</li>
-<li>paper</li>
-</ul>
-<h3><code>Components</code> — Basic reusable 3D units</h3>
-<ul>
-<li>beadsBits</li>
-<li>beadsBits.corner</li>
-<li>mesh</li>
-<li>moulding</li>
-<li>routedShapes</li>
-<li>text</li>
-</ul>
-<p><img src="./static/img/routed-shapes-1.png" alt="swcad-js demo - routed shapes 1" title="swcad-js demo - routed shapes 1"></p>
-<p><img src="./static/img/routed-shapes-2.png" alt="swcad-js demo - routed shapes 2" title="swcad-js demo - routed shapes 2"></p>
-<h3><code>ComponentSpec</code> — 3D components conforming to specs</h3>
-<ul>
-<li>brick</li>
-<li>crafts</li>
-<li>tile</li>
-</ul>
-<h3><code>Models</code> — Complex 3D models</h3>
-<ul>
-<li>arch</li>
-<li>foil</li>
-<li>structure</li>
-<li>structure.wall</li>
-<li>structure.wallEntryway</li>
-</ul>
-<h3><code>Utils</code> — Auxiliary utilities</h3>
-<ul>
-<li>colors</li>
-<li>layout</li>
-<li>palette</li>
-</ul>
-<h2>Structure</h2>
-<p><img src="./static/img/joist-1.png" alt="swcad-js demo - joist" title="swcad-js demo - joist"></p>
-<p>Internally, the library is split into several packages that follow the main API divisions:</p>
-<p><code>swcad-js-calcs</code> — Calculations of all sorts</p>
-<p><code>swcad-js-component-spec</code> — 3D components conforming to specs</p>
-<p><code>swcad-js-components</code> — Basic reusable 3D units</p>
-<p><code>swcad-js-core</code> — Integrates all these packages together into the final package</p>
-<p><code>swcad-js-data</code> — Static info</p>
-<p><code>swcad-js-models</code> — Complex 3D models</p>
-<p><code>swcad-js-profile-spec</code> — 2D profiles conforming to specs</p>
-<p><code>swcad-js-profiles</code> — 2D profiles, surfaces, sections</p>
-<p><code>swcad-js-utils</code> — Auxiliary utilities</p></article>
+<h2>SWCAD-JS API</h2>
+<p>...</p>
+<hr>
+<br/>
+<h3>DATA</h3>
+<p>Mostly math constants and common dimensions/options.</p>
+<h3>data.constants</h3>
+<p>Numeric constants and ratios.</p>
+<h3>data.standards</h3>
+<p>Dimensions and options used throughout the SWCAD-JS system.</p>
+<hr>
+<br/>
+<h3>CALCS</h3>
+<p>Math calculations and basic JSCAD operations.</p>
+<h3>calcs.geometry</h3>
+<p>Geometric calculations in 2D/3D space.</p>
+<h4>angleOfTwoPtLine(startPt, endPt, mode)</h4>
+<p>Returns angle of a two-point line.</p>
+<h4>coordDiffBetweenPoints(startPt, endPt)</h4>
+<p>Calculates co-ordinate difference between two points.</p>
+<h4>distanceBetweenPoints(startPt, endPt)</h4>
+<p>Calculates distance between two co-ordinate points.</p>
+<h4>getSquarePtsInArea(x, y, distance, centrePoints)</h4>
+<p>Gets square points in area.</p>
+<h4>getTriangularPtsInArea(x, y, distance, centrePoints)</h4>
+<p>Gets triangular points in area.</p>
+<h4>midpointBetweenPoints(startPt, endPt)</h4>
+<p>Calculates midpoint between two co-ordinate points.</p>
+<h4>pointFromAngleAndDist(angleRad, dist)</h4>
+<p>Gets a point from a given angle and distance, starting from [0, 0].</p>
+<hr>
+<h3>calcs.geometry.points</h3>
+<p>Calculations around sets of co-ordinate points in 2D/3D space.</p>
+<h4>ptCentroid(points, mode)</h4>
+<p>Finds the central point (avg.) between the given points.</p>
+<hr>
+<h3>calcs.geometry.regPoly</h3>
+<p>Calculations around regular (equiangular + equilateral) polygons.</p>
+<h4>apothemFromCircumradius(circumradius, numSides)</h4>
+<p>Calculates apothem from circumradius and # of sides.</p>
+<h4>apothemFromSideLength(sideLength, numSides)</h4>
+<p>Calculates apothem from side length and # of sides.</p>
+<h4>circumradiusFromApothem(apothem, numSides)</h4>
+<p>Calculates circumradius from apothem and # of sides.</p>
+<h4>circumradiusFromSideLength(sideLength, numSides)</h4>
+<p>Calculates circumradius from side length and # of sides.</p>
+<h4>interiorAngle(numSides)</h4>
+<p>Calculates interior angle from # of sides.</p>
+<h4>sideLengthFromApothem(apothem, numSides)</h4>
+<p>Calculates side length from apothem and # of sides.</p>
+<h4>sideLengthFromCircumRadius(circumradius, numSides)</h4>
+<p>Calculates side length from circumradius and # of sides.</p>
+<hr>
+<h3>calcs.geometry.reinforcement</h3>
+<p>Calculations for reinforcement lines within a shape.</p>
+<h4>reinforcedRectangle(opts)</h4>
+<p>Calculates points and lines for a rectangule with internal reinforcements.</p>
+<hr>
+<h3>calcs.math</h3>
+<p>Various math calculations.</p>
+<h4>arrayCartesianProduct(a, b)</h4>
+<p>Collection of all possible ordered pairs (a, b) such that the first element a belongs to set A and the second element b belongs to set B.</p>
+<h4>factorize(num)</h4>
+<p>Given an integer, calculates two integers that are factors for a containing rectangle around the input.</p>
+<h4>getRandomInt(min, max)</h4>
+<p>Gets a random integer between <code>min</code> and <code>max</code>. The maximum is exclusive and the minimum is inclusive.</p>
+<h4>inchesToMm(numInches)</h4>
+<p>Converts distance in inches to mm.</p>
+<h4>isEven(n)</h4>
+<p>Checks if a given integer is even.</p>
+<h4>isOdd(n)</h4>
+<p>Checks if a given integer is odd.</p>
+<h4>mmToInches(numMils)</h4>
+<p>Converts distance in mm to inches.</p>
+<hr>
+<h3>calcs.position</h3>
+<p>Functions leveraging JSCAD to get position data or move 2D/3D geometries.</p>
+<h4>alignModes</h4>
+<p>Common alignment modes (for JSCAD's <code>align()</code> function).</p>
+<h4>measure()</h4>
+<p>Measures key info, and presents it in a readable manner, like <code>{ size: { x: 99, y: 99, z: 99 }, min: { ... }, max: { ... } }</code>.</p>
+<h4>ctr(inGeom, pt)</h4>
+<p>Centers the given geometry, relative to the given point (defaults to [0,0,0]).</p>
+<h4>ctrMax(inGeom, pt)</h4>
+<p>Centers the given geometry (maximum Z), relative to the given point (defaults to [0,0,0]).</p>
+<h4>ctrMin(inGeom, pt)</h4>
+<p>Centers the given geometry (minimum Z), relative to the given point (defaults to [0,0,0]).</p>
+<h4>findLongAxis(size)</h4>
+<p>Finds long axis of a co-ord set.</p>
+<h4>getGeomCoords(geom)</h4>
+<p>Gets 3D bounding coordinates of a given geometry.</p>
+<hr>
+<h3>calcs.transform</h3>
+<p>Functions leveraging JSCAD to transform 2D/3D geometries.</p>
+<h4>bisect3d(opts, geom)</h4>
+<p>Cuts a given geometry in half.</p>
+<h4>cutCircularSlice(opts, geom)</h4>
+<p>Cuts a slice of an object.</p>
+<h4>cloneQuadrant(inShape)</h4>
+<p>Clones one quadrant of the given 2D shape into all quadrants.</p>
+<h4>cutQuadrant(inShape)</h4>
+<p>Cuts one quadrant of the given 2D shape.</p>
+<h4>stack(opts, geoms)</h4>
+<p>Stacks geometries on top of each other, starting from the bottom.</p>
+<hr>
+<br/>
+<h3>PROFILES</h3>
+<p>Modelling functions that generate 2D geometries.</p>
+<hr>
+<h3>profiles.beadsBits</h3>
+<p>Modelling functions that generate 2D beads (basic shapes mainly for additive <code>hull</code> functions) and bits (basic shapes for subtractive <code>hull</code> functions).</p>
+<hr>
+<h3>profiles.beadsBits.corner</h3>
+<p>Modelling functions that generate 2D shapes which emulate woodworking router bits.</p>
+<h4>chamfer(opts)</h4>
+<p>Generates a 2D chamfer bit.</p>
+<h4>cove(opts)</h4>
+<p>Generates a 2D cove bit.</p>
+<h4>rabbet(opts)</h4>
+<p>Generates a 2D rabbet bit.</p>
+<h4>roundOver(opts)</h4>
+<p>Generates a 2D round-Over bit.</p>
+<hr>
+<h3>profiles.connections</h3>
+<p>Modelling functions that generate connecting and interlocking 2D parts.</p>
+<h4>boltCircle(opts)</h4>
+<p>Generates bolt circle connectors.</p>
+<h4>dovetail(opts)</h4>
+<p>Generates dovetail connectors.</p>
+<h4>dovetailRow(opts)</h4>
+<p>Generates pieces connected by a row of dovetails.</p>
+<h4>ellipse(opts)</h4>
+<p>Generates ellipse connectors.</p>
+<h4>pegboard(opts)</h4>
+<p>Generates pegboard connectors.</p>
+<h4>polygon(opts)</h4>
+<p>Generates polygon connectors.</p>
+<h4>rightAngleTab(opts)</h4>
+<p>Generates right-angle tab connectors.</p>
+<h4>rightAngleTabRow(opts)</h4>
+<p>Generates pieces connected by a row of right-angle tabs.</p>
+<h4>tab(opts)</h4>
+<p>Generates tab connectors.</p>
+<h4>tabRow(opts)</h4>
+<p>Generates pieces connected by a row of tabs.</p>
+<hr>
+<h3>profiles.connections.jointPanel</h3>
+<p>Modelling functions that generate connecting and interlocking 2D panels.</p>
+<h4>oneJointRectPanel(opts)</h4>
+<p>Generates a set of two interlocking panels, made by dividing a rectangle in half with the given options.</p>
+<h4>twoJointRectPanel(opts)</h4>
+<p>Generates a set of four interlocking panels, made by dividing a rectangle into quarters with the given options.</p>
+<hr>
+<h3>profiles.mesh</h3>
+<p>Modelling functions that generate 2D perforated shapes.</p>
+<h4>meshPanel(opts)</h4>
+<p>Generates a 2D mesh panel with the given options.</p>
+<hr>
+<h3>profiles.reinforcements</h3>
+<p>Modelling functions that generate 2D shapes for reinforcements.</p>
+<h4>reinforcedRect(opts)</h4>
+<p>Generates a 2D reinforced rectangle with the given options for reinforcement styles.</p>
+<hr>
+<h3>profiles.reinforcements.boxCurve</h3>
+<p>Modelling functions that generate curved 2D reinforcements for right-angle corners.</p>
+<h4>boxCurveHalf(opts)</h4>
+<p>Generates a curved 2D reinforcement covering three sides (two corners) of a rectangle.</p>
+<h4>boxCurveQuarter(opts)</h4>
+<p>Generates a curved 2D reinforcement covering two sides (one corner) of a rectangle.</p>
+<hr>
+<h3>profiles.text</h3>
+<p>Modelling functions that generate 2D text.</p>
+<h4>basicText(param0)</h4>
+<p>Generates a simple 2D line of text.</p>
+<hr>
+<br/>
+<h3>COMPONENTS</h3>
+<p>Modelling functions that generate 3D geometries.</p>
+<h4>componentLine(opts)</h4>
+<p>Generates a line connecting several repetitions of the given component. Accepts various options for spacing and offsets.</p>
+<hr>
+<h3>components.beadsBits</h3>
+<p>Modelling functions that generate 3D beads (basic shapes mainly for additive <code>hull</code> functions) and bits (basic shapes for subtractive <code>hull</code> functions).</p>
+<h4>basic30DegBead(baseThickness, width)</h4>
+<p>Generates an elliptical cylinder bead, with a 30-degree slope.</p>
+<h4>basic45DegBead(baseThickness, width)</h4>
+<p>Generates an elliptical cylinder bead, with a 45-degree slope.</p>
+<h4>interface30DegProfileBeads(baseThickness, smWidth, mdWidth, lgWidth)</h4>
+<p>Generates a set of elliptical cylinder beads for interface connections.</p>
+<hr>
+<h3>components.beadsBits.corner</h3>
+<p>Modelling functions that generate 3D geometries which emulate woodworking router bits.</p>
+<h4>chamfer(opts)</h4>
+<p>Generates a 3D chamfer bit.</p>
+<h4>cove(opts)</h4>
+<p>Generates a 3D cove bit.</p>
+<h4>rabbet(opts)</h4>
+<p>Generates a 3D rabbet bit.</p>
+<h4>roundOver(opts)</h4>
+<p>Generates a 3D round-over bit.</p>
+<hr>
+<h3>components.fittings</h3>
+<p>Modelling functions that generate 3D fittings that integrate with round/rectangular profiles (dowels, dimensional lumber, etc).</p>
+<h4>doubleRoundFitting(opts)</h4>
+<p>Generates a fitting that accomodates 2 round dowels, plus space for 2 side dowels.</p>
+<h4>invRoundFittingCutProfile(opts)</h4>
+<p>Generates a 2D cutaway profile for inverted round fittings.</p>
+<h4>inverseRoundFitting(opts)</h4>
+<p>Generates a fitting for dowels, inverted for 3D-printing from the bottom (triangular groove).</p>
+<h4>rectFittingCutProfile(opts)</h4>
+<p>Generates a 2D cutaway profile for square/rectangular fittings.</p>
+<h4>rectangularFitting(opts)</h4>
+<p>Generates a fitting for square/rectangular dowels.</p>
+<h4>roundFitting(opts)</h4>
+<p>Generates a fitting for dowels (round groove).</p>
+<h4>roundFittingCutProfile(opts)</h4>
+<p>Generates a 2D cutaway profile for round fittings.</p>
+<hr>
+<h3>components.mesh</h3>
+<p>Modelling functions that generate perforated 3D shapes.</p>
+<h4>meshPanel(opts)</h4>
+<p>Generates a flat 3D mesh panel with the given options.</p>
+<hr>
+<h3>components.reinforcements</h3>
+<p>Modelling functions that generate 3D reinforcements.</p>
+<h4>reinforcedJoist(opts)</h4>
+<p>Generates an open web joist with the given options for reinforcement styles.</p>
+<h4>reinforcedRectPanel(opts)</h4>
+<p>Generates a reinforced 3D rectangular panel with the given options for reinforcement styles.</p>
+<hr>
+<h3>components.reinforcements.boxSupport</h3>
+<p>Modelling functions that generate curved 3D reinforcements for right-angle corners.</p>
+<h4>boxSupportHalf(opts)</h4>
+<p>Generates a curved 3D reinforcement covering three sides (two corners) of a rectangle.</p>
+<h4>boxSupportQuarter(opts)</h4>
+<p>Generates a curved 3D reinforcement covering two sides (one corner) of a rectangle.</p>
+<hr>
+<h3>components.routedShapes</h3>
+<p>Modelling functions that generate 3D geometries which have been &quot;routed&quot; with bits from <code>components.beadsBits.corner</code>.</p>
+<h4>routedCuboid(opts)</h4>
+<p>Generates a routed cuboid with the given options for top and bottom edges.</p>
+<h4>routedCylinderElliptic(opts)</h4>
+<p>Generates a routed elliptical cylinder with the given options for top and bottom edges.</p>
+<hr>
+<h3>components.text</h3>
+<p>Modelling functions that generate 3D text.</p>
+<h4>engravedText(opts)</h4>
+<p>Generates a 3D line of text, with engraved profile.</p>
+<h4>flatText(param0)</h4>
+<p>Generates a simple 3D line of text.</p>
+<h4>textPanel(opts)</h4>
+<p>Generates a rectangular panel with engraved text.</p></article>
     </section>
 
 
@@ -316,13 +320,13 @@ module.exports = { main }
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.fittings.html">components.fittings</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.reinforcements.html">components.reinforcements</a></li><li><a href="components.reinforcements.boxSupport.html">components.reinforcements.boxSupport</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="profiles.beadsBits.html">profiles.beadsBits</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.connections.jointPanel.html">profiles.connections.jointPanel</a></li><li><a href="profiles.mesh.html">profiles.mesh</a></li><li><a href="profiles.reinforcements.html">profiles.reinforcements</a></li><li><a href="profiles.reinforcements.boxCurve.html">profiles.reinforcements.boxCurve</a></li><li><a href="profiles.text.html">profiles.text</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.fittings.html">components.fittings</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.reinforcements.html">components.reinforcements</a></li><li><a href="components.reinforcements.boxSupport.html">components.reinforcements.boxSupport</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.html">profiles.beadsBits</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.connections.jointPanel.html">profiles.connections.jointPanel</a></li><li><a href="profiles.mesh.html">profiles.mesh</a></li><li><a href="profiles.reinforcements.html">profiles.reinforcements</a></li><li><a href="profiles.reinforcements.boxCurve.html">profiles.reinforcements.boxCurve</a></li><li><a href="profiles.text.html">profiles.text</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu Nov 05 2026 12:29:37 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Nov 06 2026 12:28:28 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

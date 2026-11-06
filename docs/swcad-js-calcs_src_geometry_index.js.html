@@ -32,7 +32,7 @@ const geoRegPolyModule = require('./geo-reg-poly');
 const reinforcementModule = require('./reinforcement');
 
 /**
- * Finds the central point (avg.) between the given points
+ * Finds the central point (avg.) between the given points.
  * @param {number[]} points - x and y coordinates
  * @param {string} mode - '3d' (default) or '2d'
  * @memberof calcs.geometry.points
@@ -66,7 +66,7 @@ const ptCentroid = (points, mode = '3d') => {
 }
 
 /**
- * Calculates co-ordinate difference between two points
+ * Calculates co-ordinate difference between two points.
  * @param {number[]} startPt - starting 2D coordinates
  * @param {number[]} endPt - ending 2D coordinates
  * @returns {number[]} 2D coordinates of diff
@@ -80,7 +80,7 @@ const coordDiffBetweenPoints = (startPt, endPt) => {
 }
 
 /**
- * Calculates distance between two co-ordinate points
+ * Calculates distance between two co-ordinate points.
  * @param {number[]} startPt - starting 2D coordinates
  * @param {number[]} endPt - ending 2D coordinates
  * @returns {number} distance between points
@@ -93,7 +93,7 @@ const distanceBetweenPoints = (startPt, endPt) => {
 }
 
 /**
- * Calculates midpoint between two co-ordinate points
+ * Calculates midpoint between two co-ordinate points.
  * @param {number[]} startPt - starting 2D coordinates
  * @param {number[]} endPt - ending 2D coordinates
  * @returns {number[]} midpoint coordinates
@@ -109,7 +109,7 @@ const midpointBetweenPoints = (startPt, endPt) => {
 }
 
 /**
- * Geometric functions
+ * Geometric calculations in 2D/3D space.
  * @memberof calcs
  * @namespace geometry
  */
@@ -135,7 +135,7 @@ const geometryInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Gets a point from a given angle and distance, starting from [0, 0]
+     * Gets a point from a given angle and distance, starting from [0, 0].
      * @memberof calcs.geometry
      * @param {number} angleRad - angle (radians)
      * @param {number} dist - distance
@@ -148,7 +148,7 @@ const geometryInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Gets line data from outline points
+     * Gets line data from outline points.
      * @param {number[][]} outlinePts 
      * @returns {Object[]} array of line details
      * @memberof calcs.geometry
@@ -179,7 +179,7 @@ const geometryInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Gets triangular points in area
+     * Gets triangular points in area.
      * @memberof calcs.geometry
      * @param {number} x - maximum X bound
      * @param {number} y - maximum Y bound
@@ -233,7 +233,7 @@ const geometryInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Gets square points in area
+     * Gets square points in area.
      * @memberof calcs.geometry
      * @param {number} x - maximum X bound
      * @param {number} y - maximum Y bound
@@ -276,7 +276,7 @@ const geometryInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Functions related to sets of Cartesian points
+     * Calculations around sets of co-ordinate points in 2D/3D space.
      * @memberof calcs.geometry
      * @namespace points
      */
@@ -313,13 +313,13 @@ module.exports = { init: geometryInit };
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.fittings.html">components.fittings</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.reinforcements.html">components.reinforcements</a></li><li><a href="components.reinforcements.boxSupport.html">components.reinforcements.boxSupport</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="profiles.beadsBits.html">profiles.beadsBits</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.connections.jointPanel.html">profiles.connections.jointPanel</a></li><li><a href="profiles.mesh.html">profiles.mesh</a></li><li><a href="profiles.reinforcements.html">profiles.reinforcements</a></li><li><a href="profiles.reinforcements.boxCurve.html">profiles.reinforcements.boxCurve</a></li><li><a href="profiles.text.html">profiles.text</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.fittings.html">components.fittings</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.reinforcements.html">components.reinforcements</a></li><li><a href="components.reinforcements.boxSupport.html">components.reinforcements.boxSupport</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.html">profiles.beadsBits</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.connections.jointPanel.html">profiles.connections.jointPanel</a></li><li><a href="profiles.mesh.html">profiles.mesh</a></li><li><a href="profiles.reinforcements.html">profiles.reinforcements</a></li><li><a href="profiles.reinforcements.boxCurve.html">profiles.reinforcements.boxCurve</a></li><li><a href="profiles.text.html">profiles.text</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu Nov 05 2026 12:29:37 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Nov 06 2026 12:28:28 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

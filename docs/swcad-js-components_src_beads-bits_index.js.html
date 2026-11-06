@@ -29,7 +29,7 @@
             <pre class="prettyprint source linenums"><code>"use strict"
 
 /**
- * Beads and Bits
+ * Modelling functions that generate 3D beads (basic shapes mainly for additive `hull` functions) and bits (basic shapes for subtractive `hull` functions).
  * @namespace beadsBits
  * @memberof components 
  * @author R. J. Salvador (Salvador Workshop)
@@ -256,7 +256,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
 
 
     /**
-     * Rabbet bit
+     * Generates a 3D rabbet bit.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
      * @memberof components.beadsBits.corner
@@ -278,7 +278,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Chamfer bit
+     * Generates a 3D chamfer bit.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
      * @memberof components.beadsBits.corner
@@ -300,7 +300,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Round-Over Bit
+     * Generates a 3D round-over bit.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
      * @memberof components.beadsBits.corner
@@ -322,7 +322,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Cove bit
+     * Generates a 3D cove bit.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
      * @memberof components.beadsBits.corner
@@ -344,7 +344,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Corner bits
+     * Modelling functions that generate 3D geometries which emulate woodworking router bits.
      * @namespace corner
      * @memberof components.beadsBits
      */
@@ -356,7 +356,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Standard 30-degree bead profile
+     * Generates an elliptical cylinder bead, with a 30-degree slope.
      * @param {number} baseThickness - Thickness of the bead profile
      * @param {number} width - Width of the bead profile
      * @returns {geom3} - bead profile
@@ -376,7 +376,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Standard 45-degree bead profile
+     * Generates an elliptical cylinder bead, with a 45-degree slope.
      * @param {number} baseThickness - Thickness of the bead profile
      * @param {number} width - Width of the bead profile
      * @returns {geom3} - bead profile
@@ -396,7 +396,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Standard bead profiles for interface connections
+     * Generates a set of elliptical cylinder beads for interface connections.
      * @param {number} baseThickness - Thickness of the bead profile
      * @param {number} smWidth - Width of the small bead profile
      * @param {number} mdWidth - Width of the medium bead profile
@@ -432,13 +432,13 @@ module.exports = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.fittings.html">components.fittings</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.reinforcements.html">components.reinforcements</a></li><li><a href="components.reinforcements.boxSupport.html">components.reinforcements.boxSupport</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="profiles.beadsBits.html">profiles.beadsBits</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.connections.jointPanel.html">profiles.connections.jointPanel</a></li><li><a href="profiles.mesh.html">profiles.mesh</a></li><li><a href="profiles.reinforcements.html">profiles.reinforcements</a></li><li><a href="profiles.reinforcements.boxCurve.html">profiles.reinforcements.boxCurve</a></li><li><a href="profiles.text.html">profiles.text</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.fittings.html">components.fittings</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.reinforcements.html">components.reinforcements</a></li><li><a href="components.reinforcements.boxSupport.html">components.reinforcements.boxSupport</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.html">profiles.beadsBits</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.connections.jointPanel.html">profiles.connections.jointPanel</a></li><li><a href="profiles.mesh.html">profiles.mesh</a></li><li><a href="profiles.reinforcements.html">profiles.reinforcements</a></li><li><a href="profiles.reinforcements.boxCurve.html">profiles.reinforcements.boxCurve</a></li><li><a href="profiles.text.html">profiles.text</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu Nov 05 2026 12:29:37 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Nov 06 2026 12:28:28 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

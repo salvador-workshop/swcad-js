@@ -29,7 +29,7 @@
             <pre class="prettyprint source linenums"><code>"use strict"
 
 /**
- * Connection Profiles
+ * Modelling functions that generate connecting and interlocking 2D parts.
  * @author R. J. Salvador
  * @namespace connections
  * @memberof profiles
@@ -42,13 +42,11 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         ellipse: ellipseShape,
         cuboid,
         rectangle,
-        triangle,
     } = jscad.primitives
 
     const {
         align,
         translate,
-        mirror
     } = jscad.transforms
 
     const {
@@ -322,7 +320,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     * ------------------------------------- */
 
     /**
-     * Generate dovetail connectors
+     * Generates dovetail connectors.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
      * @memberof profiles.connections
@@ -430,7 +428,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Generate tab connectors
+     * Generates tab connectors.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
      * @memberof profiles.connections
@@ -538,7 +536,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Generate right-angle tab connectors
+     * Generates right-angle tab connectors.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
      * @memberof profiles.connections
@@ -646,7 +644,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Generate polygon connectors
+     * Generates polygon connectors.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
      * @memberof profiles.connections
@@ -720,7 +718,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Generate ellipse connectors
+     * Generates ellipse connectors.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
      * @memberof profiles.connections
@@ -823,7 +821,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Generate pegboard connectors
+     * Generates pegboard connectors.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
      * @memberof profiles.connections
@@ -910,7 +908,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Generate bolt circle connectors
+     * Generates bolt circle connectors.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
      * @memberof profiles.connections
@@ -978,7 +976,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Generate dovetail row connectors
+     * Generates pieces connected by a row of dovetails.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
      * @memberof profiles.connections
@@ -1069,7 +1067,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Generate tab row connectors
+     * Generates pieces connected by a row of tabs.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
      * @memberof profiles.connections
@@ -1160,7 +1158,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Generate right-angle tab row connectors
+     * Generates pieces connected by a row of right-angle tabs.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
      * @memberof profiles.connections
@@ -1279,13 +1277,13 @@ module.exports = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.fittings.html">components.fittings</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.reinforcements.html">components.reinforcements</a></li><li><a href="components.reinforcements.boxSupport.html">components.reinforcements.boxSupport</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="profiles.beadsBits.html">profiles.beadsBits</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.connections.jointPanel.html">profiles.connections.jointPanel</a></li><li><a href="profiles.mesh.html">profiles.mesh</a></li><li><a href="profiles.reinforcements.html">profiles.reinforcements</a></li><li><a href="profiles.reinforcements.boxCurve.html">profiles.reinforcements.boxCurve</a></li><li><a href="profiles.text.html">profiles.text</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.fittings.html">components.fittings</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.reinforcements.html">components.reinforcements</a></li><li><a href="components.reinforcements.boxSupport.html">components.reinforcements.boxSupport</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.html">profiles.beadsBits</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.connections.jointPanel.html">profiles.connections.jointPanel</a></li><li><a href="profiles.mesh.html">profiles.mesh</a></li><li><a href="profiles.reinforcements.html">profiles.reinforcements</a></li><li><a href="profiles.reinforcements.boxCurve.html">profiles.reinforcements.boxCurve</a></li><li><a href="profiles.text.html">profiles.text</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu Nov 05 2026 12:29:37 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Nov 06 2026 12:28:28 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
