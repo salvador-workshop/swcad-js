@@ -287,7 +287,7 @@ const moduleInit = ({ jscad, swcadJs }) => {
 
 
     /**
-     * Component Line
+     * Generates a line connecting several repetitions of the given component. Accepts various options for spacing and offsets.
      * @param {*} opts 
      * @returns `geom3` or `geom3[]`
      * @author R. J. Salvador (Salvador Workshop)

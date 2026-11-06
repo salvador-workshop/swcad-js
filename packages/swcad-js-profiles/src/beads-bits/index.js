@@ -1,7 +1,7 @@
 "use strict"
 
 /**
- * Beads and Bits
+ * Modelling functions that generate 2D beads (basic shapes mainly for additive `hull` functions) and bits (basic shapes for subtractive `hull` functions).
  * @namespace beadsBits
  * @memberof profiles 
  * @author R. J. Salvador (Salvador Workshop)
@@ -237,7 +237,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
 
 
     /**
-     * Rabbet bit
+     * Generates a 2D rabbet bit.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.beadsBits.corner
@@ -320,7 +320,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Chamfer bit
+     * Generates a 2D chamfer bit.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.beadsBits.corner
@@ -398,7 +398,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Round-Over bit
+     * Generates a 2D round-Over bit.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.beadsBits.corner
@@ -477,7 +477,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Cove bit
+     * Generates a 2D cove bit.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.beadsBits.corner
@@ -557,7 +557,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Corner bits
+     * Modelling functions that generate 2D shapes which emulate woodworking router bits.
      * @namespace corner
      * @memberof profiles.beadsBits
      */

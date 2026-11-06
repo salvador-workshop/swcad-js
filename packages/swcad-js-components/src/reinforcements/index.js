@@ -3,7 +3,7 @@ const reinforcedJoistModule = require('./reinforced-joist')
 const reinforcedRectPanelModule = require('./reinforced-rect-panel')
 
 /**
- * ...
+ * Modelling functions that generate 3D reinforcements.
  * @memberof components
  * @namespace reinforcements
  */

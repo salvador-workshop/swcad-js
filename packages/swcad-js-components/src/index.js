@@ -28,7 +28,7 @@ const componentsInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Components
+     * Modelling functions that generate 3D geometries.
      * @namespace components
      * @author R. J. Salvador (Salvador Workshop)
      */

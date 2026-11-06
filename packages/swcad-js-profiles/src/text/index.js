@@ -1,7 +1,7 @@
 "use strict"
 
 /**
- * ...
+ * Modelling functions that generate 2D text.
  * @memberof profiles
  * @namespace text
  */
@@ -14,7 +14,7 @@ const textUtils = ({ jscad, swcadJs }) => {
     const { hullChain } = jscad.hulls
 
     /**
-     * Creates a simple 2D line of text
+     * Generates a simple 2D line of text.
      * @memberof profiles.text
      * @instance
      * @param {*} param0 

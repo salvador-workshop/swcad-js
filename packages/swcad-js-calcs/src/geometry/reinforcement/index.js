@@ -1,7 +1,7 @@
 "use strict"
 
 /**
- * Reinforcement layout for basic geometries (rectangle, triangle, ellipse)
+ * Calculations for reinforcement lines within a shape.
  * @namespace reinforcement
  * @memberof calcs.geometry
  * @author R. J. Salvador
@@ -569,7 +569,7 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Calculates points for a rectangular frame with internal reinforcements
+     * Calculates points and lines for a rectangule with internal reinforcements.
      * @memberof calcs.geometry.reinforcement
      * @param {Object} opts 
      * @param {number[]} opts.size - x and y coords

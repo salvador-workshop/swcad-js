@@ -5,7 +5,7 @@ const tri45Factor = Math.sqrt(2)
 const eqTriHeightFactor = tri30Factor / 2
 
 /**
- * System constants
+ * Numeric constants and ratios.
  * @namespace constants
  * @memberof data
  */

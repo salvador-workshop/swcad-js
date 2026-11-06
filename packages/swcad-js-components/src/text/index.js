@@ -1,7 +1,7 @@
 "use strict"
 
 /**
- * ...
+ * Modelling functions that generate 3D text.
  * @memberof components
  * @namespace text
  */
@@ -29,7 +29,7 @@ const textUtils = ({ jscad, swcadJs }) => {
     } = swcadJs.calcs
 
     /**
-     * Creates a simple 3D line of text
+     * Generates a simple 3D line of text.
      * @memberof components.text
      * @instance
      * @param {*} param0 
@@ -49,7 +49,7 @@ const textUtils = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Creates a 3D line of text, with engraved profile
+     * Generates a 3D line of text, with engraved profile.
      * @memberof components.text
      * @instance
      * @param {*} opts 
@@ -79,7 +79,7 @@ const textUtils = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Creates a rectangular panel with engraved text
+     * Generates a rectangular panel with engraved text.
      * @memberof components.text
      * @instance
      * @param {*} opts 

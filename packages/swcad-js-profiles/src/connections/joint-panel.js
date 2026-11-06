@@ -1,7 +1,7 @@
 "use strict"
 
 /**
- * Jointed panels
+ * Modelling functions that generate connecting and interlocking 2D panels.
  * @author R. J. Salvador
  * @namespace jointPanel
  * @memberof profiles.connections
@@ -269,7 +269,7 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
     * ------------------------------------- */
 
     /**
-     * Generate one-joint rectangular panel
+     * Generates a set of two interlocking panels, made by dividing a rectangle in half with the given options.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections.jointPanel
@@ -361,7 +361,7 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Generate two-joint rectangular panel
+     * Generates a set of four interlocking panels, made by dividing a rectangle into quarters with the given options.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections.jointPanel

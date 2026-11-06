@@ -1,7 +1,7 @@
 "use strict"
 
 /**
- * ...
+ * Modelling functions that generate perforated 3D shapes.
  * @memberof components
  * @namespace mesh
  */
@@ -34,7 +34,7 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
     } = swcadJs.profiles
 
     /**
-     * Builds a flat mesh panel model.
+     * Generates a flat 3D mesh panel with the given options.
      * @memberof components.mesh
      * @param {*} opts 
      * @returns ...

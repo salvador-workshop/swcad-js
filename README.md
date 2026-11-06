@@ -38,7 +38,7 @@ A heavily customized version of the JSCAD UI ([https://github.com/hrgdavor/jscad
 
 ### DATA
 
-Mostsly math constants and common dimensions/options.
+Mostly math constants and common dimensions/options.
 
 ### data.constants
 
@@ -258,19 +258,19 @@ Modelling functions that generate 2D shapes which emulate woodworking router bit
 
 #### chamfer(opts)
 
-Generates a 2D chamfer bit
+Generates a 2D chamfer bit.
 
 #### cove(opts)
 
-Generates a 2D cove bit
+Generates a 2D cove bit.
 
 #### rabbet(opts)
 
-Generates a 2D rabbet bit
+Generates a 2D rabbet bit.
 
 #### roundOver(opts)
 
-Generates a 2D round-Over bit
+Generates a 2D round-Over bit.
 
 ---
 
@@ -374,7 +374,7 @@ Modelling functions that generate 2D text.
 
 #### basicText(param0)
 
-Generates a simple 2D line of text
+Generates a simple 2D line of text.
 
 ---
 
@@ -426,7 +426,7 @@ Generates a 3D rabbet bit.
 
 #### roundOver(opts)
 
-Generates a 3D round-Over bit.
+Generates a 3D round-over bit.
 
 ---
 
@@ -496,11 +496,9 @@ Modelling functions that generate curved 3D reinforcements for right-angle corne
 
 Generates a curved 3D reinforcement covering three sides (two corners) of a rectangle.
 
-
 #### boxSupportQuarter(opts)
 
 Generates a curved 3D reinforcement covering two sides (one corner) of a rectangle.
-
 
 ---
 

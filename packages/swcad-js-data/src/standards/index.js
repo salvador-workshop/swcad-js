@@ -3,7 +3,7 @@
 const inchesToMm = (numIn) => numIn * 25.4
 
 /**
- * ...
+ * Dimensions and options used throughout the SWCAD-JS system.
  * @memberof data
  * @namespace standards
  */

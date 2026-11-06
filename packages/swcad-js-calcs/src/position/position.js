@@ -1,7 +1,7 @@
 "use strict"
 
 /**
- * ...
+ * Functions leveraging JSCAD to get position data or move 2D/3D geometries.
  * @memberof calcs
  * @namespace position
  */
@@ -18,7 +18,7 @@ const positionUtils = ({ jscad, swcadJs }) => {
 
 
     /**
-     * ...
+     * Common alignment modes (for JSCAD's `align()` function).
      * @memberof calcs.position
      */
     const alignModes = {
@@ -28,7 +28,7 @@ const positionUtils = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * ...
+     * Centers the given geometry, relative to the given point (defaults to [0,0,0]).
      * @memberof calcs.position
      * @param {*} inGeom 
      * @param {*} pt 
@@ -38,7 +38,7 @@ const positionUtils = ({ jscad, swcadJs }) => {
         return align({ modes: alignModes.ctr, relativeTo: pt }, inGeom)
     }
     /**
-     * ...
+     * Centers the given geometry (minimum Z), relative to the given point (defaults to [0,0,0]).
      * @memberof calcs.position
      * @param {*} inGeom 
      * @param {*} pt 
@@ -48,7 +48,7 @@ const positionUtils = ({ jscad, swcadJs }) => {
         return align({ modes: alignModes.ctrMin, relativeTo: pt }, inGeom)
     }
     /**
-     * ...
+     * Centers the given geometry (maximum Z), relative to the given point (defaults to [0,0,0]).
      * @memberof calcs.position
      * @param {*} inGeom 
      * @param {*} pt 
@@ -72,7 +72,7 @@ const positionUtils = ({ jscad, swcadJs }) => {
     };
 
     /**
-     * Gets 3D bounding coordinates of a given geometry
+     * Gets 3D bounding coordinates of a given geometry.
      * @memberof calcs.position
      * @param {object} geom 
      * @returns Bounding coords (right, left, back, front, top, bottom)
@@ -91,7 +91,7 @@ const positionUtils = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Finds long axis of a coord set
+     * Finds long axis of a coord set.
      * @memberof calcs.position
      * @param {number[]} size - [x, y, z]
      * @returns axis with longest value (either "x", "y", or "z") or `null` if invalid

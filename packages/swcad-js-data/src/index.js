@@ -5,11 +5,10 @@ const standards = require('./standards')
 
 const dataInit = ({ jscad }) => {
     /**
-     * Data
+     * Mostly math constants and common dimensions/options.
      * @namespace data
      * @author R. J. Salvador (Salvador Workshop)
      */
-
     const data = {
         constants: constants,
         standards: standards.init({ jscad }),
