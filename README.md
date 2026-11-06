@@ -28,275 +28,476 @@ A heavily customized version of the JSCAD UI ([https://github.com/hrgdavor/jscad
 
 ![swcad-js demo - walls-entryway](./static/img/entryways-1.png "swcad-js demo - walls-entryway")
 
-## Usage
-
-Works with JSCAD, however you consume it.
-
-Try copying the example below into `sw-jscad-viewer` ([sw-jscad-viewer.netlify.app](https://sw-jscad-viewer.netlify.app)).  
-
-```javascript
-/* ----------------------------------------
- * Initialization
- * ------------------------------------- */
-
-const jscad = require('@jscad/modeling')
-
-const { cuboid } = jscad.primitives
-const { translate } = jscad.transforms
-
-const swcadJs = require('swcad-js').init({ jscad });
-console.log('swcadJs', swcadJs)
-
-const {
-  math,
-  transform,
-} = swcadJs.calcs
-
-const {
-  colors,
-} = swcadJs.utils
-
-const {
-  openWebJoist,
-} = swcadJs.components
-
-const {
-  routedCuboid,
-} = swcadJs.components.routedShapes
-
-
-//==============================================================================
-
+## SWCAD-JS API
 
-/* ----------------------------------------
- * Model / Scene Prep
- * ------------------------------------- */
+...
 
-// "INTRO" PLINTH
+---
 
-const introPlinthSize = [
-  math.inchesToMm(4),
-  math.inchesToMm(4),
-  math.inchesToMm(5),
-]
+<br/>
 
-const endBlockSize = [
-  introPlinthSize[0],
-  introPlinthSize[1],
-  introPlinthSize[2] / 4,
-]
+### DATA
 
-const midBlockOverhang = math.inchesToMm(5 / 8)
+...
 
-const midBlockSize = [
-  introPlinthSize[0] - (midBlockOverhang * 2),
-  introPlinthSize[1] - (midBlockOverhang * 2),
-  introPlinthSize[2] / 2,
-]
+### data.constants
 
-// Midsection is built with jscad
-// Top and Bottom ends are built with swcad-js
+Numeric constants and ratios.
 
-const mid = cuboid({ size: midBlockSize })
+### data.standards
 
-const baseOpts = {
-  size: endBlockSize,
-  topBit: 'chamfer',
-  topBitOpts: {
-    radius1: 6,
-    radius2: 8,
-    offset1: 3,
-    offset2: 2,
-    offset3: 3,
-    offset4: 2,
-  },
-  bottomBit: 'none',
-  bottomBitOpts: {
-  },
-}
+Dimensions and options used throughout the SWCAD-JS system.
 
-const baseData = routedCuboid(baseOpts)
-const base = baseData[0]
+---
 
-const topOpts = {
-  size: endBlockSize,
-  topBit: 'roundOver',
-  topBitOpts: {
-    radius1: 3,
-    radius2: 4,
-    offset1: 1.5,
-    offset2: 1.5,
-  },
-  bottomBit: 'cove',
-  bottomBitOpts: {
-    radius1: 6,
-    radius2: 8,
-    offset1: 2.5,
-    offset2: 2.5,
-    offset3: 2.5,
-    offset4: 2.5,
-  },
-}
-
-const topData = routedCuboid(topOpts)
-const top = topData[0]
+<br/>
 
-// The library also has helper functions
+### CALCS
 
-const introPlinth = transform.stack({}, [base, mid, top])
+Math calculations and basic JSCAD operations
 
-// OPEN WEB JOIST
+### calcs.geometry
 
-const openWebJoistOpts1 = {
-  length: math.inchesToMm(6),
-  width: math.inchesToMm(1.25),
-}
+...
 
-const openWebJoistOpts2 = {
-  length: math.inchesToMm(6.5),
-  width: math.inchesToMm(1.5),
-  reinforcementLevel: 2
-}
+#### angleOfTwoPtLine(startPt, endPt, mode)
 
-const openWebJoistData1 = openWebJoist(openWebJoistOpts1)
-const openWebJoistData2 = openWebJoist(openWebJoistOpts2)
+Returns angle of a two-point line.
 
-const openWebJoistModel1 = openWebJoistData1[0]
-const openWebJoistModel2 = openWebJoistData2[0]
+#### coordDiffBetweenPoints(startPt, endPt)
 
+Calculates co-ordinate difference between two points
 
-//==============================================================================
+#### distanceBetweenPoints(startPt, endPt)
 
+Calculates distance between two co-ordinate points
 
-/* ----------------------------------------
- * Main function for JSCAD
- * ------------------------------------- */
+#### getSquarePtsInArea(x, y, distance, centrePoints)
 
+Gets square points in area
 
-function main() {
-  const spaceUnit = math.inchesToMm(4)
+#### getTriangularPtsInArea(x, y, distance, centrePoints)
 
-  return [
-    translate([spaceUnit * 0, spaceUnit * 0, spaceUnit * 0], introPlinth),
-    translate([spaceUnit * 1, spaceUnit * 0, spaceUnit * 0], openWebJoistModel1),
-    translate([spaceUnit * 2, spaceUnit * 0, spaceUnit * 0], openWebJoistModel2),
-  ]
-}
+Gets triangular points in area
 
-module.exports = { main }
-```
+#### midpointBetweenPoints(startPt, endPt)
 
-![swcad-js demo - plinth + joist](./static/img/plinth-joist-1.png "swcad-js demo - plinth + joist")
+Calculates midpoint between two co-ordinate points
 
-## API
+#### pointFromAngleAndDist(angleRad, dist)
 
-_as of version 0.12.5_
+Gets a point from a given angle and distance, starting from [0, 0]
 
-The `swcad-js` library's main functional divisions:
+---
 
-### `Data` — Static info
+### calcs.geometry.points
 
-- constants
-- functions
-- specifications
-- standards
-- standards.crafts
-- standards.lumber
-- standards.masonry
-- standards.paper
-- standards.tiles
+...
 
-### `Calcs` — Calculations of all sorts
+#### ptCentroid(points, mode)
 
-- geometry
-- geometry.points
-- geometry.regPoly
-- geometry.reinforcement
-- math
-- position
-- position.cuboid
-- position.rectangle
-- position.triangle
-- transform
+Finds the central point (avg.) between the given points
 
-### `Profiles` — 2D profiles, surfaces, sections
+---
 
-- beadsBits.corner
-- connections
-- curve
-- shapes
-- shapes.ellipse
-- shapes.rectangle
-- shapes.square
-- shapes.triangle
-- structure.arch
-- structure.foil
-- structure.mesh
-- text
-- trim
-- trim.aranea
+### calcs.geometry.regPoly
 
-![swcad-js demo - router-bits](./static/img/router-bits-1.png "swcad-js demo - router-bits")
+...
 
-### `ProfileSpec` — 2D profiles conforming to specs
+#### apothemFromCircumradius(circumradius, numSides)
 
-- lumber
-- paper
+Calculates apothem from circumradius and # of sides
 
-### `Components` — Basic reusable 3D units
+#### apothemFromSideLength(sideLength, numSides)
 
-- beadsBits
-- beadsBits.corner
-- mesh
-- moulding
-- routedShapes
-- text
+Calculates apothem from side length and # of sides
 
-![swcad-js demo - routed shapes 1](./static/img/routed-shapes-1.png "swcad-js demo - routed shapes 1")
+#### circumradiusFromApothem(apothem, numSides)
 
-![swcad-js demo - routed shapes 2](./static/img/routed-shapes-2.png "swcad-js demo - routed shapes 2")
+Calculates circumradius from apothem and # of sides
 
-### `ComponentSpec` — 3D components conforming to specs
+#### circumradiusFromSideLength(sideLength, numSides)
 
-- brick
-- crafts
-- tile
+Calculates circumradius from side length and # of sides
 
-### `Models` — Complex 3D models
+#### interiorAngle(numSides)
 
-- arch
-- foil
-- structure
-- structure.wall
-- structure.wallEntryway
+Calculates interior angle from # of sides
 
-### `Utils` — Auxiliary utilities
+#### sideLengthFromApothem(apothem, numSides)
 
-- colors
-- layout
-- palette
+Calculates side length from apothem and # of sides
 
-## Structure
+#### sideLengthFromCircumRadius(circumradius, numSides)
 
-![swcad-js demo - joist](./static/img/joist-1.png "swcad-js demo - joist")
+Calculates side length from circumradius and # of sides
 
-Internally, the library is split into several packages that follow the main API divisions:
+### calcs.geometry.reinforcement
 
-`swcad-js-calcs` — Calculations of all sorts
+#### reinforcedRectangle(opts)
 
-`swcad-js-component-spec` — 3D components conforming to specs
+Calculates points for a rectangular frame with internal reinforcements
 
-`swcad-js-components` — Basic reusable 3D units
+---
 
-`swcad-js-core` — Integrates all these packages together into the final package
+### calcs.math
 
-`swcad-js-data` — Static info
+#### arrayCartesianProduct(a, b)
 
-`swcad-js-models` — Complex 3D models
+Collection of all possible ordered pairs (a, b) such that the first element a belongs to set A and the second element b belongs to set B.
 
-`swcad-js-profile-spec` — 2D profiles conforming to specs
+#### factorize(num)
 
-`swcad-js-profiles` — 2D profiles, surfaces, sections
+Given an integer, calculates two integers that are factors for a containing rectangle around the input.
 
-`swcad-js-utils` — Auxiliary utilities
+#### getRandomInt(min, max)
 
+Gets a random integer between `min` and `max`. The maximum is exclusive and the minimum is inclusive
+
+#### inchesToMm(numInches)
+
+Converts distance in inches to mm
+
+#### isEven(n)
+
+Checks if a given integer is even
+
+#### isOdd(n)
+
+Checks if a given integer is odd
+
+#### mmToInches(numMils)
+
+Converts distance in mm to inches
+
+---
+
+### calcs.position
+
+...
+
+#### alignModes
+
+...
+
+#### measure()
+
+Measures key info, and presents it in a readable manner, like `{ size: { x: 99, y: 99, z: 99 }, min: { ... }, max: { ... } }`
+
+#### ctr(inGeom, pt)
+
+...
+
+#### ctrMax(inGeom, pt)
+
+...
+
+#### ctrMin(inGeom, pt)
+
+...
+
+#### findLongAxis(size)
+
+Finds long axis of a coord set
+
+#### getGeomCoords(geom)
+
+Gets 3D bounding coordinates of a given geometry
+
+---
+
+### calcs.transform
+
+#### bisect3d(opts, geom)
+
+Cuts a given geometry in half.
+
+#### cutCircularSlice(opts, geom)
+
+Cuts a slice of an object
+
+#### cloneQuadrant(inShape)
+
+Clones one quadrant of the given 2D shape into all quadrants.
+
+#### cutQuadrant(inShape)
+
+Cuts one quadrant of the given 2D shape
+
+#### stack(opts, geoms)
+
+Stacks geometries on top of each other, starting from the bottom
+
+---
+
+<br/>
+
+### PROFILES
+
+...
+
+### profiles.beadsBits.corner
+
+...
+
+#### chamfer(opts)
+
+Chamfer bit
+
+#### cove(opts)
+
+Cove bit
+
+#### rabbet(opts)
+
+Rabbet bit
+
+#### roundOver(opts)
+
+Round-Over bit
+
+---
+
+### profiles.connections
+
+...
+
+#### boltCircle(opts)
+
+Generate bolt circle connectors
+
+#### dovetail(opts)
+
+Generate dovetail connectors
+
+#### dovetailRow(opts)
+
+Generate dovetail row connectors
+
+#### ellipse(opts)
+
+Generate ellipse connectors
+
+#### pegboard(opts)
+
+Generate pegboard connectors
+
+#### polygon(opts)
+
+Generate polygon connectors
+
+#### rightAngleTab(opts)
+
+Generate right-angle tab connectors
+
+#### rightAngleTabRow(opts)
+
+Generate right-angle tab row connectors
+
+#### tab(opts)
+
+Generate tab connectors
+
+#### tabRow(opts)
+
+Generate tab row connectors
+
+---
+
+### profiles.connections.jointPanel
+
+...
+
+#### oneJointRectPanel(opts)
+
+...
+
+#### twoJointRectPanel(opts)
+
+...
+
+---
+
+### profiles.mesh
+
+...
+
+#### meshPanel(opts)
+
+...
+
+---
+
+### profiles.reinforcements
+
+...
+
+#### reinforcedRect(opts)
+
+Reinforced rectangle
+
+---
+
+### profiles.reinforcements.boxCurve
+
+...
+
+#### boxCurveHalf(opts)
+
+...
+
+#### boxCurveQuarter(opts)
+
+...
+
+---
+
+### profiles.text
+
+...
+
+#### basicText(param0)
+
+Creates a simple 2D line of text
+
+---
+
+<br/>
+
+### COMPONENTS
+
+...
+
+#### componentLine(opts)
+
+Component Line
+
+---
+
+### components.beadsBits
+
+...
+
+#### basic30DegBead(baseThickness, width)
+
+Standard 30-degree bead profile
+
+#### basic45DegBead(baseThickness, width)
+
+Standard 45-degree bead profile
+
+#### interface30DegProfileBeads(baseThickness, smWidth, mdWidth, lgWidth)
+
+Standard bead profiles for interface connections
+
+---
+
+### components.beadsBits.corner
+
+...
+
+#### chamfer(opts)
+
+Chamfer bit
+
+#### cove(opts)
+
+Cove bit
+
+#### rabbet(opts)
+
+Rabbet bit
+
+#### roundOver(opts)
+
+Round-Over bit
+
+---
+
+### components.fittings
+
+...
+
+#### doubleRoundFitting(opts)
+
+Fitting that accomodates 2 primary dowels, plus space for 2 side dowels
+
+#### invRoundFittingCutProfile(opts)
+
+...
+
+#### inverseRoundFitting(opts)
+
+Simple dowel fitting, inverted for 3D-printing from the bottom (triangular groove)
+
+#### rectFittingCutProfile(opts)
+
+...
+
+#### rectangularFitting(opts)
+
+...
+
+#### roundFitting(opts)
+
+Simple dowel fitting (round groove)
+
+#### roundFittingCutProfile(opts)
+
+...
+
+---
+
+### components.mesh
+
+...
+
+#### meshPanel(opts)
+
+Builds a flat mesh panel model.
+
+---
+
+### components.reinforcements
+
+...
+
+#### reinforcedJoist(opts)
+
+Component for generating an open web joist, with various options for dimensions and reinforcement levels.
+
+#### reinforcedRectPanel(opts)
+
+...
+
+---
+
+### components.routedShapes
+
+...
+
+#### routedCuboid(opts)
+
+Routed cuboid
+
+#### routedCylinderElliptic(opts)
+
+Routed elliptical cylinder
+
+---
+
+### components.text
+
+...
+
+#### engravedText(opts)
+
+Creates a 3D line of text, with engraved profile
+
+#### flatText(param0)
+
+Creates a simple 3D line of text
+
+#### textPanel(opts)
+
+Creates a rectangular panel with engraved text
