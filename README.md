@@ -38,7 +38,7 @@ A heavily customized version of the JSCAD UI ([https://github.com/hrgdavor/jscad
 
 ### DATA
 
-...
+Mostsly math constants and common dimensions/options.
 
 ### data.constants
 
@@ -54,11 +54,11 @@ Dimensions and options used throughout the SWCAD-JS system.
 
 ### CALCS
 
-Math calculations and basic JSCAD operations
+Math calculations and basic JSCAD operations.
 
 ### calcs.geometry
 
-...
+Geometric calculations in 2D/3D space.
 
 #### angleOfTwoPtLine(startPt, endPt, mode)
 
@@ -66,81 +66,87 @@ Returns angle of a two-point line.
 
 #### coordDiffBetweenPoints(startPt, endPt)
 
-Calculates co-ordinate difference between two points
+Calculates co-ordinate difference between two points.
 
 #### distanceBetweenPoints(startPt, endPt)
 
-Calculates distance between two co-ordinate points
+Calculates distance between two co-ordinate points.
 
 #### getSquarePtsInArea(x, y, distance, centrePoints)
 
-Gets square points in area
+Gets square points in area.
 
 #### getTriangularPtsInArea(x, y, distance, centrePoints)
 
-Gets triangular points in area
+Gets triangular points in area.
 
 #### midpointBetweenPoints(startPt, endPt)
 
-Calculates midpoint between two co-ordinate points
+Calculates midpoint between two co-ordinate points.
 
 #### pointFromAngleAndDist(angleRad, dist)
 
-Gets a point from a given angle and distance, starting from [0, 0]
+Gets a point from a given angle and distance, starting from [0, 0].
 
 ---
 
 ### calcs.geometry.points
 
-...
+Calculations around sets of co-ordinate points in 2D/3D space.
 
 #### ptCentroid(points, mode)
 
-Finds the central point (avg.) between the given points
+Finds the central point (avg.) between the given points.
 
 ---
 
 ### calcs.geometry.regPoly
 
-...
+Calculations around regular (equiangular + equilateral) polygons.
 
 #### apothemFromCircumradius(circumradius, numSides)
 
-Calculates apothem from circumradius and # of sides
+Calculates apothem from circumradius and # of sides.
 
 #### apothemFromSideLength(sideLength, numSides)
 
-Calculates apothem from side length and # of sides
+Calculates apothem from side length and # of sides.
 
 #### circumradiusFromApothem(apothem, numSides)
 
-Calculates circumradius from apothem and # of sides
+Calculates circumradius from apothem and # of sides.
 
 #### circumradiusFromSideLength(sideLength, numSides)
 
-Calculates circumradius from side length and # of sides
+Calculates circumradius from side length and # of sides.
 
 #### interiorAngle(numSides)
 
-Calculates interior angle from # of sides
+Calculates interior angle from # of sides.
 
 #### sideLengthFromApothem(apothem, numSides)
 
-Calculates side length from apothem and # of sides
+Calculates side length from apothem and # of sides.
 
 #### sideLengthFromCircumRadius(circumradius, numSides)
 
-Calculates side length from circumradius and # of sides
+Calculates side length from circumradius and # of sides.
+
+---
 
 ### calcs.geometry.reinforcement
 
+Calculations for reinforcement lines within a shape.
+
 #### reinforcedRectangle(opts)
 
-Calculates points for a rectangular frame with internal reinforcements
+Calculates points and lines for a rectangule with internal reinforcements.
 
 ---
 
 ### calcs.math
+
+Various math calculations.
 
 #### arrayCartesianProduct(a, b)
 
@@ -152,61 +158,63 @@ Given an integer, calculates two integers that are factors for a containing rect
 
 #### getRandomInt(min, max)
 
-Gets a random integer between `min` and `max`. The maximum is exclusive and the minimum is inclusive
+Gets a random integer between `min` and `max`. The maximum is exclusive and the minimum is inclusive.
 
 #### inchesToMm(numInches)
 
-Converts distance in inches to mm
+Converts distance in inches to mm.
 
 #### isEven(n)
 
-Checks if a given integer is even
+Checks if a given integer is even.
 
 #### isOdd(n)
 
-Checks if a given integer is odd
+Checks if a given integer is odd.
 
 #### mmToInches(numMils)
 
-Converts distance in mm to inches
+Converts distance in mm to inches.
 
 ---
 
 ### calcs.position
 
-...
+Functions leveraging JSCAD to get position data or move 2D/3D geometries.
 
 #### alignModes
 
-...
+Common alignment modes (for JSCAD's `align()` function).
 
 #### measure()
 
-Measures key info, and presents it in a readable manner, like `{ size: { x: 99, y: 99, z: 99 }, min: { ... }, max: { ... } }`
+Measures key info, and presents it in a readable manner, like `{ size: { x: 99, y: 99, z: 99 }, min: { ... }, max: { ... } }`.
 
 #### ctr(inGeom, pt)
 
-...
+Centers the given geometry, relative to the given point (defaults to [0,0,0]).
 
 #### ctrMax(inGeom, pt)
 
-...
+Centers the given geometry (maximum Z), relative to the given point (defaults to [0,0,0]).
 
 #### ctrMin(inGeom, pt)
 
-...
+Centers the given geometry (minimum Z), relative to the given point (defaults to [0,0,0]).
 
 #### findLongAxis(size)
 
-Finds long axis of a coord set
+Finds long axis of a co-ord set.
 
 #### getGeomCoords(geom)
 
-Gets 3D bounding coordinates of a given geometry
+Gets 3D bounding coordinates of a given geometry.
 
 ---
 
 ### calcs.transform
+
+Functions leveraging JSCAD to transform 2D/3D geometries.
 
 #### bisect3d(opts, geom)
 
@@ -214,7 +222,7 @@ Cuts a given geometry in half.
 
 #### cutCircularSlice(opts, geom)
 
-Cuts a slice of an object
+Cuts a slice of an object.
 
 #### cloneQuadrant(inShape)
 
@@ -222,11 +230,11 @@ Clones one quadrant of the given 2D shape into all quadrants.
 
 #### cutQuadrant(inShape)
 
-Cuts one quadrant of the given 2D shape
+Cuts one quadrant of the given 2D shape.
 
 #### stack(opts, geoms)
 
-Stacks geometries on top of each other, starting from the bottom
+Stacks geometries on top of each other, starting from the bottom.
 
 ---
 
@@ -234,131 +242,139 @@ Stacks geometries on top of each other, starting from the bottom
 
 ### PROFILES
 
-...
+Modelling functions that generate 2D geometries.
+
+---
+
+### profiles.beadsBits
+
+Modelling functions that generate 2D beads (basic shapes mainly for additive `hull` functions) and bits (basic shapes for subtractive `hull` functions).
+
+---
 
 ### profiles.beadsBits.corner
 
-...
+Modelling functions that generate 2D shapes which emulate woodworking router bits.
 
 #### chamfer(opts)
 
-Chamfer bit
+Generates a 2D chamfer bit
 
 #### cove(opts)
 
-Cove bit
+Generates a 2D cove bit
 
 #### rabbet(opts)
 
-Rabbet bit
+Generates a 2D rabbet bit
 
 #### roundOver(opts)
 
-Round-Over bit
+Generates a 2D round-Over bit
 
 ---
 
 ### profiles.connections
 
-...
+Modelling functions that generate connecting and interlocking 2D parts.
 
 #### boltCircle(opts)
 
-Generate bolt circle connectors
+Generates bolt circle connectors.
 
 #### dovetail(opts)
 
-Generate dovetail connectors
+Generates dovetail connectors.
 
 #### dovetailRow(opts)
 
-Generate dovetail row connectors
+Generates pieces connected by a row of dovetails.
 
 #### ellipse(opts)
 
-Generate ellipse connectors
+Generates ellipse connectors.
 
 #### pegboard(opts)
 
-Generate pegboard connectors
+Generates pegboard connectors.
 
 #### polygon(opts)
 
-Generate polygon connectors
+Generates polygon connectors.
 
 #### rightAngleTab(opts)
 
-Generate right-angle tab connectors
+Generates right-angle tab connectors.
 
 #### rightAngleTabRow(opts)
 
-Generate right-angle tab row connectors
+Generates pieces connected by a row of right-angle tabs.
 
 #### tab(opts)
 
-Generate tab connectors
+Generates tab connectors.
 
 #### tabRow(opts)
 
-Generate tab row connectors
+Generates pieces connected by a row of tabs.
 
 ---
 
 ### profiles.connections.jointPanel
 
-...
+Modelling functions that generate connecting and interlocking 2D panels.
 
 #### oneJointRectPanel(opts)
 
-...
+Generates a set of two interlocking panels, made by dividing a rectangle in half with the given options.
 
 #### twoJointRectPanel(opts)
 
-...
+Generates a set of four interlocking panels, made by dividing a rectangle into quarters with the given options.
 
 ---
 
 ### profiles.mesh
 
-...
+Modelling functions that generate 2D perforated shapes.
 
 #### meshPanel(opts)
 
-...
+Generates a 2D mesh panel with the given options.
 
 ---
 
 ### profiles.reinforcements
 
-...
+Modelling functions that generate 2D shapes for reinforcements.
 
 #### reinforcedRect(opts)
 
-Reinforced rectangle
+Generates a 2D reinforced rectangle with the given options for reinforcement styles.
 
 ---
 
 ### profiles.reinforcements.boxCurve
 
-...
+Modelling functions that generate curved 2D reinforcements for right-angle corners.
 
 #### boxCurveHalf(opts)
 
-...
+Generates a curved 2D reinforcement covering three sides (two corners) of a rectangle.
 
 #### boxCurveQuarter(opts)
 
-...
+Generates a curved 2D reinforcement covering two sides (one corner) of a rectangle.
 
 ---
 
 ### profiles.text
 
-...
+Modelling functions that generate 2D text.
 
 #### basicText(param0)
 
-Creates a simple 2D line of text
+Generates a simple 2D line of text
 
 ---
 
@@ -366,138 +382,154 @@ Creates a simple 2D line of text
 
 ### COMPONENTS
 
-...
+Modelling functions that generate 3D geometries.
 
 #### componentLine(opts)
 
-Component Line
+Generates a line connecting several repetitions of the given component. Accepts various options for spacing and offsets.
 
 ---
 
 ### components.beadsBits
 
-...
+Modelling functions that generate 3D beads (basic shapes mainly for additive `hull` functions) and bits (basic shapes for subtractive `hull` functions).
 
 #### basic30DegBead(baseThickness, width)
 
-Standard 30-degree bead profile
+Generates an elliptical cylinder bead, with a 30-degree slope.
 
 #### basic45DegBead(baseThickness, width)
 
-Standard 45-degree bead profile
+Generates an elliptical cylinder bead, with a 45-degree slope.
 
 #### interface30DegProfileBeads(baseThickness, smWidth, mdWidth, lgWidth)
 
-Standard bead profiles for interface connections
+Generates a set of elliptical cylinder beads for interface connections.
 
 ---
 
 ### components.beadsBits.corner
 
-...
+Modelling functions that generate 3D geometries which emulate woodworking router bits.
 
 #### chamfer(opts)
 
-Chamfer bit
+Generates a 3D chamfer bit.
 
 #### cove(opts)
 
-Cove bit
+Generates a 3D cove bit.
 
 #### rabbet(opts)
 
-Rabbet bit
+Generates a 3D rabbet bit.
 
 #### roundOver(opts)
 
-Round-Over bit
+Generates a 3D round-Over bit.
 
 ---
 
 ### components.fittings
 
-...
+Modelling functions that generate 3D fittings that integrate with round/rectangular profiles (dowels, dimensional lumber, etc).
 
 #### doubleRoundFitting(opts)
 
-Fitting that accomodates 2 primary dowels, plus space for 2 side dowels
+Generates a fitting that accomodates 2 round dowels, plus space for 2 side dowels.
 
 #### invRoundFittingCutProfile(opts)
 
-...
+Generates a 2D cutaway profile for inverted round fittings.
 
 #### inverseRoundFitting(opts)
 
-Simple dowel fitting, inverted for 3D-printing from the bottom (triangular groove)
+Generates a fitting for dowels, inverted for 3D-printing from the bottom (triangular groove).
 
 #### rectFittingCutProfile(opts)
 
-...
+Generates a 2D cutaway profile for square/rectangular fittings.
 
 #### rectangularFitting(opts)
 
-...
+Generates a fitting for square/rectangular dowels.
 
 #### roundFitting(opts)
 
-Simple dowel fitting (round groove)
+Generates a fitting for dowels (round groove).
 
 #### roundFittingCutProfile(opts)
 
-...
+Generates a 2D cutaway profile for round fittings.
 
 ---
 
 ### components.mesh
 
-...
+Modelling functions that generate perforated 3D shapes.
 
 #### meshPanel(opts)
 
-Builds a flat mesh panel model.
+Generates a flat 3D mesh panel with the given options.
 
 ---
 
 ### components.reinforcements
 
-...
+Modelling functions that generate 3D reinforcements.
 
 #### reinforcedJoist(opts)
 
-Component for generating an open web joist, with various options for dimensions and reinforcement levels.
+Generates an open web joist with the given options for reinforcement styles.
 
 #### reinforcedRectPanel(opts)
 
-...
+Generates a reinforced 3D rectangular panel with the given options for reinforcement styles.
+
+---
+
+### components.reinforcements.boxSupport
+
+Modelling functions that generate curved 3D reinforcements for right-angle corners.
+
+#### boxSupportHalf(opts)
+
+Generates a curved 3D reinforcement covering three sides (two corners) of a rectangle.
+
+
+#### boxSupportQuarter(opts)
+
+Generates a curved 3D reinforcement covering two sides (one corner) of a rectangle.
+
 
 ---
 
 ### components.routedShapes
 
-...
+Modelling functions that generate 3D geometries which have been "routed" with bits from `components.beadsBits.corner`.
 
 #### routedCuboid(opts)
 
-Routed cuboid
+Generates a routed cuboid with the given options for top and bottom edges.
 
 #### routedCylinderElliptic(opts)
 
-Routed elliptical cylinder
+Generates a routed elliptical cylinder with the given options for top and bottom edges.
 
 ---
 
 ### components.text
 
-...
+Modelling functions that generate 3D text.
 
 #### engravedText(opts)
 
-Creates a 3D line of text, with engraved profile
+Generates a 3D line of text, with engraved profile.
 
 #### flatText(param0)
 
-Creates a simple 3D line of text
+Generates a simple 3D line of text.
 
 #### textPanel(opts)
 
-Creates a rectangular panel with engraved text
+Generates a rectangular panel with engraved text.
