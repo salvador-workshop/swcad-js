@@ -299,10 +299,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         const modelProperties = roundFittingProps(initOpts)
 
         const {
-            dowelRadius,
-            dowelDiam,
             interfaceThickness,
-            fitGap,
             length,
             width,
             simpleHeight,
@@ -345,14 +342,8 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         const modelProperties = roundFittingProps(initOpts)
 
         const {
-            dowelRadius,
-            dowelDiam,
-            interfaceThickness,
-            fitGap,
             length,
             width,
-            simpleHeight,
-            invCutProfileHeight,
             invSimpleHeight,
         } = modelProperties.dims
 

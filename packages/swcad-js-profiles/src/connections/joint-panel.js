@@ -13,7 +13,6 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
     } = jscad.primitives
 
     const {
-        align,
         rotate,
     } = jscad.transforms
 

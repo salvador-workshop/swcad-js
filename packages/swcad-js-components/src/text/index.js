@@ -12,7 +12,7 @@ const DEFAULT_PANEL_HEIGHT = 2;
 const textUtils = ({ jscad, swcadJs }) => {
     const { union, subtract } = jscad.booleans
     const { cuboid, cylinderElliptic } = jscad.primitives
-    const { align, translate } = jscad.transforms
+    const { translate } = jscad.transforms
     const { vectorText } = jscad.text
     const { hullChain } = jscad.hulls
     const { extrudeLinear } = jscad.extrusions

@@ -8,19 +8,6 @@
  */
 
 const boxSupportInit = ({ jscad, swcadJs }) => {
-    const {
-        ellipse,
-        rectangle,
-    } = jscad.primitives
-
-    const {
-        align,
-    } = jscad.transforms
-
-    const {
-        subtract,
-    } = jscad.booleans
-
     const { extrudeLinear } = jscad.extrusions
 
     const {

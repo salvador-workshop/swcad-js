@@ -5,8 +5,6 @@
  * @namespace reinforcement
  * @memberof calcs.geometry
  * @author R. J. Salvador
- * @version 1.0.0
- * @requires jscad v2, swcad-js v0.11.8
  */
 
 const profReinforcementsInit = ({ jscad, swcadJs }) => {

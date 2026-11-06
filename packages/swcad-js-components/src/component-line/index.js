@@ -2,7 +2,6 @@
 
 const moduleInit = ({ jscad, swcadJs }) => {
     const {
-        cylinderElliptic,
         cuboid,
     } = jscad.primitives
 
@@ -28,7 +27,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
     const { TAU } = jscad.maths.constants
 
     const {
-        constants,
         standards,
     } = swcadJs.data
 

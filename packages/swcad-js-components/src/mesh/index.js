@@ -13,16 +13,10 @@
 //---------------------
 
 const mesh3dInit = ({ jscad, swcadJs }) => {
-
-    const { cylinder, triangle, rectangle } = jscad.primitives
-    const { translate, rotate, align, mirror } = jscad.transforms
-    const { subtract, union } = jscad.booleans
-    const { extrudeRotate, extrudeLinear } = jscad.extrusions
-    const { TAU } = jscad.maths.constants
+    const { extrudeLinear } = jscad.extrusions
 
     const {
         math,
-        position
     } = swcadJs.calcs
 
     const {

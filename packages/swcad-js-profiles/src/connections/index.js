@@ -14,13 +14,11 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         ellipse: ellipseShape,
         cuboid,
         rectangle,
-        triangle,
     } = jscad.primitives
 
     const {
         align,
         translate,
-        mirror
     } = jscad.transforms
 
     const {
