@@ -56,7 +56,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             scale: 1,
             interfaceThickness: standards.INTERFACE_THICKNESS,
             fitGap: standards.FIT_GAP,
-            logMode: 'normal',
             edgeMargin: math.inchesToMm(3 / 16),
             holeRadius: math.inchesToMm(0.125),
             holeDistance: math.inchesToMm(1),
@@ -88,7 +87,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             scale,
             interfaceThickness,
             fitGap,
-            logMode,
             size,
             edgeMargin,
             holeRadius,
@@ -182,7 +180,16 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates a 2D mesh panel with the given options.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number[]} opts.size
+     * @param {number} opts.edgeMargin
+     * @param {number} opts.holeRadius
+     * @param {number} opts.holeDistance
+     * @param {string} opts.holePattern
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.mesh
      */
@@ -196,7 +203,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             scale = defaults.opts.scale,
             interfaceThickness = defaults.opts.interfaceThickness,
             fitGap = defaults.opts.fitGap,
-            logMode = defaults.opts.logMode,
             size = defaults.opts.size,
             edgeMargin = defaults.opts.edgeMargin,
             holeRadius = defaults.opts.holeRadius,
@@ -209,7 +215,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             scale,
             interfaceThickness,
             fitGap,
-            logMode,
             size,
             edgeMargin,
             holeRadius,

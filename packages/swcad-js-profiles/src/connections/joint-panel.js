@@ -269,7 +269,16 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates a set of two interlocking panels, made by dividing a rectangle in half with the given options.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number[]} opts.size
+     * @param {number} opts.jointWidth
+     * @param {number} opts.jointMargin
+     * @param {number} opts.jointNumConnectors
+     * @param {string} opts.axis
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections.jointPanel
      */
@@ -361,11 +370,19 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates a set of four interlocking panels, made by dividing a rectangle into quarters with the given options.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number[]} opts.size
+     * @param {number} opts.jointWidth
+     * @param {number} opts.jointMargin
+     * @param {number | number[]} opts.jointNumConnectors
+     * @param {string} opts.axis
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections.jointPanel
      */
-
     const twoJointRectPanel = (opts) => {
         const defaults = jointPanelDefaults()
         const initOpts = jointPanelOpts(opts)

@@ -238,7 +238,17 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates a 2D rabbet bit.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number} opts.radius1 
+     * @param {number} opts.radius2 
+     * @param {number} opts.offset1 
+     * @param {number} opts.offset2 
+     * @param {number} opts.offset3 
+     * @param {number} opts.offset4 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.beadsBits.corner
      */
@@ -321,7 +331,17 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates a 2D chamfer bit.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number} opts.radius1 
+     * @param {number} opts.radius2 
+     * @param {number} opts.offset1 
+     * @param {number} opts.offset2 
+     * @param {number} opts.offset3 
+     * @param {number} opts.offset4 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.beadsBits.corner
      */
@@ -399,7 +419,17 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates a 2D round-Over bit.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number} opts.radius1 
+     * @param {number} opts.radius2 
+     * @param {number} opts.offset1 
+     * @param {number} opts.offset2 
+     * @param {number} opts.offset3 
+     * @param {number} opts.offset4 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.beadsBits.corner
      */
@@ -478,7 +508,17 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates a 2D cove bit.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number} opts.radius1 
+     * @param {number} opts.radius2 
+     * @param {number} opts.offset1 
+     * @param {number} opts.offset2 
+     * @param {number} opts.offset3 
+     * @param {number} opts.offset4 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.beadsBits.corner
      */

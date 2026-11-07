@@ -31,8 +31,11 @@ const textUtils = ({ jscad, swcadJs }) => {
     /**
      * Generates a simple 3D line of text.
      * @memberof components.text
-     * @instance
-     * @param {*} param0 
+     * @param {Object} opts - Options for the model
+     * @param {string} opts.message
+     * @param {number} opts.fontSize
+     * @param {number} opts.charLineWidth
+     * @param {number} opts.extrudeHeight
      * @returns ...
      */
     const flatText = (opts) => {
@@ -51,8 +54,12 @@ const textUtils = ({ jscad, swcadJs }) => {
     /**
      * Generates a 3D line of text, with engraved profile.
      * @memberof components.text
-     * @instance
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {string} opts.message
+     * @param {number} opts.fontSize
+     * @param {number} opts.inverted
+     * @param {number} opts.interfaceThickness
+     * @param {number} opts.engravingDepth
      * @returns ...
      */
     const engravedText = (opts) => {
@@ -81,8 +88,13 @@ const textUtils = ({ jscad, swcadJs }) => {
     /**
      * Generates a rectangular panel with engraved text.
      * @memberof components.text
-     * @instance
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {string} opts.message
+     * @param {number} opts.fontSize
+     * @param {number} opts.charLineWidth
+     * @param {number} opts.extrudeHeight
+     * @param {number} opts.panelThickness
+     * @param {number} opts.panelOffset
      * @returns ...
      */
     const textPanel = (opts) => {

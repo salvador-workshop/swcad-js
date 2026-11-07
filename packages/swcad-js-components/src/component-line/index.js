@@ -166,9 +166,9 @@ const moduleInit = ({ jscad, swcadJs }) => {
         const {
             interfaceThickness,
             fitGap,
-            unitLength,
             type,
             scale,
+            unitLength,
             startPt,
             endPt,
             endOffset,
@@ -286,7 +286,17 @@ const moduleInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates a line connecting several repetitions of the given component. Accepts various options for spacing and offsets.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.unitLength - Length of each unit section for webbing
+     * @param {number[]} opts.startPt - starting point (2D coords)
+     * @param {number[]} opts.endPt - ending point (2D coords)
+     * @param {number} opts.endOffset
+     * @param {number} opts.baseLineOffset
+     * @param {geom3} opts.component
      * @returns `geom3` or `geom3[]`
      * @author R. J. Salvador (Salvador Workshop)
      * @memberof components

@@ -4,7 +4,7 @@ Salvador Workshop's CAD coding tools (in JavaScript)
 
 ---
 
-![swcad-js demo - arch-foils](./static/img/collage-arch-foils.jpg "swcad-js demo - arch-foils")
+![swcad-js demo - plinth base](./static/img/base.png "swcad-js demo - plinth base")
 
 ## Overview
 
@@ -26,11 +26,9 @@ A heavily customized version of the JSCAD UI ([https://github.com/hrgdavor/jscad
 
 [npmjs.com/package/swcad-js](https://www.npmjs.com/package/swcad-js)  
 
-![swcad-js demo - walls-entryway](./static/img/entryways-1.png "swcad-js demo - walls-entryway")
-
 ## SWCAD-JS API
 
-...
+SWCAD-JS functions and utilities.
 
 ---
 
@@ -76,6 +74,8 @@ Calculates distance between two co-ordinate points.
 
 Gets square points in area.
 
+![swcad-js demo - points in area](./static/img/calcs-area-points.jpg "swcad-js demo - points in area")
+
 #### getTriangularPtsInArea(x, y, distance, centrePoints)
 
 Gets triangular points in area.
@@ -97,6 +97,8 @@ Calculations around sets of co-ordinate points in 2D/3D space.
 #### ptCentroid(points, mode)
 
 Finds the central point (avg.) between the given points.
+
+![swcad-js demo - point centroid](./static/img/calcs-centroid.jpg "swcad-js demo - point centroid")
 
 ---
 
@@ -186,9 +188,9 @@ Functions leveraging JSCAD to get position data or move 2D/3D geometries.
 
 Common alignment modes (for JSCAD's `align()` function).
 
-#### measure()
+#### measure(inputGeom)
 
-Measures key info, and presents it in a readable manner, like `{ size: { x: 99, y: 99, z: 99 }, min: { ... }, max: { ... } }`.
+Measures key info (boundingBox, dimensions).
 
 #### ctr(inGeom, pt)
 
@@ -220,13 +222,19 @@ Functions leveraging JSCAD to transform 2D/3D geometries.
 
 Cuts a given geometry in half.
 
+![swcad-js demo - bisect](./static/img/calcs-transform-bisect.png "swcad-js demo - bisect")
+
 #### cutCircularSlice(opts, geom)
 
 Cuts a slice of an object.
 
+![swcad-js demo - circular slice](./static/img/calcs-transform-slice.jpg "swcad-js demo - circular slice")
+
 #### cloneQuadrant(inShape)
 
 Clones one quadrant of the given 2D shape into all quadrants.
+
+![swcad-js demo - cut/clone quadrant](./static/img/calcs-transform-2d.jpg "swcad-js demo - cut/clone quadrant")
 
 #### cutQuadrant(inShape)
 
@@ -235,6 +243,8 @@ Cuts one quadrant of the given 2D shape.
 #### stack(opts, geoms)
 
 Stacks geometries on top of each other, starting from the bottom.
+
+![swcad-js demo - stack](./static/img/calcs-transform-stack.jpg "swcad-js demo - stack")
 
 ---
 
@@ -255,6 +265,8 @@ Modelling functions that generate 2D beads (basic shapes mainly for additive `hu
 ### profiles.beadsBits.corner
 
 Modelling functions that generate 2D shapes which emulate woodworking router bits.
+
+![swcad-js demo - 2d bits](./static/img/profiles-bits-2d.jpg "swcad-js demo - 2d bits")
 
 #### chamfer(opts)
 
@@ -277,6 +289,10 @@ Generates a 2D round-Over bit.
 ### profiles.connections
 
 Modelling functions that generate connecting and interlocking 2D parts.
+
+![swcad-js demo - connections 1](./static/img/profiles-connections-1.jpg "swcad-js demo - connections 1")
+
+![swcad-js demo - connections 2](./static/img/profiles-connections-2.png "swcad-js demo - connections 2")
 
 #### boltCircle(opts)
 
@@ -328,15 +344,21 @@ Modelling functions that generate connecting and interlocking 2D panels.
 
 Generates a set of two interlocking panels, made by dividing a rectangle in half with the given options.
 
+![swcad-js demo - joint panel (one-joint)](./static/img/profiles-connections-joint-panel-1.jpg "swcad-js demo - joint panel (one-joint)")
+
 #### twoJointRectPanel(opts)
 
 Generates a set of four interlocking panels, made by dividing a rectangle into quarters with the given options.
+
+![swcad-js demo - joint panel (two-joint)](./static/img/profiles-connections-joint-panel-2.png "swcad-js demo - joint panel (two-joint)")
 
 ---
 
 ### profiles.mesh
 
 Modelling functions that generate 2D perforated shapes.
+
+![swcad-js demo - 2d mesh panel](./static/img/profiles-mesh-panel.jpg "swcad-js demo - 2d mesh panel")
 
 #### meshPanel(opts)
 
@@ -352,11 +374,15 @@ Modelling functions that generate 2D shapes for reinforcements.
 
 Generates a 2D reinforced rectangle with the given options for reinforcement styles.
 
+![swcad-js demo - reinforced rect.](./static/img/profiles-reinforcement-rect.jpg "swcad-js demo - reinforced rect.")
+
 ---
 
 ### profiles.reinforcements.boxCurve
 
 Modelling functions that generate curved 2D reinforcements for right-angle corners.
+
+![swcad-js demo - box reinforcementt](./static/img/profiles-reinforcement-box.jpg "swcad-js demo - box reinforcementt")
 
 #### boxCurveHalf(opts)
 
@@ -371,6 +397,8 @@ Generates a curved 2D reinforcement covering two sides (one corner) of a rectang
 ### profiles.text
 
 Modelling functions that generate 2D text.
+
+![swcad-js demo - 2d text](./static/img/profiles-text.jpg "swcad-js demo - 2d text")
 
 #### basicText(param0)
 
@@ -394,6 +422,8 @@ Generates a line connecting several repetitions of the given component. Accepts 
 
 Modelling functions that generate 3D beads (basic shapes mainly for additive `hull` functions) and bits (basic shapes for subtractive `hull` functions).
 
+![swcad-js demo - 3d beads](./static/img/components-beads.png "swcad-js demo - 3d beads")
+
 #### basic30DegBead(baseThickness, width)
 
 Generates an elliptical cylinder bead, with a 30-degree slope.
@@ -411,6 +441,8 @@ Generates a set of elliptical cylinder beads for interface connections.
 ### components.beadsBits.corner
 
 Modelling functions that generate 3D geometries which emulate woodworking router bits.
+
+![swcad-js demo - 3d bits](./static/img/components-bits-3d.png "swcad-js demo - 3d bits")
 
 #### chamfer(opts)
 
@@ -433,6 +465,8 @@ Generates a 3D round-over bit.
 ### components.fittings
 
 Modelling functions that generate 3D fittings that integrate with round/rectangular profiles (dowels, dimensional lumber, etc).
+
+![swcad-js demo - fittings](./static/img/components-fittings.jpg "swcad-js demo - fittings")
 
 #### doubleRoundFitting(opts)
 
@@ -472,6 +506,8 @@ Modelling functions that generate perforated 3D shapes.
 
 Generates a flat 3D mesh panel with the given options.
 
+![swcad-js demo - mesh panel](./static/img/components-mesh-panel.jpg "swcad-js demo - mesh panel")
+
 ---
 
 ### components.reinforcements
@@ -482,15 +518,21 @@ Modelling functions that generate 3D reinforcements.
 
 Generates an open web joist with the given options for reinforcement styles.
 
+![swcad-js demo - reinforced joist](./static/img/components-reinforcements-joist.jpg "swcad-js demo - reinforced joist")
+
 #### reinforcedRectPanel(opts)
 
 Generates a reinforced 3D rectangular panel with the given options for reinforcement styles.
+
+![swcad-js demo - reinforced panel](./static/img/components-reinforcements-rect.jpg "swcad-js demo - reinforced panel")
 
 ---
 
 ### components.reinforcements.boxSupport
 
 Modelling functions that generate curved 3D reinforcements for right-angle corners.
+
+![swcad-js demo - box reinforcement](./static/img/components-reinforcements-box.jpg "swcad-js demo - box reinforcement")
 
 #### boxSupportHalf(opts)
 
@@ -506,6 +548,8 @@ Generates a curved 3D reinforcement covering two sides (one corner) of a rectang
 
 Modelling functions that generate 3D geometries which have been "routed" with bits from `components.beadsBits.corner`.
 
+![swcad-js demo - routed shapes](./static/img/components-routed-shapes.png "swcad-js demo - routed shapes")
+
 #### routedCuboid(opts)
 
 Generates a routed cuboid with the given options for top and bottom edges.
@@ -519,6 +563,8 @@ Generates a routed elliptical cylinder with the given options for top and bottom
 ### components.text
 
 Modelling functions that generate 3D text.
+
+![swcad-js demo - 3d text](./static/img/components-text.jpg "swcad-js demo - 3d text")
 
 #### engravedText(opts)
 

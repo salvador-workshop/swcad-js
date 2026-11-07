@@ -30,7 +30,13 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a flat 3D mesh panel with the given options.
      * @memberof components.mesh
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {number[]} opts.size
+     * @param {number} opts.thickness
+     * @param {number} opts.edgeMargin
+     * @param {number} opts.holeRadius
+     * @param {number} opts.holeDistance
+     * @param {string} opts.holePattern
      * @returns ...
      */
     const meshPanel = ({
