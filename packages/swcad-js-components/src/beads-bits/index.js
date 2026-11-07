@@ -91,7 +91,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {string} opts.type - Type of the model, for future use with different design variations
+     * @param {string} opts.type - Type of the model
      * @param {number} opts.scale - Scale factor for the model
      * @param {number} opts.radius1
      * @param {number} opts.radius2
@@ -242,7 +242,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {string} opts.type - Type of the model, for future use with different design variations
+     * @param {string} opts.type - Type of the model
      * @param {number} opts.scale - Scale factor for the model
      * @param {number} opts.radius1
      * @param {number} opts.radius2
@@ -274,7 +274,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {string} opts.type - Type of the model, for future use with different design variations
+     * @param {string} opts.type - Type of the model
      * @param {number} opts.scale - Scale factor for the model
      * @param {number} opts.radius1
      * @param {number} opts.radius2
@@ -306,7 +306,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {string} opts.type - Type of the model, for future use with different design variations
+     * @param {string} opts.type - Type of the model
      * @param {number} opts.scale - Scale factor for the model
      * @param {number} opts.radius1
      * @param {number} opts.radius2
@@ -338,7 +338,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {string} opts.type - Type of the model, for future use with different design variations
+     * @param {string} opts.type - Type of the model
      * @param {number} opts.scale - Scale factor for the model
      * @param {number} opts.radius1
      * @param {number} opts.radius2

@@ -181,7 +181,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a 2D mesh panel with the given options.
      * @param {Object} opts - Options for the model
-     * @param {string} opts.type - Type of the model, for future use with different design variations
+     * @param {string} opts.type - Type of the model
      * @param {number} opts.scale - Scale factor for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together

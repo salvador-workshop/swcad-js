@@ -245,7 +245,7 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a curved 2D reinforcement covering two sides (one corner) of a rectangle.
      * @param {Object} opts - Options for the model
-     * @param {string} opts.type - Type of the model, for future use with different design variations
+     * @param {string} opts.type - Type of the model
      * @param {number} opts.scale - Scale factor for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
@@ -284,7 +284,7 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a curved 2D reinforcement covering three sides (two corners) of a rectangle.
      * @param {Object} opts - Options for the model
-     * @param {string} opts.type - Type of the model, for future use with different design variations
+     * @param {string} opts.type - Type of the model
      * @param {number} opts.scale - Scale factor for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
