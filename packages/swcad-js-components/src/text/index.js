@@ -31,7 +31,6 @@ const textUtils = ({ jscad, swcadJs }) => {
     /**
      * Generates a simple 3D line of text.
      * @memberof components.text
-     * @instance
      * @param {Object} opts - Options for the model
      * @param {string} opts.message
      * @param {number} opts.fontSize
@@ -55,7 +54,6 @@ const textUtils = ({ jscad, swcadJs }) => {
     /**
      * Generates a 3D line of text, with engraved profile.
      * @memberof components.text
-     * @instance
      * @param {Object} opts - Options for the model
      * @param {string} opts.message
      * @param {number} opts.fontSize
@@ -90,7 +88,6 @@ const textUtils = ({ jscad, swcadJs }) => {
     /**
      * Generates a rectangular panel with engraved text.
      * @memberof components.text
-     * @instance
      * @param {Object} opts - Options for the model
      * @param {string} opts.message
      * @param {number} opts.fontSize

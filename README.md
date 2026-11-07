@@ -188,9 +188,9 @@ Functions leveraging JSCAD to get position data or move 2D/3D geometries.
 
 Common alignment modes (for JSCAD's `align()` function).
 
-#### measure()
+#### measure(inputGeom)
 
-Measures key info, and presents it in a readable manner, like `{ size: { x: 99, y: 99, z: 99 }, min: { ... }, max: { ... } }`.
+Measures key info (boundingBox, dimensions).
 
 #### ctr(inGeom, pt)
 

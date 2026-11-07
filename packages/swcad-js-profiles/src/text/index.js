@@ -16,8 +16,10 @@ const textUtils = ({ jscad, swcadJs }) => {
     /**
      * Generates a simple 2D line of text.
      * @memberof profiles.text
-     * @instance
-     * @param {*} param0 
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.charLineWidth
+     * @param {string} opts.message
+     * @param {number} opts.fontSize
      * @returns ...
      */
     const basicText = (opts) => {

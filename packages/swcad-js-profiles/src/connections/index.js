@@ -293,7 +293,19 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates dovetail connectors.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number[]} opts.size
+     * @param {number} opts.radius
+     * @param {number} opts.unitSpacing
+     * @param {number} opts.unitRadius
+     * @param {number} opts.unitSegments
+     * @param {number} opts.numConnectors
+     * @param {number} opts.segments
+     * @param {number} opts.interfaceMargin
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
      */
@@ -401,7 +413,19 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates tab connectors.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number[]} opts.size
+     * @param {number} opts.radius
+     * @param {number} opts.unitSpacing
+     * @param {number} opts.unitRadius
+     * @param {number} opts.unitSegments
+     * @param {number} opts.numConnectors
+     * @param {number} opts.segments
+     * @param {number} opts.interfaceMargin
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
      */
@@ -509,7 +533,19 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates right-angle tab connectors.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number[]} opts.size
+     * @param {number} opts.radius
+     * @param {number} opts.unitSpacing
+     * @param {number} opts.unitRadius
+     * @param {number} opts.unitSegments
+     * @param {number} opts.numConnectors
+     * @param {number} opts.segments
+     * @param {number} opts.interfaceMargin
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
      */
@@ -617,7 +653,19 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates polygon connectors.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number[]} opts.size
+     * @param {number} opts.radius
+     * @param {number} opts.unitSpacing
+     * @param {number} opts.unitRadius
+     * @param {number} opts.unitSegments
+     * @param {number} opts.numConnectors
+     * @param {number} opts.segments
+     * @param {number} opts.interfaceMargin
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
      */
@@ -691,7 +739,19 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates ellipse connectors.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number[]} opts.size
+     * @param {number} opts.radius
+     * @param {number} opts.unitSpacing
+     * @param {number} opts.unitRadius
+     * @param {number} opts.unitSegments
+     * @param {number} opts.numConnectors
+     * @param {number} opts.segments
+     * @param {number} opts.interfaceMargin
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
      */
@@ -794,7 +854,19 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates pegboard connectors.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number[]} opts.size
+     * @param {number} opts.radius
+     * @param {number} opts.unitSpacing
+     * @param {number} opts.unitRadius
+     * @param {number} opts.unitSegments
+     * @param {number} opts.numConnectors
+     * @param {number} opts.segments
+     * @param {number} opts.interfaceMargin
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
      */
@@ -881,7 +953,19 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates bolt circle connectors.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number[]} opts.size
+     * @param {number} opts.radius
+     * @param {number} opts.unitSpacing
+     * @param {number} opts.unitRadius
+     * @param {number} opts.unitSegments
+     * @param {number} opts.numConnectors
+     * @param {number} opts.segments
+     * @param {number} opts.interfaceMargin
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
      */
@@ -949,7 +1033,19 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates pieces connected by a row of dovetails.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number[]} opts.size
+     * @param {number} opts.radius
+     * @param {number} opts.unitSpacing
+     * @param {number} opts.unitRadius
+     * @param {number} opts.unitSegments
+     * @param {number} opts.numConnectors
+     * @param {number} opts.segments
+     * @param {number} opts.interfaceMargin
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
      */
@@ -1040,7 +1136,19 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates pieces connected by a row of tabs.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number[]} opts.size
+     * @param {number} opts.radius
+     * @param {number} opts.unitSpacing
+     * @param {number} opts.unitRadius
+     * @param {number} opts.unitSegments
+     * @param {number} opts.numConnectors
+     * @param {number} opts.segments
+     * @param {number} opts.interfaceMargin
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
      */
@@ -1131,7 +1239,19 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates pieces connected by a row of right-angle tabs.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number[]} opts.size
+     * @param {number} opts.radius
+     * @param {number} opts.unitSpacing
+     * @param {number} opts.unitRadius
+     * @param {number} opts.unitSegments
+     * @param {number} opts.numConnectors
+     * @param {number} opts.segments
+     * @param {number} opts.interfaceMargin
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.connections
      */

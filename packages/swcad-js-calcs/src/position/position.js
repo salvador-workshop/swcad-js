@@ -59,9 +59,9 @@ const positionUtils = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Measures key info, and presents it in a readable manner, like `{ size: { x: 99, y: 99, z: 99 }, min: { ... }, max: { ... } }`
+     * Measures key info (boundingBox, dimensions).
      * @memberof calcs.position
-     * @instance
+     * @param {object} inputGeom 
      * @returns ...
      */
     const measure = (inputGeom) => {
