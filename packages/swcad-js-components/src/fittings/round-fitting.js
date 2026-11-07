@@ -237,7 +237,13 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates a 2D cutaway profile for round fittings.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.dowelRadius
+     * @param {number} opts.length
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.fittings
      */
@@ -260,7 +266,13 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates a 2D cutaway profile for inverted round fittings.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.dowelRadius
+     * @param {number} opts.length
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.fittings
      */
@@ -289,7 +301,13 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates a fitting for dowels (round groove).
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.dowelRadius
+     * @param {number} opts.length
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.fittings
      */
@@ -332,7 +350,13 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates a fitting for dowels, inverted for 3D-printing from the bottom (triangular groove).
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.dowelRadius
+     * @param {number} opts.length
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.fittings
      */
@@ -371,7 +395,13 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates a fitting that accomodates 2 round dowels, plus space for 2 side dowels.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.dowelRadius
+     * @param {number} opts.length
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.fittings
      */

@@ -88,7 +88,17 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
 
     /**
      * Initializes options with user input
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {string} opts.type - Type of the model, for future use with different design variations
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.radius1
+     * @param {number} opts.radius2
+     * @param {number} opts.offset1
+     * @param {number} opts.offset2
+     * @param {number} opts.offset3
+     * @param {number} opts.offset4
      * @returns model properties
      * @memberof components.beadsBits
      * @access private
@@ -229,7 +239,17 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates a 3D rabbet bit.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {string} opts.type - Type of the model, for future use with different design variations
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.radius1
+     * @param {number} opts.radius2
+     * @param {number} opts.offset1
+     * @param {number} opts.offset2
+     * @param {number} opts.offset3
+     * @param {number} opts.offset4
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.beadsBits.corner
      */
@@ -251,7 +271,17 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates a 3D chamfer bit.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {string} opts.type - Type of the model, for future use with different design variations
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.radius1
+     * @param {number} opts.radius2
+     * @param {number} opts.offset1
+     * @param {number} opts.offset2
+     * @param {number} opts.offset3
+     * @param {number} opts.offset4
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.beadsBits.corner
      */
@@ -273,7 +303,17 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates a 3D round-over bit.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {string} opts.type - Type of the model, for future use with different design variations
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.radius1
+     * @param {number} opts.radius2
+     * @param {number} opts.offset1
+     * @param {number} opts.offset2
+     * @param {number} opts.offset3
+     * @param {number} opts.offset4
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.beadsBits.corner
      */
@@ -295,7 +335,17 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates a 3D cove bit.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {string} opts.type - Type of the model, for future use with different design variations
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.radius1
+     * @param {number} opts.radius2
+     * @param {number} opts.offset1
+     * @param {number} opts.offset2
+     * @param {number} opts.offset3
+     * @param {number} opts.offset4
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.beadsBits.corner
      */

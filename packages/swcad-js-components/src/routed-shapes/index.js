@@ -416,7 +416,16 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates a routed cuboid with the given options for top and bottom edges.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number[]} opts.size
+     * @param {string} opts.topBit
+     * @param {Object} opts.topBitOpts
+     * @param {string} opts.bottomBit
+     * @param {Object} opts.bottomBitOpts
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.routedShapes
      */
@@ -474,7 +483,17 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates a routed elliptical cylinder with the given options for top and bottom edges.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {string} opts.type - Type of the model
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.height
+     * @param {number[]} opts.radius
+     * @param {string} opts.topBit
+     * @param {Object} opts.topBitOpts
+     * @param {string} opts.bottomBit
+     * @param {Object} opts.bottomBitOpts
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.routedShapes
      */

@@ -141,7 +141,7 @@ const transformUtils = ({ jscad, swcadJs }) => {
      * @memberof calcs.transform
      * @instance
      * @param {Object} opts
-     * @param {number} opts.centralAngle
+     * @param {number} opts.centralAngle - angle in radians
      * @param {Object} geom - Object we're cutting
      * @returns bisected geometry
      */

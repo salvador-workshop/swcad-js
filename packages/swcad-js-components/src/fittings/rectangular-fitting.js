@@ -231,7 +231,13 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates a 2D cutaway profile for square/rectangular fittings.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {string} opts.type - Type of the model, for future use with different design variations
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number[]} opts.subjectSize
+     * @param {number} opts.length
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.fittings
      */
@@ -260,7 +266,13 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates a fitting for square/rectangular dowels.
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {string} opts.type - Type of the model, for future use with different design variations
+     * @param {number} opts.scale - Scale factor for the model
+     * @param {number[]} opts.subjectSize
+     * @param {number} opts.length
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.fittings
      */
