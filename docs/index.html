@@ -46,7 +46,7 @@
         <article><h1>swcad-js</h1>
 <p>Salvador Workshop's CAD coding tools (in JavaScript)</p>
 <hr>
-<p><img src="./static/img/collage-arch-foils.jpg" alt="swcad-js demo - arch-foils" title="swcad-js demo - arch-foils"></p>
+<p><img src="./static/img/base.png" alt="swcad-js demo - plinth base" title="swcad-js demo - plinth base"></p>
 <h2>Overview</h2>
 <h3>Online viewer</h3>
 <p><a href="https://sw-jscad-viewer.netlify.app/">sw-jscad-viewer.netlify.app</a></p>
@@ -57,9 +57,8 @@
 <p><a href="https://github.com/salvador-workshop/swcad-js/">github.com/salvador-workshop/swcad-js/</a></p>
 <h3>NPM package</h3>
 <p><a href="https://www.npmjs.com/package/swcad-js">npmjs.com/package/swcad-js</a></p>
-<p><img src="./static/img/entryways-1.png" alt="swcad-js demo - walls-entryway" title="swcad-js demo - walls-entryway"></p>
 <h2>SWCAD-JS API</h2>
-<p>...</p>
+<p>SWCAD-JS functions and utilities.</p>
 <hr>
 <br/>
 <h3>DATA</h3>
@@ -82,6 +81,7 @@
 <p>Calculates distance between two co-ordinate points.</p>
 <h4>getSquarePtsInArea(x, y, distance, centrePoints)</h4>
 <p>Gets square points in area.</p>
+<p><img src="./static/img/calcs-area-points.jpg" alt="swcad-js demo - points in area" title="swcad-js demo - points in area"></p>
 <h4>getTriangularPtsInArea(x, y, distance, centrePoints)</h4>
 <p>Gets triangular points in area.</p>
 <h4>midpointBetweenPoints(startPt, endPt)</h4>
@@ -93,6 +93,7 @@
 <p>Calculations around sets of co-ordinate points in 2D/3D space.</p>
 <h4>ptCentroid(points, mode)</h4>
 <p>Finds the central point (avg.) between the given points.</p>
+<p><img src="./static/img/calcs-centroid.jpg" alt="swcad-js demo - point centroid" title="swcad-js demo - point centroid"></p>
 <hr>
 <h3>calcs.geometry.regPoly</h3>
 <p>Calculations around regular (equiangular + equilateral) polygons.</p>
@@ -137,8 +138,8 @@
 <p>Functions leveraging JSCAD to get position data or move 2D/3D geometries.</p>
 <h4>alignModes</h4>
 <p>Common alignment modes (for JSCAD's <code>align()</code> function).</p>
-<h4>measure()</h4>
-<p>Measures key info, and presents it in a readable manner, like <code>{ size: { x: 99, y: 99, z: 99 }, min: { ... }, max: { ... } }</code>.</p>
+<h4>measure(inputGeom)</h4>
+<p>Measures key info (boundingBox, dimensions).</p>
 <h4>ctr(inGeom, pt)</h4>
 <p>Centers the given geometry, relative to the given point (defaults to [0,0,0]).</p>
 <h4>ctrMax(inGeom, pt)</h4>
@@ -154,14 +155,18 @@
 <p>Functions leveraging JSCAD to transform 2D/3D geometries.</p>
 <h4>bisect3d(opts, geom)</h4>
 <p>Cuts a given geometry in half.</p>
+<p><img src="./static/img/calcs-transform-bisect.png" alt="swcad-js demo - bisect" title="swcad-js demo - bisect"></p>
 <h4>cutCircularSlice(opts, geom)</h4>
 <p>Cuts a slice of an object.</p>
+<p><img src="./static/img/calcs-transform-slice.jpg" alt="swcad-js demo - circular slice" title="swcad-js demo - circular slice"></p>
 <h4>cloneQuadrant(inShape)</h4>
 <p>Clones one quadrant of the given 2D shape into all quadrants.</p>
+<p><img src="./static/img/calcs-transform-2d.jpg" alt="swcad-js demo - cut/clone quadrant" title="swcad-js demo - cut/clone quadrant"></p>
 <h4>cutQuadrant(inShape)</h4>
 <p>Cuts one quadrant of the given 2D shape.</p>
 <h4>stack(opts, geoms)</h4>
 <p>Stacks geometries on top of each other, starting from the bottom.</p>
+<p><img src="./static/img/calcs-transform-stack.jpg" alt="swcad-js demo - stack" title="swcad-js demo - stack"></p>
 <hr>
 <br/>
 <h3>PROFILES</h3>
@@ -172,6 +177,7 @@
 <hr>
 <h3>profiles.beadsBits.corner</h3>
 <p>Modelling functions that generate 2D shapes which emulate woodworking router bits.</p>
+<p><img src="./static/img/profiles-bits-2d.jpg" alt="swcad-js demo - 2d bits" title="swcad-js demo - 2d bits"></p>
 <h4>chamfer(opts)</h4>
 <p>Generates a 2D chamfer bit.</p>
 <h4>cove(opts)</h4>
@@ -183,6 +189,8 @@
 <hr>
 <h3>profiles.connections</h3>
 <p>Modelling functions that generate connecting and interlocking 2D parts.</p>
+<p><img src="./static/img/profiles-connections-1.jpg" alt="swcad-js demo - connections 1" title="swcad-js demo - connections 1"></p>
+<p><img src="./static/img/profiles-connections-2.png" alt="swcad-js demo - connections 2" title="swcad-js demo - connections 2"></p>
 <h4>boltCircle(opts)</h4>
 <p>Generates bolt circle connectors.</p>
 <h4>dovetail(opts)</h4>
@@ -208,11 +216,14 @@
 <p>Modelling functions that generate connecting and interlocking 2D panels.</p>
 <h4>oneJointRectPanel(opts)</h4>
 <p>Generates a set of two interlocking panels, made by dividing a rectangle in half with the given options.</p>
+<p><img src="./static/img/profiles-connections-joint-panel-1.jpg" alt="swcad-js demo - joint panel (one-joint)" title="swcad-js demo - joint panel (one-joint)"></p>
 <h4>twoJointRectPanel(opts)</h4>
 <p>Generates a set of four interlocking panels, made by dividing a rectangle into quarters with the given options.</p>
+<p><img src="./static/img/profiles-connections-joint-panel-2.png" alt="swcad-js demo - joint panel (two-joint)" title="swcad-js demo - joint panel (two-joint)"></p>
 <hr>
 <h3>profiles.mesh</h3>
 <p>Modelling functions that generate 2D perforated shapes.</p>
+<p><img src="./static/img/profiles-mesh-panel.jpg" alt="swcad-js demo - 2d mesh panel" title="swcad-js demo - 2d mesh panel"></p>
 <h4>meshPanel(opts)</h4>
 <p>Generates a 2D mesh panel with the given options.</p>
 <hr>
@@ -220,9 +231,11 @@
 <p>Modelling functions that generate 2D shapes for reinforcements.</p>
 <h4>reinforcedRect(opts)</h4>
 <p>Generates a 2D reinforced rectangle with the given options for reinforcement styles.</p>
+<p><img src="./static/img/profiles-reinforcement-rect.jpg" alt="swcad-js demo - reinforced rect." title="swcad-js demo - reinforced rect."></p>
 <hr>
 <h3>profiles.reinforcements.boxCurve</h3>
 <p>Modelling functions that generate curved 2D reinforcements for right-angle corners.</p>
+<p><img src="./static/img/profiles-reinforcement-box.jpg" alt="swcad-js demo - box reinforcementt" title="swcad-js demo - box reinforcementt"></p>
 <h4>boxCurveHalf(opts)</h4>
 <p>Generates a curved 2D reinforcement covering three sides (two corners) of a rectangle.</p>
 <h4>boxCurveQuarter(opts)</h4>
@@ -230,6 +243,7 @@
 <hr>
 <h3>profiles.text</h3>
 <p>Modelling functions that generate 2D text.</p>
+<p><img src="./static/img/profiles-text.jpg" alt="swcad-js demo - 2d text" title="swcad-js demo - 2d text"></p>
 <h4>basicText(param0)</h4>
 <p>Generates a simple 2D line of text.</p>
 <hr>
@@ -241,6 +255,7 @@
 <hr>
 <h3>components.beadsBits</h3>
 <p>Modelling functions that generate 3D beads (basic shapes mainly for additive <code>hull</code> functions) and bits (basic shapes for subtractive <code>hull</code> functions).</p>
+<p><img src="./static/img/components-beads.png" alt="swcad-js demo - 3d beads" title="swcad-js demo - 3d beads"></p>
 <h4>basic30DegBead(baseThickness, width)</h4>
 <p>Generates an elliptical cylinder bead, with a 30-degree slope.</p>
 <h4>basic45DegBead(baseThickness, width)</h4>
@@ -250,6 +265,7 @@
 <hr>
 <h3>components.beadsBits.corner</h3>
 <p>Modelling functions that generate 3D geometries which emulate woodworking router bits.</p>
+<p><img src="./static/img/components-bits-3d.png" alt="swcad-js demo - 3d bits" title="swcad-js demo - 3d bits"></p>
 <h4>chamfer(opts)</h4>
 <p>Generates a 3D chamfer bit.</p>
 <h4>cove(opts)</h4>
@@ -261,6 +277,7 @@
 <hr>
 <h3>components.fittings</h3>
 <p>Modelling functions that generate 3D fittings that integrate with round/rectangular profiles (dowels, dimensional lumber, etc).</p>
+<p><img src="./static/img/components-fittings.jpg" alt="swcad-js demo - fittings" title="swcad-js demo - fittings"></p>
 <h4>doubleRoundFitting(opts)</h4>
 <p>Generates a fitting that accomodates 2 round dowels, plus space for 2 side dowels.</p>
 <h4>invRoundFittingCutProfile(opts)</h4>
@@ -280,16 +297,20 @@
 <p>Modelling functions that generate perforated 3D shapes.</p>
 <h4>meshPanel(opts)</h4>
 <p>Generates a flat 3D mesh panel with the given options.</p>
+<p><img src="./static/img/components-mesh-panel.jpg" alt="swcad-js demo - mesh panel" title="swcad-js demo - mesh panel"></p>
 <hr>
 <h3>components.reinforcements</h3>
 <p>Modelling functions that generate 3D reinforcements.</p>
 <h4>reinforcedJoist(opts)</h4>
 <p>Generates an open web joist with the given options for reinforcement styles.</p>
+<p><img src="./static/img/components-reinforcements-joist.jpg" alt="swcad-js demo - reinforced joist" title="swcad-js demo - reinforced joist"></p>
 <h4>reinforcedRectPanel(opts)</h4>
 <p>Generates a reinforced 3D rectangular panel with the given options for reinforcement styles.</p>
+<p><img src="./static/img/components-reinforcements-rect.jpg" alt="swcad-js demo - reinforced panel" title="swcad-js demo - reinforced panel"></p>
 <hr>
 <h3>components.reinforcements.boxSupport</h3>
 <p>Modelling functions that generate curved 3D reinforcements for right-angle corners.</p>
+<p><img src="./static/img/components-reinforcements-box.jpg" alt="swcad-js demo - box reinforcement" title="swcad-js demo - box reinforcement"></p>
 <h4>boxSupportHalf(opts)</h4>
 <p>Generates a curved 3D reinforcement covering three sides (two corners) of a rectangle.</p>
 <h4>boxSupportQuarter(opts)</h4>
@@ -297,6 +318,7 @@
 <hr>
 <h3>components.routedShapes</h3>
 <p>Modelling functions that generate 3D geometries which have been &quot;routed&quot; with bits from <code>components.beadsBits.corner</code>.</p>
+<p><img src="./static/img/components-routed-shapes.png" alt="swcad-js demo - routed shapes" title="swcad-js demo - routed shapes"></p>
 <h4>routedCuboid(opts)</h4>
 <p>Generates a routed cuboid with the given options for top and bottom edges.</p>
 <h4>routedCylinderElliptic(opts)</h4>
@@ -304,6 +326,7 @@
 <hr>
 <h3>components.text</h3>
 <p>Modelling functions that generate 3D text.</p>
+<p><img src="./static/img/components-text.jpg" alt="swcad-js demo - 3d text" title="swcad-js demo - 3d text"></p>
 <h4>engravedText(opts)</h4>
 <p>Generates a 3D line of text, with engraved profile.</p>
 <h4>flatText(param0)</h4>
@@ -326,7 +349,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Nov 06 2026 12:28:28 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sat Nov 07 2026 13:13:05 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
