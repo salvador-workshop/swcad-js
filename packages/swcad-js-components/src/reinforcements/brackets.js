@@ -3,20 +3,25 @@
 const bracketsInit = ({ jscad, swcadJs }) => {
     const {
         rectangle,
+        cuboid
     } = jscad.primitives
 
     const {
         align,
         rotate,
+        translate,
     } = jscad.transforms
 
     const {
         subtract,
+        union,
     } = jscad.booleans
 
     const {
         extrudeLinear,
     } = jscad.extrusions
+
+    const { TAU } = jscad.maths.constants
 
     const {
         standards,
@@ -49,8 +54,11 @@ const bracketsInit = ({ jscad, swcadJs }) => {
                 size: [
                     math.inchesToMm(1.5),
                     math.inchesToMm(0.5),
-                    math.inchesToMm(0.5),
+                    math.inchesToMm(0.75),
                 ],
+            },
+            opts: {
+                numReinforcements: 4,
             },
             points: {},
             types: {},
@@ -66,6 +74,7 @@ const bracketsInit = ({ jscad, swcadJs }) => {
         const defaultOpts = {
             ...standardOpts,
             size: defaultValues.dims.size,
+            numReinforcements: defaultValues.opts.numReinforcements,
         }
 
         return {
@@ -92,6 +101,7 @@ const bracketsInit = ({ jscad, swcadJs }) => {
         // User options
         const {
             size = defaults.opts.size,
+            numReinforcements = defaults.opts.numReinforcements,
             interfaceThickness = defaults.opts.interfaceThickness,
         } = opts
 
@@ -101,6 +111,7 @@ const bracketsInit = ({ jscad, swcadJs }) => {
 
         const initOpts = {
             size,
+            numReinforcements,
             ...stdOpts,
         }
 
@@ -126,6 +137,7 @@ const bracketsInit = ({ jscad, swcadJs }) => {
 
         const {
             size,
+            numReinforcements,
             interfaceThickness,
         } = opts
 
@@ -136,7 +148,6 @@ const bracketsInit = ({ jscad, swcadJs }) => {
         const length = size[0]
         const width = size[1]
         const height = size[2]
-
         /* ----------------------------------------
         * Preparing Model Properties, Dimensions
         * ------------------------------------- */
@@ -145,7 +156,9 @@ const bracketsInit = ({ jscad, swcadJs }) => {
         const modelConstants = {}
 
         /** Derived user options for the model */
-        const modelOpts = {}
+        const modelOpts = {
+            numReinforcements,
+        }
 
         /** Various dimensions for model */
         const modelDims = {
@@ -205,13 +218,49 @@ const bracketsInit = ({ jscad, swcadJs }) => {
         const modelProperties = bracketsProps(initOpts)
 
         const {
+            numReinforcements,
+        } = modelProperties.opts
+
+        const {
+            size,
             length,
             width,
             height,
             interfaceThickness,
         } = modelProperties.dims
 
-        const mainModel = cuboid()
+        let bracketReinf = reinforcements.boxSupport.boxSupportQuarter({
+            size: [height, width],
+        })[0]
+        bracketReinf = position.ctrMin(rotate([0, TAU / -4, 0], bracketReinf))
+
+        const reinforcementsCentreLength = length - interfaceThickness
+        const reinforcementsSpacing = reinforcementsCentreLength / numReinforcements
+        const bracketReinforcements = []
+        for (let bReinfIdx = 0; bReinfIdx < numReinforcements + 1; bReinfIdx++) {
+            const currentOffset = [reinforcementsSpacing * bReinfIdx, 0, 0]
+            bracketReinforcements.push(translate(
+                currentOffset,
+                bracketReinf
+            ))
+        }
+        const bracketReinforcementsAssembly = union(
+            ...bracketReinforcements
+        )
+
+        const sidePanel = cuboid({ size: [length, interfaceThickness, height] })
+        const basePanel = cuboid({ size: [length, width, interfaceThickness] })
+        const bracketBodyBase = union(
+            align({ modes: ['center', 'min', 'min'] }, sidePanel),
+            align({ modes: ['center', 'min', 'min'] }, basePanel)
+        )
+
+        const rightAngleBracketAssembly = union(
+            bracketBodyBase,
+            align({ modes: ['center', 'min', 'min'] }, bracketReinforcementsAssembly)
+        )
+
+        const mainModel = rightAngleBracketAssembly
         const modelParts = {
             mainModel,
         }
@@ -235,6 +284,11 @@ const bracketsInit = ({ jscad, swcadJs }) => {
         const modelProperties = bracketsProps(initOpts)
 
         const {
+            numReinforcements,
+        } = modelProperties.opts
+
+        const {
+            size,
             length,
             width,
             height,
