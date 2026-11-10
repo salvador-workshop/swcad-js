@@ -21,6 +21,12 @@ const bracketsInit = ({ jscad, swcadJs }) => {
         extrudeLinear,
     } = jscad.extrusions
 
+    const {
+        measureDimensions,
+        measureBoundingBox,
+        measureVolume
+    } = jscad.measurements
+
     const { TAU } = jscad.maths.constants
 
     const {
@@ -234,10 +240,10 @@ const bracketsInit = ({ jscad, swcadJs }) => {
         })[0]
         bracketReinf = position.ctrMin(rotate([0, TAU / -4, 0], bracketReinf))
 
-        const reinforcementsCentreLength = length - interfaceThickness
-        const reinforcementsSpacing = reinforcementsCentreLength / numReinforcements
+        const reinforcementsPtsLength = length - interfaceThickness
+        const reinforcementsSpacing = reinforcementsPtsLength / (numReinforcements - 1)
         const bracketReinforcements = []
-        for (let bReinfIdx = 0; bReinfIdx < numReinforcements + 1; bReinfIdx++) {
+        for (let bReinfIdx = 0; bReinfIdx < numReinforcements; bReinfIdx++) {
             const currentOffset = [reinforcementsSpacing * bReinfIdx, 0, 0]
             bracketReinforcements.push(translate(
                 currentOffset,
@@ -295,7 +301,79 @@ const bracketsInit = ({ jscad, swcadJs }) => {
             interfaceThickness,
         } = modelProperties.dims
 
-        const mainModel = cuboid()
+        const sidePanelX = cuboid({ size: [length, interfaceThickness, height] })
+        const sidePanelY = cuboid({ size: [interfaceThickness, width, height] })
+        const basePanel = cuboid({ size: [length, width, interfaceThickness] })
+
+        const cornerBracketBodyBase = union(
+            align({ modes: ['min', 'min', 'min'] }, sidePanelX),
+            align({ modes: ['min', 'min', 'min'] }, sidePanelY),
+            align({ modes: ['min', 'min', 'min'] }, basePanel)
+        )
+
+        let numReinfs = numReinforcements;
+        if (typeof jointNumConnectors == "number") {
+            numReinfs = [
+                numReinforcements,
+                numReinforcements
+            ];
+        }
+
+        let bracketReinfX = reinforcements.boxSupport.boxSupportQuarter({
+            size: [height, width / 2],
+        })[0]
+        bracketReinfX = position.ctrMin(rotate([0, TAU / -4, 0], bracketReinfX))
+
+        const reinforcementsPtsLengthX = length - interfaceThickness
+        const reinforcementsSpacingX = reinforcementsPtsLengthX / numReinfs[0]
+        const bracketReinforcementsX = []
+        for (let bReinfXIdx = 0; bReinfXIdx < numReinfs[0]; bReinfXIdx++) {
+            const currentOffset = [reinforcementsSpacingX * bReinfXIdx, 0, 0]
+            bracketReinforcementsX.push(translate(
+                currentOffset,
+                bracketReinfX
+            ))
+        }
+        const bracketReinforcementsXAssembly = union(
+            ...bracketReinforcementsX
+        )
+
+        let bracketReinfY = reinforcements.boxSupport.boxSupportQuarter({
+            size: [height, length / 2],
+        })[0]
+        bracketReinfY = position.ctrMin(rotate([0, TAU / -4, TAU / -4], bracketReinfY))
+
+        const reinforcementsPtsLengthY = width - interfaceThickness
+        const reinforcementsSpacingY = reinforcementsPtsLengthY / numReinfs[1]
+        const bracketReinforcementsY = []
+        for (let bReinfYIdx = 0; bReinfYIdx < numReinfs[1]; bReinfYIdx++) {
+            const currentOffset = [0, reinforcementsSpacingY * bReinfYIdx, 0]
+            bracketReinforcementsY.push(translate(
+                currentOffset,
+                bracketReinfY
+            ))
+        }
+        const bracketReinforcementsYAssembly = union(
+            ...bracketReinforcementsY
+        )
+
+        const cornerBracketBodyBaseBbox = measureBoundingBox(cornerBracketBodyBase)
+        const xAssemblyPt = [cornerBracketBodyBaseBbox[1][0], 0, 0]
+        const yAssemblyPt = [0, cornerBracketBodyBaseBbox[1][1], 0]
+
+        const cornerBracketAssembly = union(
+            cornerBracketBodyBase,
+            align({
+                modes: ['max', 'min', 'min'],
+                relativeTo: xAssemblyPt
+            }, bracketReinforcementsXAssembly),
+            align({
+                modes: ['min', 'max', 'min'],
+                relativeTo: yAssemblyPt
+            }, bracketReinforcementsYAssembly),
+        )
+
+        const mainModel = cornerBracketAssembly
         const modelParts = {
             mainModel,
         }
