@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: swcad-js-components/src/reinforcements/brackets.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: swcad-js-components/src/reinforcements/brackets.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict"
+
+const bracketsInit = ({ jscad, swcadJs }) => {
+    const {
+        cuboid
+    } = jscad.primitives
+
+    const {
+        align,
+        rotate,
+        translate,
+    } = jscad.transforms
+
+    const {
+        union,
+    } = jscad.booleans
+
+    const {
+        measureBoundingBox,
+    } = jscad.measurements
+
+    const { TAU } = jscad.maths.constants
+
+    const {
+        standards,
+    } = swcadJs.data
+
+    const {
+        math,
+        position,
+    } = swcadJs.calcs
+
+    const {
+        reinforcements
+    } = swcadJs.components
+
+
+    //==============================================================================
+
+
+    /**
+     * Builds default values and opts for the model
+     * @param {*} opts 
+     * @returns default values and opts
+     * @memberof components.reinforcements.brackets
+     * @access private
+     */
+    const bracketsDefaults = () => {
+        /** Specific value declarations */
+        const defaultValues = {
+            dims: {
+                size: [
+                    math.inchesToMm(1.5),
+                    math.inchesToMm(0.5),
+                    math.inchesToMm(0.75),
+                ],
+            },
+            opts: {
+                numReinforcements: 4,
+            },
+            points: {},
+            types: {},
+            constants: {}
+        }
+
+        /** Options used by SW models */
+        const standardOpts = {
+            interfaceThickness: standards.INTERFACE_THICKNESS,
+        }
+
+        /** Computed values for option defaults */
+        const defaultOpts = {
+            ...standardOpts,
+            size: defaultValues.dims.size,
+            numReinforcements: defaultValues.opts.numReinforcements,
+        }
+
+        return {
+            opts: defaultOpts,
+            vals: defaultValues,
+        }
+    }
+
+
+    //------------------------------------------------------------------------------
+
+
+    /**
+     * Initializes options with user input
+     * @param {*} opts 
+     * @returns model properties
+     * @memberof components.reinforcements.brackets
+     * @access private
+     */
+    const bracketsOpts = (opts) => {
+        const defaults = bracketsDefaults()
+        console.log('bracketsOpts() -- opts', opts)
+
+        // User options
+        const {
+            size = defaults.opts.size,
+            numReinforcements = defaults.opts.numReinforcements,
+            interfaceThickness = defaults.opts.interfaceThickness,
+        } = opts
+
+        const stdOpts = {
+            interfaceThickness,
+        }
+
+        const initOpts = {
+            size,
+            numReinforcements,
+            ...stdOpts,
+        }
+
+        console.log('bracketsOpts() -- initOpts', initOpts)
+
+        return initOpts
+    }
+
+
+    //------------------------------------------------------------------------------
+
+
+    /**
+     * Builds model properties from the given opts
+     * @param {*} opts 
+     * @returns model properties
+     * @memberof components.reinforcements.brackets
+     * @access private
+     */
+    const bracketsProps = (opts) => {
+        const defaults = bracketsDefaults()
+        console.log('bracketsProps() -- opts', opts)
+
+        const {
+            size,
+            numReinforcements,
+            interfaceThickness,
+        } = opts
+
+        /* ----------------------------------------
+        * Prop calculations
+        * ------------------------------------- */
+
+        const length = size[0]
+        const width = size[1]
+        const height = size[2]
+        /* ----------------------------------------
+        * Preparing Model Properties, Dimensions
+        * ------------------------------------- */
+
+        /** Constant values for model */
+        const modelConstants = {}
+
+        /** Derived user options for the model */
+        const modelOpts = {
+            numReinforcements,
+        }
+
+        /** Various dimensions for model */
+        const modelDims = {
+            size,
+            length,
+            width,
+            height,
+            interfaceThickness,
+        }
+
+        /** Various key points for model */
+        const modelPoints = {}
+
+        /** Components used by model */
+        const modelComponents = {}
+
+        /* ---------------------------------------------
+        *  Model Properties
+        * ----------------------------------------------
+        * Properties accessible to all model functions.
+        * --------------------------------------------- */
+
+        const modelProperties = {
+            metadata: {},
+            constants: modelConstants,
+            opts: modelOpts,
+            dims: modelDims,
+            points: modelPoints,
+            components: modelComponents,
+        }
+
+        console.log('bracketsProps() -- modelProperties', modelProperties)
+
+        return modelProperties
+    }
+
+
+    //------------------------------------------------------------------------------
+
+    /* ----------------------------------------
+    * MODELLING FUNCTIONS
+    * ------------------------------------- */
+
+    /**
+     * Generates a right-angle bracket
+     * @param {Object} opts - Options for the model
+     * @param {number[]} opts.size
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.numReinforcements
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
+     * @memberof components.reinforcements.brackets
+     */
+    const rightAngleBracket = (opts) => {
+        const defaults = bracketsDefaults()
+        const initOpts = bracketsOpts(opts)
+        const modelProperties = bracketsProps(initOpts)
+
+        const {
+            numReinforcements,
+        } = modelProperties.opts
+
+        const {
+            size,
+            length,
+            width,
+            height,
+            interfaceThickness,
+        } = modelProperties.dims
+
+        let bracketReinf = reinforcements.boxSupport.boxSupportQuarter({
+            size: [height, width],
+        })[0]
+        bracketReinf = position.ctrMin(rotate([0, TAU / -4, 0], bracketReinf))
+
+        const reinforcementsPtsLength = length - interfaceThickness
+        const reinforcementsSpacing = reinforcementsPtsLength / (numReinforcements - 1)
+        const bracketReinforcements = []
+        for (let bReinfIdx = 0; bReinfIdx &lt; numReinforcements; bReinfIdx++) {
+            const currentOffset = [reinforcementsSpacing * bReinfIdx, 0, 0]
+            bracketReinforcements.push(translate(
+                currentOffset,
+                bracketReinf
+            ))
+        }
+        const bracketReinforcementsAssembly = union(
+            ...bracketReinforcements
+        )
+
+        const sidePanel = cuboid({ size: [length, interfaceThickness, height] })
+        const basePanel = cuboid({ size: [length, width, interfaceThickness] })
+        const bracketBodyBase = union(
+            align({ modes: ['center', 'min', 'min'] }, sidePanel),
+            align({ modes: ['center', 'min', 'min'] }, basePanel)
+        )
+
+        const rightAngleBracketAssembly = union(
+            bracketBodyBase,
+            align({ modes: ['center', 'min', 'min'] }, bracketReinforcementsAssembly)
+        )
+
+        const mainModel = rightAngleBracketAssembly
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
+     * Generates a right-angle corner bracket
+     * @param {Object} opts - Options for the model
+     * @param {number[]} opts.size
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number | number[]} opts.numReinforcements
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
+     * @memberof components.reinforcements.brackets.brackets
+     */
+    const rightAngleCornerBracket = (opts) => {
+        const defaults = bracketsDefaults()
+        const initOpts = bracketsOpts(opts)
+        const modelProperties = bracketsProps(initOpts)
+
+        const {
+            numReinforcements,
+        } = modelProperties.opts
+
+        const {
+            size,
+            length,
+            width,
+            height,
+            interfaceThickness,
+        } = modelProperties.dims
+
+        const sidePanelX = cuboid({ size: [length, interfaceThickness, height] })
+        const sidePanelY = cuboid({ size: [interfaceThickness, width, height] })
+        const basePanel = cuboid({ size: [length, width, interfaceThickness] })
+
+        const cornerBracketBodyBase = union(
+            align({ modes: ['min', 'min', 'min'] }, sidePanelX),
+            align({ modes: ['min', 'min', 'min'] }, sidePanelY),
+            align({ modes: ['min', 'min', 'min'] }, basePanel)
+        )
+
+        let numReinfs = numReinforcements;
+        if (typeof jointNumConnectors == "number") {
+            numReinfs = [
+                numReinforcements,
+                numReinforcements
+            ];
+        }
+
+        let bracketReinfX = reinforcements.boxSupport.boxSupportQuarter({
+            size: [height, width / 2],
+        })[0]
+        bracketReinfX = position.ctrMin(rotate([0, TAU / -4, 0], bracketReinfX))
+
+        const reinforcementsPtsLengthX = length - interfaceThickness
+        const reinforcementsSpacingX = reinforcementsPtsLengthX / numReinfs[0]
+        const bracketReinforcementsX = []
+        for (let bReinfXIdx = 0; bReinfXIdx &lt; numReinfs[0]; bReinfXIdx++) {
+            const currentOffset = [reinforcementsSpacingX * bReinfXIdx, 0, 0]
+            bracketReinforcementsX.push(translate(
+                currentOffset,
+                bracketReinfX
+            ))
+        }
+        const bracketReinforcementsXAssembly = union(
+            ...bracketReinforcementsX
+        )
+
+        let bracketReinfY = reinforcements.boxSupport.boxSupportQuarter({
+            size: [height, length / 2],
+        })[0]
+        bracketReinfY = position.ctrMin(rotate([0, TAU / -4, TAU / -4], bracketReinfY))
+
+        const reinforcementsPtsLengthY = width - interfaceThickness
+        const reinforcementsSpacingY = reinforcementsPtsLengthY / numReinfs[1]
+        const bracketReinforcementsY = []
+        for (let bReinfYIdx = 0; bReinfYIdx &lt; numReinfs[1]; bReinfYIdx++) {
+            const currentOffset = [0, reinforcementsSpacingY * bReinfYIdx, 0]
+            bracketReinforcementsY.push(translate(
+                currentOffset,
+                bracketReinfY
+            ))
+        }
+        const bracketReinforcementsYAssembly = union(
+            ...bracketReinforcementsY
+        )
+
+        const cornerBracketBodyBaseBbox = measureBoundingBox(cornerBracketBodyBase)
+        const xAssemblyPt = [cornerBracketBodyBaseBbox[1][0], 0, 0]
+        const yAssemblyPt = [0, cornerBracketBodyBaseBbox[1][1], 0]
+
+        const cornerBracketAssembly = union(
+            cornerBracketBodyBase,
+            align({
+                modes: ['max', 'min', 'min'],
+                relativeTo: xAssemblyPt
+            }, bracketReinforcementsXAssembly),
+            align({
+                modes: ['min', 'max', 'min'],
+                relativeTo: yAssemblyPt
+            }, bracketReinforcementsYAssembly),
+        )
+
+        const mainModel = cornerBracketAssembly
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
+     * Modelling functions that generate right-angle brackets.
+     * @namespace brackets
+     * @memberof components.reinforcements
+     * @author R. J. Salvador (Salvador Workshop)
+     */
+
+    return {
+        defaults: bracketsDefaults,
+        props: bracketsProps,
+        rightAngleBracket,
+        rightAngleCornerBracket,
+    }
+}
+
+module.exports = {
+    init: bracketsInit
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.fittings.html">components.fittings</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.reinforcements.html">components.reinforcements</a></li><li><a href="components.reinforcements.boxSupport.html">components.reinforcements.boxSupport</a></li><li><a href="components.reinforcements.brackets.html">components.reinforcements.brackets</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.html">profiles.beadsBits</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.connections.jointPanel.html">profiles.connections.jointPanel</a></li><li><a href="profiles.mesh.html">profiles.mesh</a></li><li><a href="profiles.reinforcements.html">profiles.reinforcements</a></li><li><a href="profiles.reinforcements.boxCurve.html">profiles.reinforcements.boxCurve</a></li><li><a href="profiles.text.html">profiles.text</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Mon Nov 09 2026 19:16:21 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
