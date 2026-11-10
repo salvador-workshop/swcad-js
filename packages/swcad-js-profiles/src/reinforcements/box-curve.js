@@ -267,18 +267,20 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
         const blank = rectangle({ size })
         const cutaway = ellipse({ radius: ellipseRadiusQtr })
 
-        const mainModel = subtract(
+        const cutCurve = subtract(
             align({
                 modes: ['max', 'max', 'center'],
             }, blank),
             position.ctr(cutaway)
         )
 
+        const mainModel = position.ctr(cutCurve)
+
         const modelParts = {
             mainModel,
         }
 
-        return [mainModel, modelParts, modelProperties]
+        return [cutCurve, modelParts, modelProperties]
     }
 
     /**
@@ -306,18 +308,20 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
         const blank = rectangle({ size })
         const cutaway = ellipse({ radius: ellipseRadiusHalf })
 
-        const mainModel = subtract(
+        const cutCurve = subtract(
             align({
                 modes: ['center', 'max', 'center'],
             }, blank),
             position.ctr(cutaway),
         )
 
+        const mainModel = position.ctr(cutCurve)
+
         const modelParts = {
             mainModel,
         }
 
-        return [mainModel, modelParts, modelProperties]
+        return [cutCurve, modelParts, modelProperties]
     }
 
     return {

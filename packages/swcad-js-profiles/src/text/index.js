@@ -32,7 +32,9 @@ const textUtils = ({ jscad, swcadJs }) => {
             const corners = segmentPoints.map((point) => translate(point, lineCorner))
             lineSegments.push(hullChain(corners))
         })
-        return union(lineSegments)
+
+        const bText = union(lineSegments)
+        return position.ctr(bText)
     }
 
     return {

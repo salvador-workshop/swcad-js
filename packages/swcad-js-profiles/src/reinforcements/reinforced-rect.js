@@ -21,6 +21,7 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
 
     const {
         math,
+        position,
     } = swcadJs.calcs
 
     const {
@@ -403,7 +404,7 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
         const rectPrimaryBracingInst = rectPrimaryBracing(modelProperties)
         const rectSecondaryBracingInst = rectSecondaryBracing(modelProperties)
 
-        let mainModel = finalAssembly(modelProperties)
+        let mainModel = position.ctr(finalAssembly(modelProperties))
 
         let modelParts = {
             rectOutline: rectOutlineInst,
