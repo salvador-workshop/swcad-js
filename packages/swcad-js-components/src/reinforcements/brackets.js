@@ -2,7 +2,6 @@
 
 const bracketsInit = ({ jscad, swcadJs }) => {
     const {
-        rectangle,
         cuboid
     } = jscad.primitives
 
@@ -13,18 +12,11 @@ const bracketsInit = ({ jscad, swcadJs }) => {
     } = jscad.transforms
 
     const {
-        subtract,
         union,
     } = jscad.booleans
 
     const {
-        extrudeLinear,
-    } = jscad.extrusions
-
-    const {
-        measureDimensions,
         measureBoundingBox,
-        measureVolume
     } = jscad.measurements
 
     const { TAU } = jscad.maths.constants
@@ -50,7 +42,7 @@ const bracketsInit = ({ jscad, swcadJs }) => {
      * Builds default values and opts for the model
      * @param {*} opts 
      * @returns default values and opts
-     * @memberof components.reinforcements
+     * @memberof components.reinforcements.brackets
      * @access private
      */
     const bracketsDefaults = () => {
@@ -97,7 +89,7 @@ const bracketsInit = ({ jscad, swcadJs }) => {
      * Initializes options with user input
      * @param {*} opts 
      * @returns model properties
-     * @memberof components.reinforcements
+     * @memberof components.reinforcements.brackets
      * @access private
      */
     const bracketsOpts = (opts) => {
@@ -134,7 +126,7 @@ const bracketsInit = ({ jscad, swcadJs }) => {
      * Builds model properties from the given opts
      * @param {*} opts 
      * @returns model properties
-     * @memberof components.reinforcements
+     * @memberof components.reinforcements.brackets
      * @access private
      */
     const bracketsProps = (opts) => {
@@ -209,14 +201,13 @@ const bracketsInit = ({ jscad, swcadJs }) => {
     * ------------------------------------- */
 
     /**
-     * Generates a fitting for square/rectangular dowels.
+     * Generates a right-angle bracket
      * @param {Object} opts - Options for the model
+     * @param {number[]} opts.size
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
-     * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.scale - Scale factor for the model
+     * @param {number} opts.numReinforcements
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof components.reinforcements
+     * @memberof components.reinforcements.brackets
      */
     const rightAngleBracket = (opts) => {
         const defaults = bracketsDefaults()
@@ -275,14 +266,13 @@ const bracketsInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Generates a fitting for square/rectangular dowels.
+     * Generates a right-angle corner bracket
      * @param {Object} opts - Options for the model
+     * @param {number[]} opts.size
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
-     * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.scale - Scale factor for the model
+     * @param {number | number[]} opts.numReinforcements
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof components.reinforcements
+     * @memberof components.reinforcements.brackets.brackets
      */
     const rightAngleCornerBracket = (opts) => {
         const defaults = bracketsDefaults()
@@ -380,6 +370,13 @@ const bracketsInit = ({ jscad, swcadJs }) => {
 
         return [mainModel, modelParts, modelProperties]
     }
+
+    /**
+     * Modelling functions that generate right-angle brackets.
+     * @namespace brackets
+     * @memberof components.reinforcements
+     * @author R. J. Salvador (Salvador Workshop)
+     */
 
     return {
         defaults: bracketsDefaults,
