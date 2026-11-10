@@ -16,6 +16,7 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
 
     const {
         math,
+        position,
     } = swcadJs.calcs
 
     const {
@@ -263,7 +264,10 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
         })
         const boxCurvesQtrModel = boxCurvesQtrData[0]
 
-        const mainModel = extrudeLinear({ height: marginHeight }, boxCurvesQtrModel)
+        const mainModel = position.ctr(extrudeLinear(
+            { height: marginHeight },
+            boxCurvesQtrModel
+        ))
 
         const modelParts = {
             mainModel,
@@ -300,7 +304,10 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
         })
         const boxCurvesHalfModel = boxCurvesHalfData[0]
 
-        const mainModel = extrudeLinear({ height: marginHeight }, boxCurvesHalfModel)
+        const mainModel = position.ctr(extrudeLinear(
+            { height: marginHeight },
+            boxCurvesHalfModel
+        ))
 
         const modelParts = {
             mainModel,

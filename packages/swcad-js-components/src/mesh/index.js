@@ -17,6 +17,7 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
 
     const {
         math,
+        position,
     } = swcadJs.calcs
 
     const {
@@ -57,7 +58,7 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
 
         const mPanel = extrudeLinear({ height: thickness }, mPanelProfile)
 
-        return mPanel
+        return position.ctr(mPanel)
     }
 
     return {

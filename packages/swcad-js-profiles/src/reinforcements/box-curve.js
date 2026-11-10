@@ -280,7 +280,7 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
             mainModel,
         }
 
-        return [cutCurve, modelParts, modelProperties]
+        return [mainModel, modelParts, modelProperties]
     }
 
     /**
@@ -321,7 +321,7 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
             mainModel,
         }
 
-        return [cutCurve, modelParts, modelProperties]
+        return [mainModel, modelParts, modelProperties]
     }
 
     return {

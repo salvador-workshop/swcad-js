@@ -257,7 +257,7 @@ const bracketsInit = ({ jscad, swcadJs }) => {
             align({ modes: ['center', 'min', 'min'] }, bracketReinforcementsAssembly)
         )
 
-        const mainModel = rightAngleBracketAssembly
+        const mainModel = position.ctr(rightAngleBracketAssembly)
         const modelParts = {
             mainModel,
         }
@@ -272,7 +272,7 @@ const bracketsInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number | number[]} opts.numReinforcements
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof components.reinforcements.brackets.brackets
+     * @memberof components.reinforcements.brackets
      */
     const rightAngleCornerBracket = (opts) => {
         const defaults = bracketsDefaults()
@@ -363,7 +363,7 @@ const bracketsInit = ({ jscad, swcadJs }) => {
             }, bracketReinforcementsYAssembly),
         )
 
-        const mainModel = cornerBracketAssembly
+        const mainModel = position.ctr(cornerBracketAssembly)
         const modelParts = {
             mainModel,
         }

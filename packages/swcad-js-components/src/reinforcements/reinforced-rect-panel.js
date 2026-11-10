@@ -7,6 +7,7 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
 
     const {
         math,
+        position,
     } = swcadJs.calcs
 
     const {
@@ -245,7 +246,10 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
             reinforcementThickness,
         }
         const reinforcedRect = reinforcements.reinforcedRect(reinforcedRectOpts)[0]
-        const extrudedReinforcedRect = extrudeLinear({ height: size[2] }, reinforcedRect)
+        const extrudedReinforcedRect = position.ctr(extrudeLinear(
+            { height: size[2] },
+            reinforcedRect
+        ))
 
         const mainModel = extrudedReinforcedRect
         const modelParts = {

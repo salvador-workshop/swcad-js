@@ -13,6 +13,10 @@ const textUtils = ({ jscad, swcadJs }) => {
     const { vectorText } = jscad.text
     const { hullChain } = jscad.hulls
 
+    const {
+        position,
+    } = swcadJs.calcs
+
     /**
      * Generates a simple 2D line of text.
      * @memberof profiles.text
