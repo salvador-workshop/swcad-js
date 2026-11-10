@@ -5,6 +5,7 @@ const componentLineModule = require('./component-line')
 const fittingsModule = require('./fittings')
 const meshModule = require('./mesh')
 const reinforcementsModule = require('./reinforcements')
+const reinforcementBracketsModule = require('./reinforcements/brackets')
 const routedShapesModule = require('./routed-shapes')
 const textModule = require('./text')
 
@@ -20,11 +21,19 @@ const componentsInit = ({ jscad, swcadJs }) => {
     const routedShapes = routedShapesModule.init({ jscad, swcadJs: preLib })
     const mesh = meshModule.init({ jscad, swcadJs: preLib })
     const componentLine = componentLineModule.init({ jscad, swcadJs: preLib })
+    const setupReinforcements = reinforcementsModule.init({ jscad, swcadJs: preLib })
+
     preLib.components = {
         beadsBits,
         routedShapes,
         mesh,
         componentLine,
+        reinforcements: setupReinforcements,
+    }
+
+    const finalReinforcements = {
+        ...setupReinforcements,
+        brackets: reinforcementBracketsModule.init({ jscad, swcadJs: preLib })
     }
 
     /**
@@ -38,7 +47,7 @@ const componentsInit = ({ jscad, swcadJs }) => {
         mesh,
         componentLine,
         fittings: fittingsModule.init({ jscad, swcadJs: preLib }),
-        reinforcements: reinforcementsModule.init({ jscad, swcadJs: preLib }),
+        reinforcements: finalReinforcements,
         text: textModule.init({ jscad, swcadJs: preLib }),
     }
 
