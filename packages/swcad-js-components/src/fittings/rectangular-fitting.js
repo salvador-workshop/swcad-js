@@ -85,7 +85,6 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
      */
     const rectangularFittingOpts = (opts) => {
         const defaults = rectangularFittingDefaults()
-        console.log('rectangularFittingOpts() -- opts', opts)
 
         // User options
         const {
@@ -106,7 +105,6 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
             ...stdOpts,
         }
 
-        console.log('rectangularFittingOpts() -- initOpts', initOpts)
 
         return initOpts
     }
@@ -124,7 +122,6 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
      */
     const rectangularFittingProps = (opts) => {
         const defaults = rectangularFittingDefaults()
-        console.log('rectangularFittingProps() -- opts', opts)
 
         const {
             subjectSize,
@@ -203,7 +200,6 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
             components: modelComponents,
         }
 
-        console.log('rectangularFittingProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }

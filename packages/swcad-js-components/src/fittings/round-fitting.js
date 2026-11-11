@@ -95,7 +95,6 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
      */
     const roundFittingOpts = (opts) => {
         const defaults = roundFittingDefaults()
-        console.log('roundFittingOpts() -- opts', opts)
 
         // User options
         const {
@@ -116,7 +115,6 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
             ...stdOpts,
         }
 
-        console.log('roundFittingOpts() -- initOpts', initOpts)
 
         return initOpts
     }
@@ -133,7 +131,6 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
      */
     const roundFittingProps = (opts) => {
         const defaults = roundFittingDefaults()
-        console.log('roundFittingProps() -- opts', opts)
 
         const {
             dowelRadius,
@@ -210,7 +207,6 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
             components: modelComponents,
         }
 
-        console.log('roundFittingProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }
