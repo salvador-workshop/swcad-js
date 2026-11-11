@@ -175,14 +175,6 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
         * --------------------------------------------- */
 
         const modelProperties = {
-            metadata: {
-                id: '9999',
-                name: 'New Model',
-                project: 'New Project',
-                author: 'Somebody Somewhere',
-                organization: 'Salvador Workshop',
-                client: null,
-            },
             constants: modelConstants,
             opts: modelOpts,
             dims: modelDims,

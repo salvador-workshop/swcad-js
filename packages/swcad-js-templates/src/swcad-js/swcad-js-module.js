@@ -215,14 +215,6 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
         * --------------------------------------------- */
 
         const modelProperties = {
-            metadata: {
-                id: '9999',
-                name: 'New Model',
-                project: 'New Project',
-                author: 'Somebody Somewhere',
-                organization: 'Salvador Workshop',
-                client: null,
-            },
             constants: modelConstants,
             opts: modelOpts,
             dims: modelDims,
@@ -245,7 +237,6 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
     /** Sub-component 01 */
     const subcomponent1 = (modelProps) => {
         const {
-            metadata,
             opts,
             dims,
             points,
@@ -257,7 +248,6 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
     /** Sub-component 02 */
     const subcomponent2 = (modelProps) => {
         const {
-            metadata,
             opts,
             dims,
             points,

@@ -219,14 +219,6 @@ const modelProps = (opts) => {
     * --------------------------------------------- */
 
     const modelProperties = {
-        metadata: {
-            id: '9999',
-            name: 'New Model',
-            project: 'New Project',
-            author: 'Somebody Somewhere',
-            organization: 'Salvador Workshop',
-            client: null,
-        },
         constants: modelConstants,
         opts: modelOpts,
         dims: modelDims,
@@ -261,7 +253,6 @@ const model = (opts) => {
     /** Sub-component 01 */
     const subcomponent1 = (modelProps) => {
         const {
-            metadata,
             opts,
             dims,
             points,
@@ -273,7 +264,6 @@ const model = (opts) => {
     /** Sub-component 02 */
     const subcomponent2 = (modelProps) => {
         const {
-            metadata,
             opts,
             dims,
             points,
