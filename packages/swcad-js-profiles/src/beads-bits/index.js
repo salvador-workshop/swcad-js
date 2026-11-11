@@ -62,7 +62,6 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
         /** Options used by SW models */
         const standardOpts = {
             interfaceThickness: standards.INTERFACE_THICKNESS,
-            fitGap: standards.FIT_GAP,
         }
 
         /** Computed values for option defaults */
@@ -105,12 +104,10 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
             offset3 = defaults.opts.offset3,
             offset4 = defaults.opts.offset4,
             interfaceThickness = defaults.opts.interfaceThickness,
-            fitGap = defaults.opts.fitGap,
         } = opts
 
         const stdOpts = {
             interfaceThickness,
-            fitGap,
         }
 
         const initOpts = {
@@ -148,7 +145,6 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
             offset3,
             offset4,
             interfaceThickness,
-            fitGap,
         } = opts
 
         /* ----------------------------------------
@@ -178,7 +174,6 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
             offset3,
             offset4,
             interfaceThickness,
-            fitGap,
         }
 
         /** Various key points for model */
@@ -216,7 +211,6 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * Generates a 2D rabbet bit.
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
-     * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number} opts.radius1 
      * @param {number} opts.radius2 
      * @param {number} opts.offset1 
@@ -307,7 +301,6 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * Generates a 2D chamfer bit.
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
-     * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number} opts.radius1 
      * @param {number} opts.radius2 
      * @param {number} opts.offset1 
@@ -393,7 +386,6 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * Generates a 2D round-Over bit.
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
-     * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number} opts.radius1 
      * @param {number} opts.radius2 
      * @param {number} opts.offset1 
@@ -480,7 +472,6 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * Generates a 2D cove bit.
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
-     * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number} opts.radius1 
      * @param {number} opts.radius2 
      * @param {number} opts.offset1 

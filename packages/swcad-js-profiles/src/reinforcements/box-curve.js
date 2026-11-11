@@ -63,7 +63,6 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
         /** Options used by SW models */
         const standardOpts = {
             interfaceThickness: standards.INTERFACE_THICKNESS,
-            fitGap: standards.FIT_GAP,
         }
 
         /** Computed values for option defaults */
@@ -98,12 +97,10 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
             size = defaults.opts.size,
             margin = defaults.opts.margin,
             interfaceThickness = defaults.opts.interfaceThickness,
-            fitGap = defaults.opts.fitGap,
         } = opts
 
         const stdOpts = {
             interfaceThickness,
-            fitGap,
         }
 
         const initOpts = {
@@ -134,7 +131,6 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
             size,
             margin,
             interfaceThickness,
-            fitGap,
         } = opts
 
         /* ----------------------------------------
@@ -183,7 +179,6 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
             ellipseRadiusQtr,
             ellipseRadiusHalf,
             interfaceThickness,
-            fitGap,
         }
 
         /** Various key points for model */
@@ -224,7 +219,6 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
      * Generates a curved 2D reinforcement covering two sides (one corner) of a rectangle.
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
-     * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number[]} opts.margin
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
@@ -263,7 +257,6 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
      * Generates a curved 2D reinforcement covering three sides (two corners) of a rectangle.
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
-     * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number[]} opts.margin
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]

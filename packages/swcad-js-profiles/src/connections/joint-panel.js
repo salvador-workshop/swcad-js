@@ -2,7 +2,6 @@
 
 /**
  * Modelling functions that generate connecting and interlocking 2D panels.
- * @author R. J. Salvador
  * @namespace jointPanel
  * @memberof profiles.connections
  */
@@ -291,6 +290,7 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
             jointWidth,
             jointMargin,
             totalJointWidth,
+            fitGap,
         } = modelProperties.dims
 
         const {
@@ -309,6 +309,7 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
             size: jointSize,
             interfaceMargin: jointMargin,
             numConnectors: jointNumConnectors,
+            fitGap,
         }
 
         let jointData = connections.tabRow(jointOpts)
@@ -390,6 +391,7 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
             jointWidth,
             jointMargin,
             totalJointWidth,
+            fitGap,
         } = modelProperties.dims
 
         const {
@@ -409,6 +411,7 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
             size: jointSizeX,
             interfaceMargin: jointMargin,
             numConnectors: jNumConnectors[0],
+            fitGap,
         }
         let jointDataX = connections.tabRow(jointOptsX)
         if (type == 'dovetail') {
@@ -423,6 +426,7 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
             size: jointSizeY,
             interfaceMargin: jointMargin,
             numConnectors: jNumConnectors[1],
+            fitGap,
         }
         let jointDataY = connections.tabRow(jointOptsY)
         if (type == 'dovetail') {

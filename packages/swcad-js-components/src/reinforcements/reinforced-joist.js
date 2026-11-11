@@ -58,7 +58,6 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
             unitLength: math.inchesToMm(1),
             dowelHolderLength: math.inchesToMm(5 / 16),
             interfaceThickness: standards.INTERFACE_THICKNESS,
-            fitGap: standards.FIT_GAP,
             ratioDiamToHolderHeight: 1.666667,
             ratioDiamToChannelDepth: 0.866667,
             ratioDiamToSideChannelWidth: 1,
@@ -68,7 +67,6 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
         /** Computed values for option defaults */
         const defaultOpts = {
             interfaceThickness: standards.INTERFACE_THICKNESS,
-            fitGap: standards.FIT_GAP,
             logMode: 'normal',
             width: defaultValues.width,
             length: defaultValues.length,
@@ -99,7 +97,6 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
 
         const {
             interfaceThickness,
-            fitGap,
             width,
             length,
             reinforcementLevel,
@@ -147,7 +144,6 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
             lengthUnits,
             dowelHolderLength,
             interfaceThickness,
-            fitGap,
             edgeWidth,
             supportWidth,
             lightSupportWidth,
@@ -195,7 +191,6 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
-     * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number} opts.width - Width of the joist
      * @param {number} opts.length - Length of the joist
      * @param {number} opts.reinforcementLevel - Level of reinforcement (1: basic, 2: moderate, 3: high)
@@ -210,7 +205,6 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
         // User options
         const {
             interfaceThickness = defaults.opts.interfaceThickness,
-            fitGap = defaults.opts.fitGap,
             width = defaults.opts.width,
             length = defaults.opts.length,
             reinforcementLevel = defaults.opts.reinforcementLevel,
@@ -220,7 +214,6 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
 
         const inOpts = {
             interfaceThickness,
-            fitGap,
             width,
             length,
             reinforcementLevel,
@@ -247,7 +240,6 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
                 unitLength,
                 length,
                 interfaceThickness,
-                fitGap,
                 width,
                 edgeWidth,
                 supportWidth,
