@@ -375,7 +375,6 @@ const bracketsInit = ({ jscad, swcadJs }) => {
      * Modelling functions that generate right-angle brackets.
      * @namespace brackets
      * @memberof components.reinforcements
-     * @author R. J. Salvador (Salvador Workshop)
      */
 
     return {
