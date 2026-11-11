@@ -49,6 +49,7 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
             constants: {
                 reinforcementPatterns: ['x', 'cross', 'diamond', 'full', 'full-double'],
             },
+            opts: {},
             dims: {
                 size: [
                     math.inchesToMm(3),
@@ -60,9 +61,8 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
                     standards.SM_REINFORCEMENT_WIDTH,
                 ],
             },
-            points: {
-                centrePt: [0, 0, 0]
-            }
+            points: {},
+            components: {},
         }
 
         const defaultOpts = {
@@ -184,8 +184,7 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
         * ------------------------------------- */
 
         /** Constant values for model */
-        const modelConstants = {
-        }
+        const modelConstants = defaults.vals.constants
 
         /** Derived user options for the model */
         const modelOpts = {
@@ -202,7 +201,6 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
 
         /** Various key points for model */
         const modelPoints = {
-            centrePt: defaults.vals.points.centrePt,
             ...reinforcementData.points,
         }
 
@@ -244,7 +242,6 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
      * @memberof profiles.reinforcements
      */
     const reinforcedRect = (opts) => {
-        const defaults = reinforcedRectDefaults()
         const initOpts = reinforcedRectOpts(opts)
         const modelProperties = reinforcedRectProps(initOpts)
 

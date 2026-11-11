@@ -31,24 +31,30 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
 
         /** Specific value declarations */
         const defaultValues = {
+            constants: {},
+            opts: {
+                holePattern: 'tri',
+            },
             dims: {
                 size: [
                     math.inchesToMm(6),
                     math.inchesToMm(3),
                 ],
+                edgeMargin: math.inchesToMm(3 / 16),
+                holeRadius: math.inchesToMm(0.125),
+                holeDistance: math.inchesToMm(1),
             },
-            points: {
-                centre: [0, 0, 0]
-            }
+            points: {},
+            components: {},
         }
 
         /** Computed values for option defaults */
         const defaultOpts = {
             size: defaultValues.dims.size,
-            edgeMargin: math.inchesToMm(3 / 16),
-            holeRadius: math.inchesToMm(0.125),
-            holeDistance: math.inchesToMm(1),
-            holePattern: 'tri',
+            edgeMargin: defaultValues.dims.edgeMargin,
+            holeRadius: defaultValues.dims.holeRadius,
+            holeDistance: defaultValues.dims.holeDistance,
+            holePattern: defaultValues.opts.holePattern,
         }
 
         return {
@@ -98,8 +104,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
         * ------------------------------------- */
 
         /** Constant values for model */
-        const modelConstants = {
-        }
+        const modelConstants = defaults.vals.constants
 
         /** Derived user options for the model */
         const modelOpts = {
@@ -119,13 +124,10 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
         }
 
         /** Various key points for model */
-        const modelPoints = {
-            centre: defaults.vals.points.centre,
-        }
+        const modelPoints = defaults.vals.points
 
         /** Components used by model */
-        const modelComponents = {
-        }
+        const modelComponents = defaults.vals.components
 
         /* ---------------------------------------------
         *  Model Properties
@@ -194,10 +196,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
          */
         const meshPanelPoints = (modelProps) => {
             const {
-                size,
                 meshAreaSize,
-                edgeMargin,
-                holeRadius,
                 holeDistance,
             } = modelProps.dims
 
@@ -224,15 +223,8 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
          */
         const meshPanelCutProfile = (modelProps) => {
             const {
-                size,
-                edgeMargin,
                 holeRadius,
-                holeDistance,
             } = modelProps.dims
-
-            const {
-                holePattern,
-            } = modelProps.opts
 
             const cutPts = meshPanelPoints(modelProps)
 
@@ -252,14 +244,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
         const meshPanelProfile = (modelProps) => {
             const {
                 size,
-                edgeMargin,
-                holeRadius,
-                holeDistance,
             } = modelProps.dims
-
-            const {
-                holePattern,
-            } = modelProps.opts
 
             const baseRect = rectangle({ size })
             return baseRect

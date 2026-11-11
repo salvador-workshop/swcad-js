@@ -12,10 +12,6 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
         math,
     } = swcadJs.calcs
 
-    const {
-        standards,
-    } = swcadJs.data
-
 
     //==============================================================================
 
@@ -509,7 +505,6 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
      * @returns Modelling data
      */
     const reinforcedRectangle = (opts) => {
-        const defaults = rectangleDefaults()
         const initOpts = rectangleOpts(opts)
         const modelProperties = rectangleProps(initOpts)
 

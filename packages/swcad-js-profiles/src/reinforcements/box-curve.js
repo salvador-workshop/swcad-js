@@ -43,6 +43,8 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
     const boxCurveDefaults = () => {
         /** Specific value declarations */
         const defaultValues = {
+            constants: {},
+            opts: {},
             dims: {
                 size: [
                     math.inchesToMm(2),
@@ -54,9 +56,8 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
                     standards.INTERFACE_THICKNESS,
                 ],
             },
-            points: {
-                centrePt: [0, 0, 0]
-            }
+            points: {},
+            components: {},
         }
 
         /** Computed values for option defaults */
@@ -95,7 +96,6 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
             size,
             margin,
         }
-
 
         return initOpts
     }
@@ -145,12 +145,10 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
         * ------------------------------------- */
 
         /** Constant values for model */
-        const modelConstants = {
-        }
+        const modelConstants = defaults.vals.constants
 
         /** Derived user options for the model */
-        const modelOpts = {
-        }
+        const modelOpts = defaults.vals.opts
 
         /** Various dimensions for model */
         const modelDims = {
@@ -167,13 +165,10 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
         }
 
         /** Various key points for model */
-        const modelPoints = {
-            centrePt: defaults.vals.points.centrePt,
-        }
+        const modelPoints = defaults.vals.points
 
         /** Components used by model */
-        const modelComponents = {
-        }
+        const modelComponents = defaults.vals.components
 
         /* ---------------------------------------------
         *  Model Properties
@@ -209,12 +204,10 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
      * @memberof profiles.reinforcements.boxCurve
      */
     const boxCurveQuarter = (opts) => {
-        const defaults = boxCurveDefaults()
         const initOpts = boxCurveOpts(opts)
         const modelProperties = boxCurveProps(initOpts)
         const {
             size,
-            margin,
             ellipseRadiusQtr,
         } = modelProperties.dims
 
@@ -246,12 +239,10 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
      * @memberof profiles.reinforcements.boxCurve
      */
     const boxCurveHalf = (opts) => {
-        const defaults = boxCurveDefaults()
         const initOpts = boxCurveOpts(opts)
         const modelProperties = boxCurveProps(initOpts)
         const {
             size,
-            margin,
             ellipseRadiusHalf,
         } = modelProperties.dims
 

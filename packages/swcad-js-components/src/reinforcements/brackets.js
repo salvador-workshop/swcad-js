@@ -46,8 +46,11 @@ const bracketsInit = ({ jscad, swcadJs }) => {
      * @access private
      */
     const bracketsDefaults = () => {
-        /** Specific value declarations */
         const defaultValues = {
+            constants: {},
+            opts: {
+                numReinforcements: 4,
+            },
             dims: {
                 size: [
                     math.inchesToMm(1.5),
@@ -55,22 +58,12 @@ const bracketsInit = ({ jscad, swcadJs }) => {
                     math.inchesToMm(0.75),
                 ],
             },
-            opts: {
-                numReinforcements: 4,
-            },
             points: {},
-            types: {},
-            constants: {}
+            components: {},
         }
 
-        /** Options used by SW models */
-        const standardOpts = {
-            interfaceThickness: standards.INTERFACE_THICKNESS,
-        }
-
-        /** Computed values for option defaults */
         const defaultOpts = {
-            ...standardOpts,
+            interfaceThickness: standards.INTERFACE_THICKNESS,
             size: defaultValues.dims.size,
             numReinforcements: defaultValues.opts.numReinforcements,
         }
@@ -102,14 +95,10 @@ const bracketsInit = ({ jscad, swcadJs }) => {
             interfaceThickness = defaults.opts.interfaceThickness,
         } = opts
 
-        const stdOpts = {
-            interfaceThickness,
-        }
-
         const initOpts = {
             size,
             numReinforcements,
-            ...stdOpts,
+            interfaceThickness,
         }
 
 
@@ -148,7 +137,7 @@ const bracketsInit = ({ jscad, swcadJs }) => {
         * ------------------------------------- */
 
         /** Constant values for model */
-        const modelConstants = {}
+        const modelConstants = defaults.vals.constants
 
         /** Derived user options for the model */
         const modelOpts = {
@@ -165,10 +154,10 @@ const bracketsInit = ({ jscad, swcadJs }) => {
         }
 
         /** Various key points for model */
-        const modelPoints = {}
+        const modelPoints = defaults.vals.points
 
         /** Components used by model */
-        const modelComponents = {}
+        const modelComponents = defaults.vals.components
 
         /* ---------------------------------------------
         *  Model Properties
@@ -183,7 +172,6 @@ const bracketsInit = ({ jscad, swcadJs }) => {
             points: modelPoints,
             components: modelComponents,
         }
-
 
         return modelProperties
     }
@@ -205,7 +193,6 @@ const bracketsInit = ({ jscad, swcadJs }) => {
      * @memberof components.reinforcements.brackets
      */
     const rightAngleBracket = (opts) => {
-        const defaults = bracketsDefaults()
         const initOpts = bracketsOpts(opts)
         const modelProperties = bracketsProps(initOpts)
 
@@ -270,7 +257,6 @@ const bracketsInit = ({ jscad, swcadJs }) => {
      * @memberof components.reinforcements.brackets
      */
     const rightAngleCornerBracket = (opts) => {
-        const defaults = bracketsDefaults()
         const initOpts = bracketsOpts(opts)
         const modelProperties = bracketsProps(initOpts)
 

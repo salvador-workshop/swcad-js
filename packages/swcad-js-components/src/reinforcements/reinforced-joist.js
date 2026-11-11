@@ -40,39 +40,38 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
      * @access private
      */
     const reinforcedJoistDefaults = () => {
-        /** Specific value declarations */
+        const interfaceThickness = standards.INTERFACE_THICKNESS
+
         const defaultValues = {
+            constants: {
+                interfaceThickness,
+                ratioDiamToHolderHeight: 1.666667,
+                ratioDiamToChannelDepth: 0.866667,
+                ratioDiamToSideChannelWidth: 1,
+                ratioDiamToDowelDepth: 0.333333,
+            },
+            opts: {
+                reinforcementLevel: 1,
+            },
             dims: {
-                size: [
-                    math.inchesToMm(2),
-                    math.inchesToMm(4),
-                    math.inchesToMm(1),
-                ],
+                width: math.inchesToMm(1.125),
+                length: math.inchesToMm(5.5),
+                unitLength: math.inchesToMm(1),
+                dowelHolderLength: math.inchesToMm(5 / 16),
+                interfaceThickness: standards.INTERFACE_THICKNESS,
             },
-            points: {
-                centre: [0, 0, 0]
-            },
-            width: math.inchesToMm(1.125),
-            length: math.inchesToMm(5.5),
-            reinforcementLevel: 1,
-            unitLength: math.inchesToMm(1),
-            dowelHolderLength: math.inchesToMm(5 / 16),
-            interfaceThickness: standards.INTERFACE_THICKNESS,
-            ratioDiamToHolderHeight: 1.666667,
-            ratioDiamToChannelDepth: 0.866667,
-            ratioDiamToSideChannelWidth: 1,
-            ratioDiamToDowelDepth: 0.333333,
+            points: {},
+            components: {},
         }
 
         /** Computed values for option defaults */
         const defaultOpts = {
-            interfaceThickness: standards.INTERFACE_THICKNESS,
-            logMode: 'normal',
-            width: defaultValues.width,
-            length: defaultValues.length,
-            reinforcementLevel: defaultValues.reinforcementLevel,
-            unitLength: defaultValues.unitLength,
-            dowelHolderLength: defaultValues.dowelHolderLength,
+            width: defaultValues.dims.width,
+            length: defaultValues.dims.length,
+            unitLength: defaultValues.dims.unitLength,
+            dowelHolderLength: defaultValues.dims.dowelHolderLength,
+            interfaceThickness: defaultValues.dims.interfaceThickness,
+            reinforcementLevel: defaultValues.opts.reinforcementLevel,
         }
 
         return {
@@ -124,12 +123,7 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
         * ------------------------------------- */
 
         /** Constant values for model */
-        const modelConstants = {
-            ratioDiamToHolderHeight: defaults.vals.ratioDiamToHolderHeight,
-            ratioDiamToChannelDepth: defaults.vals.ratioDiamToChannelDepth,
-            ratioDiamToSideChannelWidth: defaults.vals.ratioDiamToSideChannelWidth,
-            ratioDiamToDowelDepth: defaults.vals.ratioDiamToDowelDepth,
-        }
+        const modelConstants = defaults.vals.constants
 
         /** Derived user options for the model */
         const modelOpts = {
@@ -150,9 +144,7 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
         }
 
         /** Various key points for model */
-        const modelPoints = {
-            centre: defaults.vals.points.centre,
-        }
+        const modelPoints = defaults.vals.points
 
         /** Components used by model */
         const modelComponents = {
@@ -235,15 +227,12 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
             } = modelProps.opts
 
             const {
-                size,
                 lengthUnits,
                 unitLength,
                 length,
                 interfaceThickness,
                 width,
                 edgeWidth,
-                supportWidth,
-                lightSupportWidth,
             } = modelProps.dims
 
             const {

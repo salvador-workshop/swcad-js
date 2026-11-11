@@ -35,6 +35,7 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
             constants: {
                 reinforcementPatterns: ['x', 'cross', 'diamond', 'full', 'full-double'],
             },
+            opts: {},
             dims: {
                 size: [
                     math.inchesToMm(3),
@@ -43,9 +44,8 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
                 ],
                 reinforcementThickness: [5, 4, 3],
             },
-            points: {
-                centrePt: [0, 0, 0]
-            }
+            points: {},
+            components: {},
         }
 
         const defaultOpts = {
@@ -123,8 +123,7 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
         * ------------------------------------- */
 
         /** Constant values for model */
-        const modelConstants = {
-        }
+        const modelConstants = defaults.vals.constants
 
         /** Derived user options for the model */
         const modelOpts = {
@@ -141,13 +140,10 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
         }
 
         /** Various key points for model */
-        const modelPoints = {
-            centrePt: defaults.vals.points.centrePt,
-        }
+        const modelPoints = defaults.vals.points
 
         /** Components used by model */
-        const modelComponents = {
-        }
+        const modelComponents = defaults.vals.components
 
         /* ---------------------------------------------
         *  Model Properties
@@ -181,7 +177,6 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
      * @memberof components.reinforcements
      */
     const reinforcedRectPanel = (opts) => {
-        const defaults = reinforcedRectPanelDefaults()
         const initOpts = reinforcedRectPanelOpts(opts)
         const modelProperties = reinforcedRectPanelProps(initOpts)
 

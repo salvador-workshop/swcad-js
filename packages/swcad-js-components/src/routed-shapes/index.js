@@ -52,6 +52,8 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
     const modelDefaults = () => {
         /** Specific value declarations */
         const defaultValues = {
+            constants: {},
+            opts: {},
             dims: {
                 size: [
                     math.inchesToMm(3),
@@ -61,9 +63,8 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
                 height: math.inchesToMm(2),
                 radius: [math.inchesToMm(1.5), math.inchesToMm(3)],
             },
-            points: {
-                centre: [0, 0, 0]
-            },
+            points: {},
+            components: {},
             topBit: {
                 type: 'chamfer',
                 radius1: math.inchesToMm(1 / 2),
@@ -204,8 +205,7 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
         * ------------------------------------- */
 
         /** Constant values for model */
-        const modelConstants = {
-        }
+        const modelConstants = defaults.vals.constants
 
         /** Derived user options for the model */
         const modelOpts = {
@@ -223,13 +223,10 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
         }
 
         /** Various key points for model */
-        const modelPoints = {
-            centre: defaults.vals.points.centre,
-        }
+        const modelPoints = defaults.vals.points
 
         /** Components used by model */
-        const modelComponents = {
-        }
+        const modelComponents = defaults.vals.components
 
         /* ---------------------------------------------
         *  Model Properties
@@ -366,7 +363,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
      * @memberof components.routedShapes
      */
     const routedCuboid = (opts) => {
-        const defaults = modelDefaults()
         const initOpts = modelCuboidOpts(opts)
         const modelProperties = modelProps(initOpts)
 
@@ -430,7 +426,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
      * @memberof components.routedShapes
      */
     const routedCylinderElliptic = (opts) => {
-        const defaults = modelDefaults()
         const initOpts = modelCylinderEllipticOpts(opts)
         const modelProperties = modelProps(initOpts)
 
