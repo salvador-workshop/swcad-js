@@ -639,7 +639,7 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Modelling functions that generate reinforcement reinforcedLength
+     * Modelling functions that generate reinforcement lengths
      * @namespace reinforcedLength
      * @memberof components.reinforcements
      */
