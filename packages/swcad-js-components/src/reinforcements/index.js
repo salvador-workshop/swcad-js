@@ -1,5 +1,4 @@
 const boxSupportModule = require('./box-support')
-const reinforcedLengthModule = require('./reinforced-length')
 const reinforcedJoistModule = require('./reinforced-joist')
 const reinforcedRectPanelModule = require('./reinforced-rect-panel')
 
@@ -11,7 +10,6 @@ const reinforcedRectPanelModule = require('./reinforced-rect-panel')
 
 const reinforcementsInit = ({ jscad, swcadJs }) => {
     const boxSupport = boxSupportModule.init({ jscad, swcadJs })
-    const reinforcedLength = reinforcedLengthModule.init({ jscad, swcadJs })
     const reinforcedJoist = reinforcedJoistModule.init({ jscad, swcadJs })
     const reinforcedRectPanel = reinforcedRectPanelModule.init({ jscad, swcadJs })
 

@@ -57,7 +57,13 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
 
     const {
         math,
+        position,
+        geometry,
     } = swcadJs.calcs
+
+    const {
+        reinforcements,
+    } = swcadJs.components
 
 
     //==============================================================================
@@ -235,8 +241,151 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
 
     //------------------------------------------------------------------------------
 
-    /* ----------------------------------------
-    * MODELLING FUNCTIONS
+    /* ---------------------------------------
+    * SUB-COMPONENTS
+    * ------------------------------------- */
+
+    const reinforcementUnitBase = (opts) => {
+        const {
+            length,
+            width,
+            baseThickness
+        } = opts
+
+        return cuboid({ size: [length, width, baseThickness] })
+    }
+
+    const lightLengthReinforcement = (opts) => {
+        const {
+            length,
+            reinforcementThickness,
+            spineHeight
+        } = opts
+
+        const spine = cuboid({ size: [length, reinforcementThickness, spineHeight] })
+        return spine
+    }
+
+    const mediumLengthReinforcement = (opts) => {
+        const {
+            length,
+            width,
+            reinforcementThickness,
+            spineHeight
+        } = opts
+
+        const spine = cuboid({ size: [length, reinforcementThickness, spineHeight] })
+        const spacing = width / 3
+        const spines = [
+            translate([0, spacing / 2 + (reinforcementThickness / 2), 0], spine),
+            translate([0, spacing / -2 - (reinforcementThickness / 2), 0], spine),
+        ]
+
+        return union(spines)
+    }
+
+    const heavyLengthReinforcement = (opts) => {
+        const {
+            length,
+            width,
+            thickness,
+            reinforcementThickness
+        } = opts
+        return reinforcements.reinforcedRectPanel({
+            size: [length, width, thickness],
+            reinforcementPattern: 'x',
+            reinforcementThickness: [reinforcementThickness, reinforcementThickness, reinforcementThickness]
+        })[0]
+    }
+
+    const lightReinforcedLengthUnit = (opts) => {
+        const {
+            size,
+            baseThickness,
+            reinforcementThickness
+        } = opts
+
+        // Generate flat base
+        const lightReinfUnitBase = reinforcementUnitBase({
+            length: size[0],
+            width: size[1],
+            baseThickness: baseThickness
+        })
+        // Generate reinforcement
+        const lightReinfUnitReinforcement = lightLengthReinforcement({
+            length: size[0],
+            reinforcementThickness: reinforcementThickness,
+            spineHeight: size[2],
+        })
+
+        // Combine all pieces
+        const lightReinfUnitAssembly = union(
+            position.ctrMin(lightReinfUnitBase),
+            position.ctrMin(lightReinfUnitReinforcement)
+        )
+
+        return position.ctr(lightReinfUnitAssembly)
+    }
+
+    const mediumReinforcedLengthCoreUnit = (opts) => {
+        const {
+            size,
+            baseThickness,
+            reinforcementThickness
+        } = opts
+
+        // Generate flat base
+        const mediumReinfUnitBase = reinforcementUnitBase({
+            length: size[0],
+            width: size[1],
+            baseThickness: baseThickness
+        })
+
+        // Generate reinforcement
+        const mediumReinfUnitReinforcement = mediumLengthReinforcement({
+            length: size[0],
+            width: size[1],
+            reinforcementThickness: reinforcementThickness,
+            spineHeight: size[2],
+        })
+
+        // Combine all pieces
+        const mediumReinfUnitAssembly = union(
+            position.ctrMin(mediumReinfUnitBase),
+            position.ctrMin(mediumReinfUnitReinforcement)
+        )
+
+        return position.ctr(mediumReinfUnitAssembly)
+    }
+
+    const heavyReinforcementLengthUnit = (opts) => {
+        const {
+            size,
+            baseThickness,
+            reinforcementThickness
+        } = opts
+
+        // Generate flat base
+        const reinfUnitBase = reinforcementUnitBase(size[0], size[1], baseThickness)
+
+        const reinfUnitReinforcement = heavyLengthReinforcement({
+            length: size[0],
+            width: size[1],
+            thickness: size[2],
+            reinforcementThickness: reinforcementThickness,
+        })
+
+        // Combine all pieces
+        const reinfUnitAssembly = union(
+            position.ctrMin(reinfUnitBase),
+            position.ctrMin(reinfUnitReinforcement)
+        )
+
+        return position.ctr(reinfUnitAssembly)
+    }
+
+    /* ---------------------------------------
+    * EXPOSED MODELLING FUNCTIONS
     * ------------------------------------- */
 
     /**
@@ -245,7 +394,7 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.reinforcements.reinforcedLength
      */
-    const lightLength = (opts) => {
+    const lightReinforcedLength = (opts) => {
         const defaults = reinforcedLengthDefaults()
         const initOpts = reinforcedLengthOpts(opts)
         const modelProperties = reinforcedLengthProps(initOpts)
@@ -264,7 +413,7 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.reinforcements.reinforcedLength
      */
-    const mediumLength = (opts) => {
+    const mediumReinforcedLength = (opts) => {
         const defaults = reinforcedLengthDefaults()
         const initOpts = reinforcedLengthOpts(opts)
         const modelProperties = reinforcedLengthProps(initOpts)
@@ -283,12 +432,54 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.reinforcements.reinforcedLength
      */
-    const heavyLength = (opts) => {
+    const heavyReinforcedLength = (opts) => {
         const defaults = reinforcedLengthDefaults()
         const initOpts = reinforcedLengthOpts(opts)
         const modelProperties = reinforcedLengthProps(initOpts)
 
-        const mainModel = cuboid()
+        const {
+            size,
+            unitLength,
+            baseThickness,
+            reinforcementThickness
+        } = modelProperties.dims
+
+        const numUnits = Math.ceil(size[0] / unitLength) + 1
+
+        const reinfEdgeUnitBase = heavyReinforcementLengthUnit({
+            size: [unitLength, size[1], size[2]],
+            baseThickness,
+            reinforcementThickness,
+        })
+
+        // Attach unit base segments until the desired length is reached.
+        let reinfEdgePieceAssembly = reinfEdgeUnitBase
+        for (let assemblyIdx = 0; assemblyIdx < numUnits; assemblyIdx++) {
+            const currentOffset = assemblyIdx * (unitLength - reinforcementThickness)
+            reinfEdgePieceAssembly = union(
+                reinfEdgePieceAssembly,
+                translate(
+                    [currentOffset, 0, 0],
+                    reinfEdgeUnitBase
+                )
+            )
+        }
+
+        const keepBox = cuboid({
+            size: [
+                size[0],
+                size[1] * 1.5,
+                size[2] * 1.5,
+            ]
+        })
+
+        const reinfEdgePiece = intersect(
+            position.ctr(reinfEdgePieceAssembly),
+            keepBox
+        )
+
+        const mainModel = position.ctr(reinfEdgePiece)
+
         const modelParts = {
             mainModel,
         }
@@ -304,9 +495,9 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
     return {
         defaults: reinforcedLengthDefaults,
         props: reinforcedLengthProps,
-        lightLength,
-        mediumLength,
-        heavyLength,
+        lightReinforcedLength,
+        mediumReinforcedLength,
+        heavyReinforcedLength,
     }
 }
 

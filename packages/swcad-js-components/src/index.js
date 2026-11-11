@@ -5,9 +5,11 @@ const componentLineModule = require('./component-line')
 const fittingsModule = require('./fittings')
 const meshModule = require('./mesh')
 const reinforcementsModule = require('./reinforcements')
-const reinforcementBracketsModule = require('./reinforcements/brackets')
 const routedShapesModule = require('./routed-shapes')
 const textModule = require('./text')
+
+const reinforcementBracketsModule = require('./reinforcements/brackets')
+const reinforcedLengthModule = require('./reinforcements/reinforced-length')
 
 const componentsInit = ({ jscad, swcadJs }) => {
     const beadsBits = beadsBitsModule.init({ jscad, swcadJs })
@@ -33,7 +35,8 @@ const componentsInit = ({ jscad, swcadJs }) => {
 
     const finalReinforcements = {
         ...setupReinforcements,
-        brackets: reinforcementBracketsModule.init({ jscad, swcadJs: preLib })
+        brackets: reinforcementBracketsModule.init({ jscad, swcadJs: preLib }),
+        reinforcedLength: reinforcedLengthModule.init({ jscad, swcadJs: preLib }),
     }
 
     /**
