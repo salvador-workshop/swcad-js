@@ -95,7 +95,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
         /** Options used by SW models */
         const standardOpts = {
             type: defaultValues.types.default.id,
-            scale: 1,
             interfaceThickness: standards.INTERFACE_THICKNESS,
             fitGap: standards.FIT_GAP,
         }
@@ -140,14 +139,12 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
             bottomBit = defaults.opts.bottomBit,
             bottomBitOpts = defaults.opts.bottomBitOpts,
             type = defaults.opts.type,
-            scale = defaults.opts.scale,
             interfaceThickness = defaults.opts.interfaceThickness,
             fitGap = defaults.opts.fitGap,
         } = opts
 
         const stdOpts = {
             type,
-            scale,
             interfaceThickness,
             fitGap,
         }
@@ -185,14 +182,12 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
             bottomBit = defaults.opts.bottomBit,
             bottomBitOpts = defaults.opts.bottomBitOpts,
             type = defaults.opts.type,
-            scale = defaults.opts.scale,
             interfaceThickness = defaults.opts.interfaceThickness,
             fitGap = defaults.opts.fitGap,
         } = opts
 
         const stdOpts = {
             type,
-            scale,
             interfaceThickness,
             fitGap,
         }
@@ -234,7 +229,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
             bottomBit,
             bottomBitOpts,
             type,
-            scale,
             interfaceThickness,
             fitGap,
         } = opts
@@ -252,13 +246,11 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
         /** Constant values for model */
         const modelConstants = {
             type,
-            scale,
         }
 
         /** Derived user options for the model */
         const modelOpts = {
             type,
-            scale,
             topBit,
             bottomBit,
         }
@@ -420,7 +412,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {string} opts.type - Type of the model
-     * @param {number} opts.scale - Scale factor for the model
      * @param {number[]} opts.size
      * @param {string} opts.topBit
      * @param {Object} opts.topBitOpts
@@ -487,7 +478,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {string} opts.type - Type of the model
-     * @param {number} opts.scale - Scale factor for the model
      * @param {number} opts.height
      * @param {number[]} opts.radius
      * @param {string} opts.topBit

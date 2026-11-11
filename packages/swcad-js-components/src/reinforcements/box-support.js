@@ -61,7 +61,6 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
         /** Options used by SW models */
         const standardOpts = {
             type: defaultValues.types.default.id,
-            scale: 1,
             interfaceThickness: standards.INTERFACE_THICKNESS,
             fitGap: standards.FIT_GAP,
         }
@@ -98,14 +97,12 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
             size = defaults.opts.size,
             margin = defaults.opts.margin,
             type = defaults.opts.type,
-            scale = defaults.opts.scale,
             interfaceThickness = defaults.opts.interfaceThickness,
             fitGap = defaults.opts.fitGap,
         } = opts
 
         const stdOpts = {
             type,
-            scale,
             interfaceThickness,
             fitGap,
         }
@@ -138,7 +135,6 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
             size,
             margin,
             type,
-            scale,
             interfaceThickness,
             fitGap,
         } = opts
@@ -175,7 +171,6 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
         /** Derived user options for the model */
         const modelOpts = {
             type,
-            scale,
         }
 
         /** Various dimensions for model */
@@ -243,7 +238,6 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {string} opts.type - Type of the model
-     * @param {number} opts.scale - Scale factor for the model
      * @param {number[]} opts.size
      * @param {number[]} opts.margin
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
@@ -283,7 +277,6 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {string} opts.type - Type of the model
-     * @param {number} opts.scale - Scale factor for the model
      * @param {number[]} opts.size
      * @param {number[]} opts.margin
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]

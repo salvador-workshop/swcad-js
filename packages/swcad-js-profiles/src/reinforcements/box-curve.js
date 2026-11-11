@@ -67,7 +67,6 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
         /** Options used by SW models */
         const standardOpts = {
             type: defaultValues.types.default.id,
-            scale: 1,
             interfaceThickness: standards.INTERFACE_THICKNESS,
             fitGap: standards.FIT_GAP,
         }
@@ -104,14 +103,12 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
             size = defaults.opts.size,
             margin = defaults.opts.margin,
             type = defaults.opts.type,
-            scale = defaults.opts.scale,
             interfaceThickness = defaults.opts.interfaceThickness,
             fitGap = defaults.opts.fitGap,
         } = opts
 
         const stdOpts = {
             type,
-            scale,
             interfaceThickness,
             fitGap,
         }
@@ -144,7 +141,6 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
             size,
             margin,
             type,
-            scale,
             interfaceThickness,
             fitGap,
         } = opts
@@ -181,7 +177,6 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
         /** Derived user options for the model */
         const modelOpts = {
             type,
-            scale,
         }
 
         /** Various dimensions for model */
@@ -246,7 +241,6 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
      * Generates a curved 2D reinforcement covering two sides (one corner) of a rectangle.
      * @param {Object} opts - Options for the model
      * @param {string} opts.type - Type of the model
-     * @param {number} opts.scale - Scale factor for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
@@ -287,7 +281,6 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
      * Generates a curved 2D reinforcement covering three sides (two corners) of a rectangle.
      * @param {Object} opts - Options for the model
      * @param {string} opts.type - Type of the model
-     * @param {number} opts.scale - Scale factor for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size

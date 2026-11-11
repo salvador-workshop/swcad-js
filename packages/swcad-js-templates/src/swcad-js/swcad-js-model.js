@@ -95,7 +95,6 @@ const modelDefaults = () => {
     /** Options used by SW models */
     const standardOpts = {
         type: defaultValues.types.default.id,
-        scale: 1,
         interfaceThickness: standards.INTERFACE_THICKNESS,
         fitGap: standards.FIT_GAP,
     }
@@ -131,14 +130,12 @@ const modelOpts = (opts) => {
     const {
         size = defaults.opts.size,
         type = defaults.opts.type,
-        scale = defaults.opts.scale,
         interfaceThickness = defaults.opts.interfaceThickness,
         fitGap = defaults.opts.fitGap,
     } = opts
 
     const stdOpts = {
         type,
-        scale,
         interfaceThickness,
         fitGap,
     }
@@ -171,7 +168,6 @@ const modelProps = (opts) => {
     const {
         size,
         type,
-        scale,
         interfaceThickness,
         fitGap,
     } = opts
@@ -195,7 +191,6 @@ const modelProps = (opts) => {
     /** Derived user options for the model */
     const modelOpts = {
         type,
-        scale,
     }
 
     /** Various dimensions for model */
