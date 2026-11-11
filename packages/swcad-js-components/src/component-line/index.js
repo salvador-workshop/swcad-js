@@ -65,10 +65,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
                 startPt: [math.inchesToMm(0.5), math.inchesToMm(0.5)],
                 endPt: [math.inchesToMm(3), math.inchesToMm(4)],
             },
-            types: {
-                default: { id: 'default', desc: 'Default' },
-                alt: { id: 'alt', desc: 'Alternate' },
-            },
             component: cuboid({
                 size: [
                     math.inchesToMm(6 / 16),
@@ -80,7 +76,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
 
         /** Options used by SW models */
         const standardOpts = {
-            type: defaultValues.types.default.id,
             interfaceThickness: standards.INTERFACE_THICKNESS,
             fitGap: standards.FIT_GAP,
         }
@@ -120,7 +115,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
             interfaceThickness = defaults.opts.interfaceThickness,
             fitGap = defaults.opts.fitGap,
             unitLength = defaults.opts.unitLength,
-            type = defaults.opts.type,
             startPt = defaults.opts.startPt,
             endPt = defaults.opts.endPt,
             endOffset = defaults.opts.endOffset,
@@ -129,7 +123,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
         } = opts
 
         const stdOpts = {
-            type,
             interfaceThickness,
             fitGap,
         }
@@ -163,7 +156,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
         const {
             interfaceThickness,
             fitGap,
-            type,
             unitLength,
             startPt,
             endPt,
@@ -201,13 +193,10 @@ const moduleInit = ({ jscad, swcadJs }) => {
 
         /** Constant values for model */
         const modelConstants = {
-            type,
         }
 
         /** Derived user options for the model */
         const modelOpts = {
-            type,
-            types: defaults.vals.types,
             componentUnits,
         }
 
@@ -283,7 +272,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {string} opts.type - Type of the model
      * @param {number} opts.unitLength - Length of each unit section for webbing
      * @param {number[]} opts.startPt - starting point (2D coords)
      * @param {number[]} opts.endPt - ending point (2D coords)

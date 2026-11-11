@@ -45,16 +45,11 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
             },
             points: {
                 centrePt: [0, 0, 0]
-            },
-            types: {
-                default: { id: 'default', desc: 'Default' },
-                alt: { id: 'alt', desc: 'Alternate' },
-            },
+            }
         }
 
         /** Options used by SW models */
         const standardOpts = {
-            type: defaultValues.types.default.id,
             interfaceThickness: standards.INTERFACE_THICKNESS,
             fitGap: standards.FIT_GAP,
         }
@@ -92,13 +87,11 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
             size = defaults.opts.size,
             reinforcementPattern = defaults.opts.reinforcementPattern,
             reinforcementThickness = defaults.opts.reinforcementThickness,
-            type = defaults.opts.type,
             interfaceThickness = defaults.opts.interfaceThickness,
             fitGap = defaults.opts.fitGap,
         } = opts
 
         const stdOpts = {
-            type,
             interfaceThickness,
             fitGap,
         }
@@ -131,7 +124,6 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
             size,
             reinforcementPattern,
             reinforcementThickness,
-            type,
             interfaceThickness,
             fitGap,
         } = opts
@@ -154,7 +146,6 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
 
         /** Derived user options for the model */
         const modelOpts = {
-            type,
             reinforcementPattern,
         }
 
@@ -213,7 +204,6 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {string} opts.type - Type of the model
      * @param {number[]} opts.size
      * @param {string} opts.reinforcementPattern
      * @param {number[]} opts.reinforcementThickness

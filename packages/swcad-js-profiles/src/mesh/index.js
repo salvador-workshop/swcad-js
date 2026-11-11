@@ -42,17 +42,12 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             },
             points: {
                 centre: [0, 0, 0]
-            },
-            typeDetails: {
-                default: { id: 'default', desc: 'Default' },
-                alt: { id: 'alt', desc: 'Alternate' },
             }
         }
 
         /** Computed values for option defaults */
         const defaultOpts = {
             size: defaultValues.dims.size,
-            type: 'default',
             interfaceThickness: standards.INTERFACE_THICKNESS,
             fitGap: standards.FIT_GAP,
             edgeMargin: math.inchesToMm(3 / 16),
@@ -82,7 +77,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
         const defaults = meshPanelDefaults()
 
         const {
-            type,
             interfaceThickness,
             fitGap,
             size,
@@ -112,12 +106,10 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
 
         /** Constant values for model */
         const modelConstants = {
-            type,
         }
 
         /** Derived user options for the model */
         const modelOpts = {
-            type,
             holePattern,
         }
 
@@ -177,7 +169,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a 2D mesh panel with the given options.
      * @param {Object} opts - Options for the model
-     * @param {string} opts.type - Type of the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
@@ -194,7 +185,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
         // User options
         const {
             // size = defaults.opts.size,
-            type = defaults.opts.type,
             interfaceThickness = defaults.opts.interfaceThickness,
             fitGap = defaults.opts.fitGap,
             size = defaults.opts.size,
@@ -205,7 +195,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
         } = opts
 
         const inOpts = {
-            type,
             interfaceThickness,
             fitGap,
             size,

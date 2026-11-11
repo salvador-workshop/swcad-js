@@ -57,16 +57,11 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
             },
             points: {
                 centrePt: [0, 0, 0]
-            },
-            types: {
-                default: { id: 'default', desc: 'Default' },
-                alt: { id: 'alt', desc: 'Alternate' },
-            },
+            }
         }
 
         /** Options used by SW models */
         const standardOpts = {
-            type: defaultValues.types.default.id,
             interfaceThickness: standards.INTERFACE_THICKNESS,
             fitGap: standards.FIT_GAP,
         }
@@ -102,13 +97,11 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
         const {
             size = defaults.opts.size,
             margin = defaults.opts.margin,
-            type = defaults.opts.type,
             interfaceThickness = defaults.opts.interfaceThickness,
             fitGap = defaults.opts.fitGap,
         } = opts
 
         const stdOpts = {
-            type,
             interfaceThickness,
             fitGap,
         }
@@ -140,7 +133,6 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
         const {
             size,
             margin,
-            type,
             interfaceThickness,
             fitGap,
         } = opts
@@ -176,7 +168,6 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
 
         /** Derived user options for the model */
         const modelOpts = {
-            type,
         }
 
         /** Various dimensions for model */
@@ -240,7 +231,6 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a curved 2D reinforcement covering two sides (one corner) of a rectangle.
      * @param {Object} opts - Options for the model
-     * @param {string} opts.type - Type of the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
@@ -280,7 +270,6 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a curved 2D reinforcement covering three sides (two corners) of a rectangle.
      * @param {Object} opts - Options for the model
-     * @param {string} opts.type - Type of the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size

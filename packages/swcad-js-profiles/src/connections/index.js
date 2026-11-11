@@ -82,16 +82,11 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             },
             points: {
                 centre: [0, 0, 0]
-            },
-            types: {
-                default: { id: 'default', desc: 'Default' },
-                alt: { id: 'alt', desc: 'Alternate' },
-            },
+            }
         }
 
         /** Options used by SW models */
         const standardOpts = {
-            type: defaultValues.types.default.id,
             interfaceThickness: standards.INTERFACE_THICKNESS,
             fitGap: standards.FIT_GAP,
         }
@@ -139,13 +134,11 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             numConnectors = defaults.opts.numConnectors,
             segments = defaults.opts.segments,
             interfaceMargin = defaults.opts.interfaceMargin,
-            type = defaults.opts.type,
             interfaceThickness = defaults.opts.interfaceThickness,
             fitGap = defaults.opts.fitGap,
         } = opts
 
         const stdOpts = {
-            type,
             interfaceThickness,
             fitGap,
         }
@@ -189,7 +182,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             unitSegments,
             numConnectors,
             interfaceMargin,
-            type,
             interfaceThickness,
             fitGap,
         } = opts
@@ -224,7 +216,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
         /** Derived user options for the model */
         const modelOpts = {
-            type,
             segments,
             unitSegments,
             numConnectors,
@@ -289,8 +280,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     /**
      * Generates dovetail connectors.
      * @param {Object} opts - Options for the model
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+Z     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.radius
@@ -408,8 +398,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     /**
      * Generates tab connectors.
      * @param {Object} opts - Options for the model
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+Z     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.radius
@@ -527,8 +516,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     /**
      * Generates right-angle tab connectors.
      * @param {Object} opts - Options for the model
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+Z     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.radius
@@ -646,8 +634,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     /**
      * Generates polygon connectors.
      * @param {Object} opts - Options for the model
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+Z     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.radius
@@ -731,8 +718,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     /**
      * Generates ellipse connectors.
      * @param {Object} opts - Options for the model
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+Z     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.radius
@@ -845,8 +831,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     /**
      * Generates pegboard connectors.
      * @param {Object} opts - Options for the model
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+Z     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.radius
@@ -943,8 +928,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     /**
      * Generates bolt circle connectors.
      * @param {Object} opts - Options for the model
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+Z     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.radius
@@ -1022,8 +1006,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     /**
      * Generates pieces connected by a row of dovetails.
      * @param {Object} opts - Options for the model
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+Z     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.radius
@@ -1124,8 +1107,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     /**
      * Generates pieces connected by a row of tabs.
      * @param {Object} opts - Options for the model
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+Z     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.radius
@@ -1226,8 +1208,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     /**
      * Generates pieces connected by a row of right-angle tabs.
      * @param {Object} opts - Options for the model
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+Z     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.radius
