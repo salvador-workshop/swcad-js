@@ -50,17 +50,11 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
             },
             points: {
                 centre: [0, 0, 0]
-            },
-            types: {
-                default: { id: 'default', desc: 'Default' },
-                alt: { id: 'alt', desc: 'Alternate' },
-            },
+            }
         }
 
         /** Options used by SW models */
         const standardOpts = {
-            type: defaultValues.types.default.id,
-            scale: 1,
             interfaceThickness: standards.INTERFACE_THICKNESS,
             fitGap: standards.FIT_GAP,
         }
@@ -91,8 +85,6 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.scale - Scale factor for the model
      * @param {number} opts.radius1
      * @param {number} opts.radius2
      * @param {number} opts.offset1
@@ -114,15 +106,11 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
             offset2 = defaults.opts.offset2,
             offset3 = defaults.opts.offset3,
             offset4 = defaults.opts.offset4,
-            type = defaults.opts.type,
-            scale = defaults.opts.scale,
             interfaceThickness = defaults.opts.interfaceThickness,
             fitGap = defaults.opts.fitGap,
         } = opts
 
         const stdOpts = {
-            type,
-            scale,
             interfaceThickness,
             fitGap,
         }
@@ -161,8 +149,6 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
             offset2,
             offset3,
             offset4,
-            type,
-            scale,
             interfaceThickness,
             fitGap,
         } = opts
@@ -179,14 +165,10 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
 
         /** Constant values for model */
         const modelConstants = {
-            type,
-            scale,
         }
 
         /** Derived user options for the model */
         const modelOpts = {
-            type,
-            scale,
         }
 
         /** Various dimensions for model */
@@ -242,8 +224,6 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.scale - Scale factor for the model
      * @param {number} opts.radius1
      * @param {number} opts.radius2
      * @param {number} opts.offset1
@@ -274,8 +254,6 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.scale - Scale factor for the model
      * @param {number} opts.radius1
      * @param {number} opts.radius2
      * @param {number} opts.offset1
@@ -306,8 +284,6 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.scale - Scale factor for the model
      * @param {number} opts.radius1
      * @param {number} opts.radius2
      * @param {number} opts.offset1
@@ -338,8 +314,6 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.scale - Scale factor for the model
      * @param {number} opts.radius1
      * @param {number} opts.radius2
      * @param {number} opts.offset1

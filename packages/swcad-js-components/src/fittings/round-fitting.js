@@ -61,16 +61,10 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
             points: {
                 centre: [0, 0, 0]
             },
-            types: {
-                default: { id: 'default', desc: 'Default' },
-                alt: { id: 'alt', desc: 'Alternate' },
-            },
         }
 
         /** Options used by SW models */
         const standardOpts = {
-            type: defaultValues.types.default.id,
-            scale: 1,
             interfaceThickness: 1.333333,
             fitGap: math.inchesToMm(1 / 128),
         }
@@ -107,15 +101,11 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         const {
             dowelRadius = defaults.opts.dowelRadius,
             length = defaults.opts.length,
-            type = defaults.opts.type,
-            scale = defaults.opts.scale,
             interfaceThickness = defaults.opts.interfaceThickness,
             fitGap = defaults.opts.fitGap,
         } = opts
 
         const stdOpts = {
-            type,
-            scale,
             interfaceThickness,
             fitGap,
         }
@@ -148,8 +138,6 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         const {
             dowelRadius,
             length,
-            type,
-            scale,
             interfaceThickness,
             fitGap,
         } = opts
@@ -168,8 +156,6 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         const simpleHeight = dowelDiam / 3 + interfaceThickness + fitGap
         const invSimpleHeight = invCutProfileHeight + interfaceThickness + fitGap
 
-        const types = ['default', 'alt']
-
 
         /* ----------------------------------------
         * Preparing Model Properties, Dimensions
@@ -177,9 +163,6 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
 
         /** Derived user options for the model */
         const modelOpts = {
-            type,
-            scale,
-            types,
         }
         /** Various dimensions for model */
         const modelDims = {
@@ -240,8 +223,6 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.scale - Scale factor for the model
      * @param {number} opts.dowelRadius
      * @param {number} opts.length
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
@@ -269,8 +250,6 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.scale - Scale factor for the model
      * @param {number} opts.dowelRadius
      * @param {number} opts.length
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
@@ -304,8 +283,6 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.scale - Scale factor for the model
      * @param {number} opts.dowelRadius
      * @param {number} opts.length
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
@@ -353,8 +330,6 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.scale - Scale factor for the model
      * @param {number} opts.dowelRadius
      * @param {number} opts.length
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
@@ -398,8 +373,6 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.scale - Scale factor for the model
      * @param {number} opts.dowelRadius
      * @param {number} opts.length
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]

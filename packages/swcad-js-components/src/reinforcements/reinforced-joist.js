@@ -52,13 +52,8 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
             points: {
                 centre: [0, 0, 0]
             },
-            typeDetails: {
-                default: { id: 'default', desc: 'Default' },
-                alt: { id: 'alt', desc: 'Alternate' },
-            },
             width: math.inchesToMm(1.125),
             length: math.inchesToMm(5.5),
-            type: 'default',
             reinforcementLevel: 1,
             unitLength: math.inchesToMm(1),
             dowelHolderLength: math.inchesToMm(5 / 16),
@@ -72,8 +67,6 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
 
         /** Computed values for option defaults */
         const defaultOpts = {
-            type: 'default',
-            scale: 1,
             interfaceThickness: standards.INTERFACE_THICKNESS,
             fitGap: standards.FIT_GAP,
             logMode: 'normal',
@@ -105,8 +98,6 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
         const defaults = reinforcedJoistDefaults()
 
         const {
-            type,
-            scale,
             interfaceThickness,
             fitGap,
             width,
@@ -145,8 +136,6 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
 
         /** Derived user options for the model */
         const modelOpts = {
-            type,
-            scale,
             reinforcementLevel,
         }
 
@@ -213,8 +202,6 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
      * Generates an open web joist with the given options for reinforcement styles.
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @param {Object} opts - Options for the model
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.scale - Scale factor for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number} opts.width - Width of the joist
@@ -230,8 +217,6 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
 
         // User options
         const {
-            type = defaults.opts.type,
-            scale = defaults.opts.scale,
             interfaceThickness = defaults.opts.interfaceThickness,
             fitGap = defaults.opts.fitGap,
             width = defaults.opts.width,
@@ -242,8 +227,6 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
         } = opts
 
         const inOpts = {
-            type,
-            scale,
             interfaceThickness,
             fitGap,
             width,

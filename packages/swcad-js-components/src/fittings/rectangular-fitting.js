@@ -51,16 +51,10 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
             points: {
                 centrePt: [0, 0, 0]
             },
-            types: {
-                default: { id: 'default', desc: 'Default' },
-                alt: { id: 'alt', desc: 'Alternate' },
-            },
         }
 
         /** Options used by SW models */
         const standardOpts = {
-            type: defaultValues.types.default.id,
-            scale: 1,
             interfaceThickness: standards.INTERFACE_THICKNESS,
             fitGap: standards.FIT_GAP,
         }
@@ -97,15 +91,11 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
         const {
             subjectSize = defaults.opts.subjectSize,
             length = defaults.opts.length,
-            type = defaults.opts.type,
-            scale = defaults.opts.scale,
             interfaceThickness = defaults.opts.interfaceThickness,
             fitGap = defaults.opts.fitGap,
         } = opts
 
         const stdOpts = {
-            type,
-            scale,
             interfaceThickness,
             fitGap,
         }
@@ -139,8 +129,6 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
         const {
             subjectSize,
             length,
-            type,
-            scale,
             interfaceThickness,
             fitGap,
         } = opts
@@ -168,8 +156,6 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
 
         /** Derived user options for the model */
         const modelOpts = {
-            type,
-            scale,
         }
 
         /** Various dimensions for model */
@@ -234,8 +220,6 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.scale - Scale factor for the model
      * @param {number[]} opts.subjectSize
      * @param {number} opts.length
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
@@ -269,8 +253,6 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.scale - Scale factor for the model
      * @param {number[]} opts.subjectSize
      * @param {number} opts.length
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]

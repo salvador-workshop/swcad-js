@@ -21,6 +21,7 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
 
     const {
         math,
+        position,
     } = swcadJs.calcs
 
     const {
@@ -61,17 +62,11 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
             },
             points: {
                 centrePt: [0, 0, 0]
-            },
-            types: {
-                default: { id: 'default', desc: 'Default' },
-                alt: { id: 'alt', desc: 'Alternate' },
-            },
+            }
         }
 
         /** Options used by SW models */
         const standardOpts = {
-            type: defaultValues.types.default.id,
-            scale: 1,
             interfaceThickness: standards.INTERFACE_THICKNESS,
             fitGap: standards.FIT_GAP,
         }
@@ -109,15 +104,11 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
             size = defaults.opts.size,
             reinforcementPattern = defaults.opts.reinforcementPattern,
             reinforcementThickness = defaults.opts.reinforcementThickness,
-            type = defaults.opts.type,
-            scale = defaults.opts.scale,
             interfaceThickness = defaults.opts.interfaceThickness,
             fitGap = defaults.opts.fitGap,
         } = opts
 
         const stdOpts = {
-            type,
-            scale,
             interfaceThickness,
             fitGap,
         }
@@ -150,8 +141,6 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
             size,
             reinforcementPattern,
             reinforcementThickness,
-            type,
-            scale,
             interfaceThickness,
             fitGap,
         } = opts
@@ -219,8 +208,6 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
 
         /** Derived user options for the model */
         const modelOpts = {
-            type,
-            scale,
             reinforcementPattern,
         }
 
@@ -279,8 +266,6 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a 2D reinforced rectangle with the given options for reinforcement styles.
      * @param {Object} opts - Options for the model
-     * @param {string} opts.type - Type of the model
-     * @param {number} opts.scale - Scale factor for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
@@ -403,7 +388,7 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
         const rectPrimaryBracingInst = rectPrimaryBracing(modelProperties)
         const rectSecondaryBracingInst = rectSecondaryBracing(modelProperties)
 
-        let mainModel = finalAssembly(modelProperties)
+        let mainModel = position.ctr(finalAssembly(modelProperties))
 
         let modelParts = {
             rectOutline: rectOutlineInst,

@@ -13,6 +13,10 @@ const textUtils = ({ jscad, swcadJs }) => {
     const { vectorText } = jscad.text
     const { hullChain } = jscad.hulls
 
+    const {
+        position,
+    } = swcadJs.calcs
+
     /**
      * Generates a simple 2D line of text.
      * @memberof profiles.text
@@ -32,7 +36,9 @@ const textUtils = ({ jscad, swcadJs }) => {
             const corners = segmentPoints.map((point) => translate(point, lineCorner))
             lineSegments.push(hullChain(corners))
         })
-        return union(lineSegments)
+
+        const bText = union(lineSegments)
+        return position.ctr(bText)
     }
 
     return {

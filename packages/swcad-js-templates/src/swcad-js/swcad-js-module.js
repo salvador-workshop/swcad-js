@@ -92,7 +92,6 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
         /** Options used by SW models */
         const standardOpts = {
             type: defaultValues.types.default.id,
-            scale: 1,
             interfaceThickness: standards.INTERFACE_THICKNESS,
             fitGap: standards.FIT_GAP,
         }
@@ -128,14 +127,12 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
         const {
             size = defaults.opts.size,
             type = defaults.opts.type,
-            scale = defaults.opts.scale,
             interfaceThickness = defaults.opts.interfaceThickness,
             fitGap = defaults.opts.fitGap,
         } = opts
 
         const stdOpts = {
             type,
-            scale,
             interfaceThickness,
             fitGap,
         }
@@ -167,7 +164,6 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
         const {
             size,
             type,
-            scale,
             interfaceThickness,
             fitGap,
         } = opts
@@ -191,7 +187,6 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
         /** Derived user options for the model */
         const modelOpts = {
             type,
-            scale,
         }
 
         /** Various dimensions for model */
