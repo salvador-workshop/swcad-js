@@ -2,54 +2,20 @@
 
 const reinforcedRingInit = ({ jscad, swcadJs }) => {
     const {
-        cube,
         cylinder,
-        sphere,
-        cylinderElliptic,
-        circle,
         cuboid,
-        roundedCuboid,
-        roundedCylinder,
-        roundedRectangle,
-        rectangle,
-        triangle,
     } = jscad.primitives
 
     const {
-        align,
-        translate,
         rotate,
-        mirror
     } = jscad.transforms
 
     const {
-        intersect,
         subtract,
         union,
-        scission
     } = jscad.booleans
 
-    const {
-        extrudeLinear,
-        extrudeRotate,
-        project
-    } = jscad.extrusions
-
-    const {
-        measureDimensions,
-        measureBoundingBox,
-        measureVolume
-    } = jscad.measurements
-
-    const {
-        hull,
-        hullChain
-    } = jscad.hulls
-
-    const { vectorText } = jscad.text
-    const { toOutlines } = jscad.geometries.geom2
     const { TAU } = jscad.maths.constants
-    const { colorize } = jscad.colors
 
     const {
         standards,
@@ -330,29 +296,27 @@ const reinforcedRingInit = ({ jscad, swcadJs }) => {
     //------------------------------------------------------------------------------
 
     /**
-     * New Model 1
-     * @param {*} opts 
+     * Generates a light reinforced ring.
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.height
+     * @param {number} opts.holeRadius
+     * @param {number} opts.ringWidth
+     * @param {number} opts.baseThickness
+     * @param {number} opts.reinforcementThickness
+     * @param {number} opts.fitGap
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.reinforcements.reinforcedRing
      */
     const lightReinforcedRing = (opts) => {
-        const defaults = reinforcedRingDefaults()
         const initOpts = reinforcedRingOpts(opts)
         const modelProperties = reinforcedRingProps(initOpts)
 
         const {
             height,
-            holeRadius,
-            ringWidth,
             baseThickness,
-            reinforcementThickness,
-            fitGap,
-            holeDiam,
             ringBlankRadius,
-            ringBlankDiam,
             ringHoleCutRadius,
             ringIntReinfBlankRadius,
-            ringExtReinfHoleCutRadius,
         } = modelProperties.dims
 
         const ringReinfBase = ringReinforcementBase({
@@ -382,29 +346,29 @@ const reinforcedRingInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * New Model 2
-     * @param {*} opts 
+     * Generates a medium reinforced ring.
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.height
+     * @param {number} opts.holeRadius
+     * @param {number} opts.ringWidth
+     * @param {number} opts.baseThickness
+     * @param {number} opts.reinforcementThickness
+     * @param {number} opts.fitGap
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.reinforcements.reinforcedRing
      */
     const mediumReinforcedRing = (opts) => {
-        const defaults = reinforcedRingDefaults()
         const initOpts = reinforcedRingOpts(opts)
         const modelProperties = reinforcedRingProps(initOpts)
 
         const {
             height,
-            holeRadius,
-            ringWidth,
             baseThickness,
             reinforcementThickness,
-            fitGap,
-            holeDiam,
             ringBlankRadius,
             ringBlankDiam,
             ringHoleCutRadius,
             ringIntReinfBlankRadius,
-            ringExtReinfHoleCutRadius,
         } = modelProperties.dims
 
 
@@ -442,24 +406,25 @@ const reinforcedRingInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * ...
-     * @param {*} opts 
+     * Generates a heavy reinforced ring.
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.height
+     * @param {number} opts.holeRadius
+     * @param {number} opts.ringWidth
+     * @param {number} opts.baseThickness
+     * @param {number} opts.reinforcementThickness
+     * @param {number} opts.fitGap
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.reinforcements.reinforcedRing
      */
     const heavyReinforcedRing = (opts) => {
-        const defaults = reinforcedRingDefaults()
         const initOpts = reinforcedRingOpts(opts)
         const modelProperties = reinforcedRingProps(initOpts)
 
         const {
             height,
-            holeRadius,
-            ringWidth,
             baseThickness,
             reinforcementThickness,
-            fitGap,
-            holeDiam,
             ringBlankRadius,
             ringBlankDiam,
             ringHoleCutRadius,
