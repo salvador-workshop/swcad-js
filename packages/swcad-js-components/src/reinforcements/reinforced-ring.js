@@ -85,7 +85,7 @@ const reinforcedRingInit = ({ jscad, swcadJs }) => {
                 holeRadius: math.inchesToMm(1 / 8),
                 ringWidth: math.inchesToMm(3 / 16),
                 baseThickness: defInterfaceThickness,
-                reinforcementThickness: defInterfaceThickness,
+                reinforcementThickness: 1.125,
                 fitGap: defFitGap,
             },
             points: {},
