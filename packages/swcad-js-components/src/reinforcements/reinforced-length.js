@@ -154,17 +154,17 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
 
         const {
             size,
-            type,
-            interfaceThickness,
-            fitGap,
+            unitLength,
+            baseThickness,
+            reinforcementThickness,
         } = opts
 
         /* ----------------------------------------
         * Prop calculations
         * ------------------------------------- */
 
-        const width = size[0]
-        const depth = size[1]
+        const length = size[0]
+        const width = size[1]
         const height = size[2]
 
         /* ----------------------------------------
@@ -177,22 +177,21 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
 
         /** Derived user options for the model */
         const modelOpts = {
-            type,
         }
 
         /** Various dimensions for model */
         const modelDims = {
             size,
+            unitLength,
+            baseThickness,
+            reinforcementThickness,
+            length,
             width,
-            depth,
             height,
-            interfaceThickness,
-            fitGap,
         }
 
         /** Various key points for model */
         const modelPoints = {
-            centrePt: defaults.vals.points.centrePt,
         }
 
         /** Components used by model */
@@ -353,7 +352,11 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
         } = opts
 
         // Generate flat base
-        const reinfUnitBase = reinforcementUnitBase(size[0], size[1], baseThickness)
+        const reinfUnitBase = reinforcementUnitBase({
+            length: size[0],
+            width: size[1],
+            baseThickness: baseThickness
+        })
 
         const reinfUnitReinforcement = heavyLengthReinforcement({
             length: size[0],
