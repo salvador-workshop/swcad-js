@@ -67,12 +67,15 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
      * Builds default values and opts for the model
      * @param {*} opts 
      * @returns default values and opts
-     * @memberof newModelName
+     * @memberof newModelParent
      * @access private
      */
     const newModelNameDefaults = () => {
-        /** Specific value declarations */
         const defaultValues = {
+            constants: {
+                interfaceThickness: standards.INTERFACE_THICKNESS,
+            },
+            opts: {},
             dims: {
                 size: [
                     math.inchesToMm(2),
@@ -80,26 +83,19 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
                     math.inchesToMm(1),
                 ],
             },
-            points: {
-                centrePt: [0, 0, 0]
-            },
+            points: {},
+            components: {},
             types: {
-                default: { id: 'default', desc: 'Default' },
-                alt: { id: 'alt', desc: 'Alternate' },
+                default: { id: 'default', desc: 'Default model' },
+                alt: { id: 'alt', desc: 'Alternate model' },
             },
         }
 
-        /** Options used by SW models */
-        const standardOpts = {
-            type: defaultValues.types.default.id,
-            interfaceThickness: standards.INTERFACE_THICKNESS,
-            fitGap: standards.FIT_GAP,
-        }
-
-        /** Computed values for option defaults */
         const defaultOpts = {
-            ...standardOpts,
+            fitGap: standards.FIT_GAP,
             size: defaultValues.dims.size,
+            type: defaultValues.types.default.id,
+            interfaceThickness: defaultValues.constants.interfaceThickness,
         }
 
         return {
@@ -116,7 +112,7 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
      * Initializes options with user input
      * @param {*} opts 
      * @returns model properties
-     * @memberof newModelName
+     * @memberof newModelParent
      * @access private
      */
     const newModelNameOpts = (opts) => {
@@ -131,21 +127,18 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
             fitGap = defaults.opts.fitGap,
         } = opts
 
-        const stdOpts = {
+        const initOpts = {
+            size,
             type,
             interfaceThickness,
             fitGap,
-        }
-
-        const initOpts = {
-            size,
-            ...stdOpts,
         }
 
         console.log('newModelNameOpts() -- initOpts', initOpts)
 
         return initOpts
     }
+
 
     //------------------------------------------------------------------------------
 
@@ -154,12 +147,12 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
      * Builds model properties from the given opts
      * @param {*} opts 
      * @returns model properties
-     * @memberof newModelName
+     * @memberof newModelParent
      * @access private
      */
     const newModelNameProps = (opts) => {
         const defaults = newModelNameDefaults()
-        console.log('newModelNameProps() -- opts', opts)
+        console.log('newModelNameProps() -- prop opts', opts)
 
         const {
             size,
@@ -181,8 +174,7 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
         * ------------------------------------- */
 
         /** Constant values for model */
-        const modelConstants = {
-        }
+        const modelConstants = defaults.vals.constants
 
         /** Derived user options for the model */
         const modelOpts = {
@@ -200,13 +192,10 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
         }
 
         /** Various key points for model */
-        const modelPoints = {
-            centrePt: defaults.vals.points.centrePt,
-        }
+        const modelPoints = defaults.vals.points
 
         /** Components used by model */
-        const modelComponents = {
-        }
+        const modelComponents = defaults.vals.components
 
         /* ---------------------------------------------
         *  Model Properties
@@ -272,8 +261,12 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * New Model
-     * @param {*} opts 
+     * Generates a new model
+     * @param {Object} opts - Options for the model
+     * @param {number[]} opts.size
+     * @param {string} opts.type
+     * @param {number} opts.reinforcementThickness
+     * @param {number} opts.fitGap
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof newModelParent
      */

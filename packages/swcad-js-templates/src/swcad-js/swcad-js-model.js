@@ -70,12 +70,15 @@ const {
  * Builds default values and opts for the model
  * @param {*} opts 
  * @returns default values and opts
- * @memberof newModelName
+ * @memberof newModelParent
  * @access private
  */
 const modelDefaults = () => {
-    /** Specific value declarations */
     const defaultValues = {
+        constants: {
+            interfaceThickness: standards.INTERFACE_THICKNESS,
+        },
+        opts: {},
         dims: {
             size: [
                 math.inchesToMm(2),
@@ -83,26 +86,19 @@ const modelDefaults = () => {
                 math.inchesToMm(1),
             ],
         },
-        points: {
-            centrePt: [0, 0, 0]
-        },
+        points: {},
+        components: {},
         types: {
-            default: { id: 'default', desc: 'Default' },
-            alt: { id: 'alt', desc: 'Alternate' },
+            default: { id: 'default', desc: 'Default model' },
+            alt: { id: 'alt', desc: 'Alternate model' },
         },
     }
 
-    /** Options used by SW models */
-    const standardOpts = {
-        type: defaultValues.types.default.id,
-        interfaceThickness: standards.INTERFACE_THICKNESS,
-        fitGap: standards.FIT_GAP,
-    }
-
-    /** Computed values for option defaults */
     const defaultOpts = {
-        ...standardOpts,
+        fitGap: standards.FIT_GAP,
         size: defaultValues.dims.size,
+        type: defaultValues.types.default.id,
+        interfaceThickness: defaultValues.constants.interfaceThickness,
     }
 
     return {
@@ -119,7 +115,7 @@ const modelDefaults = () => {
  * Initializes options with user input
  * @param {*} opts 
  * @returns model properties
- * @memberof newModelName
+ * @memberof newModelParent
  * @access private
  */
 const modelOpts = (opts) => {
@@ -134,15 +130,11 @@ const modelOpts = (opts) => {
         fitGap = defaults.opts.fitGap,
     } = opts
 
-    const stdOpts = {
+    const initOpts = {
+        size,
         type,
         interfaceThickness,
         fitGap,
-    }
-
-    const initOpts = {
-        size,
-        ...stdOpts,
     }
 
     console.log('modelOpts() -- initOpts', initOpts)
@@ -158,12 +150,12 @@ const modelOpts = (opts) => {
  * Builds model properties from the given opts
  * @param {*} opts 
  * @returns model properties
- * @memberof newModelName
+ * @memberof newModelParent
  * @access private
  */
 const modelProps = (opts) => {
     const defaults = modelDefaults()
-    console.log('modelProps() -- opts', opts)
+    console.log('modelProps() -- prop opts', opts)
 
     const {
         size,
@@ -185,8 +177,7 @@ const modelProps = (opts) => {
     * ------------------------------------- */
 
     /** Constant values for model */
-    const modelConstants = {
-    }
+    const modelConstants = defaults.vals.constants
 
     /** Derived user options for the model */
     const modelOpts = {
@@ -204,13 +195,10 @@ const modelProps = (opts) => {
     }
 
     /** Various key points for model */
-    const modelPoints = {
-        centrePt: defaults.vals.points.centrePt,
-    }
+    const modelPoints = defaults.vals.points
 
     /** Components used by model */
-    const modelComponents = {
-    }
+    const modelComponents = defaults.vals.components
 
     /* ---------------------------------------------
     *  Model Properties
