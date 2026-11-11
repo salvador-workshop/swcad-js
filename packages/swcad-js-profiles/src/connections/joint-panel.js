@@ -2,7 +2,6 @@
 
 /**
  * Modelling functions that generate connecting and interlocking 2D panels.
- * @author R. J. Salvador
  * @namespace jointPanel
  * @memberof profiles.connections
  */
@@ -84,7 +83,6 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
         /** Options used by SW models */
         const standardOpts = {
             type: defaultValues.types.tab.id,
-            interfaceThickness: standards.INTERFACE_THICKNESS,
             fitGap: standards.FIT_GAP,
         }
 
@@ -126,13 +124,11 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
             jointNumConnectors = defaults.opts.jointNumConnectors,
             axis = defaults.opts.axis,
             type = defaults.opts.type,
-            interfaceThickness = defaults.opts.interfaceThickness,
             fitGap = defaults.opts.fitGap,
         } = opts
 
         const stdOpts = {
             type,
-            interfaceThickness,
             fitGap,
         }
 
@@ -170,7 +166,6 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
             jointNumConnectors,
             axis,
             type,
-            interfaceThickness,
             fitGap,
         } = opts
 
@@ -216,7 +211,6 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
             jointWidth,
             jointMargin: jMargin,
             totalJointWidth,
-            interfaceThickness,
             fitGap,
         }
 
@@ -236,14 +230,6 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
         * --------------------------------------------- */
 
         const modelProperties = {
-            metadata: {
-                id: '9999',
-                name: 'New Model',
-                project: 'New Project',
-                author: 'Somebody Somewhere',
-                organization: 'Salvador Workshop',
-                client: null,
-            },
             constants: modelConstants,
             opts: modelOpts,
             dims: modelDims,
@@ -266,7 +252,6 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
      * Generates a set of two interlocking panels, made by dividing a rectangle in half with the given options.
      * @param {Object} opts - Options for the model
      * @param {string} opts.type - Type of the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.jointWidth
@@ -299,6 +284,7 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
             jointWidth,
             jointMargin,
             totalJointWidth,
+            fitGap,
         } = modelProperties.dims
 
         const {
@@ -317,6 +303,7 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
             size: jointSize,
             interfaceMargin: jointMargin,
             numConnectors: jointNumConnectors,
+            fitGap,
         }
 
         let jointData = connections.tabRow(jointOpts)
@@ -366,7 +353,6 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
      * Generates a set of four interlocking panels, made by dividing a rectangle into quarters with the given options.
      * @param {Object} opts - Options for the model
      * @param {string} opts.type - Type of the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.jointWidth
@@ -398,6 +384,7 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
             jointWidth,
             jointMargin,
             totalJointWidth,
+            fitGap,
         } = modelProperties.dims
 
         const {
@@ -417,6 +404,7 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
             size: jointSizeX,
             interfaceMargin: jointMargin,
             numConnectors: jNumConnectors[0],
+            fitGap,
         }
         let jointDataX = connections.tabRow(jointOptsX)
         if (type == 'dovetail') {
@@ -431,6 +419,7 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
             size: jointSizeY,
             interfaceMargin: jointMargin,
             numConnectors: jNumConnectors[1],
+            fitGap,
         }
         let jointDataY = connections.tabRow(jointOptsY)
         if (type == 'dovetail') {

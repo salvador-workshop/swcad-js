@@ -77,7 +77,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
         /** Options used by SW models */
         const standardOpts = {
             interfaceThickness: standards.INTERFACE_THICKNESS,
-            fitGap: standards.FIT_GAP,
         }
 
         /** Computed values for option defaults */
@@ -113,7 +112,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
         // User options
         const {
             interfaceThickness = defaults.opts.interfaceThickness,
-            fitGap = defaults.opts.fitGap,
             unitLength = defaults.opts.unitLength,
             startPt = defaults.opts.startPt,
             endPt = defaults.opts.endPt,
@@ -124,7 +122,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
 
         const stdOpts = {
             interfaceThickness,
-            fitGap,
         }
 
         const initOpts = {
@@ -155,7 +152,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
 
         const {
             interfaceThickness,
-            fitGap,
             unitLength,
             startPt,
             endPt,
@@ -203,7 +199,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
         /** Various dimensions for model */
         const modelDims = {
             interfaceThickness,
-            fitGap,
             unitLength,
             componentUnitLength,
             lineLength,
@@ -247,14 +242,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
         * --------------------------------------------- */
 
         const modelProperties = {
-            metadata: {
-                id: '9999',
-                name: 'New Model',
-                project: 'New Project',
-                author: 'Somebody Somewhere',
-                organization: 'Salvador Workshop',
-                client: null,
-            },
             constants: modelConstants,
             opts: modelOpts,
             dims: modelDims,
@@ -271,7 +258,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
      * Generates a line connecting several repetitions of the given component. Accepts various options for spacing and offsets.
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
-     * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number} opts.unitLength - Length of each unit section for webbing
      * @param {number[]} opts.startPt - starting point (2D coords)
      * @param {number[]} opts.endPt - ending point (2D coords)
@@ -319,13 +305,7 @@ const moduleInit = ({ jscad, swcadJs }) => {
             } = modelProps.opts
 
             const {
-                interfaceThickness,
-                fitGap,
-                unitLength,
                 componentUnitLength,
-                lineLength,
-                componentDims,
-                componentBoundingBox,
             } = modelProps.dims
 
             const lineComponents = []
@@ -346,11 +326,8 @@ const moduleInit = ({ jscad, swcadJs }) => {
         const cutBox = (modelProps) => {
             const {
                 interfaceThickness,
-                fitGap,
-                unitLength,
                 lineLength,
                 componentDims,
-                componentBoundingBox,
             } = modelProps.dims
 
 
@@ -373,12 +350,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
         /** Final Assembly */
         const finalAssembly = (modelProps) => {
             const {
-                interfaceThickness,
-                fitGap,
-                unitLength,
-                lineLength,
-                componentDims,
-                componentBoundingBox,
                 baseLineOffset,
                 compLineAngle
             } = modelProps.dims

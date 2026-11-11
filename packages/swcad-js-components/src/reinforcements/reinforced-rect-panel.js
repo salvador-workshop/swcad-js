@@ -39,7 +39,7 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
                 size: [
                     math.inchesToMm(3),
                     math.inchesToMm(4),
-                    math.inchesToMm(1 / 8),
+                    standards.INTERFACE_THICKNESS,
                 ],
                 reinforcementThickness: [5, 4, 3],
             },
@@ -48,15 +48,7 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
             }
         }
 
-        /** Options used by SW models */
-        const standardOpts = {
-            interfaceThickness: standards.INTERFACE_THICKNESS,
-            fitGap: standards.FIT_GAP,
-        }
-
-        /** Computed values for option defaults */
         const defaultOpts = {
-            ...standardOpts,
             size: defaultValues.dims.size,
             reinforcementPattern: defaultValues.constants.reinforcementPatterns[0],
             reinforcementThickness: defaultValues.dims.reinforcementThickness,
@@ -87,20 +79,12 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
             size = defaults.opts.size,
             reinforcementPattern = defaults.opts.reinforcementPattern,
             reinforcementThickness = defaults.opts.reinforcementThickness,
-            interfaceThickness = defaults.opts.interfaceThickness,
-            fitGap = defaults.opts.fitGap,
         } = opts
-
-        const stdOpts = {
-            interfaceThickness,
-            fitGap,
-        }
 
         const initOpts = {
             size,
             reinforcementPattern,
             reinforcementThickness,
-            ...stdOpts,
         }
 
 
@@ -124,8 +108,6 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
             size,
             reinforcementPattern,
             reinforcementThickness,
-            interfaceThickness,
-            fitGap,
         } = opts
 
         /* ----------------------------------------
@@ -156,8 +138,6 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
             depth,
             height,
             reinforcementThickness,
-            interfaceThickness,
-            fitGap,
         }
 
         /** Various key points for model */
@@ -176,14 +156,6 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
         * --------------------------------------------- */
 
         const modelProperties = {
-            metadata: {
-                id: '9999',
-                name: 'New Model',
-                project: 'New Project',
-                author: 'Somebody Somewhere',
-                organization: 'Salvador Workshop',
-                client: null,
-            },
             constants: modelConstants,
             opts: modelOpts,
             dims: modelDims,
@@ -202,8 +174,6 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a reinforced 3D rectangular panel with the given options for reinforcement styles.
      * @param {Object} opts - Options for the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
-     * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {string} opts.reinforcementPattern
      * @param {number[]} opts.reinforcementThickness

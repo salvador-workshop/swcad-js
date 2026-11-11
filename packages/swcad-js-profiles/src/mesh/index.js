@@ -19,9 +19,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
         geometry,
     } = swcadJs.calcs
 
-    const {
-        standards,
-    } = swcadJs.data
 
     /**
      * Builds default values and opts for the model
@@ -48,8 +45,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
         /** Computed values for option defaults */
         const defaultOpts = {
             size: defaultValues.dims.size,
-            interfaceThickness: standards.INTERFACE_THICKNESS,
-            fitGap: standards.FIT_GAP,
             edgeMargin: math.inchesToMm(3 / 16),
             holeRadius: math.inchesToMm(0.125),
             holeDistance: math.inchesToMm(1),
@@ -77,8 +72,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
         const defaults = meshPanelDefaults()
 
         const {
-            interfaceThickness,
-            fitGap,
             size,
             edgeMargin,
             holeRadius,
@@ -117,8 +110,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
         const modelDims = {
             size,
             meshAreaSize,
-            interfaceThickness,
-            fitGap,
             width,
             depth,
             edgeMargin,
@@ -143,14 +134,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
         * --------------------------------------------- */
 
         const modelProperties = {
-            metadata: {
-                id: '9999',
-                name: 'New Model',
-                project: 'New Project',
-                author: 'Somebody Somewhere',
-                organization: 'Salvador Workshop',
-                client: null,
-            },
             constants: modelConstants,
             opts: modelOpts,
             dims: modelDims,
@@ -169,8 +152,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a 2D mesh panel with the given options.
      * @param {Object} opts - Options for the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
-     * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.edgeMargin
      * @param {number} opts.holeRadius
@@ -184,9 +165,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
 
         // User options
         const {
-            // size = defaults.opts.size,
-            interfaceThickness = defaults.opts.interfaceThickness,
-            fitGap = defaults.opts.fitGap,
             size = defaults.opts.size,
             edgeMargin = defaults.opts.edgeMargin,
             holeRadius = defaults.opts.holeRadius,
@@ -195,8 +173,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
         } = opts
 
         const inOpts = {
-            interfaceThickness,
-            fitGap,
             size,
             edgeMargin,
             holeRadius,

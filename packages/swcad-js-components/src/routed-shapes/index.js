@@ -31,10 +31,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
     } = swcadJs.calcs
 
     const {
-        standards,
-    } = swcadJs.data
-
-    const {
         beadsBits: beadsBits2d,
     } = swcadJs.profiles
 
@@ -88,15 +84,7 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
             }
         }
 
-        /** Options used by SW models */
-        const standardOpts = {
-            interfaceThickness: standards.INTERFACE_THICKNESS,
-            fitGap: standards.FIT_GAP,
-        }
-
-        /** Computed values for option defaults */
         const defaultOpts = {
-            ...standardOpts,
             size: defaultValues.dims.size,
             height: defaultValues.dims.height,
             radius: defaultValues.dims.radius,
@@ -133,14 +121,7 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
             topBitOpts = defaults.opts.topBitOpts,
             bottomBit = defaults.opts.bottomBit,
             bottomBitOpts = defaults.opts.bottomBitOpts,
-            interfaceThickness = defaults.opts.interfaceThickness,
-            fitGap = defaults.opts.fitGap,
         } = opts
-
-        const stdOpts = {
-            interfaceThickness,
-            fitGap,
-        }
 
         const initOpts = {
             size,
@@ -148,9 +129,7 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
             topBitOpts,
             bottomBit,
             bottomBitOpts,
-            ...stdOpts,
         }
-
 
         return initOpts
     }
@@ -174,14 +153,8 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
             topBitOpts = defaults.opts.topBitOpts,
             bottomBit = defaults.opts.bottomBit,
             bottomBitOpts = defaults.opts.bottomBitOpts,
-            interfaceThickness = defaults.opts.interfaceThickness,
-            fitGap = defaults.opts.fitGap,
         } = opts
 
-        const stdOpts = {
-            interfaceThickness,
-            fitGap,
-        }
 
         const initOpts = {
             height,
@@ -190,7 +163,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
             topBitOpts,
             bottomBit,
             bottomBitOpts,
-            ...stdOpts,
         }
 
 
@@ -219,8 +191,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
             topBitOpts,
             bottomBit,
             bottomBitOpts,
-            interfaceThickness,
-            fitGap,
         } = opts
 
         /* ----------------------------------------
@@ -250,8 +220,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
             radius,
             topBit: topBitOpts,
             bottomBit: bottomBitOpts,
-            interfaceThickness,
-            fitGap,
         }
 
         /** Various key points for model */
@@ -270,14 +238,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
         * --------------------------------------------- */
 
         const modelProperties = {
-            metadata: {
-                id: '9999',
-                name: 'New Model',
-                project: 'New Project',
-                author: 'Somebody Somewhere',
-                organization: 'Salvador Workshop',
-                client: null,
-            },
             constants: modelConstants,
             opts: modelOpts,
             dims: modelDims,
@@ -397,8 +357,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a routed cuboid with the given options for top and bottom edges.
      * @param {Object} opts - Options for the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
-     * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {string} opts.topBit
      * @param {Object} opts.topBitOpts
@@ -462,8 +420,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a routed elliptical cylinder with the given options for top and bottom edges.
      * @param {Object} opts - Options for the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
-     * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number} opts.height
      * @param {number[]} opts.radius
      * @param {string} opts.topBit

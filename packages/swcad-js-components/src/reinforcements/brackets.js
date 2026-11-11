@@ -177,7 +177,6 @@ const bracketsInit = ({ jscad, swcadJs }) => {
         * --------------------------------------------- */
 
         const modelProperties = {
-            metadata: {},
             constants: modelConstants,
             opts: modelOpts,
             dims: modelDims,

@@ -54,15 +54,7 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
             }
         }
 
-        /** Options used by SW models */
-        const standardOpts = {
-            interfaceThickness: standards.INTERFACE_THICKNESS,
-            fitGap: standards.FIT_GAP,
-        }
-
-        /** Computed values for option defaults */
         const defaultOpts = {
-            ...standardOpts,
             size: defaultValues.dims.size,
             margin: defaultValues.dims.margin,
         }
@@ -91,13 +83,9 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
         const {
             size = defaults.opts.size,
             margin = defaults.opts.margin,
-            interfaceThickness = defaults.opts.interfaceThickness,
-            fitGap = defaults.opts.fitGap,
         } = opts
 
         const stdOpts = {
-            interfaceThickness,
-            fitGap,
         }
 
         const initOpts = {
@@ -127,8 +115,6 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
         const {
             size,
             margin,
-            interfaceThickness,
-            fitGap,
         } = opts
 
         /* ----------------------------------------
@@ -176,8 +162,6 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
             marginHeight,
             ellipseRadiusQtr,
             ellipseRadiusHalf,
-            interfaceThickness,
-            fitGap,
         }
 
         /** Various key points for model */
@@ -196,14 +180,6 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
         * --------------------------------------------- */
 
         const modelProperties = {
-            metadata: {
-                id: '9999',
-                name: 'New Model',
-                project: 'New Project',
-                author: 'Somebody Somewhere',
-                organization: 'Salvador Workshop',
-                client: null,
-            },
             constants: modelConstants,
             opts: modelOpts,
             dims: modelDims,
@@ -226,8 +202,6 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
      * Generates a curved 3D reinforcement covering two sides (one corner) of a rectangle.
      * @memberof components.reinforcements.boxSupport
      * @param {Object} opts - Options for the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
-     * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number[]} opts.margin
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
@@ -264,8 +238,6 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
      * Generates a curved 3D reinforcement covering three sides (two corners) of a rectangle.
      * @memberof components.reinforcements.boxSupport
      * @param {Object} opts - Options for the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
-     * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number[]} opts.margin
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]

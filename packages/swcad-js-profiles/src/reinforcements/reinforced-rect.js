@@ -65,15 +65,7 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
             }
         }
 
-        /** Options used by SW models */
-        const standardOpts = {
-            interfaceThickness: standards.INTERFACE_THICKNESS,
-            fitGap: standards.FIT_GAP,
-        }
-
-        /** Computed values for option defaults */
         const defaultOpts = {
-            ...standardOpts,
             size: defaultValues.dims.size,
             reinforcementPattern: defaultValues.constants.reinforcementPatterns[0],
             reinforcementThickness: defaultValues.dims.reinforcementThickness,
@@ -104,22 +96,13 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
             size = defaults.opts.size,
             reinforcementPattern = defaults.opts.reinforcementPattern,
             reinforcementThickness = defaults.opts.reinforcementThickness,
-            interfaceThickness = defaults.opts.interfaceThickness,
-            fitGap = defaults.opts.fitGap,
         } = opts
-
-        const stdOpts = {
-            interfaceThickness,
-            fitGap,
-        }
 
         const initOpts = {
             size,
             reinforcementPattern,
             reinforcementThickness,
-            ...stdOpts,
         }
-
 
         return initOpts
     }
@@ -141,8 +124,6 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
             size,
             reinforcementPattern,
             reinforcementThickness,
-            interfaceThickness,
-            fitGap,
         } = opts
 
         /* ----------------------------------------
@@ -217,8 +198,6 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
             width,
             depth,
             reinforcementThickness: rThickness,
-            interfaceThickness,
-            fitGap,
         }
 
         /** Various key points for model */
@@ -240,14 +219,6 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
         * --------------------------------------------- */
 
         const modelProperties = {
-            metadata: {
-                id: '9999',
-                name: 'New Model',
-                project: 'New Project',
-                author: 'Somebody Somewhere',
-                organization: 'Salvador Workshop',
-                client: null,
-            },
             constants: modelConstants,
             opts: modelOpts,
             dims: modelDims,
@@ -266,8 +237,6 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a 2D reinforced rectangle with the given options for reinforcement styles.
      * @param {Object} opts - Options for the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
-     * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {string} opts.reinforcementPattern
      * @param {number[]} opts.reinforcementThickness
