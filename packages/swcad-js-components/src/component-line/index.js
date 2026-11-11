@@ -53,6 +53,8 @@ const moduleInit = ({ jscad, swcadJs }) => {
     const modelDefaults = () => {
         /** Specific value declarations */
         const defaultValues = {
+            constants: {},
+            opts: {},
             dims: {
                 size: [
                     math.inchesToMm(2),
@@ -61,7 +63,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
                 ],
             },
             points: {
-                centre: [0, 0, 0],
                 startPt: [math.inchesToMm(0.5), math.inchesToMm(0.5)],
                 endPt: [math.inchesToMm(3), math.inchesToMm(4)],
             },
@@ -120,20 +121,15 @@ const moduleInit = ({ jscad, swcadJs }) => {
             component = defaults.opts.component,
         } = opts
 
-        const stdOpts = {
-            interfaceThickness,
-        }
-
         const initOpts = {
+            interfaceThickness,
             unitLength,
             startPt,
             endPt,
             endOffset,
             baseLineOffset,
             component,
-            ...stdOpts,
         }
-
 
         return initOpts
     }
@@ -188,8 +184,7 @@ const moduleInit = ({ jscad, swcadJs }) => {
         * ------------------------------------- */
 
         /** Constant values for model */
-        const modelConstants = {
-        }
+        const modelConstants = defaults.vals.constants
 
         /** Derived user options for the model */
         const modelOpts = {
@@ -216,7 +211,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
 
         /** Various key points for model */
         const modelPoints = {
-            centre: defaults.vals.points.centre,
             startPt,
             midPt,
             endPt,
@@ -269,7 +263,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
      * @memberof components
      */
     const componentLine = (opts) => {
-        const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
 
@@ -355,9 +348,7 @@ const moduleInit = ({ jscad, swcadJs }) => {
             } = modelProps.dims
 
             const {
-                startPt,
                 midPt,
-                endPt,
             } = modelProps.points
 
             let bLine = baseLine(modelProps)

@@ -44,6 +44,8 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
         const defFitGap = standards.FIT_GAP
 
         const defaultValues = {
+            constants: {},
+            opts: {},
             dims: {
                 size: [
                     math.inchesToMm(3.5),
@@ -53,7 +55,9 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
                 unitLength: math.inchesToMm(1),
                 baseThickness: defInterfaceThickness,
                 reinforcementThickness: 1.125,
-            }
+            },
+            points: {},
+            components: {},
         }
 
         const defaultOpts = {
@@ -135,12 +139,10 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
         * ------------------------------------- */
 
         /** Constant values for model */
-        const modelConstants = {
-        }
+        const modelConstants = defaults.vals.constants
 
         /** Derived user options for the model */
-        const modelOpts = {
-        }
+        const modelOpts = defaults.vals.opts
 
         /** Various dimensions for model */
         const modelDims = {
@@ -154,12 +156,10 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
         }
 
         /** Various key points for model */
-        const modelPoints = {
-        }
+        const modelPoints = defaults.vals.points
 
         /** Components used by model */
-        const modelComponents = {
-        }
+        const modelComponents = defaults.vals.components
 
         /* ---------------------------------------------
         *  Model Properties
@@ -406,7 +406,6 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
      * @memberof components.reinforcements.reinforcedLength
      */
     const lightReinforcedLength = (opts) => {
-        const defaults = reinforcedLengthDefaults()
         const initOpts = reinforcedLengthOpts(opts)
         const modelProperties = reinforcedLengthProps(initOpts)
 
@@ -487,7 +486,6 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
      * @memberof components.reinforcements.reinforcedLength
      */
     const mediumReinforcedLength = (opts) => {
-        const defaults = reinforcedLengthDefaults()
         const initOpts = reinforcedLengthOpts(opts)
         const modelProperties = reinforcedLengthProps(initOpts)
 
@@ -568,7 +566,6 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
      * @memberof components.reinforcements.reinforcedLength
      */
     const heavyReinforcedLength = (opts) => {
-        const defaults = reinforcedLengthDefaults()
         const initOpts = reinforcedLengthOpts(opts)
         const modelProperties = reinforcedLengthProps(initOpts)
 

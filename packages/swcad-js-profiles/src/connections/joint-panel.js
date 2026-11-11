@@ -70,9 +70,8 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
                 jointWidth: math.inchesToMm(3 / 8),
                 jointMargin: math.inchesToMm(1 / 4),
             },
-            points: {
-                centre: [0, 0, 0]
-            },
+            points: {},
+            components: {},
             types: {
                 tab: { id: 'tab', desc: 'Tab' },
                 dovetail: { id: 'dovetail', desc: 'Dovetail' },
@@ -176,11 +175,6 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
         const width = size[0]
         const depth = size[1]
 
-        const midPoint = [
-            width / 2,
-            depth / 2,
-        ]
-
         let jMargin = jointMargin
         if (typeof jointMargin == 'number') {
             jMargin = [jointMargin, jointMargin]
@@ -192,9 +186,7 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
         * ------------------------------------- */
 
         /** Constant values for model */
-        const modelConstants = {
-            sampleThickness: defaults.vals.constants.sampleThickness,
-        }
+        const modelConstants = defaults.vals.constants
 
         /** Derived user options for the model */
         const modelOpts = {
@@ -215,13 +207,10 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
         }
 
         /** Various key points for model */
-        const modelPoints = {
-            centrePt: midPoint,
-        }
+        const modelPoints = defaults.vals.points
 
         /** Components used by model */
-        const modelComponents = {
-        }
+        const modelComponents = defaults.vals.components
 
         /* ---------------------------------------------
         *  Model Properties
@@ -263,7 +252,6 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
      */
 
     const oneJointRectPanel = (opts) => {
-        const defaults = jointPanelDefaults()
         const initOpts = jointPanelOpts(opts)
         const modelProperties = modelProps(initOpts)
 
@@ -278,18 +266,12 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
         } = modelProperties.opts
 
         const {
-            size,
             width,
             depth,
-            jointWidth,
             jointMargin,
             totalJointWidth,
             fitGap,
         } = modelProperties.dims
-
-        const {
-            centrePt
-        } = modelProperties.points
 
         // along X axis
         let jointSize = [width, totalJointWidth]
@@ -363,7 +345,6 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
      * @memberof profiles.connections.jointPanel
      */
     const twoJointRectPanel = (opts) => {
-        const defaults = jointPanelDefaults()
         const initOpts = jointPanelOpts(opts)
         const modelProperties = modelProps(initOpts)
 
@@ -373,23 +354,17 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
 
         const {
             type,
-            axis,
             jointNumConnectors,
         } = modelProperties.opts
 
         const {
-            size,
             width,
             depth,
-            jointWidth,
             jointMargin,
             totalJointWidth,
             fitGap,
         } = modelProperties.dims
 
-        const {
-            centrePt
-        } = modelProperties.points
 
         let jNumConnectors = jointNumConnectors
         if (typeof jointNumConnectors == 'number') {

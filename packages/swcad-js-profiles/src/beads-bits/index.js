@@ -43,26 +43,28 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
     const modelDefaults = () => {
         /** Specific value declarations */
         const defaultValues = {
+            constants: {},
+            opts: {},
             dims: {
-                size: [
-                    math.inchesToMm(2),
-                    math.inchesToMm(4),
-                    math.inchesToMm(1),
-                ],
+                radius1: math.inchesToMm(1 / 2),
+                radius2: math.inchesToMm(3 / 4),
+                offset1: 0,
+                offset2: 0,
+                offset3: 0,
+                offset4: 0,
             },
-            points: {
-                centre: [0, 0, 0]
-            }
+            points: {},
+            components: {},
         }
 
         /** Computed values for option defaults */
         const defaultOpts = {
-            radius1: math.inchesToMm(1 / 2),
-            radius2: math.inchesToMm(3 / 4),
-            offset1: 0,
-            offset2: 0,
-            offset3: 0,
-            offset4: 0,
+            radius1: defaultValues.dims.radius1,
+            radius2: defaultValues.dims.radius2,
+            offset1: defaultValues.dims.offset1,
+            offset2: defaultValues.dims.offset2,
+            offset3: defaultValues.dims.offset3,
+            offset4: defaultValues.dims.offset4,
         }
 
         return {
@@ -145,12 +147,10 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
         * ------------------------------------- */
 
         /** Constant values for model */
-        const modelConstants = {
-        }
+        const modelConstants = defaults.vals.constants
 
         /** Derived user options for the model */
-        const modelOpts = {
-        }
+        const modelOpts = defaults.vals.opts
 
         /** Various dimensions for model */
         const modelDims = {
@@ -163,13 +163,10 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
         }
 
         /** Various key points for model */
-        const modelPoints = {
-            centre: defaults.vals.points.centre,
-        }
+        const modelPoints = defaults.vals.points
 
         /** Components used by model */
-        const modelComponents = {
-        }
+        const modelComponents = defaults.vals.components
 
         /* ---------------------------------------------
         *  Model Properties
@@ -206,7 +203,6 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * @memberof profiles.beadsBits.corner
      */
     const rabbet = (opts) => {
-        const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
 
@@ -295,7 +291,6 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * @memberof profiles.beadsBits.corner
      */
     const chamfer = (opts) => {
-        const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
 
@@ -379,7 +374,6 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * @memberof profiles.beadsBits.corner
      */
     const roundOver = (opts) => {
-        const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
 
@@ -464,7 +458,6 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * @memberof profiles.beadsBits.corner
      */
     const cove = (opts) => {
-        const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
 

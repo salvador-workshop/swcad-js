@@ -43,7 +43,6 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
      * @access private
      */
     const roundFittingDefaults = () => {
-        /** Specific value declarations */
         const defaultValues = {
             constants: {
                 ratioDiamToHolderHeight: 1.666667,
@@ -54,24 +53,18 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
                 ratioDiamToDblFittingVertDowelCtrsDist: 1.973,
                 ratioDiamToDblFittingSideDowelCtrsDist: 1.798,
             },
+            opts: {},
             dims: {
                 dowelRadius: 3.25 / 2,
                 length: math.inchesToMm(1 / 4),
             },
-            points: {
-                centre: [0, 0, 0]
-            },
+            points: {},
+            components: {},
         }
 
-        /** Options used by SW models */
-        const standardOpts = {
+        const defaultOpts = {
             interfaceThickness: 1.333333,
             fitGap: math.inchesToMm(1 / 128),
-        }
-
-        /** Computed values for option defaults */
-        const defaultOpts = {
-            ...standardOpts,
             dowelRadius: defaultValues.dims.dowelRadius,
             length: defaultValues.dims.length,
         }
@@ -159,8 +152,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         * ------------------------------------- */
 
         /** Derived user options for the model */
-        const modelOpts = {
-        }
+        const modelOpts = defaults.vals.opts
         /** Various dimensions for model */
         const modelDims = {
             dowelRadius,
@@ -177,13 +169,11 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         }
 
         /** Various key points for model */
-        const modelPoints = {
-            centre: defaults.vals.points.centre,
-        }
+        const modelPoints = defaults.vals.points
 
         const modelConstants = defaults.vals.constants
 
-        const modelComponents = {}
+        const modelComponents = defaults.vals.components
 
         /* ---------------------------------------------
         *  Model Properties
@@ -217,7 +207,6 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
      * @memberof components.fittings
      */
     const roundFittingCutProfile = (opts) => {
-        const defaults = roundFittingDefaults()
         const initOpts = roundFittingOpts(opts)
         const modelProperties = roundFittingProps(initOpts)
 
@@ -244,7 +233,6 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
      * @memberof components.fittings
      */
     const invRoundFittingCutProfile = (opts) => {
-        const defaults = roundFittingDefaults()
         const initOpts = roundFittingOpts(opts)
         const modelProperties = roundFittingProps(initOpts)
 
@@ -277,7 +265,6 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
      * @memberof components.fittings
      */
     const roundFitting = (opts) => {
-        const defaults = roundFittingDefaults()
         const initOpts = roundFittingOpts(opts)
         const modelProperties = roundFittingProps(initOpts)
 
@@ -324,7 +311,6 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
      * @memberof components.fittings
      */
     const inverseRoundFitting = (opts) => {
-        const defaults = roundFittingDefaults()
         const initOpts = roundFittingOpts(opts)
         const modelProperties = roundFittingProps(initOpts)
 
@@ -367,7 +353,6 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
      * @memberof components.fittings
      */
     const doubleRoundFitting = (opts) => {
-        const defaults = roundFittingDefaults()
         const initOpts = roundFittingOpts(opts)
         const modelProperties = roundFittingProps(initOpts)
 

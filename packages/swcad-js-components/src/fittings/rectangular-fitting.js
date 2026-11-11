@@ -39,29 +39,20 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
      * @access private
      */
     const rectangularFittingDefaults = () => {
-        /** Specific value declarations */
         const defaultValues = {
+            constants: {},
+            opts: {},
             dims: {
-                subjectSize: [
-                    10,
-                    2,
-                ],
+                subjectSize: [10, 2],
                 length: math.inchesToMm(1 / 4),
             },
-            points: {
-                centrePt: [0, 0, 0]
-            },
+            points: {},
+            components: {},
         }
 
-        /** Options used by SW models */
-        const standardOpts = {
+        const defaultOpts = {
             interfaceThickness: standards.INTERFACE_THICKNESS,
             fitGap: standards.FIT_GAP,
-        }
-
-        /** Computed values for option defaults */
-        const defaultOpts = {
-            ...standardOpts,
             subjectSize: defaultValues.dims.subjectSize,
             length: defaultValues.dims.length,
         }
@@ -148,12 +139,10 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
         * ------------------------------------- */
 
         /** Constant values for model */
-        const modelConstants = {
-        }
+        const modelConstants = defaults.vals.constants
 
         /** Derived user options for the model */
-        const modelOpts = {
-        }
+        const modelOpts = defaults.vals.opts
 
         /** Various dimensions for model */
         const modelDims = {
@@ -170,13 +159,10 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
         }
 
         /** Various key points for model */
-        const modelPoints = {
-            centrePt: defaults.vals.points.centrePt,
-        }
+        const modelPoints = defaults.vals.points
 
         /** Components used by model */
-        const modelComponents = {
-        }
+        const modelComponents = defaults.vals.components
 
         /* ---------------------------------------------
         *  Model Properties
@@ -214,7 +200,6 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
      * @memberof components.fittings
      */
     const rectFittingCutProfile = (opts) => {
-        const defaults = rectangularFittingDefaults()
         const initOpts = rectangularFittingOpts(opts)
         const modelProperties = rectangularFittingProps(initOpts)
 
@@ -247,7 +232,6 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
      * @memberof components.fittings
      */
     const rectangularFitting = (opts) => {
-        const defaults = rectangularFittingDefaults()
         const initOpts = rectangularFittingOpts(opts)
         const modelProperties = rectangularFittingProps(initOpts)
 

@@ -35,8 +35,9 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
      * @access private
      */
     const boxSupportDefaults = () => {
-        /** Specific value declarations */
         const defaultValues = {
+            constants: {},
+            opts: {},
             dims: {
                 size: [
                     math.inchesToMm(2),
@@ -49,9 +50,8 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
                     standards.INTERFACE_THICKNESS,
                 ],
             },
-            points: {
-                centrePt: [0, 0, 0]
-            }
+            points: {},
+            components: {},
         }
 
         const defaultOpts = {
@@ -85,15 +85,10 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
             margin = defaults.opts.margin,
         } = opts
 
-        const stdOpts = {
-        }
-
         const initOpts = {
             size,
             margin,
-            ...stdOpts,
         }
-
 
         return initOpts
     }
@@ -143,12 +138,10 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
         * ------------------------------------- */
 
         /** Constant values for model */
-        const modelConstants = {
-        }
+        const modelConstants = defaults.vals.constants
 
         /** Derived user options for the model */
-        const modelOpts = {
-        }
+        const modelOpts = defaults.vals.opts
 
         /** Various dimensions for model */
         const modelDims = {
@@ -165,13 +158,10 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
         }
 
         /** Various key points for model */
-        const modelPoints = {
-            centrePt: defaults.vals.points.centrePt,
-        }
+        const modelPoints = defaults.vals.points
 
         /** Components used by model */
-        const modelComponents = {
-        }
+        const modelComponents = defaults.vals.components
 
         /* ---------------------------------------------
         *  Model Properties
@@ -207,7 +197,6 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      */
     const boxSupportQuarter = (opts) => {
-        const defaults = boxSupportDefaults()
         const initOpts = boxSupportOpts(opts)
         const modelProperties = boxSupportProps(initOpts)
         const {
@@ -243,7 +232,6 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      */
     const boxSupportHalf = (opts) => {
-        const defaults = boxSupportDefaults()
         const initOpts = boxSupportOpts(opts)
         const modelProperties = boxSupportProps(initOpts)
         const {
