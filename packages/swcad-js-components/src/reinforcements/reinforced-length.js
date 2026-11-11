@@ -77,40 +77,32 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
      * @access private
      */
     const reinforcedLengthDefaults = () => {
-        /** Specific value declarations */
+        const defInterfaceThickness = standards.INTERFACE_THICKNESS
+        const defFitGap = standards.FIT_GAP
+
         const defaultValues = {
             dims: {
                 size: [
-                    math.inchesToMm(2),
-                    math.inchesToMm(4),
-                    math.inchesToMm(1),
+                    math.inchesToMm(3.5),
+                    math.inchesToMm(5 / 16),
+                    math.inchesToMm(1 / 8),
                 ],
-            },
-            points: {
-                centrePt: [0, 0, 0]
-            },
-            types: {
-                default: { id: 'default', desc: 'Default' },
-                alt: { id: 'alt', desc: 'Alternate' },
-            },
+                unitLength: math.inchesToMm(1),
+                baseThickness: defInterfaceThickness,
+                reinforcementThickness: 1.125,
+            }
         }
 
-        /** Options used by SW models */
-        const standardOpts = {
-            type: defaultValues.types.default.id,
-            interfaceThickness: standards.INTERFACE_THICKNESS,
-            fitGap: standards.FIT_GAP,
-        }
-
-        /** Computed values for option defaults */
         const defaultOpts = {
-            ...standardOpts,
             size: defaultValues.dims.size,
+            unitLength: defaultValues.dims.unitLength,
+            baseThickness: defaultValues.dims.baseThickness,
+            reinforcementThickness: defaultValues.dims.reinforcementThickness,
         }
 
         return {
-            opts: defaultOpts,
             vals: defaultValues,
+            opts: defaultOpts,
         }
     }
 
@@ -131,22 +123,17 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
         // User options
         const {
             size = defaults.opts.size,
-            type = defaults.opts.type,
-            interfaceThickness = defaults.opts.interfaceThickness,
-            fitGap = defaults.opts.fitGap,
+            unitLength = defaults.opts.unitLength,
+            baseThickness = defaults.opts.baseThickness,
+            reinforcementThickness = defaults.opts.reinforcementThickness,
         } = opts
-
-        const stdOpts = {
-            type,
-            interfaceThickness,
-            fitGap,
-        }
 
         const initOpts = {
             size,
-            ...stdOpts,
+            unitLength,
+            baseThickness,
+            reinforcementThickness,
         }
-
 
         return initOpts
     }

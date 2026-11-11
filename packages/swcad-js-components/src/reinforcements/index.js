@@ -15,7 +15,6 @@ const reinforcementsInit = ({ jscad, swcadJs }) => {
 
     return {
         boxSupport,
-        reinforcedLength,
         reinforcedJoist,
         reinforcedRectPanel,
     }
