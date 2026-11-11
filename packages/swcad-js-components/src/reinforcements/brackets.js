@@ -94,7 +94,6 @@ const bracketsInit = ({ jscad, swcadJs }) => {
      */
     const bracketsOpts = (opts) => {
         const defaults = bracketsDefaults()
-        console.log('bracketsOpts() -- opts', opts)
 
         // User options
         const {
@@ -113,7 +112,6 @@ const bracketsInit = ({ jscad, swcadJs }) => {
             ...stdOpts,
         }
 
-        console.log('bracketsOpts() -- initOpts', initOpts)
 
         return initOpts
     }
@@ -131,7 +129,6 @@ const bracketsInit = ({ jscad, swcadJs }) => {
      */
     const bracketsProps = (opts) => {
         const defaults = bracketsDefaults()
-        console.log('bracketsProps() -- opts', opts)
 
         const {
             size,
@@ -188,7 +185,6 @@ const bracketsInit = ({ jscad, swcadJs }) => {
             components: modelComponents,
         }
 
-        console.log('bracketsProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }

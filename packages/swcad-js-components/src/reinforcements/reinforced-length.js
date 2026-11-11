@@ -121,7 +121,6 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
      */
     const reinforcedLengthOpts = (opts) => {
         const defaults = reinforcedLengthDefaults()
-        console.log('reinforcedLengthOpts() -- opts', opts)
 
         // User options
         const {
@@ -142,7 +141,6 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
             ...stdOpts,
         }
 
-        console.log('reinforcedLengthOpts() -- initOpts', initOpts)
 
         return initOpts
     }
@@ -160,7 +158,6 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
      */
     const reinforcedLengthProps = (opts) => {
         const defaults = reinforcedLengthDefaults()
-        console.log('reinforcedLengthProps() -- opts', opts)
 
         const {
             size,
@@ -231,7 +228,6 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
             components: modelComponents,
         }
 
-        console.log('reinforcedLengthProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }
