@@ -83,7 +83,6 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
         /** Options used by SW models */
         const standardOpts = {
             type: defaultValues.types.tab.id,
-            interfaceThickness: standards.INTERFACE_THICKNESS,
             fitGap: standards.FIT_GAP,
         }
 
@@ -125,13 +124,11 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
             jointNumConnectors = defaults.opts.jointNumConnectors,
             axis = defaults.opts.axis,
             type = defaults.opts.type,
-            interfaceThickness = defaults.opts.interfaceThickness,
             fitGap = defaults.opts.fitGap,
         } = opts
 
         const stdOpts = {
             type,
-            interfaceThickness,
             fitGap,
         }
 
@@ -169,7 +166,6 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
             jointNumConnectors,
             axis,
             type,
-            interfaceThickness,
             fitGap,
         } = opts
 
@@ -215,7 +211,6 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
             jointWidth,
             jointMargin: jMargin,
             totalJointWidth,
-            interfaceThickness,
             fitGap,
         }
 
@@ -257,7 +252,6 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
      * Generates a set of two interlocking panels, made by dividing a rectangle in half with the given options.
      * @param {Object} opts - Options for the model
      * @param {string} opts.type - Type of the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.jointWidth
@@ -359,7 +353,6 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
      * Generates a set of four interlocking panels, made by dividing a rectangle into quarters with the given options.
      * @param {Object} opts - Options for the model
      * @param {string} opts.type - Type of the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.jointWidth

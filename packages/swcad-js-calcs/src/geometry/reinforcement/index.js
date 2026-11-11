@@ -42,14 +42,7 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
             }
         }
 
-        /** Options used by SW models */
-        const standardOpts = {
-            interfaceThickness: standards.INTERFACE_THICKNESS,
-        }
-
-        /** Computed values for option defaults */
         const defaultOpts = {
-            ...standardOpts,
             size: defaultValues.dims.size,
         }
 
@@ -89,7 +82,6 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
         const defaultOpts = {
             size: defaultValues.dims.size,
             reinforcementPattern: defaultValues.opts.reinforcementPatterns[0],
-            interfaceThickness: standards.INTERFACE_THICKNESS,
         }
 
         return {
@@ -115,11 +107,9 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
         // User options
         const {
             size = defaults.opts.size,
-            interfaceThickness = defaults.opts.interfaceThickness,
         } = opts
 
         const stdOpts = {
-            interfaceThickness,
         }
 
         const initOpts = {
@@ -145,13 +135,11 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
         const {
             size = defaults.opts.size,
             reinforcementPattern = defaults.opts.reinforcementPattern,
-            interfaceThickness = defaults.opts.interfaceThickness,
         } = opts
 
         const stdOpts = {
             size,
             reinforcementPattern,
-            interfaceThickness
         }
 
         const initOpts = {
@@ -178,7 +166,6 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
 
         const {
             size,
-            interfaceThickness,
         } = opts
 
         /* ----------------------------------------
@@ -204,7 +191,6 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
         /** Various dimensions for model */
         const modelDims = {
             size,
-            interfaceThickness,
             width,
             depth,
             height,
@@ -243,7 +229,6 @@ const profReinforcementsInit = ({ jscad, swcadJs }) => {
         const {
             size,
             reinforcementPattern,
-            interfaceThickness,
         } = opts
 
         /* ----------------------------------------

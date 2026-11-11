@@ -47,7 +47,6 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
                 size: [
                     math.inchesToMm(2),
                     math.inchesToMm(4),
-                    math.inchesToMm(1),
                 ],
                 margin: [
                     standards.INTERFACE_THICKNESS,
@@ -60,14 +59,8 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
             }
         }
 
-        /** Options used by SW models */
-        const standardOpts = {
-            interfaceThickness: standards.INTERFACE_THICKNESS,
-        }
-
         /** Computed values for option defaults */
         const defaultOpts = {
-            ...standardOpts,
             size: defaultValues.dims.size,
             margin: defaultValues.dims.margin,
         }
@@ -96,17 +89,11 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
         const {
             size = defaults.opts.size,
             margin = defaults.opts.margin,
-            interfaceThickness = defaults.opts.interfaceThickness,
         } = opts
-
-        const stdOpts = {
-            interfaceThickness,
-        }
 
         const initOpts = {
             size,
             margin,
-            ...stdOpts,
         }
 
 
@@ -130,7 +117,6 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
         const {
             size,
             margin,
-            interfaceThickness,
         } = opts
 
         /* ----------------------------------------
@@ -178,7 +164,6 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
             marginHeight,
             ellipseRadiusQtr,
             ellipseRadiusHalf,
-            interfaceThickness,
         }
 
         /** Various key points for model */
@@ -218,7 +203,6 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a curved 2D reinforcement covering two sides (one corner) of a rectangle.
      * @param {Object} opts - Options for the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number[]} opts.size
      * @param {number[]} opts.margin
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
@@ -256,7 +240,6 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a curved 2D reinforcement covering three sides (two corners) of a rectangle.
      * @param {Object} opts - Options for the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number[]} opts.size
      * @param {number[]} opts.margin
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]

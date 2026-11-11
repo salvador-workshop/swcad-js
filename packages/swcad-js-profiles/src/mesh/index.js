@@ -48,7 +48,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
         /** Computed values for option defaults */
         const defaultOpts = {
             size: defaultValues.dims.size,
-            interfaceThickness: standards.INTERFACE_THICKNESS,
             edgeMargin: math.inchesToMm(3 / 16),
             holeRadius: math.inchesToMm(0.125),
             holeDistance: math.inchesToMm(1),
@@ -76,7 +75,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
         const defaults = meshPanelDefaults()
 
         const {
-            interfaceThickness,
             size,
             edgeMargin,
             holeRadius,
@@ -115,7 +113,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
         const modelDims = {
             size,
             meshAreaSize,
-            interfaceThickness,
             width,
             depth,
             edgeMargin,
@@ -158,7 +155,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a 2D mesh panel with the given options.
      * @param {Object} opts - Options for the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number[]} opts.size
      * @param {number} opts.edgeMargin
      * @param {number} opts.holeRadius
@@ -172,8 +168,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
 
         // User options
         const {
-            // size = defaults.opts.size,
-            interfaceThickness = defaults.opts.interfaceThickness,
             size = defaults.opts.size,
             edgeMargin = defaults.opts.edgeMargin,
             holeRadius = defaults.opts.holeRadius,
@@ -182,7 +176,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
         } = opts
 
         const inOpts = {
-            interfaceThickness,
             size,
             edgeMargin,
             holeRadius,

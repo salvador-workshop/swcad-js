@@ -85,15 +85,8 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             }
         }
 
-        /** Options used by SW models */
-        const standardOpts = {
-            interfaceThickness: standards.INTERFACE_THICKNESS,
-            fitGap: standards.FIT_GAP,
-        }
-
-        /** Computed values for option defaults */
         const defaultOpts = {
-            ...standardOpts,
+            fitGap: standards.FIT_GAP,
             size: defaultValues.dims.size,
             radius: defaultValues.dims.radius,
             unitSpacing: defaultValues.dims.unitSpacing,
@@ -134,12 +127,10 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             numConnectors = defaults.opts.numConnectors,
             segments = defaults.opts.segments,
             interfaceMargin = defaults.opts.interfaceMargin,
-            interfaceThickness = defaults.opts.interfaceThickness,
             fitGap = defaults.opts.fitGap,
         } = opts
 
         const stdOpts = {
-            interfaceThickness,
             fitGap,
         }
 
@@ -182,7 +173,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             unitSegments,
             numConnectors,
             interfaceMargin,
-            interfaceThickness,
             fitGap,
         } = opts
 
@@ -224,7 +214,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         /** Various dimensions for model */
         const modelDims = {
             size,
-            interfaceThickness,
             fitGap,
             width,
             depth,
@@ -272,7 +261,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     /**
      * Generates dovetail connectors.
      * @param {Object} opts - Options for the model
-Z     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.radius
@@ -390,7 +378,6 @@ Z     * @param {number} opts.interfaceThickness - Thickness of the interface con
     /**
      * Generates tab connectors.
      * @param {Object} opts - Options for the model
-Z     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.radius
@@ -508,7 +495,6 @@ Z     * @param {number} opts.interfaceThickness - Thickness of the interface con
     /**
      * Generates right-angle tab connectors.
      * @param {Object} opts - Options for the model
-Z     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.radius
@@ -626,7 +612,6 @@ Z     * @param {number} opts.interfaceThickness - Thickness of the interface con
     /**
      * Generates polygon connectors.
      * @param {Object} opts - Options for the model
-Z     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.radius
@@ -710,7 +695,6 @@ Z     * @param {number} opts.interfaceThickness - Thickness of the interface con
     /**
      * Generates ellipse connectors.
      * @param {Object} opts - Options for the model
-Z     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.radius
@@ -823,7 +807,6 @@ Z     * @param {number} opts.interfaceThickness - Thickness of the interface con
     /**
      * Generates pegboard connectors.
      * @param {Object} opts - Options for the model
-Z     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.radius
@@ -920,7 +903,6 @@ Z     * @param {number} opts.interfaceThickness - Thickness of the interface con
     /**
      * Generates bolt circle connectors.
      * @param {Object} opts - Options for the model
-Z     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.radius
@@ -998,7 +980,6 @@ Z     * @param {number} opts.interfaceThickness - Thickness of the interface con
     /**
      * Generates pieces connected by a row of dovetails.
      * @param {Object} opts - Options for the model
-Z     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.radius
@@ -1099,7 +1080,6 @@ Z     * @param {number} opts.interfaceThickness - Thickness of the interface con
     /**
      * Generates pieces connected by a row of tabs.
      * @param {Object} opts - Options for the model
-Z     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.radius
@@ -1200,7 +1180,6 @@ Z     * @param {number} opts.interfaceThickness - Thickness of the interface con
     /**
      * Generates pieces connected by a row of right-angle tabs.
      * @param {Object} opts - Options for the model
-Z     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
      * @param {number} opts.radius

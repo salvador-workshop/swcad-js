@@ -88,14 +88,7 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
             }
         }
 
-        /** Options used by SW models */
-        const standardOpts = {
-            interfaceThickness: standards.INTERFACE_THICKNESS,
-        }
-
-        /** Computed values for option defaults */
         const defaultOpts = {
-            ...standardOpts,
             size: defaultValues.dims.size,
             height: defaultValues.dims.height,
             radius: defaultValues.dims.radius,
@@ -132,12 +125,7 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
             topBitOpts = defaults.opts.topBitOpts,
             bottomBit = defaults.opts.bottomBit,
             bottomBitOpts = defaults.opts.bottomBitOpts,
-            interfaceThickness = defaults.opts.interfaceThickness,
         } = opts
-
-        const stdOpts = {
-            interfaceThickness,
-        }
 
         const initOpts = {
             size,
@@ -145,9 +133,7 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
             topBitOpts,
             bottomBit,
             bottomBitOpts,
-            ...stdOpts,
         }
-
 
         return initOpts
     }
@@ -171,12 +157,8 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
             topBitOpts = defaults.opts.topBitOpts,
             bottomBit = defaults.opts.bottomBit,
             bottomBitOpts = defaults.opts.bottomBitOpts,
-            interfaceThickness = defaults.opts.interfaceThickness,
         } = opts
 
-        const stdOpts = {
-            interfaceThickness,
-        }
 
         const initOpts = {
             height,
@@ -185,7 +167,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
             topBitOpts,
             bottomBit,
             bottomBitOpts,
-            ...stdOpts,
         }
 
 
@@ -214,7 +195,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
             topBitOpts,
             bottomBit,
             bottomBitOpts,
-            interfaceThickness,
         } = opts
 
         /* ----------------------------------------
@@ -244,7 +224,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
             radius,
             topBit: topBitOpts,
             bottomBit: bottomBitOpts,
-            interfaceThickness,
         }
 
         /** Various key points for model */
@@ -382,7 +361,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a routed cuboid with the given options for top and bottom edges.
      * @param {Object} opts - Options for the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number[]} opts.size
      * @param {string} opts.topBit
      * @param {Object} opts.topBitOpts
@@ -446,7 +424,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a routed elliptical cylinder with the given options for top and bottom edges.
      * @param {Object} opts - Options for the model
-     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.height
      * @param {number[]} opts.radius
      * @param {string} opts.topBit
