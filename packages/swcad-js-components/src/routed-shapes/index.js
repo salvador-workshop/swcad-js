@@ -31,10 +31,6 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
     } = swcadJs.calcs
 
     const {
-        standards,
-    } = swcadJs.data
-
-    const {
         beadsBits: beadsBits2d,
     } = swcadJs.profiles
 

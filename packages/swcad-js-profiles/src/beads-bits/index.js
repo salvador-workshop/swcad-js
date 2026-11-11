@@ -29,10 +29,6 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
         transform,
     } = swcadJs.calcs
 
-    const {
-        standards,
-    } = swcadJs.data
-
 
     //==============================================================================
 

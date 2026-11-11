@@ -19,9 +19,6 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
         geometry,
     } = swcadJs.calcs
 
-    const {
-        standards,
-    } = swcadJs.data
 
     /**
      * Builds default values and opts for the model

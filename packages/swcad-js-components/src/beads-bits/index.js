@@ -19,7 +19,6 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
 
     const {
         constants,
-        standards,
     } = swcadJs.data
 
     const {
