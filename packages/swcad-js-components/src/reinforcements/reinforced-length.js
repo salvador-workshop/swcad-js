@@ -396,7 +396,7 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
     * ------------------------------------- */
 
     /**
-     * Light reinforcement length
+     * Generates a light reinforcement length
      * @param {Object} opts - Options for the model
      * @param {number[]} opts.size
      * @param {number} opts.unitLength
@@ -477,7 +477,7 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Medium reinforcement length
+     * Generates a medium reinforcement length
      * @param {Object} opts - Options for the model
      * @param {number[]} opts.size
      * @param {number} opts.unitLength
@@ -558,7 +558,7 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Heavy reinforcement length
+     * Generates a heavy reinforcement length
      * @param {Object} opts - Options for the model
      * @param {number[]} opts.size
      * @param {number} opts.unitLength
@@ -639,7 +639,7 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Modelling functions that generate reinforcement reinforcedLength
+     * Modelling functions that generate reinforcement lengths
      * @namespace reinforcedLength
      * @memberof components.reinforcements
      */
