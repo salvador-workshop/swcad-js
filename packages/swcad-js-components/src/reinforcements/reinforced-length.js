@@ -442,7 +442,11 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
 
     /**
      * Light reinforcement length
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {number[]} opts.size
+     * @param {number} opts.unitLength
+     * @param {number} opts.baseThickness
+     * @param {number} opts.reinforcementThickness
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.reinforcements.reinforcedLength
      */
@@ -480,6 +484,11 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
             )
         }
 
+        const lightReinfLength = intersect(
+            position.ctr(lightReinfLengthAssembly),
+            outputKeepBox({ size })
+        )
+
         // End pieces
         const endPiece = cuboid({
             size: [
@@ -488,13 +497,22 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
                 size[2]
             ]
         })
-
-        const lightReinfLength = intersect(
-            position.ctr(lightReinfLengthAssembly),
-            outputKeepBox({ size })
+        const endPiece1 = align(
+            {
+                modes: ['min', 'center', 'center'],
+                relativeTo: [size[0] / -2, 0, 0]
+            },
+            endPiece
+        )
+        const endPiece2 = align(
+            {
+                modes: ['max', 'center', 'center'],
+                relativeTo: [size[0] / 2, 0, 0]
+            },
+            endPiece
         )
 
-        const mainModel = lightReinfLength
+        const mainModel = union(lightReinfLength, endPiece1, endPiece2)
         const modelParts = {
             mainModel,
             unit: lightLengthUnitBase,
@@ -505,7 +523,11 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
 
     /**
      * Medium reinforcement length
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {number[]} opts.size
+     * @param {number} opts.unitLength
+     * @param {number} opts.baseThickness
+     * @param {number} opts.reinforcementThickness
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.reinforcements.reinforcedLength
      */
@@ -543,6 +565,11 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
             )
         }
 
+        const mediumReinfLength = intersect(
+            position.ctr(mediumReinfLengthAssembly),
+            outputKeepBox({ size })
+        )
+
         // End pieces
         const endPiece = cuboid({
             size: [
@@ -551,13 +578,22 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
                 size[2]
             ]
         })
-
-        const mediumReinfLength = intersect(
-            position.ctr(mediumReinfLengthAssembly),
-            outputKeepBox({ size })
+        const endPiece1 = align(
+            {
+                modes: ['min', 'center', 'center'],
+                relativeTo: [size[0] / -2, 0, 0]
+            },
+            endPiece
+        )
+        const endPiece2 = align(
+            {
+                modes: ['max', 'center', 'center'],
+                relativeTo: [size[0] / 2, 0, 0]
+            },
+            endPiece
         )
 
-        const mainModel = mediumReinfLength
+        const mainModel = union(mediumReinfLength, endPiece1, endPiece2)
         const modelParts = {
             mainModel,
             unit: mediumLengthUnitBase
@@ -568,7 +604,11 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
 
     /**
      * Heavy reinforcement length
-     * @param {*} opts 
+     * @param {Object} opts - Options for the model
+     * @param {number[]} opts.size
+     * @param {number} opts.unitLength
+     * @param {number} opts.baseThickness
+     * @param {number} opts.reinforcementThickness
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.reinforcements.reinforcedLength
      */
@@ -606,6 +646,11 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
             )
         }
 
+        const heavyReinfLength = intersect(
+            position.ctr(heavyReinfLengthAssembly),
+            outputKeepBox({ size })
+        )
+
         // End pieces
         const endPiece = cuboid({
             size: [
@@ -614,13 +659,22 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
                 size[2]
             ]
         })
-
-        const heavyReinfLength = intersect(
-            position.ctr(heavyReinfLengthAssembly),
-            outputKeepBox({ size })
+        const endPiece1 = align(
+            {
+                modes: ['min', 'center', 'center'],
+                relativeTo: [size[0] / -2, 0, 0]
+            },
+            endPiece
+        )
+        const endPiece2 = align(
+            {
+                modes: ['max', 'center', 'center'],
+                relativeTo: [size[0] / 2, 0, 0]
+            },
+            endPiece
         )
 
-        const mainModel = heavyReinfLength
+        const mainModel = union(heavyReinfLength, endPiece1, endPiece2)
         const modelParts = {
             mainModel,
             unit: heavyLengthUnitBase
