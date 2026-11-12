@@ -8,8 +8,10 @@ const reinforcementsModule = require('./reinforcements')
 const routedShapesModule = require('./routed-shapes')
 const textModule = require('./text')
 
+const reinforcedJoistLineModule = require('./reinforcements/reinforced-joist-line')
 const reinforcementBracketsModule = require('./reinforcements/brackets')
 const reinforcedLengthModule = require('./reinforcements/reinforced-length')
+const reinforcedLineModule = require('./reinforcements/reinforced-line')
 
 const componentsInit = ({ jscad, swcadJs }) => {
     const beadsBits = beadsBitsModule.init({ jscad, swcadJs })
@@ -23,20 +25,28 @@ const componentsInit = ({ jscad, swcadJs }) => {
     const routedShapes = routedShapesModule.init({ jscad, swcadJs: preLib })
     const mesh = meshModule.init({ jscad, swcadJs: preLib })
     const componentLine = componentLineModule.init({ jscad, swcadJs: preLib })
-    const setupReinforcements = reinforcementsModule.init({ jscad, swcadJs: preLib })
+    const initReinforcements = reinforcementsModule.init({ jscad, swcadJs: preLib })
 
     preLib.components = {
         beadsBits,
         routedShapes,
         mesh,
         componentLine,
-        reinforcements: setupReinforcements,
+        reinforcements: initReinforcements,
     }
+
+    const setupReinforcements = {
+        ...initReinforcements,
+        reinforcedJoistLine: reinforcedJoistLineModule.init({ jscad, swcadJs: preLib }),
+        brackets: reinforcementBracketsModule.init({ jscad, swcadJs: preLib }),
+        reinforcedLength: reinforcedLengthModule.init({ jscad, swcadJs: preLib }),
+    }
+
+    preLib.components.reinforcements = setupReinforcements
 
     const finalReinforcements = {
         ...setupReinforcements,
-        brackets: reinforcementBracketsModule.init({ jscad, swcadJs: preLib }),
-        reinforcedLength: reinforcedLengthModule.init({ jscad, swcadJs: preLib }),
+        reinforcedLine: reinforcedLineModule.init({ jscad, swcadJs: preLib }),
     }
 
     /**
