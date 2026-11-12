@@ -76,15 +76,18 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
      * @access private
      */
     const reinforcedLineDefaults = () => {
+        const defInterfaceThickness = standards.INTERFACE_THICKNESS
+
         const defaultValues = {
             constants: {
-                interfaceThickness: standards.INTERFACE_THICKNESS,
+                interfaceThickness: defInterfaceThickness,
             },
             opts: {},
             dims: {
                 width: math.inchesToMm(5 / 16),
                 height: math.inchesToMm(1 / 8),
                 unitLength: math.inchesToMm(1),
+                endOffset: 0,
                 baseThickness: defInterfaceThickness,
                 reinforcementThickness: 1.125,
             },
@@ -101,6 +104,7 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
             endPt: defaultValues.points.endPt,
             width: defaultValues.dims.width,
             height: defaultValues.dims.height,
+            endOffset: defaultValues.dims.endOffset,
             unitLength: defaultValues.dims.unitLength,
             baseThickness: defaultValues.dims.baseThickness,
             reinforcementThickness: defaultValues.dims.reinforcementThickness,
@@ -133,6 +137,7 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
             endPt = defaults.opts.endPt,
             width = defaults.opts.width,
             height = defaults.opts.height,
+            endOffset = defaults.opts.endOffset,
             unitLength = defaults.opts.unitLength,
             baseThickness = defaults.opts.baseThickness,
             reinforcementThickness = defaults.opts.reinforcementThickness,
@@ -143,6 +148,7 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
             endPt,
             width,
             height,
+            endOffset,
             unitLength,
             baseThickness,
             reinforcementThickness,
@@ -173,6 +179,7 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
             endPt,
             width,
             height,
+            endOffset,
             unitLength,
             baseThickness,
             reinforcementThickness,
@@ -209,6 +216,7 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
         const modelDims = {
             width,
             height,
+            endOffset,
             unitLength,
             baseThickness,
             reinforcementThickness,
@@ -267,6 +275,7 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
         const {
             width,
             height,
+            endOffset,
             unitLength,
             baseThickness,
             reinforcementThickness,
@@ -281,7 +290,22 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
             midPt,
         } = modelProperties.points
 
-        const mainModel = cuboid()
+        const rOpts = {
+            size: [
+                offsetLineLength,
+                width,
+                height,
+            ],
+            unitLength,
+            baseThickness,
+            reinforcementThickness,
+        }
+        const lightReinfLength = reinforcements.reinforcedLength.lightReinforcedLength(rOpts)[0]
+
+        let adjLightReinfLength = rotate([0, 0, lineComponentAngle], lightReinfLength)
+        adjLightReinfLength = translate(midPt, adjLightReinfLength)
+
+        const mainModel = adjLightReinfLength
         const modelParts = {
             mainModel,
         }
@@ -303,6 +327,7 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
         const {
             width,
             height,
+            endOffset,
             unitLength,
             baseThickness,
             reinforcementThickness,
@@ -317,7 +342,22 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
             midPt,
         } = modelProperties.points
 
-        const mainModel = cuboid()
+        const rOpts = {
+            size: [
+                offsetLineLength,
+                width,
+                height,
+            ],
+            unitLength,
+            baseThickness,
+            reinforcementThickness,
+        }
+        const mediumReinfLength = reinforcements.reinforcedLength.mediumReinforcedLength(rOpts)[0]
+
+        let adjMediumReinfLength = rotate([0, 0, lineComponentAngle], mediumReinfLength)
+        adjMediumReinfLength = translate(midPt, adjMediumReinfLength)
+
+        const mainModel = adjMediumReinfLength
         const modelParts = {
             mainModel,
         }
@@ -339,6 +379,7 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
         const {
             width,
             height,
+            endOffset,
             unitLength,
             baseThickness,
             reinforcementThickness,
@@ -353,7 +394,22 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
             midPt,
         } = modelProperties.points
 
-        const mainModel = cuboid()
+        const rOpts = {
+            size: [
+                offsetLineLength,
+                width,
+                height,
+            ],
+            unitLength,
+            baseThickness,
+            reinforcementThickness,
+        }
+        const heavyReinfLength = reinforcements.reinforcedLength.heavyReinforcedLength(rOpts)[0]
+
+        let adjHeavyReinfLength = rotate([0, 0, lineComponentAngle], heavyReinfLength)
+        adjHeavyReinfLength = translate(midPt, adjHeavyReinfLength)
+
+        const mainModel = adjHeavyReinfLength
         const modelParts = {
             mainModel,
         }

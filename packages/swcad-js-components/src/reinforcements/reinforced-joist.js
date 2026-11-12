@@ -8,6 +8,7 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
     const {
         align,
         translate,
+        rotate,
     } = jscad.transforms
 
     const {
@@ -18,6 +19,8 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
     const {
         hull,
     } = jscad.hulls
+
+    const { TAU } = jscad.maths.constants
 
     const {
         math,
@@ -173,6 +176,144 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
 
     //------------------------------------------------------------------------------
 
+    /* ----------------------------------------
+    * Modelling, Component/Assembly Modules
+    * ------------------------------------- */
+
+    const framePanelWebs = (modelProps) => {
+        const {
+            reinforcementLevel
+        } = modelProps.opts
+
+        const {
+            lengthUnits,
+            unitLength,
+            length,
+            interfaceThickness,
+            width,
+            edgeWidth,
+        } = modelProps.dims
+
+        const {
+            interfaceProfileBeads
+        } = modelProps.components
+
+        const panelPtsWidth = width - edgeWidth
+
+        const braceUnitSize = [
+            panelPtsWidth,
+            unitLength
+        ]
+        const braceUnitMidpoint = [
+            braceUnitSize[0] / 2,
+            braceUnitSize[1] / 2,
+        ]
+        const braceUnitCentrePoints = []
+        for (let idx = 0; idx < lengthUnits; idx++) {
+            braceUnitCentrePoints.push([
+                braceUnitMidpoint[0],
+                unitLength * idx + braceUnitMidpoint[1],
+                0,
+            ])
+        }
+        let braceUnitPts = [
+            [0, 0, 0],
+            [braceUnitSize[0], braceUnitSize[1], 0],
+            [braceUnitSize[0], 0, 0],
+            [0, braceUnitSize[1], 0],
+        ]
+
+        const supportPts = braceUnitPts.map(buPt => {
+            return translate(buPt, interfaceProfileBeads.md)
+        })
+        const supportLine1 = hull(supportPts[0], supportPts[1])
+        const supportLine2 = hull(supportPts[2], supportPts[3])
+        let diagonalSupports = supportLine1
+        if (reinforcementLevel > 1) {
+            diagonalSupports = union(supportLine1, supportLine2)
+        }
+
+        const lightSupportPts = [
+            [0, 0, 0],
+            [braceUnitSize[0], 0, 0],
+            [0, braceUnitSize[1], 0],
+            [braceUnitSize[0], braceUnitSize[1], 0],
+            [0, braceUnitMidpoint[1], 0],
+            [braceUnitSize[0], braceUnitMidpoint[1], 0],
+        ]
+        let lightSupportProfilePts = lightSupportPts.map(lsPts => {
+            return translate(lsPts, interfaceProfileBeads.sm)
+        })
+        const lightSupportLine1 = hull(lightSupportProfilePts[0], lightSupportProfilePts[1])
+        const lightSupportLine2 = hull(lightSupportProfilePts[2], lightSupportProfilePts[3])
+        const lightSupportLine3 = hull(lightSupportProfilePts[4], lightSupportProfilePts[5])
+        let lightSupports = union(
+            lightSupportLine1,
+            lightSupportLine2,
+        )
+        if (reinforcementLevel > 2) {
+
+            lightSupports = union(
+                lightSupports,
+                lightSupportLine3,
+            )
+        }
+
+        const braceUnit = union(
+            diagonalSupports,
+            lightSupports,
+        )
+        let braceUnits = braceUnitCentrePoints.map(bucPt => {
+            return position.ctr(braceUnit, bucPt)
+        })
+        braceUnits = union(...braceUnits)
+
+        const edgePts = [
+            [0, 0, 0],
+            [0, length, 0],
+            [braceUnitSize[0], 0, 0],
+            [braceUnitSize[0], length, 0],
+        ]
+        const edgeProfilePts = edgePts.map(edgePt => {
+            return position.ctr(interfaceProfileBeads.lg, edgePt)
+        })
+
+        const edge1 = hull(edgeProfilePts[0], edgeProfilePts[1])
+        const edge2 = hull(edgeProfilePts[2], edgeProfilePts[3])
+
+        const joistEdges = union(
+            edge1,
+            edge2,
+        )
+
+        let endCap = cuboid({ size: [width, edgeWidth, interfaceThickness] })
+        endCap = align({
+            modes: ['min', 'min', 'center'],
+            relativeTo: [edgeWidth / -2, 0, 0]
+        }, endCap)
+        const endCaps = union(
+            endCap,
+            translate([0, length - edgeWidth, 0], endCap)
+        )
+
+        const joistWebs = union(
+            position.ctr(joistEdges),
+            position.ctr(braceUnits),
+            position.ctr(endCaps),
+        )
+
+        const keepArea = cuboid({
+            size: [
+                width,
+                length,
+                interfaceThickness * 2,
+            ]
+        })
+
+        const websAssembly = intersect(joistWebs, keepArea)
+        
+        return rotate([0, 0, TAU / 4], websAssembly)
+    }
 
     /**
      * Generates an open web joist with the given options for reinforcement styles.
@@ -206,168 +347,15 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
             unitLength,
         }
 
-
         const modelProperties = reinforcedJoistProps(inOpts)
-
-        /* ----------------------------------------
-         * Modelling, Component/Assembly Modules
-         * ------------------------------------- */
-
-
-        const framePanelWebs = (modelProps) => {
-            const {
-                reinforcementLevel
-            } = modelProps.opts
-
-            const {
-                lengthUnits,
-                unitLength,
-                length,
-                interfaceThickness,
-                width,
-                edgeWidth,
-            } = modelProps.dims
-
-            const {
-                interfaceProfileBeads
-            } = modelProps.components
-
-            const panelPtsWidth = width - edgeWidth
-
-            const braceUnitSize = [
-                panelPtsWidth,
-                unitLength
-            ]
-            const braceUnitMidpoint = [
-                braceUnitSize[0] / 2,
-                braceUnitSize[1] / 2,
-            ]
-            const braceUnitCentrePoints = []
-            for (let idx = 0; idx < lengthUnits; idx++) {
-                braceUnitCentrePoints.push([
-                    braceUnitMidpoint[0],
-                    unitLength * idx + braceUnitMidpoint[1],
-                    0,
-                ])
-            }
-            let braceUnitPts = [
-                [0, 0, 0],
-                [braceUnitSize[0], braceUnitSize[1], 0],
-                [braceUnitSize[0], 0, 0],
-                [0, braceUnitSize[1], 0],
-            ]
-
-            const supportPts = braceUnitPts.map(buPt => {
-                return translate(buPt, interfaceProfileBeads.md)
-            })
-            const supportLine1 = hull(supportPts[0], supportPts[1])
-            const supportLine2 = hull(supportPts[2], supportPts[3])
-            let diagonalSupports = supportLine1
-            if (reinforcementLevel > 1) {
-                diagonalSupports = union(supportLine1, supportLine2)
-            }
-
-            const lightSupportPts = [
-                [0, 0, 0],
-                [braceUnitSize[0], 0, 0],
-                [0, braceUnitSize[1], 0],
-                [braceUnitSize[0], braceUnitSize[1], 0],
-                [0, braceUnitMidpoint[1], 0],
-                [braceUnitSize[0], braceUnitMidpoint[1], 0],
-            ]
-            let lightSupportProfilePts = lightSupportPts.map(lsPts => {
-                return translate(lsPts, interfaceProfileBeads.sm)
-            })
-            const lightSupportLine1 = hull(lightSupportProfilePts[0], lightSupportProfilePts[1])
-            const lightSupportLine2 = hull(lightSupportProfilePts[2], lightSupportProfilePts[3])
-            const lightSupportLine3 = hull(lightSupportProfilePts[4], lightSupportProfilePts[5])
-            let lightSupports = union(
-                lightSupportLine1,
-                lightSupportLine2,
-            )
-            if (reinforcementLevel > 2) {
-
-                lightSupports = union(
-                    lightSupports,
-                    lightSupportLine3,
-                )
-            }
-
-            const braceUnit = union(
-                diagonalSupports,
-                lightSupports,
-            )
-            let braceUnits = braceUnitCentrePoints.map(bucPt => {
-                return position.ctr(braceUnit, bucPt)
-            })
-            braceUnits = union(...braceUnits)
-
-            const edgePts = [
-                [0, 0, 0],
-                [0, length, 0],
-                [braceUnitSize[0], 0, 0],
-                [braceUnitSize[0], length, 0],
-            ]
-            const edgeProfilePts = edgePts.map(edgePt => {
-                return position.ctr(interfaceProfileBeads.lg, edgePt)
-            })
-
-            const edge1 = hull(edgeProfilePts[0], edgeProfilePts[1])
-            const edge2 = hull(edgeProfilePts[2], edgeProfilePts[3])
-
-            const joistEdges = union(
-                edge1,
-                edge2,
-            )
-
-            let endCap = cuboid({ size: [width, edgeWidth, interfaceThickness] })
-            endCap = align({
-                modes: ['min', 'min', 'center'],
-                relativeTo: [edgeWidth / -2, 0, 0]
-            }, endCap)
-            const endCaps = union(
-                endCap,
-                translate([0, length - edgeWidth, 0], endCap)
-            )
-
-            const joistWebs = union(
-                position.ctr(joistEdges),
-                position.ctr(braceUnits),
-                position.ctr(endCaps),
-            )
-
-            const keepArea = cuboid({
-                size: [
-                    width,
-                    length,
-                    interfaceThickness * 2,
-                ]
-            })
-
-            return intersect(joistWebs, keepArea)
-        }
-
-
 
         /* ----------------------------------------
          * Complete Assembly
          * ------------------------------------- */
 
-        /** Final Assembly */
-        const finalAssembly = (modelProps) => {
-            fPanelWebs = framePanelWebs(modelProps)
-
-            return fPanelWebs
-        }
-
-        /* ----------------------------------------
-         * Outputs
-         * ------------------------------------- */
-
         let fPanelWebs = framePanelWebs(modelProperties)
 
-        let mainModel = finalAssembly(modelProperties)
-
+        let mainModel = fPanelWebs
         let modelParts = {
             framePanelWebs: fPanelWebs,
         }

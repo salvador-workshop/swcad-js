@@ -255,7 +255,11 @@ const reinforcedJoistLineInit = ({ jscad, swcadJs }) => {
     * ------------------------------------- */
 
     /** Sub-component 01 */
-    const subcomponent1 = (modelProps) => {
+    const reinfJoist = (modelProps) => {
+        const {
+            reinforcementLevel,
+        } = modelProps.opts
+
         const {
             width,
             endOffset,
@@ -272,60 +276,21 @@ const reinforcedJoistLineInit = ({ jscad, swcadJs }) => {
             midPt,
         } = modelProps.points
 
-        return sphere()
-    }
-
-    /** Sub-component 02 */
-    const subcomponent2 = (modelProps) => {
-        const {
+        const rJoistOpts = {
+            length: offsetLineLength,
             width,
-            endOffset,
             unitLength,
+            reinforcementLevel,
             interfaceThickness,
-            lineLength,
-            offsetLineLength,
-            lineComponentAngle,
-        } = modelProps.dims
+        }
+        const rJoist = reinforcements.reinforcedJoist(rJoistOpts)[0]
 
-        const {
-            startPt,
-            endPt,
-            midPt,
-        } = modelProps.points
-
-        return cube()
+        return rJoist
     }
 
     /* ----------------------------------------
      * Complete Assembly
      * ------------------------------------- */
-
-    /** Final Assembly */
-    const finalAssembly = (modelProps) => {
-        const {
-            width,
-            endOffset,
-            unitLength,
-            interfaceThickness,
-            lineLength,
-            offsetLineLength,
-            lineComponentAngle,
-        } = modelProps.dims
-
-        const {
-            startPt,
-            endPt,
-            midPt,
-        } = modelProps.points
-
-        let subComp1 = subcomponent1(modelProps)
-        let subComp2 = subcomponent2(modelProps)
-
-        return union(
-            subComp1,
-            subComp2,
-        )
-    }
 
     /**
      * Generates a new model
@@ -362,14 +327,15 @@ const reinforcedJoistLineInit = ({ jscad, swcadJs }) => {
          * Outputs
          * ------------------------------------- */
 
-        let subComp1 = subcomponent1(modelProperties)
-        let subComp2 = subcomponent2(modelProperties)
+        const reinforcedJoist = reinfJoist(modelProperties)
 
-        let mainModel = finalAssembly(modelProperties)
+        let adjJoist = rotate([0, 0, lineComponentAngle], reinforcedJoist)
+        adjJoist = translate(midPt, adjJoist)
+
+        let mainModel = adjJoist
 
         let modelParts = {
-            subcomponent1: subComp1,
-            subcomponent2: subComp2,
+            reinforcedJoist,
         }
 
         return [mainModel, modelParts, modelProperties]
