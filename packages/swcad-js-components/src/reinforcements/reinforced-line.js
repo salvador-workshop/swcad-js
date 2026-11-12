@@ -57,7 +57,12 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
 
     const {
         math,
+        geometry,
     } = swcadJs.calcs
+
+    const {
+        reinforcements,
+    } = swcadJs.components
 
 
     //==============================================================================
@@ -77,25 +82,28 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
             },
             opts: {},
             dims: {
-                size: [
-                    math.inchesToMm(2),
-                    math.inchesToMm(4),
-                    math.inchesToMm(1),
-                ],
+                width: math.inchesToMm(5 / 16),
+                height: math.inchesToMm(1 / 8),
+                unitLength: math.inchesToMm(1),
+                baseThickness: defInterfaceThickness,
+                reinforcementThickness: 1.125,
             },
-            points: {},
+            points: {
+                startPt: [0, 0],
+                endPt: [math.inchesToMm(3), math.inchesToMm(4)],
+            },
             components: {},
-            types: {
-                default: { id: 'default', desc: 'Default model' },
-                alt: { id: 'alt', desc: 'Alternate model' },
-            },
+            types: {},
         }
 
         const defaultOpts = {
-            fitGap: standards.FIT_GAP,
-            size: defaultValues.dims.size,
-            type: defaultValues.types.default.id,
-            interfaceThickness: defaultValues.constants.interfaceThickness,
+            startPt: defaultValues.points.startPt,
+            endPt: defaultValues.points.endPt,
+            width: defaultValues.dims.width,
+            height: defaultValues.dims.height,
+            unitLength: defaultValues.dims.unitLength,
+            baseThickness: defaultValues.dims.baseThickness,
+            reinforcementThickness: defaultValues.dims.reinforcementThickness,
         }
 
         return {
@@ -121,17 +129,23 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
 
         // User options
         const {
-            size = defaults.opts.size,
-            type = defaults.opts.type,
-            interfaceThickness = defaults.opts.interfaceThickness,
-            fitGap = defaults.opts.fitGap,
+            startPt = defaults.opts.startPt,
+            endPt = defaults.opts.endPt,
+            width = defaults.opts.width,
+            height = defaults.opts.height,
+            unitLength = defaults.opts.unitLength,
+            baseThickness = defaults.opts.baseThickness,
+            reinforcementThickness = defaults.opts.reinforcementThickness,
         } = opts
 
         const initOpts = {
-            size,
-            type,
-            interfaceThickness,
-            fitGap,
+            startPt,
+            endPt,
+            width,
+            height,
+            unitLength,
+            baseThickness,
+            reinforcementThickness,
         }
 
         console.log('reinforcedLineOpts() -- initOpts', initOpts)
@@ -155,19 +169,31 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
         console.log('reinforcedLineProps() -- prop opts', opts)
 
         const {
-            size,
-            type,
-            interfaceThickness,
-            fitGap,
+            startPt,
+            endPt,
+            width,
+            height,
+            unitLength,
+            baseThickness,
+            reinforcementThickness,
         } = opts
 
         /* ----------------------------------------
         * Prop calculations
         * ------------------------------------- */
 
-        const width = size[0]
-        const depth = size[1]
-        const height = size[2]
+        const lineComponentDetails = geometry.lines.lineComponentDetails({
+            startPt,
+            endPt,
+            endOffset,
+        })
+
+        const {
+            midPt,
+            lineLength,
+            offsetLineLength,
+            lineComponentAngle,
+        } = lineComponentDetails
 
         /* ----------------------------------------
         * Preparing Model Properties, Dimensions
@@ -177,22 +203,26 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
         const modelConstants = defaults.vals.constants
 
         /** Derived user options for the model */
-        const modelOpts = {
-            type,
-        }
+        const modelOpts = defaults.vals.opts
 
         /** Various dimensions for model */
         const modelDims = {
-            size,
             width,
-            depth,
             height,
-            interfaceThickness,
-            fitGap,
+            unitLength,
+            baseThickness,
+            reinforcementThickness,
+            lineLength,
+            offsetLineLength,
+            lineComponentAngle,
         }
 
         /** Various key points for model */
-        const modelPoints = defaults.vals.points
+        const modelPoints = {
+            startPt,
+            endPt,
+            midPt,
+        }
 
         /** Components used by model */
         const modelComponents = defaults.vals.components
@@ -229,10 +259,27 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.reinforcements.reinforcedLine
      */
-    const model1 = (opts) => {
+    const lightReinforcedLine = (opts) => {
         const defaults = reinforcedLineDefaults()
         const initOpts = reinforcedLineOpts(opts)
         const modelProperties = reinforcedLineProps(initOpts)
+
+        const {
+            width,
+            height,
+            unitLength,
+            baseThickness,
+            reinforcementThickness,
+            lineLength,
+            offsetLineLength,
+            lineComponentAngle,
+        } = modelProperties.dims
+
+        const {
+            startPt,
+            endPt,
+            midPt,
+        } = modelProperties.points
 
         const mainModel = cuboid()
         const modelParts = {
@@ -248,10 +295,27 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.reinforcements.reinforcedLine
      */
-    const model2 = (opts) => {
+    const mediumReinforcedLine = (opts) => {
         const defaults = reinforcedLineDefaults()
         const initOpts = reinforcedLineOpts(opts)
         const modelProperties = reinforcedLineProps(initOpts)
+
+        const {
+            width,
+            height,
+            unitLength,
+            baseThickness,
+            reinforcementThickness,
+            lineLength,
+            offsetLineLength,
+            lineComponentAngle,
+        } = modelProperties.dims
+
+        const {
+            startPt,
+            endPt,
+            midPt,
+        } = modelProperties.points
 
         const mainModel = cuboid()
         const modelParts = {
@@ -267,48 +331,27 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.reinforcements.reinforcedLine
      */
-    const model3 = (opts) => {
+    const heavyReinforcedLine = (opts) => {
         const defaults = reinforcedLineDefaults()
         const initOpts = reinforcedLineOpts(opts)
         const modelProperties = reinforcedLineProps(initOpts)
 
-        const mainModel = cuboid()
-        const modelParts = {
-            mainModel,
-        }
+        const {
+            width,
+            height,
+            unitLength,
+            baseThickness,
+            reinforcementThickness,
+            lineLength,
+            offsetLineLength,
+            lineComponentAngle,
+        } = modelProperties.dims
 
-        return [mainModel, modelParts, modelProperties]
-    }
-
-    /**
-     * ...
-     * @param {*} opts 
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof components.reinforcements.reinforcedLine
-     */
-    const model4 = (opts) => {
-        const defaults = reinforcedLineDefaults()
-        const initOpts = reinforcedLineOpts(opts)
-        const modelProperties = reinforcedLineProps(initOpts)
-
-        const mainModel = cuboid()
-        const modelParts = {
-            mainModel,
-        }
-
-        return [mainModel, modelParts, modelProperties]
-    }
-
-    /**
-     * ...
-     * @param {*} opts 
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof components.reinforcements.reinforcedLine
-     */
-    const model5 = (opts) => {
-        const defaults = reinforcedLineDefaults()
-        const initOpts = reinforcedLineOpts(opts)
-        const modelProperties = reinforcedLineProps(initOpts)
+        const {
+            startPt,
+            endPt,
+            midPt,
+        } = modelProperties.points
 
         const mainModel = cuboid()
         const modelParts = {
@@ -326,11 +369,9 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
     return {
         defaults: reinforcedLineDefaults,
         props: reinforcedLineProps,
-        model1,
-        model2,
-        model3,
-        model4,
-        model5,
+        lightReinforcedLine,
+        mediumReinforcedLine,
+        heavyReinforcedLine,
     }
 }
 

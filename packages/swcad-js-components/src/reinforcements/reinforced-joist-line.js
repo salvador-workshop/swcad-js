@@ -57,7 +57,12 @@ const reinforcedJoistLineInit = ({ jscad, swcadJs }) => {
 
     const {
         math,
+        geometry,
     } = swcadJs.calcs
+
+    const {
+        reinforcements,
+    } = swcadJs.components
 
 
     //==============================================================================
@@ -67,7 +72,7 @@ const reinforcedJoistLineInit = ({ jscad, swcadJs }) => {
      * Builds default values and opts for the model
      * @param {*} opts 
      * @returns default values and opts
-     * @memberof components.reinforcements.reinforcedJoistLine
+     * @memberof components.reinforcements
      * @access private
      */
     const reinforcedJoistLineDefaults = () => {
@@ -75,26 +80,29 @@ const reinforcedJoistLineInit = ({ jscad, swcadJs }) => {
             constants: {
                 interfaceThickness: standards.INTERFACE_THICKNESS,
             },
-            opts: {},
+            opts: {
+                reinforcementLevel: 1,
+            },
             dims: {
-                size: [
-                    math.inchesToMm(2),
-                    math.inchesToMm(4),
-                    math.inchesToMm(1),
-                ],
+                width: math.inchesToMm(1.125),
+                unitLength: math.inchesToMm(1),
+                endOffset: 0,
             },
-            points: {},
+            points: {
+                startPt: [0, 0],
+                endPt: [math.inchesToMm(3), math.inchesToMm(4)],
+            },
             components: {},
-            types: {
-                default: { id: 'default', desc: 'Default model' },
-                alt: { id: 'alt', desc: 'Alternate model' },
-            },
+            types: {},
         }
 
         const defaultOpts = {
-            fitGap: standards.FIT_GAP,
-            size: defaultValues.dims.size,
-            type: defaultValues.types.default.id,
+            startPt: defaultValues.points.startPt,
+            endPt: defaultValues.points.endPt,
+            width: defaultValues.dims.width,
+            endOffset: defaultValues.dims.endOffset,
+            unitLength: defaultValues.dims.unitLength,
+            reinforcementLevel: defaultValues.opts.reinforcementLevel,
             interfaceThickness: defaultValues.constants.interfaceThickness,
         }
 
@@ -112,7 +120,7 @@ const reinforcedJoistLineInit = ({ jscad, swcadJs }) => {
      * Initializes options with user input
      * @param {*} opts 
      * @returns model properties
-     * @memberof components.reinforcements.reinforcedJoistLine
+     * @memberof components.reinforcements
      * @access private
      */
     const reinforcedJoistLineOpts = (opts) => {
@@ -121,17 +129,23 @@ const reinforcedJoistLineInit = ({ jscad, swcadJs }) => {
 
         // User options
         const {
-            size = defaults.opts.size,
-            type = defaults.opts.type,
+            startPt = defaults.opts.startPt,
+            endPt = defaults.opts.endPt,
+            width = defaults.opts.width,
+            endOffset = defaults.opts.endOffset,
+            unitLength = defaults.opts.unitLength,
+            reinforcementLevel = defaults.opts.reinforcementLevel,
             interfaceThickness = defaults.opts.interfaceThickness,
-            fitGap = defaults.opts.fitGap,
         } = opts
 
         const initOpts = {
-            size,
-            type,
+            startPt,
+            endPt,
+            width,
+            endOffset,
+            unitLength,
+            reinforcementLevel,
             interfaceThickness,
-            fitGap,
         }
 
         console.log('reinforcedJoistLineOpts() -- initOpts', initOpts)
@@ -147,7 +161,7 @@ const reinforcedJoistLineInit = ({ jscad, swcadJs }) => {
      * Builds model properties from the given opts
      * @param {*} opts 
      * @returns model properties
-     * @memberof components.reinforcements.reinforcedJoistLine
+     * @memberof components.reinforcements
      * @access private
      */
     const reinforcedJoistLineProps = (opts) => {
@@ -155,19 +169,31 @@ const reinforcedJoistLineInit = ({ jscad, swcadJs }) => {
         console.log('reinforcedJoistLineProps() -- prop opts', opts)
 
         const {
-            size,
-            type,
+            startPt,
+            endPt,
+            width,
+            endOffset,
+            unitLength,
+            reinforcementLevel,
             interfaceThickness,
-            fitGap,
         } = opts
 
         /* ----------------------------------------
         * Prop calculations
         * ------------------------------------- */
 
-        const width = size[0]
-        const depth = size[1]
-        const height = size[2]
+        const lineComponentDetails = geometry.lines.lineComponentDetails({
+            startPt,
+            endPt,
+            endOffset,
+        })
+
+        const {
+            midPt,
+            lineLength,
+            offsetLineLength,
+            lineComponentAngle,
+        } = lineComponentDetails
 
         /* ----------------------------------------
         * Preparing Model Properties, Dimensions
@@ -178,21 +204,26 @@ const reinforcedJoistLineInit = ({ jscad, swcadJs }) => {
 
         /** Derived user options for the model */
         const modelOpts = {
-            type,
+            reinforcementLevel,
         }
 
         /** Various dimensions for model */
         const modelDims = {
-            size,
             width,
-            depth,
-            height,
+            endOffset,
+            unitLength,
             interfaceThickness,
-            fitGap,
+            lineLength,
+            offsetLineLength,
+            lineComponentAngle,
         }
 
         /** Various key points for model */
-        const modelPoints = defaults.vals.points
+        const modelPoints = {
+            startPt,
+            endPt,
+            midPt,
+        }
 
         /** Components used by model */
         const modelComponents = defaults.vals.components
@@ -220,118 +251,131 @@ const reinforcedJoistLineInit = ({ jscad, swcadJs }) => {
     //------------------------------------------------------------------------------
 
     /* ----------------------------------------
-    * MODELLING FUNCTIONS
+    * Modelling, Component/Assembly Modules
     * ------------------------------------- */
 
-    /**
-     * New Model 1
-     * @param {*} opts 
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof components.reinforcements.reinforcedJoistLine
-     */
-    const model1 = (opts) => {
-        const defaults = reinforcedJoistLineDefaults()
-        const initOpts = reinforcedJoistLineOpts(opts)
-        const modelProperties = reinforcedJoistLineProps(initOpts)
+    /** Sub-component 01 */
+    const subcomponent1 = (modelProps) => {
+        const {
+            width,
+            endOffset,
+            unitLength,
+            interfaceThickness,
+            lineLength,
+            offsetLineLength,
+            lineComponentAngle,
+        } = modelProps.dims
 
-        const mainModel = cuboid()
-        const modelParts = {
-            mainModel,
-        }
+        const {
+            startPt,
+            endPt,
+            midPt,
+        } = modelProps.points
 
-        return [mainModel, modelParts, modelProperties]
+        return sphere()
+    }
+
+    /** Sub-component 02 */
+    const subcomponent2 = (modelProps) => {
+        const {
+            width,
+            endOffset,
+            unitLength,
+            interfaceThickness,
+            lineLength,
+            offsetLineLength,
+            lineComponentAngle,
+        } = modelProps.dims
+
+        const {
+            startPt,
+            endPt,
+            midPt,
+        } = modelProps.points
+
+        return cube()
+    }
+
+    /* ----------------------------------------
+     * Complete Assembly
+     * ------------------------------------- */
+
+    /** Final Assembly */
+    const finalAssembly = (modelProps) => {
+        const {
+            width,
+            endOffset,
+            unitLength,
+            interfaceThickness,
+            lineLength,
+            offsetLineLength,
+            lineComponentAngle,
+        } = modelProps.dims
+
+        const {
+            startPt,
+            endPt,
+            midPt,
+        } = modelProps.points
+
+        let subComp1 = subcomponent1(modelProps)
+        let subComp2 = subcomponent2(modelProps)
+
+        return union(
+            subComp1,
+            subComp2,
+        )
     }
 
     /**
-     * New Model 2
-     * @param {*} opts 
+     * Generates a new model
+     * @param {Object} opts - Options for the model
+     * @param {number[]} opts.size
+     * @param {string} opts.type
+     * @param {number} opts.reinforcementThickness
+     * @param {number} opts.fitGap
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof components.reinforcements.reinforcedJoistLine
-     */
-    const model2 = (opts) => {
-        const defaults = reinforcedJoistLineDefaults()
-        const initOpts = reinforcedJoistLineOpts(opts)
-        const modelProperties = reinforcedJoistLineProps(initOpts)
-
-        const mainModel = cuboid()
-        const modelParts = {
-            mainModel,
-        }
-
-        return [mainModel, modelParts, modelProperties]
-    }
-
-    /**
-     * ...
-     * @param {*} opts 
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof components.reinforcements.reinforcedJoistLine
-     */
-    const model3 = (opts) => {
-        const defaults = reinforcedJoistLineDefaults()
-        const initOpts = reinforcedJoistLineOpts(opts)
-        const modelProperties = reinforcedJoistLineProps(initOpts)
-
-        const mainModel = cuboid()
-        const modelParts = {
-            mainModel,
-        }
-
-        return [mainModel, modelParts, modelProperties]
-    }
-
-    /**
-     * ...
-     * @param {*} opts 
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof components.reinforcements.reinforcedJoistLine
-     */
-    const model4 = (opts) => {
-        const defaults = reinforcedJoistLineDefaults()
-        const initOpts = reinforcedJoistLineOpts(opts)
-        const modelProperties = reinforcedJoistLineProps(initOpts)
-
-        const mainModel = cuboid()
-        const modelParts = {
-            mainModel,
-        }
-
-        return [mainModel, modelParts, modelProperties]
-    }
-
-    /**
-     * ...
-     * @param {*} opts 
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof components.reinforcements.reinforcedJoistLine
-     */
-    const model5 = (opts) => {
-        const defaults = reinforcedJoistLineDefaults()
-        const initOpts = reinforcedJoistLineOpts(opts)
-        const modelProperties = reinforcedJoistLineProps(initOpts)
-
-        const mainModel = cuboid()
-        const modelParts = {
-            mainModel,
-        }
-
-        return [mainModel, modelParts, modelProperties]
-    }
-
-    /**
-     * Modelling functions that generate new models
-     * @namespace reinforcedJoistLine
      * @memberof components.reinforcements
      */
-    return {
-        defaults: reinforcedJoistLineDefaults,
-        props: reinforcedJoistLineProps,
-        model1,
-        model2,
-        model3,
-        model4,
-        model5,
+    const reinforcedJoistLine = (opts) => {
+        const defaults = reinforcedJoistLineDefaults()
+        const initOpts = reinforcedJoistLineOpts(opts)
+        const modelProperties = reinforcedJoistLineProps(initOpts)
+
+        const {
+            width,
+            endOffset,
+            unitLength,
+            interfaceThickness,
+            lineLength,
+            offsetLineLength,
+            lineComponentAngle,
+        } = modelProperties.dims
+
+        const {
+            startPt,
+            endPt,
+            midPt,
+        } = modelProperties.points
+
+        /* ----------------------------------------
+         * Outputs
+         * ------------------------------------- */
+
+        let subComp1 = subcomponent1(modelProperties)
+        let subComp2 = subcomponent2(modelProperties)
+
+        let mainModel = finalAssembly(modelProperties)
+
+        let modelParts = {
+            subcomponent1: subComp1,
+            subcomponent2: subComp2,
+        }
+
+        return [mainModel, modelParts, modelProperties]
     }
+
+    return reinforcedJoistLine
 }
 
 module.exports = {

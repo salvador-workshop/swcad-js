@@ -54,7 +54,7 @@ const linesInit = ({ jscad, swcadJs }) => {
     const {
         standards,
     } = swcadJs.data
-    
+
     const {
         math,
         geometry
@@ -80,13 +80,13 @@ const linesInit = ({ jscad, swcadJs }) => {
         const midPt = geometry.midpointBetweenPoints(startPt, endPt)
         const lineLength = geometry.distanceBetweenPoints(startPt, endPt)
         const offsetLineLength = lineLength - (endOffset * 2)
-        const compLineAngle = geometry.angleOfTwoPtLine(startPt, endPt)
+        const lineComponentAngle = geometry.angleOfTwoPtLine(startPt, endPt)
 
         return {
             midPt,
             lineLength,
             offsetLineLength,
-            compLineAngle,
+            lineComponentAngle,
         }
     }
 

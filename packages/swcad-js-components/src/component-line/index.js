@@ -170,7 +170,7 @@ const moduleInit = ({ jscad, swcadJs }) => {
             midPt,
             lineLength,
             offsetLineLength,
-            compLineAngle,
+            lineComponentAngle: compLineAngle,
         } = lineComponentDetails
 
         const numSubLengths = Math.floor(offsetLineLength / unitLength)
@@ -330,8 +330,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
                 componentDims,
             } = modelProps.dims
 
-
-
             return cuboid({
                 size: [
                     lineLength,
@@ -361,8 +359,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
             let bLine = baseLine(modelProps)
             let cSet = componentSet(modelProps)
             const midPoint = [midPt[0], midPt[1], 0]
-
-            let a1 = cutBox(modelProps)
 
             const rotatedCompLine = rotate(
                 [0, 0, compLineAngle],
