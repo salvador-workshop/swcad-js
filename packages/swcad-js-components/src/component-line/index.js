@@ -160,10 +160,18 @@ const moduleInit = ({ jscad, swcadJs }) => {
         * Prop calculations
         * ------------------------------------- */
 
-        const midPt = geometry.midpointBetweenPoints(startPt, endPt)
+        const lineComponentDetails = geometry.lines.lineComponentDetails({
+            startPt,
+            endPt,
+            endOffset,
+        })
 
-        const lineLength = geometry.distanceBetweenPoints(startPt, endPt)
-        const offsetLineLength = lineLength - (endOffset * 2)
+        const {
+            midPt,
+            lineLength,
+            offsetLineLength,
+            compLineAngle,
+        } = lineComponentDetails
 
         const numSubLengths = Math.floor(offsetLineLength / unitLength)
         const componentUnits = numSubLengths + 1
@@ -173,7 +181,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
 
         const componentLineLength = offsetLineLength - componentDims[0]
         const componentUnitLength = componentLineLength / numSubLengths
-        const compLineAngle = geometry.angleOfTwoPtLine(startPt, endPt)
 
         const lgProfileBeadWidth = standards.LG_PROFILE_BEAD_WIDTH
         const mdProfileBeadWidth = standards.MD_PROFILE_BEAD_WIDTH

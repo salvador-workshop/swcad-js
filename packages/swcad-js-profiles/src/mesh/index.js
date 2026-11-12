@@ -207,9 +207,9 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             let pts = []
 
             if (holePattern == 'tri') {
-                pts = geometry.getTriangularPtsInArea(meshAreaSize[0], meshAreaSize[1], holeDistance)
+                pts = geometry.points.getTriangularPtsInArea(meshAreaSize[0], meshAreaSize[1], holeDistance)
             } else {
-                pts = geometry.getSquarePtsInArea(meshAreaSize[0], meshAreaSize[1], holeDistance)
+                pts = geometry.points.getSquarePtsInArea(meshAreaSize[0], meshAreaSize[1], holeDistance)
             }
 
             return pts
