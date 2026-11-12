@@ -53,6 +53,7 @@ const poinstInit = ({ jscad, swcadJs }) => {
 
     const {
         standards,
+        constants,
     } = swcadJs.data
 
     const {
@@ -70,7 +71,7 @@ const poinstInit = ({ jscad, swcadJs }) => {
      * @memberof calcs.geometry.points
      * @returns {number[]} central point (avg.) between the given points
      */
-    const ptCentroid = (points, mode = '3d') => {
+    const centroid = (points, mode = '3d') => {
         const min = [Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER]
         const max = [Number.MIN_SAFE_INTEGER, Number.MIN_SAFE_INTEGER, Number.MIN_SAFE_INTEGER]
 
@@ -141,7 +142,7 @@ const poinstInit = ({ jscad, swcadJs }) => {
         }
 
         const simplePts = allPoints.map(pt => [pt.x, pt.y])
-        const pointCentroid = ptCentroid(simplePts, '2d');
+        const pointCentroid = centroid(simplePts, '2d');
 
         return allPoints.map(pt => {
             return {
@@ -184,7 +185,7 @@ const poinstInit = ({ jscad, swcadJs }) => {
         }
 
         const simplePts = outPts.map(pt => [pt.x, pt.y])
-        const pointCentroid = ptCentroid(simplePts, '2d');
+        const pointCentroid = centroid(simplePts, '2d');
 
         return outPts.map(pt => {
             return {
@@ -200,7 +201,7 @@ const poinstInit = ({ jscad, swcadJs }) => {
      * @namespace points
      */
     return {
-        ptCentroid,
+        centroid,
         getTriangularPtsInArea,
         getSquarePtsInArea,
     }

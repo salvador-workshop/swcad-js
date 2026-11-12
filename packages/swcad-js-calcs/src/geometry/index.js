@@ -5,40 +5,6 @@ const pointsModule = require('./points');
 const reinforcementModule = require('./reinforcement');
 
 /**
- * Finds the central point (avg.) between the given points.
- * @param {number[]} points - x and y coordinates
- * @param {string} mode - '3d' (default) or '2d'
- * @memberof calcs.geometry.points
- * @returns {number[]} central point (avg.) between the given points
- */
-const ptCentroid = (points, mode = '3d') => {
-    const min = [Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER]
-    const max = [Number.MIN_SAFE_INTEGER, Number.MIN_SAFE_INTEGER, Number.MIN_SAFE_INTEGER]
-
-    points.forEach(pt => {
-        min[0] = Math.min(min[0], pt[0])
-        min[1] = Math.min(min[1], pt[1])
-
-        max[0] = Math.max(max[0], pt[0])
-        max[1] = Math.max(max[1], pt[1])
-
-        if (mode === '3d') {
-            min[2] = Math.min(min[2], pt[2])
-            max[2] = Math.max(max[2], pt[2])
-        }
-    })
-
-    let output = [
-        (max[0] + min[0]) / 2,
-        (max[1] + min[1]) / 2,
-    ]
-    if (mode === '3d') {
-        output = [...output, (max[2] + min[2]) / 2]
-    }
-    return output;
-}
-
-/**
  * Calculates co-ordinate difference between two points.
  * @param {number[]} startPt - starting 2D coordinates
  * @param {number[]} endPt - ending 2D coordinates
