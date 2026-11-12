@@ -160,10 +160,18 @@ const moduleInit = ({ jscad, swcadJs }) => {
         * Prop calculations
         * ------------------------------------- */
 
-        const midPt = geometry.midpointBetweenPoints(startPt, endPt)
+        const lineComponentDetails = geometry.lines.lineComponentDetails({
+            startPt,
+            endPt,
+            endOffset,
+        })
 
-        const lineLength = geometry.distanceBetweenPoints(startPt, endPt)
-        const offsetLineLength = lineLength - (endOffset * 2)
+        const {
+            midPt,
+            lineLength,
+            offsetLineLength,
+            lineComponentAngle: compLineAngle,
+        } = lineComponentDetails
 
         const numSubLengths = Math.floor(offsetLineLength / unitLength)
         const componentUnits = numSubLengths + 1
@@ -173,7 +181,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
 
         const componentLineLength = offsetLineLength - componentDims[0]
         const componentUnitLength = componentLineLength / numSubLengths
-        const compLineAngle = geometry.angleOfTwoPtLine(startPt, endPt)
 
         const lgProfileBeadWidth = standards.LG_PROFILE_BEAD_WIDTH
         const mdProfileBeadWidth = standards.MD_PROFILE_BEAD_WIDTH
@@ -323,8 +330,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
                 componentDims,
             } = modelProps.dims
 
-
-
             return cuboid({
                 size: [
                     lineLength,
@@ -354,8 +359,6 @@ const moduleInit = ({ jscad, swcadJs }) => {
             let bLine = baseLine(modelProps)
             let cSet = componentSet(modelProps)
             const midPoint = [midPt[0], midPt[1], 0]
-
-            let a1 = cutBox(modelProps)
 
             const rotatedCompLine = rotate(
                 [0, 0, compLineAngle],
