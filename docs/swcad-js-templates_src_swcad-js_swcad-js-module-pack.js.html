@@ -95,12 +95,15 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
      * Builds default values and opts for the model
      * @param {*} opts 
      * @returns default values and opts
-     * @memberof newModelName
+     * @memberof newModelParent.newModelPack
      * @access private
      */
     const newModelNameDefaults = () => {
-        /** Specific value declarations */
         const defaultValues = {
+            constants: {
+                interfaceThickness: standards.INTERFACE_THICKNESS,
+            },
+            opts: {},
             dims: {
                 size: [
                     math.inchesToMm(2),
@@ -108,26 +111,19 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
                     math.inchesToMm(1),
                 ],
             },
-            points: {
-                centrePt: [0, 0, 0]
-            },
+            points: {},
+            components: {},
             types: {
-                default: { id: 'default', desc: 'Default' },
-                alt: { id: 'alt', desc: 'Alternate' },
+                default: { id: 'default', desc: 'Default model' },
+                alt: { id: 'alt', desc: 'Alternate model' },
             },
         }
 
-        /** Options used by SW models */
-        const standardOpts = {
-            type: defaultValues.types.default.id,
-            interfaceThickness: standards.INTERFACE_THICKNESS,
-            fitGap: standards.FIT_GAP,
-        }
-
-        /** Computed values for option defaults */
         const defaultOpts = {
-            ...standardOpts,
+            fitGap: standards.FIT_GAP,
             size: defaultValues.dims.size,
+            type: defaultValues.types.default.id,
+            interfaceThickness: defaultValues.constants.interfaceThickness,
         }
 
         return {
@@ -144,7 +140,7 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
      * Initializes options with user input
      * @param {*} opts 
      * @returns model properties
-     * @memberof newModelName
+     * @memberof newModelParent.newModelPack
      * @access private
      */
     const newModelNameOpts = (opts) => {
@@ -159,15 +155,11 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
             fitGap = defaults.opts.fitGap,
         } = opts
 
-        const stdOpts = {
+        const initOpts = {
+            size,
             type,
             interfaceThickness,
             fitGap,
-        }
-
-        const initOpts = {
-            size,
-            ...stdOpts,
         }
 
         console.log('newModelNameOpts() -- initOpts', initOpts)
@@ -183,12 +175,12 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
      * Builds model properties from the given opts
      * @param {*} opts 
      * @returns model properties
-     * @memberof newModelName
+     * @memberof newModelParent.newModelPack
      * @access private
      */
     const newModelNameProps = (opts) => {
         const defaults = newModelNameDefaults()
-        console.log('newModelNameProps() -- opts', opts)
+        console.log('newModelNameProps() -- prop opts', opts)
 
         const {
             size,
@@ -210,8 +202,7 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
         * ------------------------------------- */
 
         /** Constant values for model */
-        const modelConstants = {
-        }
+        const modelConstants = defaults.vals.constants
 
         /** Derived user options for the model */
         const modelOpts = {
@@ -229,13 +220,10 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
         }
 
         /** Various key points for model */
-        const modelPoints = {
-            centrePt: defaults.vals.points.centrePt,
-        }
+        const modelPoints = defaults.vals.points
 
         /** Components used by model */
-        const modelComponents = {
-        }
+        const modelComponents = defaults.vals.components
 
         /* ---------------------------------------------
         *  Model Properties
@@ -267,7 +255,7 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
      * New Model 1
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
-     * @memberof newModelParent
+     * @memberof newModelParent.newModelPack
      */
     const model1 = (opts) => {
         const defaults = newModelNameDefaults()
@@ -286,7 +274,7 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
      * New Model 2
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
-     * @memberof newModelParent
+     * @memberof newModelParent.newModelPack
      */
     const model2 = (opts) => {
         const defaults = newModelNameDefaults()
@@ -305,7 +293,7 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
      * ...
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
-     * @memberof newModelParent
+     * @memberof newModelParent.newModelPack
      */
     const model3 = (opts) => {
         const defaults = newModelNameDefaults()
@@ -324,7 +312,7 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
      * ...
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
-     * @memberof newModelParent
+     * @memberof newModelParent.newModelPack
      */
     const model4 = (opts) => {
         const defaults = newModelNameDefaults()
@@ -343,7 +331,7 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
      * ...
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
-     * @memberof newModelParent
+     * @memberof newModelParent.newModelPack
      */
     const model5 = (opts) => {
         const defaults = newModelNameDefaults()
@@ -358,6 +346,11 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
         return [mainModel, modelParts, modelProperties]
     }
 
+    /**
+     * Modelling functions that generate new models
+     * @namespace newModelPack
+     * @memberof newModelParent
+     */
     return {
         defaults: newModelNameDefaults,
         props: newModelNameProps,
@@ -382,13 +375,13 @@ module.exports = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.fittings.html">components.fittings</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.reinforcements.html">components.reinforcements</a></li><li><a href="components.reinforcements.boxSupport.html">components.reinforcements.boxSupport</a></li><li><a href="components.reinforcements.brackets.html">components.reinforcements.brackets</a></li><li><a href="components.reinforcements.reinforcedLength.html">components.reinforcements.reinforcedLength</a></li><li><a href="components.reinforcements.reinforcedRing.html">components.reinforcements.reinforcedRing</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.html">profiles.beadsBits</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.connections.jointPanel.html">profiles.connections.jointPanel</a></li><li><a href="profiles.mesh.html">profiles.mesh</a></li><li><a href="profiles.reinforcements.html">profiles.reinforcements</a></li><li><a href="profiles.reinforcements.boxCurve.html">profiles.reinforcements.boxCurve</a></li><li><a href="profiles.text.html">profiles.text</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.lines.html">calcs.geometry.lines</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.regPoly.html">calcs.geometry.regPoly</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.fittings.html">components.fittings</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.reinforcements.html">components.reinforcements</a></li><li><a href="components.reinforcements.boxSupport.html">components.reinforcements.boxSupport</a></li><li><a href="components.reinforcements.brackets.html">components.reinforcements.brackets</a></li><li><a href="components.reinforcements.reinforcedLength.html">components.reinforcements.reinforcedLength</a></li><li><a href="components.reinforcements.reinforcedLine.html">components.reinforcements.reinforcedLine</a></li><li><a href="components.reinforcements.reinforcedRing.html">components.reinforcements.reinforcedRing</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="newModelParent.newModelPack.html">newModelParent.newModelPack</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.html">profiles.beadsBits</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.connections.jointPanel.html">profiles.connections.jointPanel</a></li><li><a href="profiles.mesh.html">profiles.mesh</a></li><li><a href="profiles.reinforcements.html">profiles.reinforcements</a></li><li><a href="profiles.reinforcements.boxCurve.html">profiles.reinforcements.boxCurve</a></li><li><a href="profiles.text.html">profiles.text</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Wed Nov 11 2026 15:59:21 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu Nov 12 2026 11:44:01 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
