@@ -2,54 +2,9 @@
 
 const reinforcedJoistLineInit = ({ jscad, swcadJs }) => {
     const {
-        cube,
-        cylinder,
-        sphere,
-        cylinderElliptic,
-        circle,
-        cuboid,
-        roundedCuboid,
-        roundedCylinder,
-        roundedRectangle,
-        rectangle,
-        triangle,
-    } = jscad.primitives
-
-    const {
-        align,
         translate,
         rotate,
-        mirror
     } = jscad.transforms
-
-    const {
-        intersect,
-        subtract,
-        union,
-        scission
-    } = jscad.booleans
-
-    const {
-        extrudeLinear,
-        extrudeRotate,
-        project
-    } = jscad.extrusions
-
-    const {
-        measureDimensions,
-        measureBoundingBox,
-        measureVolume
-    } = jscad.measurements
-
-    const {
-        hull,
-        hullChain
-    } = jscad.hulls
-
-    const { vectorText } = jscad.text
-    const { toOutlines } = jscad.geometries.geom2
-    const { TAU } = jscad.maths.constants
-    const { colorize } = jscad.colors
 
     const {
         standards,
@@ -262,19 +217,10 @@ const reinforcedJoistLineInit = ({ jscad, swcadJs }) => {
 
         const {
             width,
-            endOffset,
             unitLength,
             interfaceThickness,
-            lineLength,
             offsetLineLength,
-            lineComponentAngle,
         } = modelProps.dims
-
-        const {
-            startPt,
-            endPt,
-            midPt,
-        } = modelProps.points
 
         const rJoistOpts = {
             length: offsetLineLength,
@@ -293,33 +239,27 @@ const reinforcedJoistLineInit = ({ jscad, swcadJs }) => {
      * ------------------------------------- */
 
     /**
-     * Generates a new model
+     * Generates a reinforced joist line
      * @param {Object} opts - Options for the model
-     * @param {number[]} opts.size
-     * @param {string} opts.type
-     * @param {number} opts.reinforcementThickness
-     * @param {number} opts.fitGap
+     * @param {number[]} opts.startPt
+     * @param {number[]} opts.endPt
+     * @param {number} opts.width
+     * @param {number} opts.endOffset
+     * @param {number} opts.unitLength
+     * @param {number} opts.reinforcementLevel
+     * @param {number} opts.interfaceThickness
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.reinforcements
      */
     const reinforcedJoistLine = (opts) => {
-        const defaults = reinforcedJoistLineDefaults()
         const initOpts = reinforcedJoistLineOpts(opts)
         const modelProperties = reinforcedJoistLineProps(initOpts)
 
         const {
-            width,
-            endOffset,
-            unitLength,
-            interfaceThickness,
-            lineLength,
-            offsetLineLength,
             lineComponentAngle,
         } = modelProperties.dims
 
         const {
-            startPt,
-            endPt,
             midPt,
         } = modelProperties.points
 

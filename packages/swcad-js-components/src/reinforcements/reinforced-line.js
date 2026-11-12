@@ -2,54 +2,9 @@
 
 const reinforcedLineInit = ({ jscad, swcadJs }) => {
     const {
-        cube,
-        cylinder,
-        sphere,
-        cylinderElliptic,
-        circle,
-        cuboid,
-        roundedCuboid,
-        roundedCylinder,
-        roundedRectangle,
-        rectangle,
-        triangle,
-    } = jscad.primitives
-
-    const {
-        align,
         translate,
         rotate,
-        mirror
     } = jscad.transforms
-
-    const {
-        intersect,
-        subtract,
-        union,
-        scission
-    } = jscad.booleans
-
-    const {
-        extrudeLinear,
-        extrudeRotate,
-        project
-    } = jscad.extrusions
-
-    const {
-        measureDimensions,
-        measureBoundingBox,
-        measureVolume
-    } = jscad.measurements
-
-    const {
-        hull,
-        hullChain
-    } = jscad.hulls
-
-    const { vectorText } = jscad.text
-    const { toOutlines } = jscad.geometries.geom2
-    const { TAU } = jscad.maths.constants
-    const { colorize } = jscad.colors
 
     const {
         standards,
@@ -262,31 +217,34 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
     * ------------------------------------- */
 
     /**
-     * New Model 1
-     * @param {*} opts 
+     * Generates a light reinforced line.
+     * @param {Object} opts - Options for the model
+     * @param {number[]} opts.startPt
+     * @param {number[]} opts.endPt
+     * @param {number} opts.width
+     * @param {number} opts.height
+     * @param {number} opts.endOffset
+     * @param {number} opts.unitLength
+     * @param {number} opts.baseThickness
+     * @param {number} opts.reinforcementThickness
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.reinforcements.reinforcedLine
      */
     const lightReinforcedLine = (opts) => {
-        const defaults = reinforcedLineDefaults()
         const initOpts = reinforcedLineOpts(opts)
         const modelProperties = reinforcedLineProps(initOpts)
 
         const {
             width,
             height,
-            endOffset,
             unitLength,
             baseThickness,
             reinforcementThickness,
-            lineLength,
             offsetLineLength,
             lineComponentAngle,
         } = modelProperties.dims
 
         const {
-            startPt,
-            endPt,
             midPt,
         } = modelProperties.points
 
@@ -314,31 +272,34 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * New Model 2
-     * @param {*} opts 
+     * Generates a medium reinforced line.
+     * @param {Object} opts - Options for the model
+     * @param {number[]} opts.startPt
+     * @param {number[]} opts.endPt
+     * @param {number} opts.width
+     * @param {number} opts.height
+     * @param {number} opts.endOffset
+     * @param {number} opts.unitLength
+     * @param {number} opts.baseThickness
+     * @param {number} opts.reinforcementThickness
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.reinforcements.reinforcedLine
      */
     const mediumReinforcedLine = (opts) => {
-        const defaults = reinforcedLineDefaults()
         const initOpts = reinforcedLineOpts(opts)
         const modelProperties = reinforcedLineProps(initOpts)
 
         const {
             width,
             height,
-            endOffset,
             unitLength,
             baseThickness,
             reinforcementThickness,
-            lineLength,
             offsetLineLength,
             lineComponentAngle,
         } = modelProperties.dims
 
         const {
-            startPt,
-            endPt,
             midPt,
         } = modelProperties.points
 
@@ -366,31 +327,34 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * ...
-     * @param {*} opts 
+     * Generates a heavy reinforced line.
+     * @param {Object} opts - Options for the model
+     * @param {number[]} opts.startPt
+     * @param {number[]} opts.endPt
+     * @param {number} opts.width
+     * @param {number} opts.height
+     * @param {number} opts.endOffset
+     * @param {number} opts.unitLength
+     * @param {number} opts.baseThickness
+     * @param {number} opts.reinforcementThickness
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.reinforcements.reinforcedLine
      */
     const heavyReinforcedLine = (opts) => {
-        const defaults = reinforcedLineDefaults()
         const initOpts = reinforcedLineOpts(opts)
         const modelProperties = reinforcedLineProps(initOpts)
 
         const {
             width,
             height,
-            endOffset,
             unitLength,
             baseThickness,
             reinforcementThickness,
-            lineLength,
             offsetLineLength,
             lineComponentAngle,
         } = modelProperties.dims
 
         const {
-            startPt,
-            endPt,
             midPt,
         } = modelProperties.points
 
@@ -418,7 +382,7 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Modelling functions that generate new models
+     * Modelling functions that generate reinforced lines
      * @namespace reinforcedLine
      * @memberof components.reinforcements
      */

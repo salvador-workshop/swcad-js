@@ -2,70 +2,11 @@
 
 const linesInit = ({ jscad, swcadJs }) => {
     const {
-        cube,
-        cylinder,
-        sphere,
-        cylinderElliptic,
-        circle,
-        cuboid,
-        roundedCuboid,
-        roundedCylinder,
-        roundedRectangle,
-        rectangle,
-        triangle,
-    } = jscad.primitives
-
-    const {
-        align,
-        translate,
-        rotate,
-        mirror
-    } = jscad.transforms
-
-    const {
-        intersect,
-        subtract,
-        union,
-        scission
-    } = jscad.booleans
-
-    const {
-        extrudeLinear,
-        extrudeRotate,
-        project
-    } = jscad.extrusions
-
-    const {
-        measureDimensions,
-        measureBoundingBox,
-        measureVolume
-    } = jscad.measurements
-
-    const {
-        hull,
-        hullChain
-    } = jscad.hulls
-
-    const { vectorText } = jscad.text
-    const { toOutlines } = jscad.geometries.geom2
-    const { TAU } = jscad.maths.constants
-    const { colorize } = jscad.colors
-
-    const {
-        standards,
-    } = swcadJs.data
-
-    const {
-        math,
         geometry
     } = swcadJs.calcs
 
-
-    //==============================================================================
-
-
     /**
-     * New Model 1
+     * Calculates details for linear components, which are given starting + ending points and an end offset value.
      * @param {*} opts 
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof calcs.geometry.lines
@@ -91,7 +32,7 @@ const linesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Modelling functions that generate new models
+     * Calculations for linear components
      * @namespace lines
      * @memberof calcs.geometry
      */
