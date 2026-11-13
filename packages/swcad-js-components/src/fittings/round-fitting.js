@@ -369,6 +369,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
             dowelRadius,
             dowelDiam,
             width,
+            length,
         } = modelProperties.dims
 
         const baseRect = rectangle({

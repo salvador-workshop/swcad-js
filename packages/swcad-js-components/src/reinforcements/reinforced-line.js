@@ -37,7 +37,10 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
             constants: {
                 interfaceThickness: defInterfaceThickness,
             },
-            opts: {},
+            opts: {
+                hasReinforcedEnds: true,
+                hasUnitReinforcements: true,
+            },
             dims: {
                 width: math.inchesToMm(5 / 16),
                 height: math.inchesToMm(1 / 8),
@@ -63,6 +66,8 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
             unitLength: defaultValues.dims.unitLength,
             baseThickness: defaultValues.dims.baseThickness,
             reinforcementThickness: defaultValues.dims.reinforcementThickness,
+            hasReinforcedEnds: defaultValues.opts.hasReinforcedEnds,
+            hasUnitReinforcements: defaultValues.opts.hasUnitReinforcements,
         }
 
         return {
@@ -96,6 +101,8 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
             unitLength = defaults.opts.unitLength,
             baseThickness = defaults.opts.baseThickness,
             reinforcementThickness = defaults.opts.reinforcementThickness,
+            hasReinforcedEnds = defaults.opts.hasReinforcedEnds,
+            hasUnitReinforcements = defaults.opts.hasUnitReinforcements,
         } = opts
 
         const initOpts = {
@@ -107,6 +114,8 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
             unitLength,
             baseThickness,
             reinforcementThickness,
+            hasReinforcedEnds,
+            hasUnitReinforcements,
         }
 
         console.log('reinforcedLineOpts() -- initOpts', initOpts)
@@ -138,6 +147,8 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
             unitLength,
             baseThickness,
             reinforcementThickness,
+            hasReinforcedEnds,
+            hasUnitReinforcements,
         } = opts
 
         /* ----------------------------------------
@@ -165,7 +176,10 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
         const modelConstants = defaults.vals.constants
 
         /** Derived user options for the model */
-        const modelOpts = defaults.vals.opts
+        const modelOpts = {
+            hasReinforcedEnds,
+            hasUnitReinforcements,
+        }
 
         /** Various dimensions for model */
         const modelDims = {
@@ -227,12 +241,19 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.unitLength
      * @param {number} opts.baseThickness
      * @param {number} opts.reinforcementThickness
+     * @param {boolean} opts.hasReinforcedEnds
+     * @param {boolean} opts.hasUnitReinforcements
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.reinforcements.reinforcedLine
      */
     const lightReinforcedLine = (opts) => {
         const initOpts = reinforcedLineOpts(opts)
         const modelProperties = reinforcedLineProps(initOpts)
+
+        const {
+            hasReinforcedEnds,
+            hasUnitReinforcements,
+        } = modelProperties.opts
 
         const {
             width,
@@ -257,6 +278,8 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
             unitLength,
             baseThickness,
             reinforcementThickness,
+            hasReinforcedEnds,
+            hasUnitReinforcements,
         }
         const lightReinfLength = reinforcements.reinforcedLength.lightReinforcedLength(rOpts)[0]
 
@@ -283,12 +306,19 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.unitLength
      * @param {number} opts.baseThickness
      * @param {number} opts.reinforcementThickness
+     * @param {number} opts.hasReinforcedEnds
+     * @param {number} opts.hasUnitReinforcements
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.reinforcements.reinforcedLine
      */
     const mediumReinforcedLine = (opts) => {
         const initOpts = reinforcedLineOpts(opts)
         const modelProperties = reinforcedLineProps(initOpts)
+
+        const {
+            hasReinforcedEnds,
+            hasUnitReinforcements,
+        } = modelProperties.opts
 
         const {
             width,
@@ -313,6 +343,8 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
             unitLength,
             baseThickness,
             reinforcementThickness,
+            hasReinforcedEnds,
+            hasUnitReinforcements,
         }
         const mediumReinfLength = reinforcements.reinforcedLength.mediumReinforcedLength(rOpts)[0]
 
