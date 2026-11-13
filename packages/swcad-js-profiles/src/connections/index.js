@@ -274,7 +274,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @memberof profiles.connections
      */
     const dovetail = (opts) => {
-        const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
 
@@ -391,7 +390,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @memberof profiles.connections
      */
     const tab = (opts) => {
-        const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
 
@@ -508,7 +506,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @memberof profiles.connections
      */
     const rightAngleTab = (opts) => {
-        const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
 
@@ -529,11 +526,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
         const rAngTabWidth = width - (interfaceMargin[0] * 2)
         const rAngTabLength = depth - (interfaceMargin[1] * 2)
-
-        // const tabEndSize = [
-        //     rAngTabLength,
-        //     rAngTabLength,
-        // ]
 
         const widthCoords = [
             interfaceMargin[0],
@@ -625,7 +617,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @memberof profiles.connections
      */
     const polygon = (opts) => {
-        const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
 
@@ -634,17 +625,11 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         } = modelProperties.opts
 
         const {
-            width,
-            depth,
             radius,
             fitGap,
             diametre,
             interfaceMargin,
         } = modelProperties.dims
-
-        const {
-            sampleThickness
-        } = modelProperties.constants
 
         const halfGap = fitGap / 2
         const cornerRadius = math.inchesToMm(1 / 4)
@@ -708,7 +693,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @memberof profiles.connections
      */
     const ellipse = (opts) => {
-        const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
 
@@ -722,13 +706,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
             fitGap,
             interfaceMargin,
         } = modelProperties.dims
-
-        const {
-            sampleThickness
-        } = modelProperties.constants
-
-        const halfGap = fitGap / 2
-        const cornerRadius = math.inchesToMm(1 / 4)
 
         const diam = [
             width - (interfaceMargin[0] * 2),
@@ -820,7 +797,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @memberof profiles.connections
      */
     const pegboard = (opts) => {
-        const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
 
@@ -829,18 +805,12 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         } = modelProperties.opts
 
         const {
-            width,
-            depth,
             unitRadius,
             unitSpacing,
             fitGap,
             unitDiametre,
             interfaceMargin,
         } = modelProperties.dims
-
-        const {
-            sampleThickness
-        } = modelProperties.constants
 
         const halfGap = fitGap / 2
         const cornerRadius = unitDiametre * 0.75
@@ -916,7 +886,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @memberof profiles.connections
      */
     const boltCircle = (opts) => {
-        const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
 
@@ -927,23 +896,15 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
         const {
             radius,
-            diametre,
             unitRadius,
-            unitSpacing,
             fitGap,
-            unitDiametre,
             interfaceMargin,
         } = modelProperties.dims
-
-        const {
-            sampleThickness
-        } = modelProperties.constants
 
         const halfGap = fitGap / 2
         const holeRadius = unitRadius + halfGap
         const inCircle = circle({ radius, segments })
         const holePoints = toOutlines(inCircle)[0]
-        const basePunch = circle({ radius: unitRadius })
 
         const dowels = holePoints.map(dPt => {
             return translate(dPt, circle({ radius: unitRadius, segments: unitSegments }))
@@ -993,7 +954,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @memberof profiles.connections
      */
     const dovetailRow = (opts) => {
-        const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
 
@@ -1004,7 +964,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         const {
             width,
             depth,
-            fitGap,
             interfaceMargin,
         } = modelProperties.dims
 
@@ -1093,7 +1052,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @memberof profiles.connections
      */
     const tabRow = (opts) => {
-        const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
 
@@ -1104,7 +1062,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         const {
             width,
             depth,
-            fitGap,
             interfaceMargin,
         } = modelProperties.dims
 
@@ -1193,7 +1150,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @memberof profiles.connections
      */
     const rightAngleTabRow = (opts) => {
-        const defaults = modelDefaults()
         const initOpts = modelOpts(opts)
         const modelProperties = modelProps(initOpts)
 
@@ -1204,7 +1160,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         const {
             width,
             depth,
-            fitGap,
             interfaceMargin,
         } = modelProperties.dims
 

@@ -45,7 +45,10 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
 
         const defaultValues = {
             constants: {},
-            opts: {},
+            opts: {
+                hasReinforcedEnds: true,
+                hasUnitReinforcements: true,
+            },
             dims: {
                 size: [
                     math.inchesToMm(3.5),
@@ -65,6 +68,8 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
             unitLength: defaultValues.dims.unitLength,
             baseThickness: defaultValues.dims.baseThickness,
             reinforcementThickness: defaultValues.dims.reinforcementThickness,
+            hasReinforcedEnds: defaultValues.opts.hasReinforcedEnds,
+            hasUnitReinforcements: defaultValues.opts.hasUnitReinforcements,
         }
 
         return {
@@ -93,6 +98,8 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
             unitLength = defaults.opts.unitLength,
             baseThickness = defaults.opts.baseThickness,
             reinforcementThickness = defaults.opts.reinforcementThickness,
+            hasReinforcedEnds = defaults.opts.hasReinforcedEnds,
+            hasUnitReinforcements = defaults.opts.hasUnitReinforcements,
         } = opts
 
         const initOpts = {
@@ -100,6 +107,8 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
             unitLength,
             baseThickness,
             reinforcementThickness,
+            hasReinforcedEnds,
+            hasUnitReinforcements,
         }
 
         return initOpts
@@ -124,6 +133,8 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
             unitLength,
             baseThickness,
             reinforcementThickness,
+            hasReinforcedEnds,
+            hasUnitReinforcements,
         } = opts
 
         /* ----------------------------------------
@@ -142,7 +153,10 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
         const modelConstants = defaults.vals.constants
 
         /** Derived user options for the model */
-        const modelOpts = defaults.vals.opts
+        const modelOpts = {
+            hasReinforcedEnds,
+            hasUnitReinforcements,
+        }
 
         /** Various dimensions for model */
         const modelDims = {
@@ -239,11 +253,46 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
         })[0]
     }
 
+    const endPieces = (opts) => {
+        const { size, reinforcementThickness } = opts
+
+        const endPiece = cuboid({
+            size: [
+                reinforcementThickness,
+                size[1],
+                size[2]
+            ]
+        })
+
+        const endPiece1 = align(
+            {
+                modes: ['min', 'center', 'min'],
+                relativeTo: [size[0] / -2, 0, 0]
+            },
+            endPiece
+        )
+
+        const endPiece2 = align(
+            {
+                modes: ['max', 'center', 'min'],
+                relativeTo: [size[0] / 2, 0, 0]
+            },
+            endPiece
+        )
+
+        return {
+            endPiece,
+            endPiece1,
+            endPiece2,
+        }
+    }
+
     const lightReinforcedLengthUnit = (opts) => {
         const {
             size,
             baseThickness,
-            reinforcementThickness
+            reinforcementThickness,
+            hasUnitReinforcements,
         } = opts
 
         // Generate flat base
@@ -259,36 +308,24 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
             spineHeight: size[2],
         })
 
-        // End pieces
-        const endPiece = cuboid({
-            size: [
-                reinforcementThickness,
-                size[1],
-                size[2]
-            ]
-        })
-        const endPiece1 = align(
-            {
-                modes: ['min', 'center', 'min'],
-                relativeTo: [size[0] / -2, 0, 0]
-            },
-            endPiece
-        )
-        const endPiece2 = align(
-            {
-                modes: ['max', 'center', 'min'],
-                relativeTo: [size[0] / 2, 0, 0]
-            },
-            endPiece
-        )
-
         // Combine all pieces
-        const lightReinfUnitAssembly = union(
+        let lightReinfUnitAssembly = union(
             position.ctrMin(lightReinfUnitBase),
             position.ctrMin(lightReinfUnitReinforcement),
-            endPiece1,
-            endPiece2,
         )
+
+        if (hasUnitReinforcements) {
+            const {
+                endPiece1,
+                endPiece2,
+            } = endPieces({ size, reinforcementThickness })
+
+            lightReinfUnitAssembly = union(
+                lightReinfUnitAssembly,
+                endPiece1,
+                endPiece2,
+            )
+        }
 
         return position.ctr(lightReinfUnitAssembly)
     }
@@ -297,7 +334,8 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
         const {
             size,
             baseThickness,
-            reinforcementThickness
+            reinforcementThickness,
+            hasUnitReinforcements,
         } = opts
 
         // Generate flat base
@@ -315,36 +353,24 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
             spineHeight: size[2],
         })
 
-        // End pieces
-        const endPiece = cuboid({
-            size: [
-                reinforcementThickness,
-                size[1],
-                size[2]
-            ]
-        })
-        const endPiece1 = align(
-            {
-                modes: ['min', 'center', 'min'],
-                relativeTo: [size[0] / -2, 0, 0]
-            },
-            endPiece
-        )
-        const endPiece2 = align(
-            {
-                modes: ['max', 'center', 'min'],
-                relativeTo: [size[0] / 2, 0, 0]
-            },
-            endPiece
-        )
-
         // Combine all pieces
-        const mediumReinfUnitAssembly = union(
+        let mediumReinfUnitAssembly = union(
             position.ctrMin(mediumReinfUnitBase),
             position.ctrMin(mediumReinfUnitReinforcement),
-            endPiece1,
-            endPiece2,
         )
+
+        if (hasUnitReinforcements) {
+            const {
+                endPiece1,
+                endPiece2,
+            } = endPieces({ size, reinforcementThickness })
+
+            mediumReinfUnitAssembly = union(
+                mediumReinfUnitAssembly,
+                endPiece1,
+                endPiece2,
+            )
+        }
 
         return position.ctr(mediumReinfUnitAssembly)
     }
@@ -402,12 +428,19 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.unitLength
      * @param {number} opts.baseThickness
      * @param {number} opts.reinforcementThickness
+     * @param {boolean} opts.hasReinforcedEnds
+     * @param {boolean} opts.hasUnitReinforcements
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.reinforcements.reinforcedLength
      */
     const lightReinforcedLength = (opts) => {
         const initOpts = reinforcedLengthOpts(opts)
         const modelProperties = reinforcedLengthProps(initOpts)
+
+        const {
+            hasReinforcedEnds,
+            hasUnitReinforcements,
+        } = modelProperties.opts
 
         const {
             size,
@@ -420,6 +453,7 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
             size: [unitLength, size[1], size[2]],
             baseThickness,
             reinforcementThickness,
+            hasUnitReinforcements,
         })
 
         // Attach unit base segments until the desired length is reached.
@@ -443,33 +477,24 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
             outputKeepBox({ size })
         )
 
-        // End pieces
-        const endPiece = cuboid({
-            size: [
-                reinforcementThickness,
-                size[1],
-                size[2]
-            ]
-        })
-        const endPiece1 = align(
-            {
-                modes: ['min', 'center', 'center'],
-                relativeTo: [size[0] / -2, 0, 0]
-            },
-            endPiece
-        )
-        const endPiece2 = align(
-            {
-                modes: ['max', 'center', 'center'],
-                relativeTo: [size[0] / 2, 0, 0]
-            },
-            endPiece
-        )
+        let lightReinfLengthOutput = lightReinfLength
 
-        const mainModel = union(lightReinfLength, endPiece1, endPiece2)
+        const {
+            endPiece,
+            endPiece1,
+            endPiece2,
+        } = endPieces({ size, reinforcementThickness })
+
+        if (hasReinforcedEnds) {
+            lightReinfLengthOutput = union(lightReinfLength, endPiece1, endPiece2)
+        }
+
+        const mainModel = lightReinfLengthOutput
+
         const modelParts = {
             mainModel,
             unit: lightLengthUnitBase,
+            endPiece,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -482,12 +507,19 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.unitLength
      * @param {number} opts.baseThickness
      * @param {number} opts.reinforcementThickness
+     * @param {boolean} opts.hasReinforcedEnds
+     * @param {boolean} opts.hasUnitReinforcements
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.reinforcements.reinforcedLength
      */
     const mediumReinforcedLength = (opts) => {
         const initOpts = reinforcedLengthOpts(opts)
         const modelProperties = reinforcedLengthProps(initOpts)
+
+        const {
+            hasReinforcedEnds,
+            hasUnitReinforcements,
+        } = modelProperties.opts
 
         const {
             size,
@@ -500,6 +532,7 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
             size: [unitLength, size[1], size[2]],
             baseThickness,
             reinforcementThickness,
+            hasUnitReinforcements,
         })
 
         // Attach unit base segments until the desired length is reached.
@@ -523,33 +556,23 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
             outputKeepBox({ size })
         )
 
-        // End pieces
-        const endPiece = cuboid({
-            size: [
-                reinforcementThickness,
-                size[1],
-                size[2]
-            ]
-        })
-        const endPiece1 = align(
-            {
-                modes: ['min', 'center', 'center'],
-                relativeTo: [size[0] / -2, 0, 0]
-            },
-            endPiece
-        )
-        const endPiece2 = align(
-            {
-                modes: ['max', 'center', 'center'],
-                relativeTo: [size[0] / 2, 0, 0]
-            },
-            endPiece
-        )
+        let mediumReinfLengthOutput = mediumReinfLength
 
-        const mainModel = union(mediumReinfLength, endPiece1, endPiece2)
+        const {
+            endPiece,
+            endPiece1,
+            endPiece2,
+        } = endPieces({ size, reinforcementThickness })
+
+        if (hasReinforcedEnds) {
+            mediumReinfLengthOutput = union(mediumReinfLength, endPiece1, endPiece2)
+        }
+
+        const mainModel = mediumReinfLengthOutput
         const modelParts = {
             mainModel,
-            unit: mediumLengthUnitBase
+            unit: mediumLengthUnitBase,
+            endPiece,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -604,32 +627,17 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
         )
 
         // End pieces
-        const endPiece = cuboid({
-            size: [
-                reinforcementThickness,
-                size[1],
-                size[2]
-            ]
-        })
-        const endPiece1 = align(
-            {
-                modes: ['min', 'center', 'center'],
-                relativeTo: [size[0] / -2, 0, 0]
-            },
-            endPiece
-        )
-        const endPiece2 = align(
-            {
-                modes: ['max', 'center', 'center'],
-                relativeTo: [size[0] / 2, 0, 0]
-            },
-            endPiece
-        )
+        const {
+            endPiece,
+            endPiece1,
+            endPiece2,
+        } = endPieces({ size, reinforcementThickness })
 
         const mainModel = union(heavyReinfLength, endPiece1, endPiece2)
         const modelParts = {
             mainModel,
-            unit: heavyLengthUnitBase
+            unit: heavyLengthUnitBase,
+            endPiece,
         }
 
         return [mainModel, modelParts, modelProperties]

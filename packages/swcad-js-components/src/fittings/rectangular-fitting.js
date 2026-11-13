@@ -262,6 +262,8 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
         const mainModel = position.ctr(dHolder)
         const modelParts = {
             mainModel,
+            section: dHolderSection,
+            cutaway: topCutaway,
         }
 
         return [mainModel, modelParts, modelProperties]

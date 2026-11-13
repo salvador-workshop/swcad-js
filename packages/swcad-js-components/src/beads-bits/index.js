@@ -208,6 +208,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
         const mainModel = extrudedBit
         const modelParts = {
             mainModel,
+            bitProfile,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -235,6 +236,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
         const mainModel = extrudedBit
         const modelParts = {
             mainModel,
+            bitProfile,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -262,6 +264,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
         const mainModel = extrudedBit
         const modelParts = {
             mainModel,
+            bitProfile,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -289,6 +292,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
         const mainModel = extrudedBit
         const modelParts = {
             mainModel,
+            bitProfile,
         }
 
         return [mainModel, modelParts, modelProperties]

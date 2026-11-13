@@ -295,6 +295,8 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         const mainModel = position.ctr(dHolder)
         const modelParts = {
             mainModel,
+            section: dHolderSection,
+            cutaway: topCutaway,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -337,6 +339,8 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         const mainModel = position.ctr(dHolder)
         const modelParts = {
             mainModel,
+            section: dHolderSection,
+            cutaway: channelCutaway,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -356,97 +360,76 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         const initOpts = roundFittingOpts(opts)
         const modelProperties = roundFittingProps(initOpts)
 
-        /* ----------------------------------------
-         * Modelling, Component/Assembly Modules
-         * ------------------------------------- */
+        const {
+            ratioDiamToHolderHeight,
+            ratioDiamToSideChannelWidth,
+        } = modelProperties.constants
 
-        const roundFittingSection = (modelProps) => {
-            const {
-                ratioDiamToHolderHeight,
-                ratioDiamToChannelDepth,
-                ratioDiamToSideChannelWidth,
-                ratioDiamToDowelDepth,
-            } = modelProps.constants
+        const {
+            dowelRadius,
+            dowelDiam,
+            width,
+            length,
+        } = modelProperties.dims
 
-            const {
-                dowelRadius,
-                dowelDiam,
-                interfaceThickness,
-                fitGap,
+        const baseRect = rectangle({
+            size: [
                 width,
-            } = modelProps.dims
+                dowelDiam * ratioDiamToHolderHeight,
+            ]
+        })
 
-            const baseRect = rectangle({
-                size: [
-                    width,
-                    dowelDiam * ratioDiamToHolderHeight,
-                ]
-            })
+        const topCutaway = roundFittingCutProfile(opts)[0]
+        const channelCutaway = invRoundFittingCutProfile(opts)[0]
+        const sideCutaway = triangle({
+            type: 'ASA', values: [
+                Math.PI / 6,
+                dowelDiam * ratioDiamToSideChannelWidth,
+                Math.PI / 6,
+            ]
+        })
 
-            const topCutaway = roundFittingCutProfile(opts)[0]
-            const channelCutaway = invRoundFittingCutProfile(opts)[0]
-            let sideCutaway1 = triangle({
-                type: 'ASA', values: [
-                    Math.PI / 6,
-                    dowelDiam * ratioDiamToSideChannelWidth,
-                    Math.PI / 6,
-                ]
-            })
-            sideCutaway1 = rotate([0, 0, Math.PI / -2], sideCutaway1)
-            const sideCutaway2 = mirror({ normal: [1, 0, 0] }, sideCutaway1)
+        let sideCutaway1 = sideCutaway
+        sideCutaway1 = rotate([0, 0, Math.PI / -2], sideCutaway1)
+        const sideCutaway2 = mirror({ normal: [1, 0, 0] }, sideCutaway1)
 
-            let dHolderSection = subtract(
-                align({ modes: ['center', 'min', 'center'] }, baseRect),
-                align({ modes: ['center', 'min', 'center'] }, channelCutaway),
-            )
+        let dHolderSection = subtract(
+            align({ modes: ['center', 'min', 'center'] }, baseRect),
+            align({ modes: ['center', 'min', 'center'] }, channelCutaway),
+        )
 
-            dHolderSection = subtract(
-                align({ modes: ['center', 'max', 'center'] }, dHolderSection),
-                translate([0, dowelRadius / 3, 0], topCutaway),
-            )
+        dHolderSection = subtract(
+            align({ modes: ['center', 'max', 'center'] }, dHolderSection),
+            translate([0, dowelRadius / 3, 0], topCutaway),
+        )
 
-            dHolderSection = subtract(
-                align({ modes: ['min', 'center', 'center'] }, dHolderSection),
-                align({ modes: ['min', 'center', 'center'] }, sideCutaway1),
-            )
+        dHolderSection = subtract(
+            align({ modes: ['min', 'center', 'center'] }, dHolderSection),
+            align({ modes: ['min', 'center', 'center'] }, sideCutaway1),
+        )
 
-            dHolderSection = subtract(
-                align({ modes: ['max', 'center', 'center'] }, dHolderSection),
-                align({ modes: ['max', 'center', 'center'] }, sideCutaway2),
-            )
-
-            return position.ctr(dHolderSection)
-        }
-
-        /* ----------------------------------------
-         * Complete Assembly
-         * ------------------------------------- */
-
-        /** Final Assembly */
-        const finalAssembly = (modelProps) => {
-            const {
-                length,
-            } = modelProps.dims
-
-
-            const dHolderSection = roundFittingSection(modelProps)
-
-            let dHolder = extrudeLinear({ height: length }, dHolderSection)
-            dHolder = rotate([Math.PI / 2, 0, 0], dHolder)
-
-            return position.ctr(dHolder)
-        }
+        dHolderSection = subtract(
+            align({ modes: ['max', 'center', 'center'] }, dHolderSection),
+            align({ modes: ['max', 'center', 'center'] }, sideCutaway2),
+        )
 
         /* ----------------------------------------
          * Outputs
          * ------------------------------------- */
 
-        const roundFittingSectionInst = roundFittingSection(modelProperties)
+        const dowelHolderSection = position.ctr(dHolderSection)
 
-        const mainModel = finalAssembly(modelProperties)
+        let dHolder = extrudeLinear({ height: length }, dowelHolderSection)
+        dHolder = rotate([Math.PI / 2, 0, 0], dHolder)
+
+        const mainModel = position.ctr(dHolder)
 
         const modelParts = {
-            roundFittingSection: roundFittingSectionInst,
+            mainModel,
+            topCutaway,
+            sideCutaway,
+            bottomCutaway: channelCutaway,
+            section: dowelHolderSection,
         }
 
         return [mainModel, modelParts, modelProperties]

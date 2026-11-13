@@ -472,6 +472,8 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
         const mainModel = cutShape
         const modelParts = {
             mainModel,
+            cutPathTop,
+            cutPathBottom,
         }
 
         return [mainModel, modelParts, modelProperties]

@@ -431,7 +431,7 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
         const mainModel = outProfiles
 
         const modelParts = {
-            model: outProfiles,
+            mainModel,
             cut: comboCut,
         }
 

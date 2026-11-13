@@ -275,6 +275,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
         let mainModel = finalAssembly(modelProperties)
 
         let modelParts = {
+            mainModel,
             meshPanelCutProfile: meshPanelCutProfileInst,
             meshPanelProfile: meshPanelProfileInst,
         }
