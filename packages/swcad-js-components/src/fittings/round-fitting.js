@@ -477,10 +477,6 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
             rotate([0, 0, TAU / 4], cutawayBase),
         )
 
-        // const roundFittingCrossAssembly = subtract(
-        //     position.ctrMax(blank),
-        //     cutaway
-        // )
         const roundFittingCrossAssembly = subtract(
             position.ctrMin(blank, [0, 0, -interfaceThickness]),
             position.ctrMin(cutaway),
@@ -489,6 +485,11 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         const mainModel = position.ctr(roundFittingCrossAssembly)
         const modelParts = {
             mainModel,
+            blankBase,
+            cutawayProfile,
+            cutawayBase,
+            blank,
+            cutaway,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -508,7 +509,65 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         const initOpts = roundFittingOpts(opts)
         const modelProperties = roundFittingProps(initOpts)
 
-        const mainModel = cuboid()
+        const {
+            interfaceThickness,
+            length,
+            width,
+            simpleHeight,
+            dowelRadius,
+            dowelDiam,
+            invCutProfileHeight,
+            invCutProfileSideLength,
+            roundCutProfileRadius,
+            invSimpleHeight,
+            fitGap,
+        } = modelProperties.dims
+
+        const totalLength = length * 2
+
+        const blankBase = cuboid({ size: [totalLength, width, simpleHeight] })
+        const blankBaseTee = align(
+            { modes: ['min', 'center', 'center'] },
+            cuboid({ size: [length, width, simpleHeight] })
+        )
+
+        const cutawayProfile = roundFittingCutProfile(opts)[0]
+
+        let cutawayBase = extrudeLinear({ height: totalLength * 1.5 }, cutawayProfile)
+        cutawayBase = position.ctr(rotate([0, TAU / 4, 0], cutawayBase))
+
+        let cutawayBaseTee = extrudeLinear({ height: length * 1.5 }, cutawayProfile)
+        cutawayBaseTee = align(
+            { modes: ['min', 'center', 'center'] },
+            rotate([0, TAU / 4, 0], cutawayBaseTee)
+        )
+
+        const blank = union(
+            blankBase,
+            rotate([0, 0, TAU / 4], blankBaseTee),
+        )
+
+        const cutaway = union(
+            cutawayBase,
+            rotate([0, 0, TAU / 4], cutawayBaseTee),
+        )
+
+        // const roundFittingTeeAssembly = subtract(
+        //     position.ctrMin(blank, [0, 0, -interfaceThickness]),
+        //     position.ctrMin(cutaway),
+        // )
+        const blankOffsetY = fitGap / 2 - interfaceThickness
+        const roundFittingTeeAssembly = subtract(
+            align({
+                modes: ['center', 'min', 'min'],
+                relativeTo: [0, blankOffsetY, -interfaceThickness],
+            }, blank),
+            align({
+                modes: ['center', 'min', 'min'],
+            }, cutaway),
+        )
+
+        const mainModel = position.ctr(roundFittingTeeAssembly)
         const modelParts = {
             mainModel,
         }
@@ -530,7 +589,36 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         const initOpts = roundFittingOpts(opts)
         const modelProperties = roundFittingProps(initOpts)
 
-        const mainModel = cuboid()
+        const {
+            interfaceThickness,
+            length,
+            width,
+            simpleHeight,
+        } = modelProperties.dims
+
+        const totalLength = length * 2
+
+        const blankBase = cuboid({ size: [totalLength, width, simpleHeight] })
+        const cutawayProfile = roundFittingCutProfile(opts)[0]
+        let cutawayBase = extrudeLinear({ height: totalLength * 1.5 }, cutawayProfile)
+        cutawayBase = position.ctr(rotate([0, TAU / 4, 0], cutawayBase))
+
+        const blank = union(
+            blankBase,
+            rotate([0, 0, TAU / 4], blankBase),
+        )
+
+        const cutaway = union(
+            cutawayBase,
+            rotate([0, 0, TAU / 4], cutawayBase),
+        )
+
+        const roundFittingCrossAssembly = subtract(
+            position.ctrMin(blank, [0, 0, -interfaceThickness]),
+            position.ctrMin(cutaway),
+        )
+
+        const mainModel = position.ctr(roundFittingCrossAssembly)
         const modelParts = {
             mainModel,
         }
