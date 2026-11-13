@@ -266,6 +266,7 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
         const mainModel = adjLightReinfLength
         const modelParts = {
             mainModel,
+            baseModel: lightReinfLength,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -321,6 +322,7 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
         const mainModel = adjMediumReinfLength
         const modelParts = {
             mainModel,
+            baseModel: mediumReinfLength,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -376,6 +378,7 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
         const mainModel = adjHeavyReinfLength
         const modelParts = {
             mainModel,
+            baseModel: heavyReinfLength,
         }
 
         return [mainModel, modelParts, modelProperties]

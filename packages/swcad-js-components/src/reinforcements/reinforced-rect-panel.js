@@ -203,6 +203,7 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
         const mainModel = extrudedReinforcedRect
         const modelParts = {
             mainModel,
+            profile: reinforcedRect,
         }
 
         return [mainModel, modelParts, modelProperties]

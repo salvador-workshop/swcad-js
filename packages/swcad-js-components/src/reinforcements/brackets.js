@@ -201,7 +201,6 @@ const bracketsInit = ({ jscad, swcadJs }) => {
         } = modelProperties.opts
 
         const {
-            size,
             length,
             width,
             height,
@@ -242,6 +241,9 @@ const bracketsInit = ({ jscad, swcadJs }) => {
         const mainModel = position.ctr(rightAngleBracketAssembly)
         const modelParts = {
             mainModel,
+            sidePanel,
+            basePanel,
+            support: bracketReinf,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -265,7 +267,6 @@ const bracketsInit = ({ jscad, swcadJs }) => {
         } = modelProperties.opts
 
         const {
-            size,
             length,
             width,
             height,
@@ -347,6 +348,10 @@ const bracketsInit = ({ jscad, swcadJs }) => {
         const mainModel = position.ctr(cornerBracketAssembly)
         const modelParts = {
             mainModel,
+            sidePanelX,
+            sidePanelY,
+            supportX: bracketReinfX,
+            supportY: bracketReinfY,
         }
 
         return [mainModel, modelParts, modelProperties]

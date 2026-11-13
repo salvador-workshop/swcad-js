@@ -357,6 +357,7 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
         let mainModel = position.ctr(finalAssembly(modelProperties))
 
         let modelParts = {
+            mainModel,
             rectOutline: rectOutlineInst,
             rectPrimaryBracing: rectPrimaryBracingInst,
             rectSecondaryBracing: rectSecondaryBracingInst,

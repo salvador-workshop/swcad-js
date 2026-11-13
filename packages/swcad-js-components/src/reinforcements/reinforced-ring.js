@@ -340,6 +340,8 @@ const reinforcedRingInit = ({ jscad, swcadJs }) => {
         const mainModel = position.ctr(ringAssembly)
         const modelParts = {
             mainModel,
+            base: ringReinfBase,
+            innerEdge: ringReinfInnerEdge,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -400,6 +402,9 @@ const reinforcedRingInit = ({ jscad, swcadJs }) => {
         const mainModel = position.ctr(ringAssembly)
         const modelParts = {
             mainModel,
+            base: ringReinfBase,
+            innerEdge: ringReinfInnerEdge,
+            spokes: ringReinfSpokes,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -467,6 +472,10 @@ const reinforcedRingInit = ({ jscad, swcadJs }) => {
         const mainModel = position.ctr(ringAssembly)
         const modelParts = {
             mainModel,
+            base: ringReinfBase,
+            innerEdge: ringReinfInnerEdge,
+            spokes: ringReinfSpokes,
+            outerEdge: ringReinfOuterEdge,
         }
 
         return [mainModel, modelParts, modelProperties]

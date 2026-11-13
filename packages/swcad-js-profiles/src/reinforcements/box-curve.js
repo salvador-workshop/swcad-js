@@ -225,6 +225,8 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
 
         const modelParts = {
             mainModel,
+            blank,
+            cutaway,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -260,6 +262,8 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
 
         const modelParts = {
             mainModel,
+            blank,
+            cutaway,
         }
 
         return [mainModel, modelParts, modelProperties]

@@ -218,6 +218,7 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
 
         const modelParts = {
             mainModel,
+            profile: boxCurvesQtrModel,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -253,6 +254,7 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
 
         const modelParts = {
             mainModel,
+            profile: boxCurvesHalfModel,
         }
 
         return [mainModel, modelParts, modelProperties]

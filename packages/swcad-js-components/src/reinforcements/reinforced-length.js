@@ -470,6 +470,7 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
         const modelParts = {
             mainModel,
             unit: lightLengthUnitBase,
+            endPiece,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -549,7 +550,8 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
         const mainModel = union(mediumReinfLength, endPiece1, endPiece2)
         const modelParts = {
             mainModel,
-            unit: mediumLengthUnitBase
+            unit: mediumLengthUnitBase,
+            endPiece,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -629,7 +631,8 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
         const mainModel = union(heavyReinfLength, endPiece1, endPiece2)
         const modelParts = {
             mainModel,
-            unit: heavyLengthUnitBase
+            unit: heavyLengthUnitBase,
+            endPiece,
         }
 
         return [mainModel, modelParts, modelProperties]
