@@ -5,22 +5,26 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         circle,
         rectangle,
         triangle,
+        cuboid,
     } = jscad.primitives
 
     const {
         align,
         translate,
         rotate,
-        mirror
+        mirror,
     } = jscad.transforms
 
     const {
         subtract,
+        union,
     } = jscad.booleans
 
     const {
         extrudeLinear,
     } = jscad.extrusions
+
+    const { TAU } = jscad.maths.constants
 
     const {
         constants,
@@ -435,6 +439,105 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         return [mainModel, modelParts, modelProperties]
     }
 
+    /**
+     * Generates a ...
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number} opts.dowelRadius
+     * @param {number} opts.length
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof components.fittings
+     */
+    const roundFittingCross = (opts) => {
+        const initOpts = roundFittingOpts(opts)
+        const modelProperties = roundFittingProps(initOpts)
+
+        const {
+            interfaceThickness,
+            length,
+            width,
+            simpleHeight,
+        } = modelProperties.dims
+
+        const totalLength = length * 2
+
+        const blankBase = cuboid({ size: [totalLength, width, simpleHeight] })
+        const cutawayProfile = roundFittingCutProfile(opts)[0]
+        let cutawayBase = extrudeLinear({ height: totalLength * 1.5 }, cutawayProfile)
+        cutawayBase = position.ctr(rotate([0, TAU / 4, 0], cutawayBase))
+
+        const blank = union(
+            blankBase,
+            rotate([0, 0, TAU / 4], blankBase),
+        )
+
+        const cutaway = union(
+            cutawayBase,
+            rotate([0, 0, TAU / 4], cutawayBase),
+        )
+
+        // const roundFittingCrossAssembly = subtract(
+        //     position.ctrMax(blank),
+        //     cutaway
+        // )
+        const roundFittingCrossAssembly = subtract(
+            position.ctrMin(blank, [0, 0, -interfaceThickness]),
+            position.ctrMin(cutaway),
+        )
+
+        const mainModel = position.ctr(roundFittingCrossAssembly)
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
+     * Generates a ...
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number} opts.dowelRadius
+     * @param {number} opts.length
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof components.fittings
+     */
+    const roundFittingTee = (opts) => {
+        const initOpts = roundFittingOpts(opts)
+        const modelProperties = roundFittingProps(initOpts)
+
+        const mainModel = cuboid()
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
+     * Generates a ...
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number} opts.dowelRadius
+     * @param {number} opts.length
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof components.fittings
+     */
+    const roundFittingSplit = (opts) => {
+        const initOpts = roundFittingOpts(opts)
+        const modelProperties = roundFittingProps(initOpts)
+
+        const mainModel = cuboid()
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
     return {
         defaults: roundFittingDefaults,
         props: roundFittingProps,
@@ -443,6 +546,9 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         roundFitting,
         inverseRoundFitting,
         doubleRoundFitting,
+        roundFittingCross,
+        roundFittingTee,
+        roundFittingSplit,
     }
 }
 
