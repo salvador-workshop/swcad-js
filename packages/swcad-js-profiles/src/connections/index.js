@@ -682,7 +682,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
-     * @param {number} opts.radius
      * @param {number} opts.unitSpacing
      * @param {number} opts.unitRadius
      * @param {number} opts.unitSegments
@@ -1023,13 +1022,13 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         ////////
 
         const mainModel = [
-            dovetailProfiles[0],
             dovetailProfiles[1],
+            dovetailProfiles[0],
         ]
 
         const modelParts = {
-            male: dovetailProfiles[0],
-            female: dovetailProfiles[1],
+            male: dovetailProfiles[1],
+            female: dovetailProfiles[0],
             cut: dovetailRowCut,
         }
 
@@ -1121,13 +1120,13 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         ////////
 
         const mainModel = [
-            tabProfiles[0],
             tabProfiles[1],
+            tabProfiles[0],
         ]
 
         const modelParts = {
-            male: tabProfiles[0],
-            female: tabProfiles[1],
+            male: tabProfiles[1],
+            female: tabProfiles[0],
             cut: tabRowCut,
         }
 
@@ -1219,13 +1218,13 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         ////////
 
         const mainModel = [
-            rAngTabProfiles[0],
             rAngTabProfiles[1],
+            rAngTabProfiles[0],
         ]
 
         const modelParts = {
-            male: rAngTabProfiles[0],
-            female: rAngTabProfiles[1],
+            male: rAngTabProfiles[1],
+            female: rAngTabProfiles[0],
             cut: rAngTabRowCut,
         }
 

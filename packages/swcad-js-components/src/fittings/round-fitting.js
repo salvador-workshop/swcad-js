@@ -5,22 +5,27 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         circle,
         rectangle,
         triangle,
+        cuboid,
     } = jscad.primitives
 
     const {
         align,
         translate,
         rotate,
-        mirror
+        mirror,
     } = jscad.transforms
 
     const {
         subtract,
+        union,
+        intersect,
     } = jscad.booleans
 
     const {
         extrudeLinear,
     } = jscad.extrusions
+
+    const { TAU } = jscad.maths.constants
 
     const {
         constants,
@@ -30,6 +35,10 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         math,
         position,
     } = swcadJs.calcs
+
+    const {
+        connections,
+    } = swcadJs.profiles
 
 
     //==============================================================================
@@ -435,6 +444,205 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         return [mainModel, modelParts, modelProperties]
     }
 
+    /**
+     * Generates a "cross" round fitting.
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number} opts.dowelRadius
+     * @param {number} opts.length
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof components.fittings
+     */
+    const roundFittingCross = (opts) => {
+        const initOpts = roundFittingOpts(opts)
+        const modelProperties = roundFittingProps(initOpts)
+
+        const {
+            interfaceThickness,
+            length,
+            width,
+            simpleHeight,
+        } = modelProperties.dims
+
+        const totalLength = length * 2
+
+        const blankBase = cuboid({ size: [totalLength, width, simpleHeight] })
+        const cutawayProfile = roundFittingCutProfile(opts)[0]
+        let cutawayBase = extrudeLinear({ height: totalLength * 1.5 }, cutawayProfile)
+        cutawayBase = position.ctr(rotate([0, TAU / 4, 0], cutawayBase))
+
+        const blank = union(
+            blankBase,
+            rotate([0, 0, TAU / 4], blankBase),
+        )
+
+        const cutaway = union(
+            cutawayBase,
+            rotate([0, 0, TAU / 4], cutawayBase),
+        )
+
+        const roundFittingCrossAssembly = subtract(
+            position.ctrMin(blank, [0, 0, -interfaceThickness]),
+            position.ctrMin(cutaway),
+        )
+
+        const mainModel = position.ctr(roundFittingCrossAssembly)
+        const modelParts = {
+            mainModel,
+            blankBase,
+            cutawayProfile,
+            cutawayBase,
+            blank,
+            cutaway,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
+     * Generates a "T" round fitting.
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number} opts.dowelRadius
+     * @param {number} opts.length
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof components.fittings
+     */
+    const roundFittingTee = (opts) => {
+        const initOpts = roundFittingOpts(opts)
+        const modelProperties = roundFittingProps(initOpts)
+
+        const {
+            interfaceThickness,
+            length,
+            width,
+            simpleHeight,
+            fitGap,
+        } = modelProperties.dims
+
+        const totalLength = length * 2
+
+        const blankBase = cuboid({ size: [totalLength, width, simpleHeight] })
+        const blankBaseTee = align(
+            { modes: ['min', 'center', 'center'] },
+            cuboid({ size: [length, width, simpleHeight] })
+        )
+
+        const cutawayProfile = roundFittingCutProfile(opts)[0]
+
+        let cutawayBase = extrudeLinear({ height: totalLength * 1.5 }, cutawayProfile)
+        cutawayBase = position.ctr(rotate([0, TAU / 4, 0], cutawayBase))
+
+        let cutawayBaseTee = extrudeLinear({ height: length * 1.5 }, cutawayProfile)
+        cutawayBaseTee = align(
+            { modes: ['min', 'center', 'center'] },
+            rotate([0, TAU / 4, 0], cutawayBaseTee)
+        )
+
+        const blank = union(
+            blankBase,
+            rotate([0, 0, TAU / 4], blankBaseTee),
+        )
+
+        const cutaway = union(
+            cutawayBase,
+            rotate([0, 0, TAU / 4], cutawayBaseTee),
+        )
+
+        const blankOffsetY = fitGap / 2 - interfaceThickness
+        const roundFittingTeeAssembly = subtract(
+            align({
+                modes: ['center', 'min', 'min'],
+                relativeTo: [0, blankOffsetY, -interfaceThickness],
+            }, blank),
+            align({
+                modes: ['center', 'min', 'min'],
+            }, cutaway),
+        )
+
+        const mainModel = position.ctr(roundFittingTeeAssembly)
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
+     * Generates a split round fitting. Returns two models (male + female).
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number} opts.dowelRadius
+     * @param {number} opts.length
+     * @returns Array with model, parts, and properties: [`geom3`[], `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof components.fittings
+     */
+    const roundFittingSplit = (opts) => {
+        const initOpts = roundFittingOpts(opts)
+        const modelProperties = roundFittingProps(initOpts)
+
+        const {
+            interfaceThickness,
+            length,
+            width,
+            simpleHeight,
+            dowelRadius,
+        } = modelProperties.dims
+
+        const connLength = interfaceThickness * 2 + dowelRadius
+        const fittingBodyLength = (length - connLength) / 2
+
+        const splitProfiles = connections.ellipse({
+            size: [width, connLength],
+            interfaceMargin: [interfaceThickness, interfaceThickness],
+            segments: 12,
+        })[0]
+        const [maleSplitProfile, femaleSplitProfile] = splitProfiles
+        const fittingBodyProfile = rectangle({ size: [width, fittingBodyLength] })
+
+        const maleFittingProfile = union(
+            align({ modes: ['center', 'min', 'center'] }, maleSplitProfile),
+            align({ modes: ['center', 'max', 'center'] }, fittingBodyProfile),
+        )
+        const femaleFittingProfile = union(
+            align({ modes: ['center', 'max', 'center'] }, femaleSplitProfile),
+            align({ modes: ['center', 'min', 'center'] }, fittingBodyProfile),
+        )
+
+        const maleFittingZone = extrudeLinear({ height: simpleHeight }, maleFittingProfile)
+        const femaleFittingZone = extrudeLinear({ height: simpleHeight }, femaleFittingProfile)
+        const baseFitting = roundFitting(opts)[0]
+
+        const maleRoundFitting = intersect(
+            position.ctrMin(maleFittingZone),
+            position.ctrMin(baseFitting),
+        )
+        const femaleRoundFitting = intersect(
+            position.ctrMin(femaleFittingZone),
+            position.ctrMin(baseFitting),
+        )
+
+        const mainModel = [
+            position.ctr(maleRoundFitting),
+            position.ctr(femaleRoundFitting),
+        ]
+
+        const modelParts = {
+            mainModel,
+            maleSplitProfile,
+            femaleSplitProfile,
+            maleFittingProfile,
+            femaleFittingProfile,
+            maleFitting: maleRoundFitting,
+            femaleFitting: femaleRoundFitting,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
     return {
         defaults: roundFittingDefaults,
         props: roundFittingProps,
@@ -443,6 +651,9 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         roundFitting,
         inverseRoundFitting,
         doubleRoundFitting,
+        roundFittingCross,
+        roundFittingTee,
+        roundFittingSplit,
     }
 }
 
