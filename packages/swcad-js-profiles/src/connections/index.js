@@ -682,7 +682,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size
-     * @param {number} opts.radius
      * @param {number} opts.unitSpacing
      * @param {number} opts.unitRadius
      * @param {number} opts.unitSegments

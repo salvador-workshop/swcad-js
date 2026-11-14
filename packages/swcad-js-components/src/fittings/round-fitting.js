@@ -445,7 +445,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Generates a ...
+     * Generates a "cross" round fitting.
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
@@ -501,7 +501,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Generates a ...
+     * Generates a "T" round fitting.
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
@@ -519,12 +519,6 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
             length,
             width,
             simpleHeight,
-            dowelRadius,
-            dowelDiam,
-            invCutProfileHeight,
-            invCutProfileSideLength,
-            roundCutProfileRadius,
-            invSimpleHeight,
             fitGap,
         } = modelProperties.dims
 
@@ -557,10 +551,6 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
             rotate([0, 0, TAU / 4], cutawayBaseTee),
         )
 
-        // const roundFittingTeeAssembly = subtract(
-        //     position.ctrMin(blank, [0, 0, -interfaceThickness]),
-        //     position.ctrMin(cutaway),
-        // )
         const blankOffsetY = fitGap / 2 - interfaceThickness
         const roundFittingTeeAssembly = subtract(
             align({
@@ -581,13 +571,13 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Generates a ...
+     * Generates a split round fitting. Returns two models (male + female).
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number} opts.dowelRadius
      * @param {number} opts.length
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns Array with model, parts, and properties: [`geom3`[], `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof components.fittings
      */
     const roundFittingSplit = (opts) => {
