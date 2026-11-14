@@ -1,17 +1,5 @@
 "use strict"
 
-/**
- * Modelling functions that generate perforated 3D shapes.
- * @memberof components
- * @namespace mesh
- */
-
-//-----------
-// TO-DO
-//---------------------
-// - Cylinders with rounded corners
-//---------------------
-
 const mesh3dInit = ({ jscad, swcadJs }) => {
     const { extrudeLinear } = jscad.extrusions
 
@@ -38,16 +26,18 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.holeRadius
      * @param {number} opts.holeDistance
      * @param {string} opts.holePattern
-     * @returns ...
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      */
-    const meshPanel = ({
-        size,
-        thickness = standards.INTERFACE_THICKNESS,
-        edgeMargin = math.inchesToMm(1 / 8),
-        holeRadius,
-        holeDistance,
-        holePattern = 'tri',
-    }) => {
+    const meshPanel = (opts) => {
+        const {
+            size,
+            thickness = standards.INTERFACE_THICKNESS,
+            edgeMargin = math.inchesToMm(1 / 8),
+            holeRadius,
+            holeDistance,
+            holePattern = 'tri',
+        } = opts
+
         const mPanelProfile = mesh2d.meshPanel({
             size: [size[0], size[1]],
             edgeMargin,
@@ -56,11 +46,25 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
             holePattern,
         })[0]
 
-        const mPanel = extrudeLinear({ height: thickness }, mPanelProfile)
+        let mPanel = extrudeLinear({ height: thickness }, mPanelProfile)
 
-        return position.ctr(mPanel)
+        mPanel = position.ctr(mPanel)
+
+        const mainModel = mPanel
+
+        const modelParts = {
+            mainModel,
+            profile: mPanelProfile,
+        }
+
+        return [mainModel, modelParts, opts]
     }
 
+    /**
+     * Modelling functions that generate perforated 3D shapes.
+     * @memberof components
+     * @namespace mesh
+     */
     return {
         meshPanel,
     }

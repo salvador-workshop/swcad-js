@@ -265,7 +265,7 @@ const moduleInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.endOffset
      * @param {number} opts.baseLineOffset
      * @param {geom3} opts.component
-     * @returns `geom3` or `geom3[]`
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @author R. J. Salvador (Salvador Workshop)
      * @memberof components
      */
