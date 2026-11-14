@@ -89,7 +89,6 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
      */
     const reinforcedLineOpts = (opts) => {
         const defaults = reinforcedLineDefaults()
-        console.log('reinforcedLineOpts() -- opts', opts)
 
         // User options
         const {
@@ -118,7 +117,6 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
             hasUnitReinforcements,
         }
 
-        console.log('reinforcedLineOpts() -- initOpts', initOpts)
 
         return initOpts
     }
@@ -136,7 +134,6 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
      */
     const reinforcedLineProps = (opts) => {
         const defaults = reinforcedLineDefaults()
-        console.log('reinforcedLineProps() -- prop opts', opts)
 
         const {
             startPt,
@@ -218,7 +215,6 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
             components: modelComponents,
         }
 
-        console.log('reinforcedLineProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }

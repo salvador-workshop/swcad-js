@@ -288,11 +288,11 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
             fitGap,
         }
 
-        let jointData = connections.tabRow(jointOpts)
+        let jointData = connections.tabRow.tabRow(jointOpts)
         if (type == 'dovetail') {
-            jointData = connections.dovetailRow(jointOpts)
+            jointData = connections.tabRow.dovetailRow(jointOpts)
         } else if (type == 'rightAngleTab') {
-            jointData = connections.rightAngleTabRow(jointOpts)
+            jointData = connections.tabRow.rightAngleTabRow(jointOpts)
         }
 
         let jointCut = position.ctr(jointData[1].cut)
@@ -381,11 +381,11 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
             numConnectors: jNumConnectors[0],
             fitGap,
         }
-        let jointDataX = connections.tabRow(jointOptsX)
+        let jointDataX = connections.tabRow.tabRow(jointOptsX)
         if (type == 'dovetail') {
-            jointDataX = connections.dovetailRow(jointOptsX)
+            jointDataX = connections.tabRow.dovetailRow(jointOptsX)
         } else if (type == 'rightAngleTab') {
-            jointDataX = connections.rightAngleTabRow(jointOptsX)
+            jointDataX = connections.tabRow.rightAngleTabRow(jointOptsX)
         }
         const jointCutX = position.ctr(jointDataX[1].cut)
 
@@ -396,11 +396,11 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
             numConnectors: jNumConnectors[1],
             fitGap,
         }
-        let jointDataY = connections.tabRow(jointOptsY)
+        let jointDataY = connections.tabRow.tabRow(jointOptsY)
         if (type == 'dovetail') {
-            jointDataY = connections.dovetailRow(jointOptsY)
+            jointDataY = connections.tabRow.dovetailRow(jointOptsY)
         } else if (type == 'rightAngleTab') {
-            jointDataY = connections.rightAngleTabRow(jointOptsY)
+            jointDataY = connections.tabRow.rightAngleTabRow(jointOptsY)
         }
         const jointCutY = rotate([0, 0, TAU / 4], position.ctr(jointDataY[1].cut))
 

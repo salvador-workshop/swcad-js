@@ -80,7 +80,6 @@ const reinforcedJoistLineInit = ({ jscad, swcadJs }) => {
      */
     const reinforcedJoistLineOpts = (opts) => {
         const defaults = reinforcedJoistLineDefaults()
-        console.log('reinforcedJoistLineOpts() -- opts', opts)
 
         // User options
         const {
@@ -103,7 +102,6 @@ const reinforcedJoistLineInit = ({ jscad, swcadJs }) => {
             interfaceThickness,
         }
 
-        console.log('reinforcedJoistLineOpts() -- initOpts', initOpts)
 
         return initOpts
     }
@@ -121,7 +119,6 @@ const reinforcedJoistLineInit = ({ jscad, swcadJs }) => {
      */
     const reinforcedJoistLineProps = (opts) => {
         const defaults = reinforcedJoistLineDefaults()
-        console.log('reinforcedJoistLineProps() -- prop opts', opts)
 
         const {
             startPt,
@@ -196,8 +193,6 @@ const reinforcedJoistLineInit = ({ jscad, swcadJs }) => {
             points: modelPoints,
             components: modelComponents,
         }
-
-        console.log('reinforcedJoistLineProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }

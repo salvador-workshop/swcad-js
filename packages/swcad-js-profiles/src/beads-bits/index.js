@@ -272,7 +272,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
         const mainModel = fullBit
         const modelParts = {
             mainModel,
-            fullBit,
+            corner: cornerBit,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -356,6 +356,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
         const mainModel = fullBit
         const modelParts = {
             mainModel,
+            corner: cornerBit,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -440,6 +441,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
         const mainModel = fullBit
         const modelParts = {
             mainModel,
+            corner: cornerBit,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -525,6 +527,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
         const mainModel = fullBit
         const modelParts = {
             mainModel,
+            corner: cornerBit,
         }
 
         return [mainModel, modelParts, modelProperties]

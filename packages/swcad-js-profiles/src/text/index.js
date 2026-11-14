@@ -24,7 +24,7 @@ const textUtils = ({ jscad, swcadJs }) => {
      * @param {number} opts.charLineWidth
      * @param {string} opts.message
      * @param {number} opts.fontSize
-     * @returns ...
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      */
     const basicText = (opts) => {
         const lineRadius = opts.charLineWidth / 2
@@ -37,8 +37,17 @@ const textUtils = ({ jscad, swcadJs }) => {
             lineSegments.push(hullChain(corners))
         })
 
-        const bText = union(lineSegments)
-        return position.ctr(bText)
+        let bText = union(lineSegments)
+        bText = position.ctr(bText)
+
+        const mainModel = bText
+
+        const modelParts = {
+            mainModel,
+            textLines: lineSegmentPointArrays,
+        }
+
+        return [mainModel, modelParts, opts]
     }
 
     return {

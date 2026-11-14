@@ -86,7 +86,6 @@ const reinforcedRingInit = ({ jscad, swcadJs }) => {
      */
     const reinforcedRingOpts = (opts) => {
         const defaults = reinforcedRingDefaults()
-        console.log('reinforcedRingOpts() -- opts', opts)
 
         // User options
         const {
@@ -107,7 +106,6 @@ const reinforcedRingInit = ({ jscad, swcadJs }) => {
             fitGap
         }
 
-        console.log('reinforcedRingOpts() -- initOpts', initOpts)
 
         return initOpts
     }
@@ -125,7 +123,6 @@ const reinforcedRingInit = ({ jscad, swcadJs }) => {
      */
     const reinforcedRingProps = (opts) => {
         const defaults = reinforcedRingDefaults()
-        console.log('reinforcedRingProps() -- opts', opts)
 
         const {
             height,
@@ -195,7 +192,6 @@ const reinforcedRingInit = ({ jscad, swcadJs }) => {
             components: modelComponents,
         }
 
-        console.log('reinforcedRingProps() -- modelProperties', modelProperties)
 
         return modelProperties
     }
