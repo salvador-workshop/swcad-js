@@ -18,6 +18,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
     const {
         subtract,
         union,
+        intersect,
     } = jscad.booleans
 
     const {
@@ -34,6 +35,10 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         math,
         position,
     } = swcadJs.calcs
+
+    const {
+        connections,
+    } = swcadJs.profiles
 
 
     //==============================================================================
@@ -594,33 +599,55 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
             length,
             width,
             simpleHeight,
+            dowelRadius,
         } = modelProperties.dims
 
-        const totalLength = length * 2
+        const connLength = interfaceThickness * 2 + dowelRadius
+        const fittingBodyLength = (length - connLength) / 2
 
-        const blankBase = cuboid({ size: [totalLength, width, simpleHeight] })
-        const cutawayProfile = roundFittingCutProfile(opts)[0]
-        let cutawayBase = extrudeLinear({ height: totalLength * 1.5 }, cutawayProfile)
-        cutawayBase = position.ctr(rotate([0, TAU / 4, 0], cutawayBase))
+        const splitProfiles = connections.ellipse({
+            size: [width, connLength],
+            interfaceMargin: [interfaceThickness, interfaceThickness],
+            segments: 12,
+        })[0]
+        const [maleSplitProfile, femaleSplitProfile] = splitProfiles
+        const fittingBodyProfile = rectangle({ size: [width, fittingBodyLength] })
 
-        const blank = union(
-            blankBase,
-            rotate([0, 0, TAU / 4], blankBase),
+        const maleFittingProfile = union(
+            align({ modes: ['center', 'min', 'center'] }, maleSplitProfile),
+            align({ modes: ['center', 'max', 'center'] }, fittingBodyProfile),
+        )
+        const femaleFittingProfile = union(
+            align({ modes: ['center', 'max', 'center'] }, femaleSplitProfile),
+            align({ modes: ['center', 'min', 'center'] }, fittingBodyProfile),
         )
 
-        const cutaway = union(
-            cutawayBase,
-            rotate([0, 0, TAU / 4], cutawayBase),
+        const maleFittingZone = extrudeLinear({ height: simpleHeight }, maleFittingProfile)
+        const femaleFittingZone = extrudeLinear({ height: simpleHeight }, femaleFittingProfile)
+        const baseFitting = roundFitting(opts)[0]
+
+        const maleRoundFitting = intersect(
+            position.ctrMin(maleFittingZone),
+            position.ctrMin(baseFitting),
+        )
+        const femaleRoundFitting = intersect(
+            position.ctrMin(femaleFittingZone),
+            position.ctrMin(baseFitting),
         )
 
-        const roundFittingCrossAssembly = subtract(
-            position.ctrMin(blank, [0, 0, -interfaceThickness]),
-            position.ctrMin(cutaway),
-        )
+        const mainModel = [
+            position.ctr(maleRoundFitting),
+            position.ctr(femaleRoundFitting),
+        ]
 
-        const mainModel = position.ctr(roundFittingCrossAssembly)
         const modelParts = {
             mainModel,
+            maleSplitProfile,
+            femaleSplitProfile,
+            maleFittingProfile,
+            femaleFittingProfile,
+            maleFitting: maleRoundFitting,
+            femaleFitting: femaleRoundFitting,
         }
 
         return [mainModel, modelParts, modelProperties]
