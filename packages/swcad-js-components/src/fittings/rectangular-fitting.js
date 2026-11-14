@@ -3,6 +3,7 @@
 const rectangularFittingInit = ({ jscad, swcadJs }) => {
     const {
         rectangle,
+        cuboid,
     } = jscad.primitives
 
     const {
@@ -12,11 +13,15 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
 
     const {
         subtract,
+        union,
+        intersect,
     } = jscad.booleans
 
     const {
         extrudeLinear,
     } = jscad.extrusions
+
+    const { TAU } = jscad.maths.constants
 
     const {
         standards,
@@ -26,6 +31,10 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
         math,
         position,
     } = swcadJs.calcs
+
+    const {
+        connections,
+    } = swcadJs.profiles
 
 
     //==============================================================================
@@ -269,11 +278,214 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
         return [mainModel, modelParts, modelProperties]
     }
 
+    /**
+     * Generates a "cross" rectangular fitting.
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number[]} opts.subjectSize
+     * @param {number} opts.length
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof components.fittings
+     */
+    const rectangularFittingCross = (opts) => {
+        const initOpts = rectangularFittingOpts(opts)
+        const modelProperties = rectangularFittingProps(initOpts)
+
+        const {
+            interfaceThickness,
+            length,
+            width,
+            height,
+        } = modelProperties.dims
+
+        const totalLength = length * 2
+
+        const blankBase = cuboid({ size: [totalLength, width, height] })
+        const cutawayProfile = rectFittingCutProfile(opts)[0]
+        let cutawayBase = extrudeLinear({ height: totalLength * 1.5 }, cutawayProfile)
+        cutawayBase = position.ctr(rotate([TAU / 4, 0, 0], cutawayBase))
+
+        const blank = union(
+            blankBase,
+            rotate([0, 0, TAU / 4], blankBase),
+        )
+
+        const cutaway = union(
+            cutawayBase,
+            rotate([0, 0, TAU / 4], cutawayBase),
+        )
+
+        const rectangularFittingCrossAssembly = subtract(
+            position.ctrMin(blank, [0, 0, -interfaceThickness]),
+            position.ctrMin(cutaway),
+        )
+
+        const mainModel = position.ctr(rectangularFittingCrossAssembly)
+        const modelParts = {
+            mainModel,
+            blankBase,
+            cutawayProfile,
+            cutawayBase,
+            blank,
+            cutaway,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
+     * Generates a "T" rectangular fitting.
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number[]} opts.subjectSize
+     * @param {number} opts.length
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof components.fittings
+     */
+    const rectangularFittingTee = (opts) => {
+        const initOpts = rectangularFittingOpts(opts)
+        const modelProperties = rectangularFittingProps(initOpts)
+
+        const {
+            interfaceThickness,
+            length,
+            width,
+            height,
+            fitGap,
+        } = modelProperties.dims
+
+        const totalLength = length * 2
+
+        const blankBase = cuboid({ size: [totalLength, width, height] })
+        const blankBaseTee = align(
+            { modes: ['min', 'center', 'center'] },
+            cuboid({ size: [length, width, height] })
+        )
+
+        const cutawayProfile = rectFittingCutProfile(opts)[0]
+
+        let cutawayBase = extrudeLinear({ height: totalLength * 1.5 }, cutawayProfile)
+        cutawayBase = position.ctr(rotate([TAU / 4, 0, 0], cutawayBase))
+
+        let cutawayBaseTee = extrudeLinear({ height: length * 1.5 }, cutawayProfile)
+        cutawayBaseTee = align(
+            { modes: ['center', 'min', 'center'] },
+            rotate([TAU / 4, 0, 0], cutawayBaseTee)
+        )
+
+        const blank = union(
+            blankBase,
+            rotate([0, 0, TAU / 4], blankBaseTee),
+        )
+
+        const cutaway = union(
+            rotate([0, 0, TAU / 4], cutawayBase),
+            cutawayBaseTee,
+        )
+
+        const blankOffsetY = fitGap / 2 - interfaceThickness
+        const rectangularFittingTeeAssembly = subtract(
+            align({
+                modes: ['center', 'min', 'min'],
+                relativeTo: [0, blankOffsetY, -interfaceThickness],
+            }, blank),
+            align({
+                modes: ['center', 'min', 'min'],
+            }, cutaway),
+        )
+
+        const mainModel = position.ctr(rectangularFittingTeeAssembly)
+        const modelParts = {
+            mainModel,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
+     * Generates a split rectangular fitting. Returns two models (male + female).
+     * @param {Object} opts - Options for the model
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
+     * @param {number} opts.fitGap - Gap for fitting parts together
+     * @param {number[]} opts.subjectSize
+     * @param {number} opts.length
+     * @returns Array with model, parts, and properties: [`geom3`[], `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof components.fittings
+     */
+    const rectangularFittingSplit = (opts) => {
+        const initOpts = rectangularFittingOpts(opts)
+        const modelProperties = rectangularFittingProps(initOpts)
+
+        const {
+            subjectWidth,
+            interfaceThickness,
+            length,
+            width,
+            height,
+        } = modelProperties.dims
+
+        const ellipseTabRadius = subjectWidth / 2
+        const connLength = interfaceThickness * 2 + ellipseTabRadius
+        const fittingBodyLength = (length - connLength) / 2
+
+        const splitProfiles = connections.tab.ellipse({
+            size: [width, connLength],
+            interfaceMargin: [interfaceThickness, interfaceThickness],
+            segments: 12,
+        })[0]
+        const [maleSplitProfile, femaleSplitProfile] = splitProfiles
+        const fittingBodyProfile = rectangle({ size: [width, fittingBodyLength] })
+
+        const maleFittingProfile = union(
+            align({ modes: ['center', 'min', 'center'] }, maleSplitProfile),
+            align({ modes: ['center', 'max', 'center'] }, fittingBodyProfile),
+        )
+        const femaleFittingProfile = union(
+            align({ modes: ['center', 'max', 'center'] }, femaleSplitProfile),
+            align({ modes: ['center', 'min', 'center'] }, fittingBodyProfile),
+        )
+
+        const maleFittingZone = extrudeLinear({ height: height }, maleFittingProfile)
+        const femaleFittingZone = extrudeLinear({ height: height }, femaleFittingProfile)
+        const baseFitting = rectangularFitting(opts)[0]
+
+        const maleRoundFitting = intersect(
+            position.ctrMin(maleFittingZone),
+            position.ctrMin(baseFitting),
+        )
+        const femaleRoundFitting = intersect(
+            position.ctrMin(femaleFittingZone),
+            position.ctrMin(baseFitting),
+        )
+
+        const mainModel = [
+            position.ctr(maleRoundFitting),
+            position.ctr(femaleRoundFitting),
+        ]
+
+        const modelParts = {
+            mainModel,
+            maleSplitProfile,
+            femaleSplitProfile,
+            maleFittingProfile,
+            femaleFittingProfile,
+            maleFitting: maleRoundFitting,
+            femaleFitting: femaleRoundFitting,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
     return {
         defaults: rectangularFittingDefaults,
         props: rectangularFittingProps,
         rectFittingCutProfile,
         rectangularFitting,
+        rectangularFittingCross,
+        rectangularFittingTee,
+        rectangularFittingSplit,
     }
 }
 
