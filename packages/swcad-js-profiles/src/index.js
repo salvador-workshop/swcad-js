@@ -19,10 +19,21 @@ const profilesInit = ({ jscad, swcadJs }) => {
         }
     }
 
-    const connectionsApi = {
+    const connectionsSetup = {
         ...connections,
-        jointPanel: jointPanelModule.init({ jscad, swcadJs: preLib }),
         tabRow: tabRowModule.init({ jscad, swcadJs: preLib }),
+    }
+
+    preLib = {
+        ...swcadJs,
+        profiles: {
+            connections: connectionsSetup
+        }
+    }
+
+    const connectionsApi = {
+        ...connectionsSetup,
+        jointPanel: jointPanelModule.init({ jscad, swcadJs: preLib }),
     }
 
     /**

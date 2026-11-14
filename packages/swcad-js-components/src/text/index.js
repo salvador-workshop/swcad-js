@@ -45,9 +45,8 @@ const textUtils = ({ jscad, swcadJs }) => {
             message: opts.message,
             fontSize: opts.fontSize,
             charLineWidth: opts.charLineWidth
-        })
+        })[0]
         let message3D = extrudeLinear({ height: opts.extrudeHeight || DEFAULT_EXTRUDE_HEIGHT }, message2D)
-
         message3D = position.ctr(message3D)
 
         const mainModel = message3D
@@ -121,7 +120,7 @@ const textUtils = ({ jscad, swcadJs }) => {
         const textModel = flatText({
             ...opts,
             extrudeHeight: extrudeHt,
-        });
+        })[0];
         const textModelDims = measureDimensions(textModel);
         const panelOffset = opts.panelOffset || 2;
 
