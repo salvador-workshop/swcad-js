@@ -595,7 +595,7 @@ const roundFittingInit = ({ jscad, swcadJs }) => {
         const connLength = interfaceThickness * 2 + dowelRadius
         const fittingBodyLength = (length - connLength) / 2
 
-        const splitProfiles = connections.ellipse({
+        const splitProfiles = connections.tab.ellipse({
             size: [width, connLength],
             interfaceMargin: [interfaceThickness, interfaceThickness],
             segments: 12,

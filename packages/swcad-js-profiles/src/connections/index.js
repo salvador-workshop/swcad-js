@@ -1,7 +1,6 @@
 "use strict"
 
 const tabModule = require('./tab')
-const tabRowModule = require('./tab-row')
 
 /**
  * Modelling functions that generate connecting and interlocking 2D parts.
@@ -444,13 +443,11 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     const tab = tabModule.init({ jscad, swcadJs })
-    const tabRow = tabRowModule.init({ jscad, swcadJs })
 
     return {
         defaults: modelDefaults,
         props: modelProps,
         tab,
-        tabRow,
         polygon,
         pegboard,
         boltCircle,

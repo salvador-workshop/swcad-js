@@ -2,10 +2,12 @@
 
 const beadsBitsModule = require('./beads-bits')
 const connectionsModule = require('./connections')
-const jointPanelModule = require('./connections/joint-panel')
 const meshModule = require('./mesh')
 const reinforcementsModule = require('./reinforcements')
 const textModule = require('./text')
+
+const jointPanelModule = require('./connections/joint-panel')
+const tabRowModule = require('./connections/tab-row')
 
 const profilesInit = ({ jscad, swcadJs }) => {
     const connections = connectionsModule.init({ jscad, swcadJs })
@@ -19,7 +21,8 @@ const profilesInit = ({ jscad, swcadJs }) => {
 
     const connectionsApi = {
         ...connections,
-        jointPanel: jointPanelModule.init({ jscad, swcadJs: preLib })
+        jointPanel: jointPanelModule.init({ jscad, swcadJs: preLib }),
+        tabRow: tabRowModule.init({ jscad, swcadJs: preLib }),
     }
 
     /**
