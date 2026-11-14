@@ -3,6 +3,7 @@
 const rectangularFittingInit = ({ jscad, swcadJs }) => {
     const {
         rectangle,
+        cuboid,
     } = jscad.primitives
 
     const {
@@ -12,11 +13,15 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
 
     const {
         subtract,
+        union,
+        intersect,
     } = jscad.booleans
 
     const {
         extrudeLinear,
     } = jscad.extrusions
+
+    const { TAU } = jscad.maths.constants
 
     const {
         standards,
@@ -26,6 +31,10 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
         math,
         position,
     } = swcadJs.calcs
+
+    const {
+        connections,
+    } = swcadJs.profiles
 
 
     //==============================================================================
@@ -295,7 +304,7 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
         const blankBase = cuboid({ size: [totalLength, width, height] })
         const cutawayProfile = rectFittingCutProfile(opts)[0]
         let cutawayBase = extrudeLinear({ height: totalLength * 1.5 }, cutawayProfile)
-        cutawayBase = position.ctr(rotate([0, TAU / 4, 0], cutawayBase))
+        cutawayBase = position.ctr(rotate([TAU / 4, 0, 0], cutawayBase))
 
         const blank = union(
             blankBase,
@@ -358,12 +367,12 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
         const cutawayProfile = rectFittingCutProfile(opts)[0]
 
         let cutawayBase = extrudeLinear({ height: totalLength * 1.5 }, cutawayProfile)
-        cutawayBase = position.ctr(rotate([0, TAU / 4, 0], cutawayBase))
+        cutawayBase = position.ctr(rotate([TAU / 4, 0, 0], cutawayBase))
 
         let cutawayBaseTee = extrudeLinear({ height: length * 1.5 }, cutawayProfile)
         cutawayBaseTee = align(
-            { modes: ['min', 'center', 'center'] },
-            rotate([0, TAU / 4, 0], cutawayBaseTee)
+            { modes: ['center', 'min', 'center'] },
+            rotate([TAU / 4, 0, 0], cutawayBaseTee)
         )
 
         const blank = union(
@@ -372,8 +381,8 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
         )
 
         const cutaway = union(
-            cutawayBase,
-            rotate([0, 0, TAU / 4], cutawayBaseTee),
+            rotate([0, 0, TAU / 4], cutawayBase),
+            cutawayBaseTee,
         )
 
         const blankOffsetY = fitGap / 2 - interfaceThickness
@@ -410,13 +419,14 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
         const modelProperties = rectangularFittingProps(initOpts)
 
         const {
+            subjectWidth,
             interfaceThickness,
             length,
             width,
             height,
         } = modelProperties.dims
 
-        const ellipseTabRadius = width / 2
+        const ellipseTabRadius = subjectWidth / 2
         const connLength = interfaceThickness * 2 + ellipseTabRadius
         const fittingBodyLength = (length - connLength) / 2
 
