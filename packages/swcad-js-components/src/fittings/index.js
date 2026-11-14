@@ -22,6 +22,9 @@ const fittingsInit = ({ jscad, swcadJs }) => {
         roundFittingSplit: roundFitting.roundFittingSplit,
         rectangularFitting: rectangularFitting.rectangularFitting,
         rectFittingCutProfile: rectangularFitting.rectFittingCutProfile,
+        rectangularFittingCross: rectangularFitting.rectangularFittingCross,
+        rectangularFittingTee: rectangularFitting.rectangularFittingTee,
+        rectangularFittingSplit: rectangularFitting.rectangularFittingSplit,
     }
 }
 
