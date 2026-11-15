@@ -1,6 +1,5 @@
 "use strict"
 
-const geoRegPolyModule = require('./geo-reg-poly');
 const pointsModule = require('./points');
 const reinforcementModule = require('./reinforcement');
 
@@ -116,7 +115,6 @@ const geometryInit = ({ jscad, swcadJs }) => {
     }
 
     const points = pointsModule.init({ jscad, swcadJs })
-    const regPoly = geoRegPolyModule.init({ jscad, swcadJs })
     const reinforcement = reinforcementModule.init({ jscad, swcadJs })
 
     return {
@@ -127,7 +125,6 @@ const geometryInit = ({ jscad, swcadJs }) => {
         getLineDataFromOutlinePoints,
         distanceBetweenPoints,
         points,
-        regPoly,
         reinforcement,
     }
 }
