@@ -52,7 +52,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
                 edgeMargin: math.inchesToMm(3 / 16),
                 holeRadius: math.inchesToMm(0.125),
                 holeDistance: math.inchesToMm(1),
-                lineThickness: defInterfaceThickness,
+                gapThickness: defInterfaceThickness,
             },
             points: {},
             components: {},
@@ -64,7 +64,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             edgeMargin: defaultValues.dims.edgeMargin,
             holeRadius: defaultValues.dims.holeRadius,
             holeDistance: defaultValues.dims.holeDistance,
-            lineThickness: defaultValues.dims.lineThickness,
+            gapThickness: defaultValues.dims.gapThickness,
             holePattern: defaultValues.opts.holePattern,
             holeSegments: defaultValues.opts.holeSegments,
         }
@@ -95,7 +95,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             edgeMargin = defaults.opts.edgeMargin,
             holeRadius = defaults.opts.holeRadius,
             holeDistance = defaults.opts.holeDistance,
-            lineThickness = defaults.opts.lineThickness,
+            gapThickness = defaults.opts.gapThickness,
             holePattern = defaults.opts.holePattern,
             holeSegments = defaults.opts.holeSegments,
         } = opts
@@ -105,7 +105,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             edgeMargin,
             holeRadius,
             holeDistance,
-            lineThickness,
+            gapThickness,
             holePattern,
             holeSegments
         }
@@ -128,7 +128,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             edgeMargin,
             holeRadius,
             holeDistance,
-            lineThickness,
+            gapThickness,
             holePattern,
             holeSegments,
         } = opts
@@ -170,7 +170,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             holeRadius,
             holeDiam,
             holeDistance,
-            lineThickness,
+            gapThickness,
         }
 
         /** Various key points for model */
@@ -223,14 +223,14 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
     const meshPanelFrameBlankProfile = (modelProps) => {
         const {
             size,
-            lineThickness,
+            edgeMargin,
         } = modelProps.dims
 
         const baseRect = rectangle({ size })
         const cutRect = rectangle({
             size: [
-                size[0] - (lineThickness * 2),
-                size[1] - (lineThickness * 2),
+                size[0] - (edgeMargin * 2),
+                size[1] - (edgeMargin * 2),
             ]
         })
 
@@ -331,7 +331,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
      * @param {number[]} opts.size
      * @param {number} opts.edgeMargin
      * @param {number} opts.holeRadius
-     * @param {number} opts.lineThickness
+     * @param {number} opts.gapThickness
      * @param {string} opts.holePattern
      * @param {number} opts.holeSegments
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
@@ -349,7 +349,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
                 inOpts.size[1] + (inOpts.holeRadius * 6),
             ],
             edgeMargin: defaults.vals.constants.interfaceThickness,
-            holeDistance: inOpts.holeRadius * 2 + inOpts.lineThickness,
+            holeDistance: inOpts.holeRadius * 2 + inOpts.gapThickness,
         }
         const setupProperties = meshPanelProps(setupOpts)
         let setupCutProfile = meshPanelCutProfile(setupProperties)
