@@ -12,7 +12,13 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
 
     const {
         subtract,
+        union,
+        intersect,
     } = jscad.booleans
+
+    const {
+        standards,
+    } = swcadJs.data
 
     const {
         math,
@@ -36,6 +42,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             },
             opts: {
                 holePattern: 'tri',
+                holeSegments: 20,
             },
             dims: {
                 size: [
@@ -59,6 +66,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             holeDistance: defaultValues.dims.holeDistance,
             lineThickness: defaultValues.dims.lineThickness,
             holePattern: defaultValues.opts.holePattern,
+            holeSegments: defaultValues.opts.holeSegments,
         }
 
         return {
@@ -89,6 +97,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             holeDistance = defaults.opts.holeDistance,
             lineThickness = defaults.opts.lineThickness,
             holePattern = defaults.opts.holePattern,
+            holeSegments = defaults.opts.holeSegments,
         } = opts
 
         const initOpts = {
@@ -98,6 +107,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             holeDistance,
             lineThickness,
             holePattern,
+            holeSegments
         }
 
         return initOpts
@@ -120,6 +130,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             holeDistance,
             lineThickness,
             holePattern,
+            holeSegments,
         } = opts
 
         /* ----------------------------------------
@@ -146,6 +157,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
         /** Derived user options for the model */
         const modelOpts = {
             holePattern,
+            holeSegments,
         }
 
         /** Various dimensions for model */
@@ -260,13 +272,21 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
      */
     const meshPanelCutProfile = (modelProps) => {
         const {
+            holeSegments,
+        } = modelProps.opts
+
+        const {
             holeRadius,
         } = modelProps.dims
 
         const cutPts = meshPanelPoints(modelProps)
 
         const cutCircles = cutPts.map(cutPt => {
-            return circle({ radius: holeRadius, center: [cutPt.x, cutPt.y] })
+            return circle({
+                radius: holeRadius,
+                center: [cutPt.x, cutPt.y],
+                segments: holeSegments,
+            })
         })
 
         return cutCircles
@@ -280,6 +300,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.holeRadius
      * @param {number} opts.holeDistance
      * @param {string} opts.holePattern
+     * @param {number} opts.holeSegments
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.mesh
      */
@@ -312,6 +333,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.holeRadius
      * @param {number} opts.lineThickness
      * @param {string} opts.holePattern
+     * @param {number} opts.holeSegments
      * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
      * @memberof profiles.mesh
      */
@@ -323,11 +345,11 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
         const setupOpts = {
             ...inOpts,
             size: [
-                opts.size[0] + (opts.holeRadius * 6),
-                opts.size[1] + (opts.holeRadius * 6),
+                inOpts.size[0] + (inOpts.holeRadius * 6),
+                inOpts.size[1] + (inOpts.holeRadius * 6),
             ],
             edgeMargin: defaults.vals.constants.interfaceThickness,
-            holeDistance: opts.holeRadius * 2 + opts.lineThickness,
+            holeDistance: inOpts.holeRadius * 2 + inOpts.lineThickness,
         }
         const setupProperties = meshPanelProps(setupOpts)
         let setupCutProfile = meshPanelCutProfile(setupProperties)
@@ -340,8 +362,8 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
         const latticeFrame = meshPanelFrameBlankProfile(modelProperties)
         const keepBox = rectangle({
             size: [
-                opts.size[0] - 0.001,
-                opts.size[1] - 0.001,
+                inOpts.size[0] - 0.001,
+                inOpts.size[1] - 0.001,
             ]
         })
         const innerLattice = intersect(
