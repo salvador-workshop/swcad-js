@@ -28,10 +28,12 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
      * @access private
      */
     const meshPanelDefaults = () => {
+        const defInterfaceThickness = standards.INTERFACE_THICKNESS
 
-        /** Specific value declarations */
         const defaultValues = {
-            constants: {},
+            constants: {
+                interfaceThickness: defInterfaceThickness,
+            },
             opts: {
                 holePattern: 'tri',
             },
@@ -43,6 +45,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
                 edgeMargin: math.inchesToMm(3 / 16),
                 holeRadius: math.inchesToMm(0.125),
                 holeDistance: math.inchesToMm(1),
+                lineThickness: defInterfaceThickness,
             },
             points: {},
             components: {},
@@ -54,6 +57,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             edgeMargin: defaultValues.dims.edgeMargin,
             holeRadius: defaultValues.dims.holeRadius,
             holeDistance: defaultValues.dims.holeDistance,
+            lineThickness: defaultValues.dims.lineThickness,
             holePattern: defaultValues.opts.holePattern,
         }
 
@@ -66,6 +70,38 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
 
     //------------------------------------------------------------------------------
 
+
+    /**
+     * Initializes options with user input
+     * @param {*} opts 
+     * @returns model properties
+     * @memberof profiles.mesh
+     * @access private
+     */
+    const meshPanelOpts = (opts) => {
+        const defaults = meshPanelDefaults()
+
+        // User options
+        const {
+            size = defaults.opts.size,
+            edgeMargin = defaults.opts.edgeMargin,
+            holeRadius = defaults.opts.holeRadius,
+            holeDistance = defaults.opts.holeDistance,
+            lineThickness = defaults.opts.lineThickness,
+            holePattern = defaults.opts.holePattern,
+        } = opts
+
+        const initOpts = {
+            size,
+            edgeMargin,
+            holeRadius,
+            holeDistance,
+            lineThickness,
+            holePattern,
+        }
+
+        return initOpts
+    }
 
     /**
      * Builds model properties from the given opts
@@ -82,6 +118,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             edgeMargin,
             holeRadius,
             holeDistance,
+            lineThickness,
             holePattern,
         } = opts
 
@@ -121,6 +158,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
             holeRadius,
             holeDiam,
             holeDistance,
+            lineThickness,
         }
 
         /** Various key points for model */
@@ -147,9 +185,92 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
         return modelProperties
     }
 
-
     //------------------------------------------------------------------------------
 
+    /**
+     * Builds a 2D mesh panel blank
+     * @memberof profiles.mesh
+     * @returns ...
+     * @access private
+     */
+    const meshPanelBlankProfile = (modelProps) => {
+        const {
+            size,
+        } = modelProps.dims
+
+        const baseRect = rectangle({ size })
+        return baseRect
+    }
+
+    /**
+     * Builds a 2D mesh panel frame blank
+     * @memberof profiles.mesh
+     * @returns ...
+     * @access private
+     */
+    const meshPanelFrameBlankProfile = (modelProps) => {
+        const {
+            size,
+            lineThickness,
+        } = modelProps.dims
+
+        const baseRect = rectangle({ size })
+        const cutRect = rectangle({
+            size: [
+                size[0] - (lineThickness * 2),
+                size[1] - (lineThickness * 2),
+            ]
+        })
+
+        return subtract(baseRect, cutRect)
+    }
+
+    /**
+     * Calculates points in mesh area
+     * @memberof profiles.mesh
+     * @returns ...
+     * @access private
+     */
+    const meshPanelPoints = (modelProps) => {
+        const {
+            meshAreaSize,
+            holeDistance,
+        } = modelProps.dims
+
+        const {
+            holePattern,
+        } = modelProps.opts
+
+        let pts = []
+
+        if (holePattern == 'tri') {
+            pts = geometry.points.getTriangularPtsInArea(meshAreaSize[0], meshAreaSize[1], holeDistance)
+        } else {
+            pts = geometry.points.getSquarePtsInArea(meshAreaSize[0], meshAreaSize[1], holeDistance)
+        }
+
+        return pts
+    }
+
+    /**
+     * Builds 2D mesh panel perforations (hole punch)
+     * @memberof profiles.mesh
+     * @returns ...
+     * @access private
+     */
+    const meshPanelCutProfile = (modelProps) => {
+        const {
+            holeRadius,
+        } = modelProps.dims
+
+        const cutPts = meshPanelPoints(modelProps)
+
+        const cutCircles = cutPts.map(cutPt => {
+            return circle({ radius: holeRadius, center: [cutPt.x, cutPt.y] })
+        })
+
+        return cutCircles
+    }
 
     /**
      * Generates a 2D mesh panel with the given options.
@@ -163,128 +284,90 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
      * @memberof profiles.mesh
      */
     const meshPanel = (opts) => {
-        const defaults = meshPanelDefaults()
-
-        // User options
-        const {
-            size = defaults.opts.size,
-            edgeMargin = defaults.opts.edgeMargin,
-            holeRadius = defaults.opts.holeRadius,
-            holeDistance = defaults.opts.holeDistance,
-            holePattern = defaults.opts.holePattern,
-        } = opts
-
-        const inOpts = {
-            size,
-            edgeMargin,
-            holeRadius,
-            holeDistance,
-            holePattern,
-        }
-
+        const inOpts = meshPanelOpts(opts)
         const modelProperties = meshPanelProps(inOpts)
 
-        /* ----------------------------------------
-         * Modelling, Component/Assembly Modules
-         * ------------------------------------- */
+        let mPanelCutProfile = meshPanelCutProfile(modelProperties)
+        let mPanelBlankProfile = meshPanelBlankProfile(modelProperties)
 
-        /**
-         * Calculates points in mesh area
-         * @memberof profiles.mesh
-         * @returns ...
-         * @access private
-         */
-        const meshPanelPoints = (modelProps) => {
-            const {
-                meshAreaSize,
-                holeDistance,
-            } = modelProps.dims
-
-            const {
-                holePattern,
-            } = modelProps.opts
-
-            let pts = []
-
-            if (holePattern == 'tri') {
-                pts = geometry.points.getTriangularPtsInArea(meshAreaSize[0], meshAreaSize[1], holeDistance)
-            } else {
-                pts = geometry.points.getSquarePtsInArea(meshAreaSize[0], meshAreaSize[1], holeDistance)
-            }
-
-            return pts
-        }
-
-        /**
-         * Builds 2D mesh panel perforations (hole punch)
-         * @memberof profiles.mesh
-         * @returns ...
-         * @access private
-         */
-        const meshPanelCutProfile = (modelProps) => {
-            const {
-                holeRadius,
-            } = modelProps.dims
-
-            const cutPts = meshPanelPoints(modelProps)
-
-            const cutCircles = cutPts.map(cutPt => {
-                return circle({ radius: holeRadius, center: [cutPt.x, cutPt.y] })
-            })
-
-            return cutCircles
-        }
-
-        /**
-         * Builds a 2D mesh panel
-         * @memberof profiles.mesh
-         * @returns ...
-         * @access private
-         */
-        const meshPanelProfile = (modelProps) => {
-            const {
-                size,
-            } = modelProps.dims
-
-            const baseRect = rectangle({ size })
-            return baseRect
-        }
-
-        /* ----------------------------------------
-         * Complete Assembly
-         * ------------------------------------- */
-
-        /** Final Assembly */
-        const finalAssembly = (modelProps) => {
-            let subComp1 = meshPanelProfile(modelProps)
-            let subComp2 = meshPanelCutProfile(modelProps)
-
-            return subtract(
-                subComp1,
-                subComp2,
-            )
-        }
-
-        /* ----------------------------------------
-         * Outputs
-         * ------------------------------------- */
-
-        let meshPanelCutProfileInst = meshPanelCutProfile(modelProperties)
-        let meshPanelProfileInst = meshPanelProfile(modelProperties)
-
-        const mainModel = finalAssembly(modelProperties)
+        const mainModel = subtract(
+            mPanelBlankProfile,
+            mPanelCutProfile,
+        )
 
         const modelParts = {
             mainModel,
-            meshPanelCutProfile: meshPanelCutProfileInst,
-            meshPanelProfile: meshPanelProfileInst,
+            blank: mPanelBlankProfile,
+            cutaway: mPanelCutProfile,
+        }
+
+        return [mainModel, modelParts, modelProperties]
+    }
+
+    /**
+     * Generates a 2D mesh lattice panel with the given options.
+     * @param {Object} opts - Options for the model
+     * @param {number[]} opts.size
+     * @param {number} opts.edgeMargin
+     * @param {number} opts.holeRadius
+     * @param {number} opts.lineThickness
+     * @param {string} opts.holePattern
+     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @memberof profiles.mesh
+     */
+    const meshLatticePanel = (opts) => {
+        const defaults = meshPanelDefaults()
+        const inOpts = meshPanelOpts(opts)
+        const modelProperties = meshPanelProps(inOpts)
+
+        const setupOpts = {
+            ...inOpts,
+            size: [
+                opts.size[0] + (opts.holeRadius * 6),
+                opts.size[1] + (opts.holeRadius * 6),
+            ],
+            edgeMargin: defaults.vals.constants.interfaceThickness,
+            holeDistance: opts.holeRadius * 2 + opts.lineThickness,
+        }
+        const setupProperties = meshPanelProps(setupOpts)
+        let setupCutProfile = meshPanelCutProfile(setupProperties)
+        let setupBlankProfile = meshPanelBlankProfile(setupProperties)
+        const setupModel = subtract(
+            setupBlankProfile,
+            setupCutProfile,
+        )
+
+        const latticeFrame = meshPanelFrameBlankProfile(modelProperties)
+        const keepBox = rectangle({
+            size: [
+                opts.size[0] - 0.001,
+                opts.size[1] - 0.001,
+            ]
+        })
+        const innerLattice = intersect(
+            keepBox,
+            setupModel
+        )
+
+        const mainModel = union(
+            latticeFrame,
+            innerLattice,
+        )
+
+        const modelParts = {
+            mainModel,
+            blank: setupBlankProfile,
+            cutaway: setupCutProfile,
+            latticeFrame,
+            innerLattice,
         }
 
         return [mainModel, modelParts, modelProperties]
     }
 
     return {
-        meshPanel
+        meshPanel,
+        meshLatticePanel,
     }
 }
 
