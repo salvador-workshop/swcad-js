@@ -168,11 +168,11 @@ const transformUtils = ({ jscad, swcadJs }) => {
     }
 
     return {
-        bisect3d,
-        cutCircularSlice,
         stack,
         cutQuadrant,
         cloneQuadrant,
+        bisect3d,
+        cutCircularSlice,
     }
 }
 
