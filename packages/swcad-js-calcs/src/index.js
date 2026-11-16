@@ -36,7 +36,6 @@ const calcsInit = ({ jscad, swcadJs }) => {
     /**
      * Math calculations and basic JSCAD operations.
      * @namespace calcs
-     * @author R. J. Salvador (Salvador Workshop)
      */
 
     const calcs = {

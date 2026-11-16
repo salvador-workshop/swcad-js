@@ -495,7 +495,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
     /**
      * Modelling functions that generate various connecting tab rows.
-     * @author R. J. Salvador
      * @namespace tabRow
      * @memberof profiles.connections
      */

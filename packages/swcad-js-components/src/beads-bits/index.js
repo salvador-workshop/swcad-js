@@ -5,8 +5,7 @@ const cornerBitsModule = require('./corner')
 /**
  * Modelling functions that generate 3D beads (basic shapes mainly for additive `hull` functions) and bits (basic shapes for subtractive `hull` functions).
  * @namespace beadsBits
- * @memberof components 
- * @author R. J. Salvador (Salvador Workshop)
+ * @memberof components
  */
 
 const beadsBitsInit = ({ jscad, swcadJs }) => {

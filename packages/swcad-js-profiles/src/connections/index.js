@@ -4,7 +4,6 @@ const tabModule = require('./tab')
 
 /**
  * Modelling functions that generate connecting and interlocking 2D parts.
- * @author R. J. Salvador
  * @namespace connections
  * @memberof profiles
  */

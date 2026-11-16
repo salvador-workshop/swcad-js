@@ -4,7 +4,6 @@
  * Modelling functions that generate 2D beads (basic shapes mainly for additive `hull` functions) and bits (basic shapes for subtractive `hull` functions).
  * @namespace beadsBits
  * @memberof profiles 
- * @author R. J. Salvador (Salvador Workshop)
  */
 
 const beadsBitsInit = ({ jscad, swcadJs }) => {

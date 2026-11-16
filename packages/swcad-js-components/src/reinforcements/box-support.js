@@ -4,7 +4,6 @@
  * Modelling functions that generate curved 3D reinforcements for right-angle corners.
  * @namespace boxSupport
  * @memberof components.reinforcements
- * @author R. J. Salvador (Salvador Workshop)
  */
 
 const boxSupportInit = ({ jscad, swcadJs }) => {

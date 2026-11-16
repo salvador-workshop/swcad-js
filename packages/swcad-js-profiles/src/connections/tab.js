@@ -638,7 +638,6 @@ const tabConnectionProfilesInit = ({ jscad, swcadJs }) => {
 
     /**
      * Modelling functions that generate various connecting tabs.
-     * @author R. J. Salvador
      * @namespace tab
      * @memberof profiles.connections
      */

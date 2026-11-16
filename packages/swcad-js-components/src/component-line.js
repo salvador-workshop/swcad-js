@@ -262,11 +262,10 @@ const moduleInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.unitLength - Length of each unit section for webbing
      * @param {number[]} opts.startPt - starting point (2D coords)
      * @param {number[]} opts.endPt - ending point (2D coords)
-     * @param {number} opts.endOffset
-     * @param {number} opts.baseLineOffset
-     * @param {geom3} opts.component
+     * @param {number} opts.endOffset - offset between start/end point and line start/end
+     * @param {number} opts.baseLineOffset - offset from centre of line axis
+     * @param {geom3} opts.component - component to repeat
      * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
-     * @author R. J. Salvador (Salvador Workshop)
      * @memberof components
      */
     const componentLine = (opts) => {

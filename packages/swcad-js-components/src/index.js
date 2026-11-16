@@ -52,7 +52,6 @@ const componentsInit = ({ jscad, swcadJs }) => {
     /**
      * Modelling functions that generate 3D geometries.
      * @namespace components
-     * @author R. J. Salvador (Salvador Workshop)
      */
     const components = {
         beadsBits,

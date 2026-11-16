@@ -6,7 +6,6 @@ const rectReinforcementModule = require('./rectangle-reinforcement');
  * Calculations for reinforcement lines within a shape.
  * @namespace reinforcement
  * @memberof calcs.geometry
- * @author R. J. Salvador
  */
 
 const profReinforcementsInit = ({ jscad, swcadJs }) => {
