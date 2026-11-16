@@ -52,7 +52,14 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
     const modelDefaults = () => {
         /** Specific value declarations */
         const defaultValues = {
-            constants: {},
+            constants: {
+                bitTypes: [
+                    'cove',
+                    'roundOver',
+                    'rabbet',
+                    'chamfer',
+                ]
+            },
             opts: {},
             dims: {
                 size: [
@@ -354,11 +361,11 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a routed cuboid with the given options for top and bottom edges.
      * @param {Object} opts - Options for the model
-     * @param {number[]} opts.size
-     * @param {string} opts.topBit
-     * @param {Object} opts.topBitOpts
-     * @param {string} opts.bottomBit
-     * @param {Object} opts.bottomBitOpts
+     * @param {number[]} opts.size - size of base cuboid (length, width, height)
+     * @param {string} opts.topBit - top bit type. One of 'cove', 'roundOver', 'rabbet', 'chamfer'
+     * @param {Object} opts.topBitOpts - top bit options (`radius1`, `radius2`, `offset1`, `offset2`, `offset3`, `offset4`)
+     * @param {string} opts.bottomBit - bottom bit type. One of 'cove', 'roundOver', 'rabbet', 'chamfer'
+     * @param {Object} opts.bottomBitOpts - bottom bit options (`radius1`, `radius2`, `offset1`, `offset2`, `offset3`, `offset4`)
      * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.routedShapes
      */
@@ -416,12 +423,12 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a routed elliptical cylinder with the given options for top and bottom edges.
      * @param {Object} opts - Options for the model
-     * @param {number} opts.height
-     * @param {number[]} opts.radius
-     * @param {string} opts.topBit
-     * @param {Object} opts.topBitOpts
-     * @param {string} opts.bottomBit
-     * @param {Object} opts.bottomBitOpts
+     * @param {number} opts.height - height of base cylinderElliptic
+     * @param {number[]} opts.radius - radius of base cylinderElliptic (x, y)
+     * @param {string} opts.topBit - top bit type. One of 'cove', 'roundOver', 'rabbet', 'chamfer'
+     * @param {Object} opts.topBitOpts - top bit options (`radius1`, `radius2`, `offset1`, `offset2`, `offset3`, `offset4`)
+     * @param {string} opts.bottomBit - bottom bit type. One of 'cove', 'roundOver', 'rabbet', 'chamfer'
+     * @param {Object} opts.bottomBitOpts - bottom bit options (`radius1`, `radius2`, `offset1`, `offset2`, `offset3`, `offset4`)
      * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.routedShapes
      */

@@ -191,8 +191,8 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
      * Generates a curved 3D reinforcement covering two sides (one corner) of a rectangle.
      * @memberof components.reinforcements.boxSupport
      * @param {Object} opts - Options for the model
-     * @param {number[]} opts.size
-     * @param {number[]} opts.margin
+     * @param {number[]} opts.size - size of box (length, width, height)
+     * @param {number[]} opts.margin - margins between edge and curve (x, y)
      * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      */
     const boxSupportQuarter = (opts) => {
@@ -201,7 +201,7 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
         const {
             size,
             margin,
-            marginHeight,
+            height,
         } = modelProperties.dims
 
         const boxCurvesQtrData = reinforcements.boxCurve.boxCurveQuarter({
@@ -211,7 +211,7 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
         const boxCurvesQtrModel = boxCurvesQtrData[0]
 
         const mainModel = position.ctr(extrudeLinear(
-            { height: marginHeight },
+            { height: height },
             boxCurvesQtrModel
         ))
 
@@ -227,8 +227,8 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
      * Generates a curved 3D reinforcement covering three sides (two corners) of a rectangle.
      * @memberof components.reinforcements.boxSupport
      * @param {Object} opts - Options for the model
-     * @param {number[]} opts.size
-     * @param {number[]} opts.margin
+     * @param {number[]} opts.size - size of box (length, width, height)
+     * @param {number[]} opts.margin - margins between edge and curve (x, y)
      * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      */
     const boxSupportHalf = (opts) => {
@@ -237,7 +237,7 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
         const {
             size,
             margin,
-            marginHeight,
+            height,
         } = modelProperties.dims
 
         const boxCurvesHalfData = reinforcements.boxCurve.boxCurveHalf({
@@ -247,7 +247,7 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
         const boxCurvesHalfModel = boxCurvesHalfData[0]
 
         const mainModel = position.ctr(extrudeLinear(
-            { height: marginHeight },
+            { height: height },
             boxCurvesHalfModel
         ))
 

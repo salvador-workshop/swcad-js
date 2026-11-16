@@ -295,12 +295,12 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a 2D mesh panel with the given options.
      * @param {Object} opts - Options for the model
-     * @param {number[]} opts.size
-     * @param {number} opts.edgeMargin
-     * @param {number} opts.holeRadius
-     * @param {number} opts.holeDistance
-     * @param {string} opts.holePattern
-     * @param {number} opts.holeSegments
+     * @param {number[]} opts.size - size of panel (length, width)
+     * @param {number} opts.edgeMargin - distance from edge to mesh pattern
+     * @param {number} opts.holeRadius - mesh hole radius
+     * @param {number} opts.holeDistance - distance between mesh hole centres
+     * @param {string} opts.holePattern - mesh hole arrangement ('tri' or 'square')
+     * @param {number} opts.holeSegments - number of segments for each mesh hole
      * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.mesh
      */
@@ -328,12 +328,12 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a 2D mesh lattice panel with the given options.
      * @param {Object} opts - Options for the model
-     * @param {number[]} opts.size
-     * @param {number} opts.edgeMargin
-     * @param {number} opts.holeRadius
-     * @param {number} opts.gapThickness
-     * @param {string} opts.holePattern
-     * @param {number} opts.holeSegments
+     * @param {number[]} opts.size - size of panel (length, width)
+     * @param {number} opts.edgeMargin - distance from edge to mesh pattern
+     * @param {number} opts.holeRadius - mesh hole radius
+     * @param {number} opts.gapThickness - minimum distance between hole edges
+     * @param {string} opts.holePattern - mesh hole arrangement ('tri' or 'square')
+     * @param {number} opts.holeSegments - number of segments for each mesh hole
      * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.mesh
      */

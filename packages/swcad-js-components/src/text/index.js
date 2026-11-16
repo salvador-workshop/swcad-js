@@ -32,10 +32,10 @@ const textUtils = ({ jscad, swcadJs }) => {
      * Generates a simple 3D line of text.
      * @memberof components.text
      * @param {Object} opts - Options for the model
-     * @param {string} opts.message
-     * @param {number} opts.fontSize
-     * @param {number} opts.charLineWidth
-     * @param {number} opts.extrudeHeight
+     * @param {string} opts.message - text to be rendered
+     * @param {number} opts.fontSize - font size (character height)
+     * @param {number} opts.charLineWidth - line width for letter strokes
+     * @param {number} opts.extrudeHeight - height of 3D text
      * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      */
     const flatText = (opts) => {
@@ -62,11 +62,10 @@ const textUtils = ({ jscad, swcadJs }) => {
      * Generates a 3D line of text, with engraved profile.
      * @memberof components.text
      * @param {Object} opts - Options for the model
-     * @param {string} opts.message
-     * @param {number} opts.fontSize
-     * @param {number} opts.inverted
-     * @param {number} opts.interfaceThickness
-     * @param {number} opts.engravingDepth
+     * @param {string} opts.message - text to be rendered
+     * @param {number} opts.fontSize - font size (character height)
+     * @param {boolean} opts.inverted - if true, text is inverted (points to -y)
+     * @param {number} opts.engravingDepth - depth of engraving
      * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      */
     const engravedText = (opts) => {
@@ -106,12 +105,12 @@ const textUtils = ({ jscad, swcadJs }) => {
      * Generates a rectangular panel with engraved text.
      * @memberof components.text
      * @param {Object} opts - Options for the model
-     * @param {string} opts.message
-     * @param {number} opts.fontSize
-     * @param {number} opts.charLineWidth
-     * @param {number} opts.extrudeHeight
-     * @param {number} opts.panelThickness
-     * @param {number} opts.panelOffset
+     * @param {string} opts.message - text to be rendered
+     * @param {number} opts.fontSize - font size (character height)
+     * @param {number} opts.charLineWidth - line width for letter strokes
+     * @param {number} opts.extrudeHeight - height of 3D text
+     * @param {number} opts.panelThickness - thickness of panel
+     * @param {number} opts.panelOffset - margin between panel edge and text
      * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      */
     const textPanel = (opts) => {

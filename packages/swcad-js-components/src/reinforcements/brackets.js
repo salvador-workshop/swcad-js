@@ -186,9 +186,9 @@ const bracketsInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a right-angle bracket
      * @param {Object} opts - Options for the model
-     * @param {number[]} opts.size
+     * @param {number[]} opts.size - Size of bracket (length, width, height)
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
-     * @param {number} opts.numReinforcements
+     * @param {number} opts.numReinforcements - Number of internal supporting pieces
      * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.reinforcements.brackets
      */
@@ -252,9 +252,9 @@ const bracketsInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a right-angle corner bracket
      * @param {Object} opts - Options for the model
-     * @param {number[]} opts.size
+     * @param {number[]} opts.size - Size of bracket (length, width, height)
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
-     * @param {number | number[]} opts.numReinforcements
+     * @param {number} opts.numReinforcements - Number of internal supporting pieces
      * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.reinforcements.brackets
      */

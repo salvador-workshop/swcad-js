@@ -236,13 +236,13 @@ const reinforcedJoistLineInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a reinforced joist line
      * @param {Object} opts - Options for the model
-     * @param {number[]} opts.startPt
-     * @param {number[]} opts.endPt
-     * @param {number} opts.width
-     * @param {number} opts.endOffset
-     * @param {number} opts.unitLength
-     * @param {number} opts.reinforcementLevel
-     * @param {number} opts.interfaceThickness
+     * @param {number[]} opts.startPt - starting point (2D co-ordinate)
+     * @param {number[]} opts.endPt - ending point (2D co-ordinate)
+     * @param {number} opts.width - Width of the joist
+     * @param {number} opts.endOffset - offset between start/end point and line start/end
+     * @param {number} opts.unitLength - Length of each unit section for webbing
+     * @param {number} opts.reinforcementLevel - Level of reinforcement (1: basic, 2: moderate, 3: high)
+     * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.reinforcements
      */

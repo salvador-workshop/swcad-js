@@ -50,7 +50,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
                 sampleThickness: 1, // scission only works with 3D objects. Need a filler thickness for now
             },
             opts: {
-                segments: 6,
                 numConnectors: 3,
             },
             dims: {
@@ -69,7 +68,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         const defaultOpts = {
             fitGap: standards.FIT_GAP,
             size: defaultValues.dims.size,
-            segments: defaultValues.opts.segments,
             numConnectors: defaultValues.opts.numConnectors,
             interfaceMargin: defaultValues.dims.interfaceMargin,
         }
@@ -98,7 +96,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         const {
             size = defaults.opts.size,
             numConnectors = defaults.opts.numConnectors,
-            segments = defaults.opts.segments,
             interfaceMargin = defaults.opts.interfaceMargin,
             fitGap = defaults.opts.fitGap,
         } = opts
@@ -106,7 +103,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         const initOpts = {
             fitGap,
             size,
-            segments,
             numConnectors,
             interfaceMargin,
         }
@@ -131,7 +127,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
         const {
             size,
-            segments,
             numConnectors,
             interfaceMargin,
             fitGap,
@@ -165,7 +160,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
         /** Derived user options for the model */
         const modelOpts = {
-            segments,
             numConnectors,
         }
 
@@ -215,10 +209,9 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * Generates pieces connected by a row of dovetails.
      * @param {Object} opts - Options for the model
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {number[]} opts.size
-     * @param {number} opts.numConnectors
-     * @param {number} opts.segments
-     * @param {number} opts.interfaceMargin
+     * @param {number[]} opts.size - Total size of connectors (width, length)
+     * @param {number} opts.numConnectors - Number of connectors in row
+     * @param {number | number[]} opts.interfaceMargin - Margin between edge of base plates and central connector (x, y)
      * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.connections.tabRow
      */
@@ -309,10 +302,9 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * Generates pieces connected by a row of tabs.
      * @param {Object} opts - Options for the model
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {number[]} opts.size
-     * @param {number} opts.numConnectors
-     * @param {number} opts.segments
-     * @param {number} opts.interfaceMargin
+     * @param {number[]} opts.size - Total size of connectors (width, length)
+     * @param {number} opts.numConnectors - Number of connectors in row
+     * @param {number | number[]} opts.interfaceMargin - Margin between edge of base plates and central connector (x, y)
      * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.connections.tabRow
      */
@@ -403,10 +395,9 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * Generates pieces connected by a row of right-angle tabs.
      * @param {Object} opts - Options for the model
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {number[]} opts.size
-     * @param {number} opts.numConnectors
-     * @param {number} opts.segments
-     * @param {number} opts.interfaceMargin
+     * @param {number[]} opts.size - Total size of connectors (width, length)
+     * @param {number} opts.numConnectors - Number of connectors in row
+     * @param {number | number[]} opts.interfaceMargin - Margin between edge of base plates and central connector (x, y)
      * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.connections.tabRow
      */

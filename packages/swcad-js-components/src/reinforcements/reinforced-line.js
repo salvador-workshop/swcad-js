@@ -229,16 +229,16 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a light reinforced line.
      * @param {Object} opts - Options for the model
-     * @param {number[]} opts.startPt
-     * @param {number[]} opts.endPt
-     * @param {number} opts.width
-     * @param {number} opts.height
-     * @param {number} opts.endOffset
-     * @param {number} opts.unitLength
-     * @param {number} opts.baseThickness
-     * @param {number} opts.reinforcementThickness
-     * @param {boolean} opts.hasReinforcedEnds
-     * @param {boolean} opts.hasUnitReinforcements
+     * @param {number[]} opts.startPt - starting point (2D co-ordinate)
+     * @param {number[]} opts.endPt - ending point (2D co-ordinate)
+     * @param {number} opts.width - width of reinforcement
+     * @param {number} opts.height - height of reinforcement
+     * @param {number} opts.endOffset - offset between start/end point and line start/end
+     * @param {number} opts.unitLength - Length of reinforcing units
+     * @param {number} opts.baseThickness - Thickness of base
+     * @param {number} opts.reinforcementThickness - Thickness of reinforcing pieces
+     * @param {boolean} opts.hasReinforcedEnds - if true, adds reinforcement at the ends
+     * @param {boolean} opts.hasUnitReinforcements - if true, adds reinforcement between each unit
      * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.reinforcements.reinforcedLine
      */
@@ -294,16 +294,16 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a medium reinforced line.
      * @param {Object} opts - Options for the model
-     * @param {number[]} opts.startPt
-     * @param {number[]} opts.endPt
-     * @param {number} opts.width
-     * @param {number} opts.height
-     * @param {number} opts.endOffset
-     * @param {number} opts.unitLength
-     * @param {number} opts.baseThickness
-     * @param {number} opts.reinforcementThickness
-     * @param {number} opts.hasReinforcedEnds
-     * @param {number} opts.hasUnitReinforcements
+     * @param {number[]} opts.startPt - starting point (2D co-ordinate)
+     * @param {number[]} opts.endPt - ending point (2D co-ordinate)
+     * @param {number} opts.width - width of reinforcement
+     * @param {number} opts.height - height of reinforcement
+     * @param {number} opts.endOffset - offset between start/end point and line start/end
+     * @param {number} opts.unitLength - Length of reinforcing units
+     * @param {number} opts.baseThickness - Thickness of base
+     * @param {number} opts.reinforcementThickness - Thickness of reinforcing pieces
+     * @param {boolean} opts.hasReinforcedEnds - if true, adds reinforcement at the ends
+     * @param {boolean} opts.hasUnitReinforcements - if true, adds reinforcement between each unit
      * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.reinforcements.reinforcedLine
      */
@@ -359,14 +359,14 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a heavy reinforced line.
      * @param {Object} opts - Options for the model
-     * @param {number[]} opts.startPt
-     * @param {number[]} opts.endPt
-     * @param {number} opts.width
-     * @param {number} opts.height
-     * @param {number} opts.endOffset
-     * @param {number} opts.unitLength
-     * @param {number} opts.baseThickness
-     * @param {number} opts.reinforcementThickness
+     * @param {number[]} opts.startPt - starting point (2D co-ordinate)
+     * @param {number[]} opts.endPt - ending point (2D co-ordinate)
+     * @param {number} opts.width - width of reinforcement
+     * @param {number} opts.height - height of reinforcement
+     * @param {number} opts.endOffset - offset between start/end point and line start/end
+     * @param {number} opts.unitLength - Length of reinforcing units
+     * @param {number} opts.baseThickness - Thickness of base
+     * @param {number} opts.reinforcementThickness - Thickness of reinforcing pieces
      * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.reinforcements.reinforcedLine
      */

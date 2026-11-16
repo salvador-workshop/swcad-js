@@ -7,8 +7,8 @@ const linesInit = ({ jscad, swcadJs }) => {
 
     /**
      * Calculates details for linear components, which are given starting + ending points and an end offset value.
-     * @param {number[]} startPt - 2D co-ordinate
-     * @param {number[]} endPt - 2D co-ordinate
+     * @param {number[]} startPt - starting point (2D co-ordinate)
+     * @param {number[]} endPt - ending point (2D co-ordinate)
      * @param {number} endOffset - offset between start/end point and line start/end
      * @returns {Object.<string, (number|number[])>} details for linear components (`midPt`, `lineLength`, `offsetLineLength`, `lineComponentAngle`)
      * @memberof calcs.geometry.lines
