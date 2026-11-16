@@ -52,9 +52,9 @@ const positionUtils = ({ jscad, swcadJs }) => {
     /**
      * Centers the given geometry, relative to the given point (defaults to [0,0,0]).
      * @memberof calcs.position
-     * @param {*} inGeom 
-     * @param {*} pt 
-     * @returns ...
+     * @param {object} inGeom - 2D / 3D geometry
+     * @param {number[]} pt - 3D coordinate (defaults to origin)
+     * @returns {void}
      */
     const ctr = (inGeom, pt = [0, 0, 0]) => {
         return align({ modes: alignModes.ctr, relativeTo: pt }, inGeom)
@@ -62,9 +62,9 @@ const positionUtils = ({ jscad, swcadJs }) => {
     /**
      * Centers the given geometry (minimum Z), relative to the given point (defaults to [0,0,0]).
      * @memberof calcs.position
-     * @param {*} inGeom 
-     * @param {*} pt 
-     * @returns ...
+     * @param {object} inGeom - 2D / 3D geometry
+     * @param {number[]} pt - 3D coordinate (defaults to origin)
+     * @returns {void}
      */
     const ctrMin = (inGeom, pt = [0, 0, 0]) => {
         return align({ modes: alignModes.ctrMin, relativeTo: pt }, inGeom)
@@ -72,9 +72,9 @@ const positionUtils = ({ jscad, swcadJs }) => {
     /**
      * Centers the given geometry (maximum Z), relative to the given point (defaults to [0,0,0]).
      * @memberof calcs.position
-     * @param {*} inGeom 
-     * @param {*} pt 
-     * @returns ...
+     * @param {object} inGeom - 2D / 3D geometry
+     * @param {number[]} pt - 3D coordinate (defaults to origin)
+     * @returns {void}
      */
     const ctrMax = (inGeom, pt = [0, 0, 0]) => {
         return align({ modes: alignModes.ctrMax, relativeTo: pt }, inGeom)
@@ -101,13 +101,13 @@ module.exports = { init: positionUtils };
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.lines.html">calcs.geometry.lines</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.fittings.html">components.fittings</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.reinforcements.html">components.reinforcements</a></li><li><a href="components.reinforcements.boxSupport.html">components.reinforcements.boxSupport</a></li><li><a href="components.reinforcements.brackets.html">components.reinforcements.brackets</a></li><li><a href="components.reinforcements.reinforcedLength.html">components.reinforcements.reinforcedLength</a></li><li><a href="components.reinforcements.reinforcedLine.html">components.reinforcements.reinforcedLine</a></li><li><a href="components.reinforcements.reinforcedRing.html">components.reinforcements.reinforcedRing</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="newModelParent.newModelPack.html">newModelParent.newModelPack</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.html">profiles.beadsBits</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.connections.jointPanel.html">profiles.connections.jointPanel</a></li><li><a href="profiles.connections.tab.html">profiles.connections.tab</a></li><li><a href="profiles.connections.tabRow.html">profiles.connections.tabRow</a></li><li><a href="profiles.mesh.html">profiles.mesh</a></li><li><a href="profiles.reinforcements.html">profiles.reinforcements</a></li><li><a href="profiles.reinforcements.boxCurve.html">profiles.reinforcements.boxCurve</a></li><li><a href="profiles.text.html">profiles.text</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.lines.html">calcs.geometry.lines</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.fittings.html">components.fittings</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.reinforcements.html">components.reinforcements</a></li><li><a href="components.reinforcements.boxSupport.html">components.reinforcements.boxSupport</a></li><li><a href="components.reinforcements.brackets.html">components.reinforcements.brackets</a></li><li><a href="components.reinforcements.reinforcedLength.html">components.reinforcements.reinforcedLength</a></li><li><a href="components.reinforcements.reinforcedLine.html">components.reinforcements.reinforcedLine</a></li><li><a href="components.reinforcements.reinforcedRing.html">components.reinforcements.reinforcedRing</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.html">profiles.beadsBits</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.connections.jointPanel.html">profiles.connections.jointPanel</a></li><li><a href="profiles.connections.tab.html">profiles.connections.tab</a></li><li><a href="profiles.connections.tabRow.html">profiles.connections.tabRow</a></li><li><a href="profiles.mesh.html">profiles.mesh</a></li><li><a href="profiles.reinforcements.html">profiles.reinforcements</a></li><li><a href="profiles.reinforcements.boxCurve.html">profiles.reinforcements.boxCurve</a></li><li><a href="profiles.text.html">profiles.text</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sun Nov 15 2026 16:11:25 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Mon Nov 16 2026 10:51:27 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

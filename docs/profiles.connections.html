@@ -63,13 +63,6 @@
     
 
     
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li>R. J. Salvador</li>
-        </ul>
-    </dd>
-    
 
     
 
@@ -132,7 +125,7 @@
     
 
     
-    <h4 class="name" id=".boltCircle"><span class="type-signature">(static) </span>boltCircle<span class="signature">(opts)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".boltCircle"><span class="type-signature">(static) </span>boltCircle<span class="signature">(opts)</span><span class="type-signature"> &rarr; {Array.&lt;(geom2|Object.&lt;string, geom2>|Object.&lt;string, any>)>}</span></h4>
     
 
     
@@ -257,30 +250,7 @@
 
             
 
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>unitSpacing</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
+            <td class="description last">Radius of bolt circle group (group centre to unit centres)</td>
         </tr>
 
     
@@ -303,7 +273,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Bolt circle radius</td>
         </tr>
 
     
@@ -326,7 +296,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Number of segments in bolt circles</td>
         </tr>
 
     
@@ -349,7 +319,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Number of bolts in circle</td>
         </tr>
 
     
@@ -372,7 +342,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Margin between edge of base plate and edge of bolt circles</td>
         </tr>
 
     
@@ -420,7 +390,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-profiles_src_connections_index.js.html">swcad-js-profiles/src/connections/index.js</a>, <a href="swcad-js-profiles_src_connections_index.js.html#line392">line 392</a>
+        <a href="swcad-js-profiles_src_connections_index.js.html">swcad-js-profiles/src/connections/index.js</a>, <a href="swcad-js-profiles_src_connections_index.js.html#line294">line 294</a>
     </li></ul></dd>
     
 
@@ -449,10 +419,22 @@
 
         
 <div class="param-desc">
-    Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+    Array with model, parts, and properties
 </div>
 
 
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;(geom2|Object.&lt;string, geom2>|Object.&lt;string, any>)></span>
+
+
+    </dd>
+</dl>
 
     
 
@@ -466,7 +448,7 @@
     
 
     
-    <h4 class="name" id=".pegboard"><span class="type-signature">(static) </span>pegboard<span class="signature">(opts)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".polygon"><span class="type-signature">(static) </span>polygon<span class="signature">(opts)</span><span class="type-signature"> &rarr; {Array.&lt;(geom2|Object.&lt;string, geom2>|Object.&lt;string, any>)>}</span></h4>
     
 
     
@@ -474,7 +456,7 @@
 
 
 <div class="description">
-    Generates pegboard connectors.
+    Generates regular polygon connectors.
 </div>
 
 
@@ -591,76 +573,7 @@
 
             
 
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>unitSpacing</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>unitRadius</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>unitSegments</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
+            <td class="description last">Radius of central polygon</td>
         </tr>
 
     
@@ -683,7 +596,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Segments of central polygon</td>
         </tr>
 
     
@@ -706,7 +619,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Margin between polygon and container</td>
         </tr>
 
     
@@ -754,7 +667,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-profiles_src_connections_index.js.html">swcad-js-profiles/src/connections/index.js</a>, <a href="swcad-js-profiles_src_connections_index.js.html#line305">line 305</a>
+        <a href="swcad-js-profiles_src_connections_index.js.html">swcad-js-profiles/src/connections/index.js</a>, <a href="swcad-js-profiles_src_connections_index.js.html#line221">line 221</a>
     </li></ul></dd>
     
 
@@ -783,344 +696,22 @@
 
         
 <div class="param-desc">
-    Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+    Array with model, parts, and properties
 </div>
 
 
 
-    
-
-
-
-
-
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
         
-            
+<span class="param-type">Array.&lt;(geom2|Object.&lt;string, geom2>|Object.&lt;string, any>)></span>
 
-    
 
-    
-    <h4 class="name" id=".polygon"><span class="type-signature">(static) </span>polygon<span class="signature">(opts)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Generates polygon connectors.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>opts</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Options for the model
-                <h6>Properties</h6>
-                
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>fitGap</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Gap for fitting parts together</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>radius</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>unitSpacing</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>unitRadius</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>unitSegments</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>segments</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>interfaceMargin</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="swcad-js-profiles_src_connections_index.js.html">swcad-js-profiles/src/connections/index.js</a>, <a href="swcad-js-profiles_src_connections_index.js.html#line231">line 231</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
+    </dd>
 </dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-</div>
-
-
 
     
 
@@ -1144,13 +735,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.lines.html">calcs.geometry.lines</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.fittings.html">components.fittings</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.reinforcements.html">components.reinforcements</a></li><li><a href="components.reinforcements.boxSupport.html">components.reinforcements.boxSupport</a></li><li><a href="components.reinforcements.brackets.html">components.reinforcements.brackets</a></li><li><a href="components.reinforcements.reinforcedLength.html">components.reinforcements.reinforcedLength</a></li><li><a href="components.reinforcements.reinforcedLine.html">components.reinforcements.reinforcedLine</a></li><li><a href="components.reinforcements.reinforcedRing.html">components.reinforcements.reinforcedRing</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="newModelParent.newModelPack.html">newModelParent.newModelPack</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.html">profiles.beadsBits</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.connections.jointPanel.html">profiles.connections.jointPanel</a></li><li><a href="profiles.connections.tab.html">profiles.connections.tab</a></li><li><a href="profiles.connections.tabRow.html">profiles.connections.tabRow</a></li><li><a href="profiles.mesh.html">profiles.mesh</a></li><li><a href="profiles.reinforcements.html">profiles.reinforcements</a></li><li><a href="profiles.reinforcements.boxCurve.html">profiles.reinforcements.boxCurve</a></li><li><a href="profiles.text.html">profiles.text</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.lines.html">calcs.geometry.lines</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.fittings.html">components.fittings</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.reinforcements.html">components.reinforcements</a></li><li><a href="components.reinforcements.boxSupport.html">components.reinforcements.boxSupport</a></li><li><a href="components.reinforcements.brackets.html">components.reinforcements.brackets</a></li><li><a href="components.reinforcements.reinforcedLength.html">components.reinforcements.reinforcedLength</a></li><li><a href="components.reinforcements.reinforcedLine.html">components.reinforcements.reinforcedLine</a></li><li><a href="components.reinforcements.reinforcedRing.html">components.reinforcements.reinforcedRing</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.html">profiles.beadsBits</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.connections.jointPanel.html">profiles.connections.jointPanel</a></li><li><a href="profiles.connections.tab.html">profiles.connections.tab</a></li><li><a href="profiles.connections.tabRow.html">profiles.connections.tabRow</a></li><li><a href="profiles.mesh.html">profiles.mesh</a></li><li><a href="profiles.reinforcements.html">profiles.reinforcements</a></li><li><a href="profiles.reinforcements.boxCurve.html">profiles.reinforcements.boxCurve</a></li><li><a href="profiles.text.html">profiles.text</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sun Nov 15 2026 16:11:25 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Mon Nov 16 2026 10:51:27 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

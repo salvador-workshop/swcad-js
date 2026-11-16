@@ -32,7 +32,6 @@
  * Modelling functions that generate curved 3D reinforcements for right-angle corners.
  * @namespace boxSupport
  * @memberof components.reinforcements
- * @author R. J. Salvador (Salvador Workshop)
  */
 
 const boxSupportInit = ({ jscad, swcadJs }) => {
@@ -220,9 +219,9 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
      * Generates a curved 3D reinforcement covering two sides (one corner) of a rectangle.
      * @memberof components.reinforcements.boxSupport
      * @param {Object} opts - Options for the model
-     * @param {number[]} opts.size
-     * @param {number[]} opts.margin
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
+     * @param {number[]} opts.size - size of box (length, width, height)
+     * @param {number[]} opts.margin - margins between edge and curve (x, y)
+     * @returns {Array.&lt;(geom3|Object.&lt;string, geom3>|Object.&lt;string, any>)>} Array with model, parts, and properties
      */
     const boxSupportQuarter = (opts) => {
         const initOpts = boxSupportOpts(opts)
@@ -230,7 +229,7 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
         const {
             size,
             margin,
-            marginHeight,
+            height,
         } = modelProperties.dims
 
         const boxCurvesQtrData = reinforcements.boxCurve.boxCurveQuarter({
@@ -240,7 +239,7 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
         const boxCurvesQtrModel = boxCurvesQtrData[0]
 
         const mainModel = position.ctr(extrudeLinear(
-            { height: marginHeight },
+            { height: height },
             boxCurvesQtrModel
         ))
 
@@ -256,9 +255,9 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
      * Generates a curved 3D reinforcement covering three sides (two corners) of a rectangle.
      * @memberof components.reinforcements.boxSupport
      * @param {Object} opts - Options for the model
-     * @param {number[]} opts.size
-     * @param {number[]} opts.margin
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.&lt;string, geom3>`, `Object.&lt;string, any>`]
+     * @param {number[]} opts.size - size of box (length, width, height)
+     * @param {number[]} opts.margin - margins between edge and curve (x, y)
+     * @returns {Array.&lt;(geom3|Object.&lt;string, geom3>|Object.&lt;string, any>)>} Array with model, parts, and properties
      */
     const boxSupportHalf = (opts) => {
         const initOpts = boxSupportOpts(opts)
@@ -266,7 +265,7 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
         const {
             size,
             margin,
-            marginHeight,
+            height,
         } = modelProperties.dims
 
         const boxCurvesHalfData = reinforcements.boxCurve.boxCurveHalf({
@@ -276,7 +275,7 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
         const boxCurvesHalfModel = boxCurvesHalfData[0]
 
         const mainModel = position.ctr(extrudeLinear(
-            { height: marginHeight },
+            { height: height },
             boxCurvesHalfModel
         ))
 
@@ -309,13 +308,13 @@ module.exports = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.lines.html">calcs.geometry.lines</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.fittings.html">components.fittings</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.reinforcements.html">components.reinforcements</a></li><li><a href="components.reinforcements.boxSupport.html">components.reinforcements.boxSupport</a></li><li><a href="components.reinforcements.brackets.html">components.reinforcements.brackets</a></li><li><a href="components.reinforcements.reinforcedLength.html">components.reinforcements.reinforcedLength</a></li><li><a href="components.reinforcements.reinforcedLine.html">components.reinforcements.reinforcedLine</a></li><li><a href="components.reinforcements.reinforcedRing.html">components.reinforcements.reinforcedRing</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="newModelParent.newModelPack.html">newModelParent.newModelPack</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.html">profiles.beadsBits</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.connections.jointPanel.html">profiles.connections.jointPanel</a></li><li><a href="profiles.connections.tab.html">profiles.connections.tab</a></li><li><a href="profiles.connections.tabRow.html">profiles.connections.tabRow</a></li><li><a href="profiles.mesh.html">profiles.mesh</a></li><li><a href="profiles.reinforcements.html">profiles.reinforcements</a></li><li><a href="profiles.reinforcements.boxCurve.html">profiles.reinforcements.boxCurve</a></li><li><a href="profiles.text.html">profiles.text</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="calcs.html">calcs</a></li><li><a href="calcs.geometry.html">calcs.geometry</a></li><li><a href="calcs.geometry.lines.html">calcs.geometry.lines</a></li><li><a href="calcs.geometry.points.html">calcs.geometry.points</a></li><li><a href="calcs.geometry.reinforcement.html">calcs.geometry.reinforcement</a></li><li><a href="calcs.math.html">calcs.math</a></li><li><a href="calcs.position.html">calcs.position</a></li><li><a href="calcs.transform.html">calcs.transform</a></li><li><a href="components.html">components</a></li><li><a href="components.beadsBits.html">components.beadsBits</a></li><li><a href="components.beadsBits.corner.html">components.beadsBits.corner</a></li><li><a href="components.fittings.html">components.fittings</a></li><li><a href="components.mesh.html">components.mesh</a></li><li><a href="components.reinforcements.html">components.reinforcements</a></li><li><a href="components.reinforcements.boxSupport.html">components.reinforcements.boxSupport</a></li><li><a href="components.reinforcements.brackets.html">components.reinforcements.brackets</a></li><li><a href="components.reinforcements.reinforcedLength.html">components.reinforcements.reinforcedLength</a></li><li><a href="components.reinforcements.reinforcedLine.html">components.reinforcements.reinforcedLine</a></li><li><a href="components.reinforcements.reinforcedRing.html">components.reinforcements.reinforcedRing</a></li><li><a href="components.routedShapes.html">components.routedShapes</a></li><li><a href="components.text.html">components.text</a></li><li><a href="data.html">data</a></li><li><a href="data.constants.html">data.constants</a></li><li><a href="data.standards.html">data.standards</a></li><li><a href="profiles.html">profiles</a></li><li><a href="profiles.beadsBits.html">profiles.beadsBits</a></li><li><a href="profiles.beadsBits.corner.html">profiles.beadsBits.corner</a></li><li><a href="profiles.connections.html">profiles.connections</a></li><li><a href="profiles.connections.jointPanel.html">profiles.connections.jointPanel</a></li><li><a href="profiles.connections.tab.html">profiles.connections.tab</a></li><li><a href="profiles.connections.tabRow.html">profiles.connections.tabRow</a></li><li><a href="profiles.mesh.html">profiles.mesh</a></li><li><a href="profiles.reinforcements.html">profiles.reinforcements</a></li><li><a href="profiles.reinforcements.boxCurve.html">profiles.reinforcements.boxCurve</a></li><li><a href="profiles.text.html">profiles.text</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sun Nov 15 2026 16:11:25 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Mon Nov 16 2026 10:51:27 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
