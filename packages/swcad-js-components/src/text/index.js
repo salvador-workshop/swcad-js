@@ -36,7 +36,7 @@ const textUtils = ({ jscad, swcadJs }) => {
      * @param {number} opts.fontSize
      * @param {number} opts.charLineWidth
      * @param {number} opts.extrudeHeight
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      */
     const flatText = (opts) => {
         if (opts.message === undefined || opts.message.length === 0) return []
@@ -67,7 +67,7 @@ const textUtils = ({ jscad, swcadJs }) => {
      * @param {number} opts.inverted
      * @param {number} opts.interfaceThickness
      * @param {number} opts.engravingDepth
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      */
     const engravedText = (opts) => {
         const inverted = opts.inverted || false
@@ -112,7 +112,7 @@ const textUtils = ({ jscad, swcadJs }) => {
      * @param {number} opts.extrudeHeight
      * @param {number} opts.panelThickness
      * @param {number} opts.panelOffset
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      */
     const textPanel = (opts) => {
         const extrudeHt = opts.extrudeHeight || DEFAULT_EXTRUDE_HEIGHT;

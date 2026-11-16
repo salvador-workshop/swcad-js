@@ -267,7 +267,7 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
      * @param {string} opts.type
      * @param {number} opts.reinforcementThickness
      * @param {number} opts.fitGap
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof newModelParent
      */
     const newModelName = (opts) => {

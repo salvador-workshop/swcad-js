@@ -301,7 +301,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.holeDistance
      * @param {string} opts.holePattern
      * @param {number} opts.holeSegments
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.mesh
      */
     const meshPanel = (opts) => {
@@ -334,7 +334,7 @@ const mesh2dInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.gapThickness
      * @param {string} opts.holePattern
      * @param {number} opts.holeSegments
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.mesh
      */
     const meshLatticePanel = (opts) => {

@@ -205,7 +205,7 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.subjectSize
      * @param {number} opts.length
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.fittings
      */
     const rectFittingCutProfile = (opts) => {
@@ -237,7 +237,7 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.subjectSize
      * @param {number} opts.length
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.fittings
      */
     const rectangularFitting = (opts) => {
@@ -285,7 +285,7 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.subjectSize
      * @param {number} opts.length
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.fittings
      */
     const rectangularFittingCross = (opts) => {
@@ -341,7 +341,7 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.subjectSize
      * @param {number} opts.length
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.fittings
      */
     const rectangularFittingTee = (opts) => {
@@ -411,7 +411,7 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.subjectSize
      * @param {number} opts.length
-     * @returns Array with model, parts, and properties: [`geom3`[], `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.fittings
      */
     const rectangularFittingSplit = (opts) => {

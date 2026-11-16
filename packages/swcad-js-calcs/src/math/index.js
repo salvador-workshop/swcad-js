@@ -70,8 +70,8 @@ const mathUtils = ({ jscad, swcadJs }) => {
         },
         /**
          * Gets a random integer between `min` and `max`. The maximum is exclusive and the minimum is inclusive.
-         * @param {number} min
-         * @param {number} max
+         * @param {number} min - minimum value (inclusive)
+         * @param {number} max - maximum value (exclusive)
          * @returns {number} random integer
          * @memberof calcs.math
          */

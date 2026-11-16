@@ -215,7 +215,7 @@ const tabConnectionProfilesInit = ({ jscad, swcadJs }) => {
      * @param {number[]} opts.size
      * @param {number} opts.segments
      * @param {number} opts.interfaceMargin
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.connections.tab
      */
     const dovetail = (opts) => {
@@ -326,7 +326,7 @@ const tabConnectionProfilesInit = ({ jscad, swcadJs }) => {
      * @param {number[]} opts.size
      * @param {number} opts.segments
      * @param {number} opts.interfaceMargin
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.connections.tab
      */
     const tab = (opts) => {
@@ -437,7 +437,7 @@ const tabConnectionProfilesInit = ({ jscad, swcadJs }) => {
      * @param {number[]} opts.size
      * @param {number} opts.segments
      * @param {number} opts.interfaceMargin
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.connections.tab
      */
     const rightAngleTab = (opts) => {
@@ -543,7 +543,7 @@ const tabConnectionProfilesInit = ({ jscad, swcadJs }) => {
      * @param {number[]} opts.size
      * @param {number} opts.segments
      * @param {number} opts.interfaceMargin
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.connections.tab
      */
     const ellipse = (opts) => {

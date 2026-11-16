@@ -229,7 +229,7 @@ const modelProps = (opts) => {
 /**
  * New Model
  * @param {*} opts 
- * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+ * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
  * @memberof newModelParent
  */
 const model = (opts) => {

@@ -225,7 +225,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.unitSegments
      * @param {number} opts.segments
      * @param {number} opts.interfaceMargin
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.connections
      */
     const polygon = (opts) => {
@@ -299,7 +299,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.unitSegments
      * @param {number} opts.segments
      * @param {number} opts.interfaceMargin
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.connections
      */
     const pegboard = (opts) => {
@@ -386,7 +386,7 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.unitSegments
      * @param {number} opts.segments
      * @param {number} opts.interfaceMargin
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.connections
      */
     const boltCircle = (opts) => {

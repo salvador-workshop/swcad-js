@@ -359,7 +359,7 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts.topBitOpts
      * @param {string} opts.bottomBit
      * @param {Object} opts.bottomBitOpts
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.routedShapes
      */
     const routedCuboid = (opts) => {
@@ -422,7 +422,7 @@ const routedShapesInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts.topBitOpts
      * @param {string} opts.bottomBit
      * @param {Object} opts.bottomBitOpts
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.routedShapes
      */
     const routedCylinderElliptic = (opts) => {

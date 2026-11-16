@@ -179,7 +179,7 @@ const cornerBitsInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.offset2
      * @param {number} opts.offset3
      * @param {number} opts.offset4
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.beadsBits.corner
      */
     const rabbet = (opts) => {
@@ -207,7 +207,7 @@ const cornerBitsInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.offset2
      * @param {number} opts.offset3
      * @param {number} opts.offset4
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.beadsBits.corner
      */
     const chamfer = (opts) => {
@@ -235,7 +235,7 @@ const cornerBitsInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.offset2
      * @param {number} opts.offset3
      * @param {number} opts.offset4
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.beadsBits.corner
      */
     const roundOver = (opts) => {
@@ -263,7 +263,7 @@ const cornerBitsInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.offset2
      * @param {number} opts.offset3
      * @param {number} opts.offset4
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.beadsBits.corner
      */
     const cove = (opts) => {

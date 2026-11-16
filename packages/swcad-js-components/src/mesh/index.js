@@ -118,7 +118,7 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.holeDistance
      * @param {string} opts.holePattern
      * @param {number} opts.holeSegments
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      */
     const meshPanel = (opts) => {
         const inOpts = meshPanelOpts(opts)
@@ -153,7 +153,7 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.gapThickness
      * @param {string} opts.holePattern
      * @param {number} opts.holeSegments
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      */
     const meshLatticePanel = (opts) => {
         const inOpts = meshPanelOpts(opts)

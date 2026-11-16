@@ -194,7 +194,7 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number[]} opts.size
      * @param {number[]} opts.margin
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      */
     const boxSupportQuarter = (opts) => {
         const initOpts = boxSupportOpts(opts)
@@ -230,7 +230,7 @@ const boxSupportInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number[]} opts.size
      * @param {number[]} opts.margin
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      */
     const boxSupportHalf = (opts) => {
         const initOpts = boxSupportOpts(opts)

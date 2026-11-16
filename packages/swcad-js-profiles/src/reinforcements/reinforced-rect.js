@@ -238,7 +238,7 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
      * @param {number[]} opts.size
      * @param {string} opts.reinforcementPattern
      * @param {number[]} opts.reinforcementThickness
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.reinforcements
      */
     const reinforcedRect = (opts) => {

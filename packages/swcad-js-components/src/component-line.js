@@ -160,11 +160,11 @@ const moduleInit = ({ jscad, swcadJs }) => {
         * Prop calculations
         * ------------------------------------- */
 
-        const lineComponentDetails = geometry.lines.lineComponentDetails({
+        const lineComponentDetails = geometry.lines.lineComponentDetails(
             startPt,
             endPt,
             endOffset,
-        })
+        )
 
         const {
             midPt,
@@ -265,7 +265,7 @@ const moduleInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.endOffset
      * @param {number} opts.baseLineOffset
      * @param {geom3} opts.component
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @author R. J. Salvador (Salvador Workshop)
      * @memberof components
      */

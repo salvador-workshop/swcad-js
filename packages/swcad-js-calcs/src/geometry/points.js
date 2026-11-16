@@ -50,7 +50,7 @@ const poinstInit = ({ jscad, swcadJs }) => {
      * @param {number} y - maximum Y bound
      * @param {number} distance - distance between points
      * @param {boolean} centrePoints - if true, points will be centred on origin. If false, origin will be at a corner.
-     * @returns {Object[]} set of x and y coordinates for points
+     * @returns {Array.<Object.<string, number>>} set of x and y coordinates for points
      */
 
     const getTriangularPtsInArea = (x, y, distance, centrePoints = true) => {
@@ -104,7 +104,7 @@ const poinstInit = ({ jscad, swcadJs }) => {
      * @param {number} y - maximum Y bound
      * @param {number} distance - distance between points
      * @param {boolean} centrePoints - if true, points will be centred on origin. If false, origin will be at a corner.
-     * @returns {Object[]} set of x and y coordinates for points
+     * @returns {Array.<Object.<string, number>>} set of x and y coordinates for points
      */
     const getSquarePtsInArea = (x, y, distance, centrePoints = true) => {
         const halfDist = distance / 2;

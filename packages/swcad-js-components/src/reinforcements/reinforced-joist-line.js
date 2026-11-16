@@ -134,11 +134,11 @@ const reinforcedJoistLineInit = ({ jscad, swcadJs }) => {
         * Prop calculations
         * ------------------------------------- */
 
-        const lineComponentDetails = geometry.lines.lineComponentDetails({
+        const lineComponentDetails = geometry.lines.lineComponentDetails(
             startPt,
             endPt,
             endOffset,
-        })
+        )
 
         const {
             midPt,
@@ -243,7 +243,7 @@ const reinforcedJoistLineInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.unitLength
      * @param {number} opts.reinforcementLevel
      * @param {number} opts.interfaceThickness
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.reinforcements
      */
     const reinforcedJoistLine = (opts) => {

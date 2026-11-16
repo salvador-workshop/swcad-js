@@ -317,7 +317,7 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates an open web joist with the given options for reinforcement styles.
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.width - Width of the joist

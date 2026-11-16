@@ -300,7 +300,7 @@ const reinforcedRingInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.baseThickness
      * @param {number} opts.reinforcementThickness
      * @param {number} opts.fitGap
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.reinforcements.reinforcedRing
      */
     const lightReinforcedRing = (opts) => {
@@ -352,7 +352,7 @@ const reinforcedRingInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.baseThickness
      * @param {number} opts.reinforcementThickness
      * @param {number} opts.fitGap
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.reinforcements.reinforcedRing
      */
     const mediumReinforcedRing = (opts) => {
@@ -415,7 +415,7 @@ const reinforcedRingInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.baseThickness
      * @param {number} opts.reinforcementThickness
      * @param {number} opts.fitGap
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.reinforcements.reinforcedRing
      */
     const heavyReinforcedRing = (opts) => {

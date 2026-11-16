@@ -152,11 +152,11 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
         * Prop calculations
         * ------------------------------------- */
 
-        const lineComponentDetails = geometry.lines.lineComponentDetails({
+        const lineComponentDetails = geometry.lines.lineComponentDetails(
             startPt,
             endPt,
             endOffset,
-        })
+        )
 
         const {
             midPt,
@@ -239,7 +239,7 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.reinforcementThickness
      * @param {boolean} opts.hasReinforcedEnds
      * @param {boolean} opts.hasUnitReinforcements
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.reinforcements.reinforcedLine
      */
     const lightReinforcedLine = (opts) => {
@@ -304,7 +304,7 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.reinforcementThickness
      * @param {number} opts.hasReinforcedEnds
      * @param {number} opts.hasUnitReinforcements
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.reinforcements.reinforcedLine
      */
     const mediumReinforcedLine = (opts) => {
@@ -367,7 +367,7 @@ const reinforcedLineInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.unitLength
      * @param {number} opts.baseThickness
      * @param {number} opts.reinforcementThickness
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.reinforcements.reinforcedLine
      */
     const heavyReinforcedLine = (opts) => {

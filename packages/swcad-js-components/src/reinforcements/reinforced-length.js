@@ -430,7 +430,7 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.reinforcementThickness
      * @param {boolean} opts.hasReinforcedEnds
      * @param {boolean} opts.hasUnitReinforcements
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.reinforcements.reinforcedLength
      */
     const lightReinforcedLength = (opts) => {
@@ -509,7 +509,7 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.reinforcementThickness
      * @param {boolean} opts.hasReinforcedEnds
      * @param {boolean} opts.hasUnitReinforcements
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.reinforcements.reinforcedLength
      */
     const mediumReinforcedLength = (opts) => {
@@ -585,7 +585,7 @@ const reinforcedLengthInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.unitLength
      * @param {number} opts.baseThickness
      * @param {number} opts.reinforcementThickness
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.reinforcements.reinforcedLength
      */
     const heavyReinforcedLength = (opts) => {

@@ -247,7 +247,7 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.jointMargin
      * @param {number} opts.jointNumConnectors
      * @param {string} opts.axis
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.connections.jointPanel
      */
 
@@ -341,7 +341,7 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.jointMargin
      * @param {number | number[]} opts.jointNumConnectors
      * @param {string} opts.axis
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.connections.jointPanel
      */
     const twoJointRectPanel = (opts) => {

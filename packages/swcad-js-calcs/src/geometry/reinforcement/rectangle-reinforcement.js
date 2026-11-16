@@ -347,7 +347,7 @@ const rectangleReinforcementsInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts 
      * @param {number[]} opts.size - x and y coords
      * @param {string} opts.reinforcementPattern - one of ['x', 'cross', 'diamond', 'full', 'full-double']
-     * @returns Modelling data
+     * @returns {Object.<string, object>} Modelling data (`opts`, `dims`, `points`)
      */
     const reinforcedRectangle = (opts) => {
         const initOpts = rectangleOpts(opts)

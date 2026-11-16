@@ -200,7 +200,7 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number[]} opts.size
      * @param {number[]} opts.margin
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.reinforcements.boxCurve
      */
     const boxCurveQuarter = (opts) => {
@@ -237,7 +237,7 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number[]} opts.size
      * @param {number[]} opts.margin
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.reinforcements.boxCurve
      */
     const boxCurveHalf = (opts) => {

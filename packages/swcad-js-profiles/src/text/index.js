@@ -24,7 +24,7 @@ const textUtils = ({ jscad, swcadJs }) => {
      * @param {number} opts.charLineWidth
      * @param {string} opts.message
      * @param {number} opts.fontSize
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      */
     const basicText = (opts) => {
         const lineRadius = opts.charLineWidth / 2
