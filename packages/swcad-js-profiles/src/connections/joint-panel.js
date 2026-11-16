@@ -244,6 +244,7 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size - Total size of panel to be divided (length, width)
      * @param {number} opts.jointWidth - width of joint
+     * @param {number} opts.jointMargin - margins around joint cores
      * @param {number} opts.jointNumConnectors - number of connectors in joint
      * @param {string} opts.axis - Axis of main division (either 'x' or 'y', defaults to 'x')
      * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
@@ -337,6 +338,7 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.size - Total size of panel to be divided (length, width)
      * @param {number} opts.jointWidth - width of joint
+     * @param {number} opts.jointMargin - margins around joint cores
      * @param {number} opts.jointNumConnectors - number of connectors in joint
      * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.connections.jointPanel
