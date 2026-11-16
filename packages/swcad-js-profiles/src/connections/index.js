@@ -4,7 +4,6 @@ const tabModule = require('./tab')
 
 /**
  * Modelling functions that generate connecting and interlocking 2D parts.
- * @author R. J. Salvador
  * @namespace connections
  * @memberof profiles
  */
@@ -59,7 +58,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
                 unitSegments: 24,
             },
             dims: {
-                unitSpacing: math.inchesToMm(1),
                 unitRadius: 6.35,
                 radius: 12.7,
                 interfaceMargin: math.inchesToMm(3 / 8),
@@ -70,7 +68,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         const defaultOpts = {
             fitGap: standards.FIT_GAP,
             radius: defaultValues.dims.radius,
-            unitSpacing: defaultValues.dims.unitSpacing,
             unitRadius: defaultValues.dims.unitRadius,
             segments: defaultValues.opts.segments,
             unitSegments: defaultValues.opts.unitSegments,
@@ -100,7 +97,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         // User options
         const {
             radius = defaults.opts.radius,
-            unitSpacing = defaults.opts.unitSpacing,
             unitRadius = defaults.opts.unitRadius,
             unitSegments = defaults.opts.unitSegments,
             segments = defaults.opts.segments,
@@ -112,7 +108,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         const initOpts = {
             fitGap,
             radius,
-            unitSpacing,
             unitRadius,
             segments,
             unitSegments,
@@ -139,7 +134,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
 
         const {
             radius,
-            unitSpacing,
             unitRadius,
             segments,
             unitSegments,
@@ -178,7 +172,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         const modelDims = {
             fitGap,
             radius,
-            unitSpacing,
             unitRadius,
             diametre,
             unitDiametre,
@@ -216,16 +209,13 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     * ------------------------------------- */
 
     /**
-     * Generates polygon connectors.
+     * Generates regular polygon connectors.
      * @param {Object} opts - Options for the model
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {number} opts.radius
-     * @param {number} opts.unitSpacing
-     * @param {number} opts.unitRadius
-     * @param {number} opts.unitSegments
-     * @param {number} opts.segments
-     * @param {number} opts.interfaceMargin
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @param {number} opts.radius - Radius of central polygon
+     * @param {number} opts.segments - Segments of central polygon
+     * @param {number} opts.interfaceMargin - Margin between polygon and container
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.connections
      */
     const polygon = (opts) => {
@@ -290,103 +280,15 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
     }
 
     /**
-     * Generates pegboard connectors.
-     * @param {Object} opts - Options for the model
-     * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {number} opts.radius
-     * @param {number} opts.unitSpacing
-     * @param {number} opts.unitRadius
-     * @param {number} opts.unitSegments
-     * @param {number} opts.segments
-     * @param {number} opts.interfaceMargin
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @memberof profiles.connections
-     */
-    const pegboard = (opts) => {
-        const initOpts = modelOpts(opts)
-        const modelProperties = modelProps(initOpts)
-
-        const {
-            unitSegments,
-        } = modelProperties.opts
-
-        const {
-            unitRadius,
-            unitSpacing,
-            fitGap,
-            unitDiametre,
-            interfaceMargin,
-        } = modelProperties.dims
-
-        const halfGap = fitGap / 2
-        const cornerRadius = unitDiametre * 0.75
-
-        const specs = {
-            dowelRadius: -halfGap + unitRadius,
-            holeRadius: halfGap + unitRadius,
-        }
-
-        specs.totalWidth = interfaceMargin[0] * 2 + (unitRadius * 2 + unitSpacing)
-        const halfWidth = specs.totalWidth / 2
-        specs.cornerPoints = [
-            [halfWidth - cornerRadius, halfWidth - cornerRadius, 0],
-            [-halfWidth + cornerRadius, halfWidth - cornerRadius, 0],
-            [-halfWidth + cornerRadius, -halfWidth + cornerRadius, 0],
-            [halfWidth - cornerRadius, -halfWidth + cornerRadius, 0],
-        ]
-        const halfUnit = unitSpacing / 2
-        specs.dowelPoints = [
-            [halfUnit, halfUnit, 0],
-            [-halfUnit, halfUnit, 0],
-            [-halfUnit, -halfUnit, 0],
-            [halfUnit, -halfUnit, 0],
-        ]
-
-        const corners = specs.cornerPoints.map(cPt => {
-            return translate(cPt, circle({ radius: cornerRadius }))
-        })
-        const dowels = specs.dowelPoints.map(dPt => {
-            return translate(dPt, circle({ radius: specs.dowelRadius, segments: unitSegments }))
-        })
-        const dowelDies = specs.dowelPoints.map(dPt => {
-            return translate(dPt, circle({ radius: specs.holeRadius, segments: unitSegments }))
-        })
-
-        const basePlate = hull(corners)
-        const dowelAssembly = union(dowels)
-
-        const male = dowelAssembly
-        const female = subtract(basePlate, dowelDies)
-
-        const pegboardProfiles = [
-            female,
-            male,
-        ]
-
-        const mainModel = [
-            pegboardProfiles[1],
-            pegboardProfiles[0],
-        ]
-
-        const modelParts = {
-            male: pegboardProfiles[1],
-            female: pegboardProfiles[0],
-        }
-
-        return [mainModel, modelParts, modelProperties]
-    }
-
-    /**
      * Generates bolt circle connectors.
      * @param {Object} opts - Options for the model
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {number} opts.radius
-     * @param {number} opts.unitSpacing
-     * @param {number} opts.unitRadius
-     * @param {number} opts.unitSegments
-     * @param {number} opts.segments
-     * @param {number} opts.interfaceMargin
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @param {number} opts.radius - Radius of bolt circle group (group centre to unit centres)
+     * @param {number} opts.unitRadius - Bolt circle radius
+     * @param {number} opts.unitSegments - Number of segments in bolt circles
+     * @param {number} opts.segments - Number of bolts in circle
+     * @param {number} opts.interfaceMargin - Margin between edge of base plate and edge of bolt circles
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.connections
      */
     const boltCircle = (opts) => {
@@ -449,7 +351,6 @@ const connectionProfilesInit = ({ jscad, swcadJs }) => {
         props: modelProps,
         tab,
         polygon,
-        pegboard,
         boltCircle,
     }
 }

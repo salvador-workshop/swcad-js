@@ -226,7 +226,7 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
     /**
      * New Model 1
      * @param {*} opts 
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof newModelParent.newModelPack
      */
     const model1 = (opts) => {
@@ -245,7 +245,7 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
     /**
      * New Model 2
      * @param {*} opts 
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof newModelParent.newModelPack
      */
     const model2 = (opts) => {
@@ -264,7 +264,7 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
     /**
      * ...
      * @param {*} opts 
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof newModelParent.newModelPack
      */
     const model3 = (opts) => {
@@ -283,7 +283,7 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
     /**
      * ...
      * @param {*} opts 
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof newModelParent.newModelPack
      */
     const model4 = (opts) => {
@@ -302,7 +302,7 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
     /**
      * ...
      * @param {*} opts 
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof newModelParent.newModelPack
      */
     const model5 = (opts) => {

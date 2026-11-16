@@ -24,9 +24,9 @@ const positionUtils = ({ jscad, swcadJs }) => {
     /**
      * Centers the given geometry, relative to the given point (defaults to [0,0,0]).
      * @memberof calcs.position
-     * @param {*} inGeom 
-     * @param {*} pt 
-     * @returns ...
+     * @param {object} inGeom - 2D / 3D geometry
+     * @param {number[]} pt - 3D coordinate (defaults to origin)
+     * @returns {void}
      */
     const ctr = (inGeom, pt = [0, 0, 0]) => {
         return align({ modes: alignModes.ctr, relativeTo: pt }, inGeom)
@@ -34,9 +34,9 @@ const positionUtils = ({ jscad, swcadJs }) => {
     /**
      * Centers the given geometry (minimum Z), relative to the given point (defaults to [0,0,0]).
      * @memberof calcs.position
-     * @param {*} inGeom 
-     * @param {*} pt 
-     * @returns ...
+     * @param {object} inGeom - 2D / 3D geometry
+     * @param {number[]} pt - 3D coordinate (defaults to origin)
+     * @returns {void}
      */
     const ctrMin = (inGeom, pt = [0, 0, 0]) => {
         return align({ modes: alignModes.ctrMin, relativeTo: pt }, inGeom)
@@ -44,9 +44,9 @@ const positionUtils = ({ jscad, swcadJs }) => {
     /**
      * Centers the given geometry (maximum Z), relative to the given point (defaults to [0,0,0]).
      * @memberof calcs.position
-     * @param {*} inGeom 
-     * @param {*} pt 
-     * @returns ...
+     * @param {object} inGeom - 2D / 3D geometry
+     * @param {number[]} pt - 3D coordinate (defaults to origin)
+     * @returns {void}
      */
     const ctrMax = (inGeom, pt = [0, 0, 0]) => {
         return align({ modes: alignModes.ctrMax, relativeTo: pt }, inGeom)

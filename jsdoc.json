@@ -3,7 +3,8 @@
     "recurseDepth": 10,
     "source": {
         "includePattern": ".+\\.js(doc|x)?$",
-        "excludePattern": "(^|\\/|\\\\)_"
+        "excludePattern": "(^|\\/|\\\\)_",
+        "exclude": ["packages/swcad-js-templates"]
     },
     "sourceType": "module",
     "tags": {

@@ -317,7 +317,7 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
 
     /**
      * Generates an open web joist with the given options for reinforcement styles.
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.width - Width of the joist
@@ -325,7 +325,6 @@ const reinforcedJoistInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.reinforcementLevel - Level of reinforcement (1: basic, 2: moderate, 3: high)
      * @param {number} opts.unitLength - Length of each unit section for webbing
      * @memberof components.reinforcements
-     * @author R. J. Salvador (Salvador Workshop)
      */
     const reinforcedJoist = (opts) => {
         const defaults = reinforcedJoistDefaults()

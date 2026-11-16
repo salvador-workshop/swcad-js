@@ -111,14 +111,14 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
      * Generates a flat 3D mesh panel with the given options.
      * @memberof components.mesh
      * @param {Object} opts - Options for the model
-     * @param {number[]} opts.size
-     * @param {number} opts.thickness
-     * @param {number} opts.edgeMargin
-     * @param {number} opts.holeRadius
-     * @param {number} opts.holeDistance
-     * @param {string} opts.holePattern
-     * @param {number} opts.holeSegments
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @param {number[]} opts.size - size of panel (length, width)
+     * @param {number} opts.thickness - thickness of panel
+     * @param {number} opts.edgeMargin - distance from edge to mesh pattern
+     * @param {number} opts.holeRadius - mesh hole radius
+     * @param {number} opts.holeDistance - distance between mesh hole centres
+     * @param {string} opts.holePattern - mesh hole arrangement ('tri' or 'square')
+     * @param {number} opts.holeSegments - number of segments for each mesh hole
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      */
     const meshPanel = (opts) => {
         const inOpts = meshPanelOpts(opts)
@@ -146,14 +146,14 @@ const mesh3dInit = ({ jscad, swcadJs }) => {
      * Generates a flat 3D mesh lattice panel with the given options.
      * @memberof components.mesh
      * @param {Object} opts - Options for the model
-     * @param {number[]} opts.size
-     * @param {number} opts.thickness
-     * @param {number} opts.edgeMargin
-     * @param {number} opts.holeRadius
-     * @param {number} opts.gapThickness
-     * @param {string} opts.holePattern
-     * @param {number} opts.holeSegments
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @param {number[]} opts.size - size of panel (length, width)
+     * @param {number} opts.thickness - thickness of panel
+     * @param {number} opts.edgeMargin - distance from edge to mesh pattern
+     * @param {number} opts.holeRadius - mesh hole radius
+     * @param {number} opts.gapThickness - minimum distance between hole edges
+     * @param {string} opts.holePattern - mesh hole arrangement ('tri' or 'square')
+     * @param {number} opts.holeSegments - number of segments for each mesh hole
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      */
     const meshLatticePanel = (opts) => {
         const inOpts = meshPanelOpts(opts)

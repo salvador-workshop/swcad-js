@@ -160,11 +160,11 @@ const moduleInit = ({ jscad, swcadJs }) => {
         * Prop calculations
         * ------------------------------------- */
 
-        const lineComponentDetails = geometry.lines.lineComponentDetails({
+        const lineComponentDetails = geometry.lines.lineComponentDetails(
             startPt,
             endPt,
             endOffset,
-        })
+        )
 
         const {
             midPt,
@@ -262,11 +262,10 @@ const moduleInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.unitLength - Length of each unit section for webbing
      * @param {number[]} opts.startPt - starting point (2D coords)
      * @param {number[]} opts.endPt - ending point (2D coords)
-     * @param {number} opts.endOffset
-     * @param {number} opts.baseLineOffset
-     * @param {geom3} opts.component
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
-     * @author R. J. Salvador (Salvador Workshop)
+     * @param {number} opts.endOffset - offset between start/end point and line start/end
+     * @param {number} opts.baseLineOffset - offset from centre of line axis
+     * @param {geom3} opts.component - component to repeat
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components
      */
     const componentLine = (opts) => {

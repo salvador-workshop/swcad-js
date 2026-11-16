@@ -170,10 +170,10 @@ const reinforcedRectPanelInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a reinforced 3D rectangular panel with the given options for reinforcement styles.
      * @param {Object} opts - Options for the model
-     * @param {number[]} opts.size
-     * @param {string} opts.reinforcementPattern
-     * @param {number[]} opts.reinforcementThickness
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @param {number[]} opts.size - size of the panel (length, width, height)
+     * @param {string} opts.reinforcementPattern - one of ['x', 'cross', 'diamond', 'full', 'full-double']
+     * @param {number[]} opts.reinforcementThickness - thicknesses of reinforcements (border, primary, secondary)
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.reinforcements
      */
     const reinforcedRectPanel = (opts) => {

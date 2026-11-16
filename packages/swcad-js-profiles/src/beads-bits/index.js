@@ -4,7 +4,6 @@
  * Modelling functions that generate 2D beads (basic shapes mainly for additive `hull` functions) and bits (basic shapes for subtractive `hull` functions).
  * @namespace beadsBits
  * @memberof profiles 
- * @author R. J. Salvador (Salvador Workshop)
  */
 
 const beadsBitsInit = ({ jscad, swcadJs }) => {
@@ -199,7 +198,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.offset2 
      * @param {number} opts.offset3 
      * @param {number} opts.offset4 
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.beadsBits.corner
      */
     const rabbet = (opts) => {
@@ -287,7 +286,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.offset2 
      * @param {number} opts.offset3 
      * @param {number} opts.offset4 
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.beadsBits.corner
      */
     const chamfer = (opts) => {
@@ -371,7 +370,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.offset2 
      * @param {number} opts.offset3 
      * @param {number} opts.offset4 
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.beadsBits.corner
      */
     const roundOver = (opts) => {
@@ -456,7 +455,7 @@ const beadsBitsInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.offset2 
      * @param {number} opts.offset3 
      * @param {number} opts.offset4 
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.beadsBits.corner
      */
     const cove = (opts) => {

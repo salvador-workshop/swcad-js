@@ -7,7 +7,6 @@ const dataInit = ({ jscad }) => {
     /**
      * Mostly math constants and common dimensions/options.
      * @namespace data
-     * @author R. J. Salvador (Salvador Workshop)
      */
     const data = {
         constants: constants,

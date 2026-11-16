@@ -53,7 +53,7 @@ const tabConnectionProfilesInit = ({ jscad, swcadJs }) => {
                 sampleThickness: 1, // scission only works with 3D objects. Need a filler thickness for now
             },
             opts: {
-                segments: 6,
+                segments: 16,
             },
             dims: {
                 size: [
@@ -212,10 +212,9 @@ const tabConnectionProfilesInit = ({ jscad, swcadJs }) => {
      * Generates dovetail connectors.
      * @param {Object} opts - Options for the model
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {number[]} opts.size
-     * @param {number} opts.segments
-     * @param {number} opts.interfaceMargin
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @param {number[]} opts.size - Total size of connectors (width, length)
+     * @param {number | number[]} opts.interfaceMargin - Margin between edge of base plates and central connector (x, y)
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.connections.tab
      */
     const dovetail = (opts) => {
@@ -323,10 +322,9 @@ const tabConnectionProfilesInit = ({ jscad, swcadJs }) => {
      * Generates tab connectors.
      * @param {Object} opts - Options for the model
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {number[]} opts.size
-     * @param {number} opts.segments
-     * @param {number} opts.interfaceMargin
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @param {number[]} opts.size - Total size of connectors (width, length)
+     * @param {number | number[]} opts.interfaceMargin - Margin between edge of base plates and central connector (x, y)
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.connections.tab
      */
     const tab = (opts) => {
@@ -434,10 +432,9 @@ const tabConnectionProfilesInit = ({ jscad, swcadJs }) => {
      * Generates right-angle tab connectors.
      * @param {Object} opts - Options for the model
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {number[]} opts.size
-     * @param {number} opts.segments
-     * @param {number} opts.interfaceMargin
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @param {number[]} opts.size - Total size of connectors (width, length)
+     * @param {number | number[]} opts.interfaceMargin - Margin between edge of base plates and central connector (x, y)
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.connections.tab
      */
     const rightAngleTab = (opts) => {
@@ -540,10 +537,10 @@ const tabConnectionProfilesInit = ({ jscad, swcadJs }) => {
      * Generates ellipse connectors.
      * @param {Object} opts - Options for the model
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {number[]} opts.size
+     * @param {number[]} opts.size - Total size of connectors (width, length)
      * @param {number} opts.segments
-     * @param {number} opts.interfaceMargin
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @param {number | number[]} opts.interfaceMargin - Margin between edge of base plates and central connector (x, y)
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.connections.tab
      */
     const ellipse = (opts) => {
@@ -638,7 +635,6 @@ const tabConnectionProfilesInit = ({ jscad, swcadJs }) => {
 
     /**
      * Modelling functions that generate various connecting tabs.
-     * @author R. J. Salvador
      * @namespace tab
      * @memberof profiles.connections
      */

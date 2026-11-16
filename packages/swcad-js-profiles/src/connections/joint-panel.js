@@ -240,14 +240,14 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a set of two interlocking panels, made by dividing a rectangle in half with the given options.
      * @param {Object} opts - Options for the model
-     * @param {string} opts.type - Type of the model
+     * @param {string} opts.type - Type of joint to be used (one of 'tab', 'dovetail', or 'rightAngleTab')
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {number[]} opts.size
-     * @param {number} opts.jointWidth
-     * @param {number} opts.jointMargin
-     * @param {number} opts.jointNumConnectors
-     * @param {string} opts.axis
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @param {number[]} opts.size - Total size of panel to be divided (length, width)
+     * @param {number} opts.jointWidth - width of joint
+     * @param {number} opts.jointMargin - margins around joint cores
+     * @param {number} opts.jointNumConnectors - number of connectors in joint
+     * @param {string} opts.axis - Axis of main division (either 'x' or 'y', defaults to 'x')
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.connections.jointPanel
      */
 
@@ -334,14 +334,13 @@ const jointPanelInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a set of four interlocking panels, made by dividing a rectangle into quarters with the given options.
      * @param {Object} opts - Options for the model
-     * @param {string} opts.type - Type of the model
+     * @param {string} opts.type - Type of joint to be used (one of 'tab', 'dovetail', or 'rightAngleTab')
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {number[]} opts.size
-     * @param {number} opts.jointWidth
-     * @param {number} opts.jointMargin
-     * @param {number | number[]} opts.jointNumConnectors
-     * @param {string} opts.axis
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @param {number[]} opts.size - Total size of panel to be divided (length, width)
+     * @param {number} opts.jointWidth - width of joint
+     * @param {number} opts.jointMargin - margins around joint cores
+     * @param {number} opts.jointNumConnectors - number of connectors in joint
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.connections.jointPanel
      */
     const twoJointRectPanel = (opts) => {

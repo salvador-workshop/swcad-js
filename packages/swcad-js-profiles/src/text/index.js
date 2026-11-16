@@ -21,10 +21,10 @@ const textUtils = ({ jscad, swcadJs }) => {
      * Generates a simple 2D line of text.
      * @memberof profiles.text
      * @param {Object} opts - Options for the model
-     * @param {number} opts.charLineWidth
-     * @param {string} opts.message
-     * @param {number} opts.fontSize
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @param {number} opts.charLineWidth - line width for letter strokes
+     * @param {string} opts.message - text to be rendered
+     * @param {number} opts.fontSize - font size (character height)
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      */
     const basicText = (opts) => {
         const lineRadius = opts.charLineWidth / 2

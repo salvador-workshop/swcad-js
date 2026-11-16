@@ -198,9 +198,9 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a curved 2D reinforcement covering two sides (one corner) of a rectangle.
      * @param {Object} opts - Options for the model
-     * @param {number[]} opts.size
-     * @param {number[]} opts.margin
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @param {number[]} opts.size - size of box (length, width)
+     * @param {number[]} opts.margin - margins between edge and curve (x, y)
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.reinforcements.boxCurve
      */
     const boxCurveQuarter = (opts) => {
@@ -235,9 +235,9 @@ const boxCurveInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a curved 2D reinforcement covering three sides (two corners) of a rectangle.
      * @param {Object} opts - Options for the model
-     * @param {number[]} opts.size
-     * @param {number[]} opts.margin
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @param {number[]} opts.size - size of box (length, width)
+     * @param {number[]} opts.margin - margins between edge and curve (x, y)
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.reinforcements.boxCurve
      */
     const boxCurveHalf = (opts) => {

@@ -235,10 +235,10 @@ const reinforcedRectInit = ({ jscad, swcadJs }) => {
     /**
      * Generates a 2D reinforced rectangle with the given options for reinforcement styles.
      * @param {Object} opts - Options for the model
-     * @param {number[]} opts.size
-     * @param {string} opts.reinforcementPattern
-     * @param {number[]} opts.reinforcementThickness
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @param {number[]} opts.size - size of rectangle (length, width)
+     * @param {string} opts.reinforcementPattern - one of ['x', 'cross', 'diamond', 'full', 'full-double']
+     * @param {number[]} opts.reinforcementThickness - thicknesses of reinforcements (border, primary, secondary)
+     * @returns {Array.<(geom2|Object.<string, geom2>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof profiles.reinforcements
      */
     const reinforcedRect = (opts) => {

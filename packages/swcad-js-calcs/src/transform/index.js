@@ -39,7 +39,7 @@ const transformUtils = ({ jscad, swcadJs }) => {
      * Cuts one quadrant of the given 2D shape.
      * @memberof calcs.transform
      * @param {object} inShape - geom2 object
-     * @returns 2D geometry of one quadrant from the given shape
+     * @returns {object} 2D geometry of one quadrant from the given shape
      */
     const cutQuadrant = (inShape) => {
         const inShapeDims = measureDimensions(inShape)
@@ -73,7 +73,7 @@ const transformUtils = ({ jscad, swcadJs }) => {
      * Clones one quadrant of the given 2D shape into all quadrants.
      * @memberof calcs.transform
      * @param {object} inShape - geom2 object
-     * @returns 2D geometry with cloned quadrants
+     * @returns {object} 2D geometry with cloned quadrants
      */
     const cloneQuadrant = (inShape) => {
         const firstMirror = mirror({ normal: [0, 1, 0] }, inShape)
@@ -95,7 +95,7 @@ const transformUtils = ({ jscad, swcadJs }) => {
      * @param {Object} opts
      * @param {string} opts.axis - Axis direction pointing to the remaining geometry. This could be negative, specified like "x" or "-y"
      * @param {Object} geom - Object we're cutting
-     * @returns bisected geometry
+     * @returns {object} bisected geometry
      */
     const bisect3d = (opts, geom) => {
         const geomDims = measureDimensions(geom);
@@ -141,7 +141,7 @@ const transformUtils = ({ jscad, swcadJs }) => {
      * @param {Object} opts
      * @param {number} opts.centralAngle - angle in radians
      * @param {Object} geom - Object we're cutting
-     * @returns bisected geometry
+     * @returns {object} bisected geometry
      */
     const cutCircularSlice = (opts, geom) => {
         const geomDims = measureDimensions(geom);

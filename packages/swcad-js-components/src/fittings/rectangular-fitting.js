@@ -205,7 +205,7 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
      * @param {number} opts.fitGap - Gap for fitting parts together
      * @param {number[]} opts.subjectSize
      * @param {number} opts.length
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.fittings
      */
     const rectFittingCutProfile = (opts) => {
@@ -235,9 +235,9 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {number[]} opts.subjectSize
-     * @param {number} opts.length
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @param {number[]} opts.subjectSize - size of subject cross section (length, width)
+     * @param {number} opts.length - length of fitting
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties. Output parts: { `mainModel`, `section`, `cutaway` }
      * @memberof components.fittings
      */
     const rectangularFitting = (opts) => {
@@ -283,9 +283,9 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {number[]} opts.subjectSize
-     * @param {number} opts.length
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @param {number[]} opts.subjectSize - size of subject cross section (length, width)
+     * @param {number} opts.length - length of fitting
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties. Output parts: { `mainModel`, `blankBase`, `cutawayProfile`, `cutawayBase`, `blank`, `cutaway` }
      * @memberof components.fittings
      */
     const rectangularFittingCross = (opts) => {
@@ -339,9 +339,9 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {number[]} opts.subjectSize
-     * @param {number} opts.length
-     * @returns Array with model, parts, and properties: [`geom3`, `Object.<string, geom3>`, `Object.<string, any>`]
+     * @param {number[]} opts.subjectSize - size of subject cross section (length, width)
+     * @param {number} opts.length - length of fitting
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties. { `mainModel`, `blank`, `cutaway` }
      * @memberof components.fittings
      */
     const rectangularFittingTee = (opts) => {
@@ -399,6 +399,8 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
         const mainModel = position.ctr(rectangularFittingTeeAssembly)
         const modelParts = {
             mainModel,
+            blank,
+            cutaway,
         }
 
         return [mainModel, modelParts, modelProperties]
@@ -409,9 +411,9 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {number[]} opts.subjectSize
-     * @param {number} opts.length
-     * @returns Array with model, parts, and properties: [`geom3`[], `Object.<string, geom3>`, `Object.<string, any>`]
+     * @param {number[]} opts.subjectSize - size of subject cross section (length, width)
+     * @param {number} opts.length - length of fitting
+     * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.fittings
      */
     const rectangularFittingSplit = (opts) => {
