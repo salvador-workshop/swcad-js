@@ -203,8 +203,8 @@ const rectangularFittingInit = ({ jscad, swcadJs }) => {
      * @param {Object} opts - Options for the model
      * @param {number} opts.interfaceThickness - Thickness of the interface connections
      * @param {number} opts.fitGap - Gap for fitting parts together
-     * @param {number[]} opts.subjectSize
-     * @param {number} opts.length
+     * @param {number[]} opts.subjectSize - size of subject cross section (length, width)
+     * @param {number} opts.length - length of fitting
      * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
      * @memberof components.fittings
      */

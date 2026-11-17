@@ -208,7 +208,7 @@ const bracketsInit = ({ jscad, swcadJs }) => {
         } = modelProperties.dims
 
         let bracketReinf = reinforcements.boxSupport.boxSupportQuarter({
-            size: [height, width],
+            size: [height, width, interfaceThickness],
         })[0]
         bracketReinf = position.ctrMin(rotate([0, TAU / -4, 0], bracketReinf))
 
@@ -292,7 +292,7 @@ const bracketsInit = ({ jscad, swcadJs }) => {
         }
 
         let bracketReinfX = reinforcements.boxSupport.boxSupportQuarter({
-            size: [height, width / 2],
+            size: [height, width / 2, interfaceThickness],
         })[0]
         bracketReinfX = position.ctrMin(rotate([0, TAU / -4, 0], bracketReinfX))
 
@@ -311,7 +311,7 @@ const bracketsInit = ({ jscad, swcadJs }) => {
         )
 
         let bracketReinfY = reinforcements.boxSupport.boxSupportQuarter({
-            size: [height, length / 2],
+            size: [height, length / 2, interfaceThickness],
         })[0]
         bracketReinfY = position.ctrMin(rotate([0, TAU / -4, TAU / -4], bracketReinfY))
 
