@@ -26,11 +26,94 @@ A heavily customized version of the JSCAD UI ([https://github.com/hrgdavor/jscad
 
 [npmjs.com/package/swcad-js](https://www.npmjs.com/package/swcad-js)  
 
+<br/>
+
+## Usage
+
+The library can be used in a JSCAD script like so:
+
+```javascript
+// Library initialization
+const jscad = require('@jscad/modeling')
+const swcadJs = require('swcad-js').init({ jscad });
+
+// Initializing JSCAD functionality
+const {
+    cube,
+    cylinder,
+    sphere,
+} = jscad.primitives
+
+const {
+    translate,
+    rotate,
+} = jscad.transforms
+
+// Initializing SWCAD-JS functionality
+const {
+    mesh,
+} = swcadJs.components
+
+const {
+    math
+} = swcadJs.calcs;
+
+// Typical JSCAD main function
+const main = () => {
+
+    // Creating a mesh panel. Note the array output format
+    const meshPanelExample = mesh.meshPanel({
+        size: [math.inchesToMm(3), math.inchesToMm(4)],
+        thickness: 2,
+        holeRadius: 3,
+        holeDistance: math.inchesToMm(3 / 4),
+        holePattern: 'tri',
+    })[0]
+    
+    return meshPanelExample
+}
+
+module.exports = { main }
+```
+
+Many more examples can be found on the [SW JSCAD Viewer](https://sw-jscad-viewer.netlify.app/).
+
+### Component/Profile Output
+
+SWCAD-JS component and profile functions typically return an array of three values:
+
+```javascript
+const [
+    mainModel, // the output model itself (JSCAD geom2/geom3)
+    modelParts, // main model + various sub-components
+    modelProperties, // props (dims, options, etc.) used during assembly
+] = swcadJs.components.mesh.meshPanel(opts)
+```
+
+While it may appear verbose, this allows the consumer to have the output model AND auxiliary data for building around that model. Details around specific `modelParts` may be found in the [API documentation](https://salvador-workshop.github.io/swcad-js/).
+
+For more detail, here's a source excerpt for one such function:
+
+```javascript
+const mediumReinforcedRing = (opts) => {
+    // ...
+    
+    const mainModel = position.ctr(ringAssembly)
+    const modelParts = {
+        mainModel,
+        base: ringReinfBase,
+        innerEdge: ringReinfInnerEdge,
+        spokes: ringReinfSpokes,
+    }
+    return [mainModel, modelParts, modelProperties]
+}
+```
+
+<br/>
+
 ## SWCAD-JS API -- Overview
 
-SWCAD-JS functions and utilities.
-
----
+A quick overview of SWCAD-JS functions and utilities. For more information, check the [API documentation](https://salvador-workshop.github.io/swcad-js/).
 
 <br/>
 
@@ -46,7 +129,6 @@ Numeric constants and ratios.
 
 Dimensions and options used throughout the SWCAD-JS system.
 
----
 
 <br/>
 
@@ -89,8 +171,6 @@ Functions leveraging JSCAD to transform 2D/3D geometries.
 ![swcad-js demo - cut/clone quadrant](./static/img/calcs-transform-2d.jpg "swcad-js demo - cut/clone quadrant")
 
 ![swcad-js demo - stack](./static/img/calcs-transform-stack.jpg "swcad-js demo - stack")
-
----
 
 <br/>
 
@@ -147,8 +227,6 @@ Modelling functions that generate curved 2D reinforcements for right-angle corne
 Modelling functions that generate 2D text.
 
 ![swcad-js demo - 2d text](./static/img/profiles-text.jpg "swcad-js demo - 2d text")
-
----
 
 <br/>
 
