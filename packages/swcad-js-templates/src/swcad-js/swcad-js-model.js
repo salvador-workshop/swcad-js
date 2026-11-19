@@ -63,7 +63,9 @@ const {
 } = swcadJs.calcs
 
 
-//==============================================================================
+//------------------------------------------------------------
+// Model Internal Functions
+//------------------------------------------------------------
 
 
 /**
@@ -73,18 +75,24 @@ const {
  * @memberof newModelParent
  * @access private
  */
-const modelDefaults = () => {
+const newModelNameDefaults = () => {
+    const interfaceThickness = standards.INTERFACE_THICKNESS
+    const fitGap = standards.FIT_GAP
+
     const defaultValues = {
         constants: {
-            interfaceThickness: standards.INTERFACE_THICKNESS,
+            interfaceThickness
         },
-        opts: {},
+        opts: {
+            type: 'default',
+        },
         dims: {
             size: [
                 math.inchesToMm(2),
                 math.inchesToMm(4),
                 math.inchesToMm(1),
             ],
+            fitGap,
         },
         points: {},
         components: {},
@@ -95,10 +103,10 @@ const modelDefaults = () => {
     }
 
     const defaultOpts = {
-        fitGap: standards.FIT_GAP,
         size: defaultValues.dims.size,
-        type: defaultValues.types.default.id,
+        type: defaultValues.opts.type,
         interfaceThickness: defaultValues.constants.interfaceThickness,
+        fitGap: defaultValues.dims.fitGap,
     }
 
     return {
@@ -108,9 +116,6 @@ const modelDefaults = () => {
 }
 
 
-//------------------------------------------------------------------------------
-
-
 /**
  * Initializes options with user input
  * @param {*} opts 
@@ -118,9 +123,9 @@ const modelDefaults = () => {
  * @memberof newModelParent
  * @access private
  */
-const modelOpts = (opts) => {
-    const defaults = modelDefaults()
-    console.log('modelOpts() -- opts', opts)
+const newModelNameOpts = (opts) => {
+    const defaults = newModelNameDefaults()
+    console.log('newModelNameOpts() -- opts', opts)
 
     // User options
     const {
@@ -137,13 +142,10 @@ const modelOpts = (opts) => {
         fitGap,
     }
 
-    console.log('modelOpts() -- initOpts', initOpts)
+    console.log('newModelNameOpts() -- initOpts', initOpts)
 
     return initOpts
 }
-
-
-//------------------------------------------------------------------------------
 
 
 /**
@@ -153,9 +155,9 @@ const modelOpts = (opts) => {
  * @memberof newModelParent
  * @access private
  */
-const modelProps = (opts) => {
-    const defaults = modelDefaults()
-    console.log('modelProps() -- prop opts', opts)
+const newModelNameProps = (opts) => {
+    const defaults = newModelNameDefaults()
+    console.log('newModelNameProps() -- prop opts', opts)
 
     const {
         size,
@@ -164,17 +166,15 @@ const modelProps = (opts) => {
         fitGap,
     } = opts
 
-    /* ----------------------------------------
-    * Prop calculations
-    * ------------------------------------- */
+    //----------------------------------------
+    // Prop calculations
 
     const width = size[0]
     const depth = size[1]
     const height = size[2]
 
-    /* ----------------------------------------
-    * Preparing Model Properties, Dimensions
-    * ------------------------------------- */
+    //----------------------------------------
+    // Preparing Model Properties, Dimensions
 
     /** Constant values for model */
     const modelConstants = defaults.vals.constants
@@ -200,11 +200,12 @@ const modelProps = (opts) => {
     /** Components used by model */
     const modelComponents = defaults.vals.components
 
-    /* ---------------------------------------------
-    *  Model Properties
-    * ----------------------------------------------
-    * Properties accessible to all model functions.
-    * --------------------------------------------- */
+    /** Defined model types */
+    const modelTypes = defaults.vals.types
+
+    //--------------------------------------------------
+    // MODEL PROPERTIES
+    // Properties accessible to all model functions.
 
     const modelProperties = {
         constants: modelConstants,
@@ -212,79 +213,98 @@ const modelProps = (opts) => {
         dims: modelDims,
         points: modelPoints,
         components: modelComponents,
+        types: modelTypes,
     }
 
-    console.log('modelProps() -- modelProperties', modelProperties)
+    console.log('newModelNameProps() -- modelProperties', modelProperties)
 
     return modelProperties
 }
 
 
-//------------------------------------------------------------------------------
+//------------------------------------------------------------
+// Secondary Modelling Functions
+//------------------------------------------------------------
+
+
+const subcomponent1 = (opts) => {
+    const {
+        size,
+        width,
+        depth,
+    } = opts
+
+    return sphere()
+}
+
+const subcomponent2 = (opts) => {
+    const {
+        size,
+        width,
+        depth,
+    } = opts
+
+    return cube()
+}
+
+
+//------------------------------------------------------------
+// Primary Modelling Functions
+//------------------------------------------------------------
 
 
 /**
- * New Model
- * @param {*} opts 
+ * Generates a new model
+ * @param {Object} opts - Options for the model
+ * @param {number[]} opts.size
+ * @param {string} opts.type
+ * @param {number} opts.reinforcementThickness
+ * @param {number} opts.fitGap
  * @returns {Array.<(geom3|Object.<string, geom3>|Object.<string, any>)>} Array with model, parts, and properties
  * @memberof newModelParent
  */
-const model = (opts) => {
-    const defaults = modelDefaults()
-    const initOpts = modelOpts(opts)
-    const modelProperties = modelProps(initOpts)
+const newModelName = (opts) => {
+    const defaults = newModelNameDefaults()
+    const initOpts = newModelNameOpts(opts)
+    const modelProperties = newModelNameProps(initOpts)
 
-    /* ----------------------------------------
-     * Modelling, Component/Assembly Modules
-     * ------------------------------------- */
+    const {
+        type,
+    } = modelProperties.opts
 
-    /** Sub-component 01 */
-    const subcomponent1 = (modelProps) => {
-        const {
-            opts,
-            dims,
-            points,
-        } = modelProps
+    const {
+        size,
+        width,
+        depth,
+        height,
+        interfaceThickness,
+        fitGap,
+    } = modelProperties.dims
 
-        return sphere()
-    }
+    //----------------------------------------
+    // Initializing sub-components
 
-    /** Sub-component 02 */
-    const subcomponent2 = (modelProps) => {
-        const {
-            opts,
-            dims,
-            points,
-        } = modelProps
+    let subComp1 = subcomponent1({
+        size,
+        width,
+        depth,
+    })
 
-        return cube()
-    }
+    let subComp2 = subcomponent2({
+        size,
+        width,
+        depth,
+    })
 
-    /* ----------------------------------------
-     * Complete Assembly
-     * ------------------------------------- */
+    //----------------------------------------
+    // Assembling sub-components
 
-    /** Final Assembly */
-    const finalAssembly = (modelProps) => {
-        let subComp1 = subcomponent1(modelProps)
-        let subComp2 = subcomponent2(modelProps)
+    const mainModel = union(
+        subComp1,
+        subComp2,
+    )
 
-        return union(
-            subComp1,
-            subComp2,
-        )
-    }
-
-    /* ----------------------------------------
-     * Outputs
-     * ------------------------------------- */
-
-    let subComp1 = subcomponent1(modelProperties)
-    let subComp2 = subcomponent2(modelProperties)
-
-    let mainModel = finalAssembly(modelProperties)
-
-    let modelParts = {
+    const modelParts = {
         subcomponent1: subComp1,
         subcomponent2: subComp2,
     }
@@ -293,27 +313,15 @@ const model = (opts) => {
 }
 
 
-//------------------------------------------------------------------------------
+//-----------------------------------------------
+// Model / Scene Prep
+//-----------------------------------------------
 
+const newModelName1 = newModelName({})[0]
 
-/* ----------------------------------------
- * Model / Scene Prep
- * ------------------------------------- */
+const newModelName2 = newModelName({})[0]
 
-
-const outer = subtract(
-    cube({ size: 10 }),
-    sphere({ radius: 6.8 })
-)
-
-const inner = intersect(
-    sphere({ radius: 4 }),
-    cube({ size: 7 })
-)
-
-
-//==============================================================================
-
+const spaceUnit = math.inchesToMm(3.5)
 
 /**
  * Main function to be rendered by JSCAD
@@ -321,18 +329,13 @@ const inner = intersect(
  * @ignore
  */
 function main() {
-    const spaceUnit = math.inchesToMm(3.5)
 
     return [
-        translate([spaceUnit * 0, spaceUnit * 0, spaceUnit * 0], inner),
-        translate([spaceUnit * 0, spaceUnit * 0, spaceUnit * 0], outer),
+        translate([spaceUnit * 0, spaceUnit * 0, spaceUnit * 0], newModelName1),
+        translate([spaceUnit * 0, spaceUnit * 0, spaceUnit * 0], newModelName2),
     ]
 }
 
-
 module.exports = {
-    modelDefaults,
-    modelProps,
-    model,
     main,
 }

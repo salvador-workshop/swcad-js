@@ -60,7 +60,9 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
     } = swcadJs.calcs
 
 
-    //==============================================================================
+    //------------------------------------------------------------
+    // Model Internal Functions
+    //------------------------------------------------------------
 
 
     /**
@@ -71,17 +73,23 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
      * @access private
      */
     const newModelNameDefaults = () => {
+        const interfaceThickness = standards.INTERFACE_THICKNESS
+        const fitGap = standards.FIT_GAP
+
         const defaultValues = {
             constants: {
-                interfaceThickness: standards.INTERFACE_THICKNESS,
+                interfaceThickness
             },
-            opts: {},
+            opts: {
+                type: 'default',
+            },
             dims: {
                 size: [
                     math.inchesToMm(2),
                     math.inchesToMm(4),
                     math.inchesToMm(1),
                 ],
+                fitGap,
             },
             points: {},
             components: {},
@@ -92,10 +100,10 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
         }
 
         const defaultOpts = {
-            fitGap: standards.FIT_GAP,
             size: defaultValues.dims.size,
-            type: defaultValues.types.default.id,
+            type: defaultValues.opts.type,
             interfaceThickness: defaultValues.constants.interfaceThickness,
+            fitGap: defaultValues.dims.fitGap,
         }
 
         return {
@@ -103,9 +111,6 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
             vals: defaultValues,
         }
     }
-
-
-    //------------------------------------------------------------------------------
 
 
     /**
@@ -140,9 +145,6 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
     }
 
 
-    //------------------------------------------------------------------------------
-
-
     /**
      * Builds model properties from the given opts
      * @param {*} opts 
@@ -161,17 +163,15 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
             fitGap,
         } = opts
 
-        /* ----------------------------------------
-        * Prop calculations
-        * ------------------------------------- */
+        //----------------------------------------
+        // Prop calculations
 
         const width = size[0]
         const depth = size[1]
         const height = size[2]
 
-        /* ----------------------------------------
-        * Preparing Model Properties, Dimensions
-        * ------------------------------------- */
+        //----------------------------------------
+        // Preparing Model Properties, Dimensions
 
         /** Constant values for model */
         const modelConstants = defaults.vals.constants
@@ -197,11 +197,12 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
         /** Components used by model */
         const modelComponents = defaults.vals.components
 
-        /* ---------------------------------------------
-        *  Model Properties
-        * ----------------------------------------------
-        * Properties accessible to all model functions.
-        * --------------------------------------------- */
+        /** Defined model types */
+        const modelTypes = defaults.vals.types
+
+        //--------------------------------------------------
+        // MODEL PROPERTIES
+        // Properties accessible to all model functions.
 
         const modelProperties = {
             constants: modelConstants,
@@ -209,6 +210,7 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
             dims: modelDims,
             points: modelPoints,
             components: modelComponents,
+            types: modelTypes,
         }
 
         console.log('newModelNameProps() -- modelProperties', modelProperties)
@@ -217,48 +219,36 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
     }
 
 
-    //------------------------------------------------------------------------------
+    //------------------------------------------------------------
+    // Secondary Modelling Functions
+    //------------------------------------------------------------
 
-    /* ----------------------------------------
-    * Modelling, Component/Assembly Modules
-    * ------------------------------------- */
 
-    /** Sub-component 01 */
-    const subcomponent1 = (modelProps) => {
+    const subcomponent1 = (opts) => {
         const {
-            opts,
-            dims,
-            points,
-        } = modelProps
+            size,
+            width,
+            depth,
+        } = opts
 
         return sphere()
     }
 
-    /** Sub-component 02 */
-    const subcomponent2 = (modelProps) => {
+    const subcomponent2 = (opts) => {
         const {
-            opts,
-            dims,
-            points,
-        } = modelProps
+            size,
+            width,
+            depth,
+        } = opts
 
         return cube()
     }
 
-    /* ----------------------------------------
-     * Complete Assembly
-     * ------------------------------------- */
 
-    /** Final Assembly */
-    const finalAssembly = (modelProps) => {
-        let subComp1 = subcomponent1(modelProps)
-        let subComp2 = subcomponent2(modelProps)
+    //------------------------------------------------------------
+    // Primary Modelling Functions
+    //------------------------------------------------------------
 
-        return union(
-            subComp1,
-            subComp2,
-        )
-    }
 
     /**
      * Generates a new model
@@ -275,16 +265,43 @@ const newModelNameInit = ({ jscad, swcadJs }) => {
         const initOpts = newModelNameOpts(opts)
         const modelProperties = newModelNameProps(initOpts)
 
-        /* ----------------------------------------
-         * Outputs
-         * ------------------------------------- */
+        const {
+            type,
+        } = modelProperties.opts
 
-        let subComp1 = subcomponent1(modelProperties)
-        let subComp2 = subcomponent2(modelProperties)
+        const {
+            size,
+            width,
+            depth,
+            height,
+            interfaceThickness,
+            fitGap,
+        } = modelProperties.dims
 
-        let mainModel = finalAssembly(modelProperties)
+        //----------------------------------------
+        // Initializing sub-components
 
-        let modelParts = {
+        let subComp1 = subcomponent1({
+            size,
+            width,
+            depth,
+        })
+
+        let subComp2 = subcomponent2({
+            size,
+            width,
+            depth,
+        })
+
+        //----------------------------------------
+        // Assembling sub-components
+
+        const mainModel = union(
+            subComp1,
+            subComp2,
+        )
+
+        const modelParts = {
             subcomponent1: subComp1,
             subcomponent2: subComp2,
         }
