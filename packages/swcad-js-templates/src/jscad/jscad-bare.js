@@ -55,23 +55,18 @@ const { colorize } = jscad.colors
 const inchesToMm = (numIn) => numIn * 25.4
 
 
-//==============================================================================
+//-----------------------------------------------
+// Model / Scene Prep
+//-----------------------------------------------
 
-
-/* ----------------------------------------
- * Test subjects
- * ------------------------------------- */
 
 const newModelOpts = {
     size: [inchesToMm(3), inchesToMm(3), inchesToMm(1)],
 }
+
 const newModel = cuboid(newModelOpts)
 
-
-
-//==============================================================================
-
-
+const spaceUnit = inchesToMm(3.5)
 
 
 /**
@@ -80,7 +75,6 @@ const newModel = cuboid(newModelOpts)
  * @ignore
  */
 function main() {
-    const spaceUnit = inchesToMm(3.5)
 
     return [
         translate([spaceUnit * 0, spaceUnit * 0, spaceUnit * 0], newModel),
